@@ -1,0 +1,315 @@
+{
+  "project_info": {
+    "project_number": "735152079133",
+    "firebase_url": "https://ynci-f904e.firebaseio.com",
+    "project_id": "ynci-f904e",
+    "storage_bucket": "ynci-f904e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:60e7e641c9e95ab534e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.indomini_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:d208cd3206fdec9d34e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.kosgoro_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:b2947bd815b38bc034e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.mbw204_club_ina"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:c68de0763939bc5e34e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.ppdi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:02e793dc2a9233f834e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.psmti_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:801e6c2a5547b46434e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.umart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:720450af45f0deba34e1f4",
+        "android_client_info": {
+          "package_name": "com.connexist.ynci"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-16bgg80d9psn33l2jjj3jjoo4dbq3uuh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connexist.ynci",
+            "certificate_hash": "7e7405dbc374cb5e6b3c829e354b91c1ba5e3e02"
+          }
+        },
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735152079133:android:d831ac8211f723d034e1f4",
+        "android_client_info": {
+          "package_name": "com.pasaronline.ynci"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735152079133-3s8v9kpdnj4hgg232fers58r3fnt1cc2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pasaronline.ynci",
+            "certificate_hash": "7e7405dbc374cb5e6b3c829e354b91c1ba5e3e02"
+          }
+        },
+        {
+          "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMK21kuLCFwOqtlr4SE7a6skSYbcnUsxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735152079133-6mkp98h1g1olq83vgp1a76p9msid0hfi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735152079133-1re61r86d74u2bguarnennidfkjolv53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cxCommunityNmax"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
