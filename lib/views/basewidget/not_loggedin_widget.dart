@@ -7,7 +7,7 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/basewidget/button/custom_button.dart';
-import 'package:mbw204_club_ina/views/screens/auth/auth.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 
 class NotLoggedInWidget extends StatelessWidget {
   @override
@@ -25,13 +25,14 @@ class NotLoggedInWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE),
               child: CustomButton(
                 buttonText: getTranslated('LOGIN', context),
-                onTap: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen()), (route) => false),
+                onTap: () => {},
+                //  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen()), (route) => false)
               ),
             ),
             InkWell(
               onTap: () {
-                Provider.of<AuthProvider>(context, listen: false).updateSelectedIndex(1);
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen(initialPage: 1)), (route) => false);
+                // Provider.of<AuthProvider>(context, listen: false).updateSelectedIndex(1);
+                // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen()), (route) => false);
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_LARGE, horizontal: 30),

@@ -6,7 +6,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:mbw204_club_ina/views/screens/auth/auth.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 
 class DioManager {
@@ -34,7 +34,7 @@ class DioManager {
       onError: (DioError e) async {
         bool isTokenExpired = JwtDecoder.isExpired(prefs.getString('token'));
         if(isTokenExpired) {
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen()), (Route<dynamic> route) => false);
+          // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => AuthScreen()), (Route<dynamic> route) => false);
         }
       }
     ));

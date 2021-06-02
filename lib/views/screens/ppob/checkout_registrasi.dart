@@ -9,7 +9,7 @@ import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_expansion_tile.dart' as custom;
-import 'package:mbw204_club_ina/views/screens/auth/auth.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 
 class CheckoutRegistrasiScreen extends StatefulWidget {
   final double productPrice;
@@ -267,10 +267,10 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                 child: RaisedButton(
                                   elevation: 3.0,
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => AuthScreen()),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(builder: (context) => AuthScreen()),
+                                    // );
                                   },
                                   color: ColorResources.WHITE,
                                   textColor: ColorResources.PRIMARY,
@@ -285,8 +285,8 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                 child: RaisedButton(
                                 elevation: 3.0,
                                 onPressed: () { 
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AuthScreen(initialPage: 0)));
-                                  Provider.of<AuthProvider>(context, listen: false).updateSelectedIndex(0);
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => AuthScreen()));
+                                  // Provider.of<AuthProvider>(context, listen: false).updateSelectedIndex(0);
                                 },
                                 color: ColorResources.WHITE,
                                 textColor: ColorResources.PRIMARY,

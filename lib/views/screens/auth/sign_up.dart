@@ -1,26 +1,22 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mbw204_club_ina/data/models/news.dart';
+import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:mbw204_club_ina/views/screens/auth/widgets/signin.dart';
-import 'package:mbw204_club_ina/views/screens/auth/widgets/signup.dart';
-import 'package:select_form_field/select_form_field.dart';
 
-class AuthScreen extends StatelessWidget{
-  final int initialPage;
-  AuthScreen({this.initialPage = 0});
+class SignUpScreen extends StatefulWidget{
 
   @override
-  Widget build(BuildContext context) {
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
 
+class _SignUpScreenState extends State<SignUpScreen> {
+  @override
+  Widget build(BuildContext context) {
     
     TextEditingController fullnameController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
@@ -33,8 +29,10 @@ class AuthScreen extends StatelessWidget{
     bool passwordObscure = false;
     bool passwordConfirmObscure = false;
 
-    PageController pageController = PageController(initialPage: initialPage);
     int groupValue = 0;
+    String chapter = "";
+    String subModel = "";
+    String bodyStyle = "";
 
     return Scaffold(
       body: Stack(
@@ -167,6 +165,121 @@ class AuthScreen extends StatelessWidget{
                                     ),
                                   ),
                                 ),
+
+                                Container(
+                                  margin: EdgeInsets.only(top: 15.0),
+                                  child: StatefulBuilder(
+                                    builder: (BuildContext context, Function setState) {
+                                      return CustomDropDownFormField(
+                                        titleText: 'Chapter',
+                                        hintText: 'Chapter',
+                                        contentPadding: EdgeInsets.zero,
+                                        value: chapter,
+                                        filled: false,
+                                        onSaved: (val) {
+                                          setState(() => chapter = val);
+                                        },
+                                        onChanged: (val) {  
+                                          setState(() => chapter = val);
+                                        },
+                                        dataSource: [
+                                          {
+                                            "display": "Jakarta",
+                                            "value": "jakarta",
+                                          },
+                                          {
+                                            "display": "Bandung",
+                                            "value": "bandung",
+                                          },
+                                          {
+                                            "display": "Bali",
+                                            "value": "bali",
+                                          },
+                                        ],
+                                        textField: 'display',
+                                        valueField: 'value',
+                                      );
+                                      
+                                    }, 
+                                  ),
+                                ),
+
+                                Container(
+                                  margin: EdgeInsets.only(top: 15.0),
+                                  child: StatefulBuilder(
+                                    builder: (BuildContext context, Function setState) {
+                                      return CustomDropDownFormField(
+                                        titleText: 'Sub Model',
+                                        hintText: 'Sub Model',
+                                        contentPadding: EdgeInsets.zero,
+                                        value: subModel,
+                                        filled: false,
+                                        onSaved: (val) {
+                                          setState(() => subModel = val);
+                                        },
+                                        onChanged: (val) {  
+                                          setState(() => subModel = val);
+                                        },
+                                        dataSource: [
+                                          {
+                                            "display": "Jakarta",
+                                            "value": "jakarta",
+                                          },
+                                          {
+                                            "display": "Bandung",
+                                            "value": "bandung",
+                                          },
+                                          {
+                                            "display": "Bali",
+                                            "value": "bali",
+                                          },
+                                        ],
+                                        textField: 'display',
+                                        valueField: 'value',
+                                      );
+                                      
+                                    }, 
+                                  ),
+                                ),
+
+                                Container(
+                                  margin: EdgeInsets.only(top: 15.0),
+                                  child: StatefulBuilder(
+                                    builder: (BuildContext context, Function setState) {
+                                      return CustomDropDownFormField(
+                                        titleText: 'Body Style',
+                                        hintText: 'Body Style',
+                                        contentPadding: EdgeInsets.zero,
+                                        value: bodyStyle,
+                                        filled: false,
+                                        onSaved: (val) {
+                                          setState(() => bodyStyle = val);
+                                        },
+                                        onChanged: (val) {  
+                                          setState(() => bodyStyle = val);
+                                        },
+                                        dataSource: [
+                                          {
+                                            "display": "Jakarta",
+                                            "value": "jakarta",
+                                          },
+                                          {
+                                            "display": "Bandung",
+                                            "value": "bandung",
+                                          },
+                                          {
+                                            "display": "Bali",
+                                            "value": "bali",
+                                          },
+                                        ],
+                                        textField: 'display',
+                                        valueField: 'value',
+                                      );
+                                      
+                                    }, 
+                                  ),
+                                ),
+                                
 
                                 Container(
                                   margin: EdgeInsets.only(top: 15.0),
@@ -304,25 +417,27 @@ class AuthScreen extends StatelessWidget{
                                           ))
                                         ],
                                       ),
-                                      TextField(
-                                        controller: emailController,
-                                        style: titilliumRegular.copyWith(
-                                          color: ColorResources.WHITE
-                                        ),
-                                        keyboardType: TextInputType.emailAddress,
-                                        textInputAction: TextInputAction.next,
-                                        decoration: InputDecoration(
-                                          hintText: "ex. johndoe@gmail.com",
-                                          hintStyle: titilliumRegular,
-                                          isDense: true,
-                                          enabledBorder: UnderlineInputBorder(      
-                                            borderSide: BorderSide(color: ColorResources.WHITE),   
-                                          ),  
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: ColorResources.WHITE),
+                                      Container(
+                                        child: TextField(
+                                          controller: emailController,
+                                          style: titilliumRegular.copyWith(
+                                            color: ColorResources.WHITE
                                           ),
-                                          border: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: ColorResources.WHITE),
+                                          keyboardType: TextInputType.emailAddress,
+                                          textInputAction: TextInputAction.next,
+                                          decoration: InputDecoration(
+                                            hintText: "ex. johndoe@gmail.com",
+                                            hintStyle: titilliumRegular,
+                                            isDense: true,
+                                            enabledBorder: UnderlineInputBorder(      
+                                              borderSide: BorderSide(color: ColorResources.WHITE),   
+                                            ),  
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(color: ColorResources.WHITE),
+                                            ),
+                                            border: UnderlineInputBorder(
+                                              borderSide: BorderSide(color: ColorResources.WHITE),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -634,6 +749,5 @@ class AuthScreen extends StatelessWidget{
       ),
     );
   }
-  
 }
 

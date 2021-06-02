@@ -4,7 +4,7 @@ import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:mbw204_club_ina/views/screens/auth/auth.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 
 class GuestDialog extends StatelessWidget {
   @override
@@ -46,7 +46,10 @@ class GuestDialog extends StatelessWidget {
                 )),
 
                 Expanded(child: InkWell(
-                  onTap: () => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => AuthScreen()), (route) => false),
+                  onTap: () => {
+
+                  },
+                  // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => AuthScreen()), (route) => false),
                   child: Container(
                     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                     alignment: Alignment.center,

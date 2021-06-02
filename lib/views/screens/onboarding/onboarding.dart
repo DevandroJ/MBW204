@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/onboarding.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
-import 'package:mbw204_club_ina/views/screens/auth/auth.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   final Color indicatorColor;
@@ -193,7 +193,7 @@ class OnBoardingScreen extends StatelessWidget {
                         child: TextButton(
                           onPressed: () {
                             if (Provider.of<OnBoardingProvider>(context, listen: false).selectedIndex == onBoardingProvider.onBoardingList.length - 1) {
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AuthScreen()));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignInScreen()));
                             } else {
                               pageController.animateToPage(Provider.of<OnBoardingProvider>(context, listen: false).selectedIndex+1, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                             }
