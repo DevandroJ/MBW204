@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 
 class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -149,7 +150,11 @@ class SignInScreen extends StatelessWidget {
                               width: double.infinity,
                               margin: EdgeInsets.only(top: 15.0),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => DashBoardScreen()),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0)

@@ -14,14 +14,14 @@ class SearchWidget extends StatelessWidget {
     return InkWell(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SearchProductPage(typeProduct: "commerce"))),
       child: Container(
-        height: 55.0,
+        height: 50.0,
         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          borderRadius: BorderRadius.circular(30.0),
           color: ColorResources.LAVENDER,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withOpacity(0.1),
               spreadRadius: 3,
               blurRadius: 10,
               offset: Offset(0, 3),
@@ -31,17 +31,23 @@ class SearchWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(width: 200.0, 
-              child: Text(hintText, 
-                style: titilliumRegular.copyWith(
-                  color: ColorResources.BLACK 
-                ),
-                overflow: TextOverflow.ellipsis
-              )
-            ),
-            Icon(
-              Icons.search,
-              color: ColorResources.PRIMARY,
+            Container(
+              width: 90.0,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.search,
+                    color: ColorResources.BLACK,
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(hintText, 
+                    style: titilliumRegular.copyWith(
+                      color: ColorResources.BLACK 
+                    ),
+                    overflow: TextOverflow.ellipsis
+                  )
+                ],
+              ) 
             ),
           ], 
         ),

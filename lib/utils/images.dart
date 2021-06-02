@@ -11,6 +11,7 @@ class Images {
   static const String splash = 'assets/images/splash.jpg';
   static const String wheel_btn = 'assets/images/wheel-btn.png';
   static const String logo = 'assets/images/logo.png';
+  static const String home_sos = 'assets/images/home-sos.png';
   static const String onboarding_sos = 'assets/images/onboarding-sos.png';
   static const String onboarding_mart = 'assets/images/onboarding-mart.png';
   static const String bank_transfer = 'assets/images/bank_transfer.png';
@@ -35,6 +36,10 @@ class Images {
   static const String delivery = 'assets/images/delivery.png';
   static const String toolbar_background = 'assets/images/toolbar_background.jpg';
   static const String chats = 'assets/images/chats.png';
+  static const String media = 'assets/images/media.png';
+  static const String mart = 'assets/images/mart.png';
+  static const String ppob = 'assets/images/ppob.png';
+  static const String search_member = 'assets/images/search_member.png';
   static const String help_center = 'assets/images/help_center.png';
   static const String language = 'assets/images/language.png';
   static const String notification_filled = 'assets/images/notification_filled.png';
