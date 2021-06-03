@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/ppob.dart';
-import 'package:mbw204_club_ina/views/screens/auth/forget_password.dart';
+import 'package:mbw204_club_ina/views/screens/auth/change_password.dart';
 import 'package:mbw204_club_ina/views/basewidget/list_component.dart';
 import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart';
 import 'package:mbw204_club_ina/views/screens/setting/widgets/language_dialog.dart';
@@ -156,7 +156,7 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ForgetPasswordScreen()),
+                          MaterialPageRoute(builder: (context) => ChangePasswordScreen()),
                         );
                       },
                       child: Text(getTranslated("CHANGE_PASSWORD", context),

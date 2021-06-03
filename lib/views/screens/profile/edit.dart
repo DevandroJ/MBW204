@@ -9,7 +9,15 @@ class ProfileEditScreen extends StatefulWidget {
 }
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  
+  TextEditingController emailController = TextEditingController();
+  TextEditingController fullnameController = TextEditingController();
+  TextEditingController noKtpController = TextEditingController();
+  TextEditingController noHpController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +56,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 ),
                 clipper: CustomClipPath(),
               ),
+
               Align(  
                 alignment: Alignment.bottomLeft,
                 child: Container(
@@ -58,35 +67,138 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         radius: 50.0,
                         backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif"),
                       ),
+                      Positioned(
+                        right: 5.0,
+                        bottom: 0.0,
+                        child: Container(
+                          width: 32.0,
+                          height: 32.0,
+                          decoration: BoxDecoration(
+                            color: ColorResources.GRAY_LIGHT_PRIMARY,
+                            borderRadius: BorderRadius.all(Radius.circular(20.0))
+                          ),
+                          child: Icon(
+                            Icons.camera_alt,
+                            size: 14.0,
+                            color: ColorResources.BLACK    
+                          ),
+                        )
+                      ),
                     ],
                   )
                 ),
               ),
-              Positioned(
-                right: 20.0,
-                bottom: 5.0,
-                child: Text("hello"),
-              ),
-             
-
-               Align(  
+            
+              Align(  
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                  margin: EdgeInsets.only(top: 60.0, left: 145.0),
-                  child: Text("Nurhalizah",
-                    style: poppinsRegular.copyWith(
-                      color: ColorResources.BTN_PRIMARY_SECOND,
-                      fontSize: 16.0
-                    ),
+                  margin: EdgeInsets.only(top: 60.0, left: 145.0, right: 10.0),
+                  child: TextField(
+                    controller: fullnameController,
                   )
                 ),
               ),
 
             ],
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 0.0, left: 16.0, right: 16.0),
+            child: Card(
+              elevation: 3.0,
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  margin: EdgeInsets.only(top: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      inputComponent(context, "Email", emailController),
+                      SizedBox(height: 10.0),
+                      inputComponent(context, "Nomor Identitas KTP", noKtpController),
+                      SizedBox(height: 10.0),
+                      inputComponent(context, "Nomor Handphone", noKtpController),
+                      SizedBox(height: 10.0),
+                      inputComponent(context, "Alamat", addressController),
+                      SizedBox(height: 10.0),
+                    ],
+                  ),
+                )
+              ),
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 180.0,
+                  height: 30.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: ColorResources.BLACK,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)
+                      )
+                    ),
+                    onPressed: () => Navigator.of(context).pop(), 
+                    child: Text("Kembali",
+                      style: poppinsRegular.copyWith(
+                        fontSize: 14.0,
+                        color: ColorResources.YELLOW_PRIMARY
+                      ),
+                    )
+                  ),
+                ),
+                Container(
+                  width: 180.0,
+                  height: 30.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: ColorResources.BLACK,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)
+                      )
+                    ),
+                    onPressed: () {}, 
+                    child: Text("Simpan",
+                      style: poppinsRegular.copyWith(
+                        fontSize: 14.0,
+                        color: ColorResources.YELLOW_PRIMARY
+                      ),
+                    )
+                  ),
+                ),
+              ],
+            ),
           )
 
         ],
       ),
+    );
+  }
+
+  Widget inputComponent(BuildContext context, String label, TextEditingController textEditingController) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label,
+          style: poppinsRegular,
+        ),
+        TextField(
+          controller: textEditingController,
+          decoration: InputDecoration(
+            isDense: true
+          ),
+        ),
+        Divider(
+          height: 1.0,
+        )
+      ],
     );
   }
 }

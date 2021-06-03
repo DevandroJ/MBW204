@@ -1,95 +1,216 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
+
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
 
 class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: ColorResources.GRAY_LIGHT_PRIMARY,
+        title: Text("About us",
+          style: poppinsRegular.copyWith(
+            color: ColorResources.BLACK,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        leading: InkWell(
+          onTap: () => Navigator.of(context).pop(),
+          child: Icon(
+            Icons.arrow_back,
+            color: ColorResources.BLACK,
+          )
+        ),
+      ),
+      body: ListView(
+        children: [
+          Stack(
+            children: [
 
-            CustomAppBar(title: getTranslated("ABOUT_US", context), isBackButtonExist: true),
-
-            Container(
-              width: double.infinity, 
-              height: 160.0,
-              margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-              child: Card(
-                elevation: 3.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)
-                ),
+              ClipPath(
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorResources.PRIMARY,
-                    borderRadius: BorderRadius.circular(20.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        spreadRadius: 1.0,
-                        blurRadius: 3.0,
-                        offset: Offset(0.0, 3.0),
-                      )
-                    ],
-                  ),
-                  padding: EdgeInsets.all(10.0),
+                  width: MediaQuery.of(context).size.width,
+                  height: 140.0,
+                  color: ColorResources.GRAY_LIGHT_PRIMARY,
+                ),
+                clipper: CustomClipPath(),
+              ),
+
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 40.0),
                   child: Column(
                     children: [
                       Container(
                         height: 100.0,
-                        child: Image.asset(Images.logo)
+                        child: Image.asset(Images.logo_app)
                       ),
                       SizedBox(height: 10.0),
-                      Text("INDOMINI CLUB",
-                        style: TextStyle(
-                          color: ColorResources.WHITE,
+                      Text("MERCEDES-BENZ W204 CLUB INDONESIA",
+                        style: poppinsRegular.copyWith(
                           fontWeight: FontWeight.bold
-                        ),
-                      )
-                    ]
-                  )
-                ),
-              )
-            ),
-
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-              child: Card(
-                child: Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("HISTORY",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Container(
-                        child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed velit condimentum mi semper imperdiet ut id leo. Proin lacinia interdum laoreet. Duis elementum, purus ac eleifend scelerisque, ex justo malesuada tellus, ac dictum purus tortor ut massa. Suspendisse viverra, risus a tincidunt fringilla, nisi mi bibendum nisi, sodales faucibus mauris mi a libero. Etiam scelerisque ligula mauris, sit amet tempor leo venenatis vel. Nunc et molestie ligula, sed rhoncus orci. Proin diam odio, maximus in rutrum in, varius eget magna. Praesent ut neque mi. Cras egestas eros id nulla accumsan placerat.",
-                          softWrap: true,
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            height: 1.8
-                          ),
                         ),
                       )
                     ],
-                  ),
+                  ) 
                 ),
               ),
-            )
 
-          ],
-        ),
-      ),
+            ],
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+            child: Row(
+              children: [ 
+                Text("HISTORY",
+                  style: poppinsRegular.copyWith(
+                    fontWeight: FontWeight.bold
+                  ),
+                  softWrap: true,
+                ),
+
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 15.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.black,
+                      height: 50.0,
+                    )
+                  ),
+                ),
+              ]
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("VISION STATEMENT:",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("ELEVATE TO THE NEXT LEVEL",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("“Membawa MBW204 Club INA ketingkat yang lebih tinggi untuk menjadi organisasi otomotif yang sehat dan menyenangkan bagi semua  stakeholder didalam melakukan aktivitas kegiatan otomotif maupun cara berorganisasi yang lebih baik, transparan dan dapat dipertanggung jawabkan”.",
+                  style: poppinsRegular,
+                  softWrap: true,
+                )
+              ],
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Misi:",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("MBW204 Club INA Wonderful Journey",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ), 
+                Text("Didalam perjalanan menuju Visi organisasi, semua stakeholder akan menikmati perjalanan yang sangat menyenangkan didalam:",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("• Melanjutkan Visi & Misi dari kepemimpinan sebelumnya\n• Mengembangkan dan memperbaiki aturan organisasi yang ada\n• Membangun Digital Platform MBW204 Club INA bagi pelaksanaan aturan organisasi, tata tertib organisasi, program kegiatan aktivitas sehari-hari maupun administrasi keanggotaan MBW204 Club INA\n• Melakukan kegiatan aktivitas yang mengutamakan kebersamaan antar sesama anggota MBW204 Club INA\n• Membangun kemitraan yang seluas-luasnya dengan pihak external maupun pihak internal untuk mengoptimalkan manfaat bagi seluruh stakeholder\n• Berpartisipasi aktif didalam kegiatan-kegiatan otomotif baik didalam negeri maupun diluar negeri\n• Membangun BUDAYA ORGANISASI MBW204 Club INA yang SPORTIF, BERETIKA dan BERTANGGUNG JAWAB dalam semangat KEKELUARGAAN",
+                  style: poppinsRegular,
+                  softWrap: true,
+                )
+              ],
+            ),
+          ),
+          
+          Container(
+            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+            child: Row(
+              children: [ 
+                Text("VISI & MISI",
+                  style: poppinsRegular.copyWith(
+                    fontWeight: FontWeight.bold
+                  ),
+                  softWrap: true,
+                ),
+
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 15.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.black,
+                      height: 50.0,
+                    )
+                  ),
+                ),
+              ]
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Visi:",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("ELEVATE TO THE NEXT LEVEL",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("Misi:",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("MBW204 Club INA Wonderful Journey",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("Tagline:",
+                  style: poppinsRegular,
+                  softWrap: true,
+                ),
+                Text("MBW204 Club INA Wonderful Journey",
+                  style: poppinsRegular,
+                  softWrap: true,
+                )
+              ],
+            ),
+          )
+
+
+        ],
+      ) 
     );
   }
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  var radius = 10.0;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 140);
+    path.quadraticBezierTo(size.width / 2, size.height, 
+    size.width, size.height - 140);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

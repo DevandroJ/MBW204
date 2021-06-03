@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/views/screens/about/about.dart';
+import 'package:mbw204_club_ina/views/screens/auth/change_password.dart';
 import 'package:mbw204_club_ina/views/screens/profile/profile.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -13,6 +15,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -29,13 +32,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
               child: Column(
                 children: [
-                  drawerItems(context, ProfileScreen(), Images.logo_app, "Tentang MBW204\nClub Indonesia"),
+                  drawerItems(context, AboutUsScreen(), Images.logo_app, "Tentang MBW204\nClub Indonesia"),
                   drawerItems(context, ProfileScreen(), Images.profile_drawer, "Profil"),
                   drawerItems(context, ProfileScreen(), Images.settings_drawer, "Pengaturan"),
-                  drawerItems(context, ProfileScreen(), Images.lock_drawer, "Ubah Kata Sandi"),
+                  drawerItems(context, ChangePasswordScreen(), Images.lock_drawer, "Ubah Kata Sandi"),
                   drawerItems(context, ProfileScreen(), Images.tos_drawer, "Term of Service"),
                   drawerItems(context, ProfileScreen(), Images.bantuan_drawer, "Bantuan"),
-                  drawerItems(context, ProfileScreen(), Images.logout_drawer, "Logout")
+                  drawerItems(context, AboutUsScreen(), Images.logout_drawer, "Logout")
                 ],
               ),
             )
@@ -69,7 +72,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
                   Positioned(
                     top: 12.0,
-                    right: 12.0,
+                    right: 17.0,
                     child: Container(
                       width: 34.0,
                       height: 34.0,
@@ -214,4 +217,5 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       )
     );
   }
+  
 }

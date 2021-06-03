@@ -3,21 +3,16 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/views/screens/profile/edit.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 
-import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/views/screens/profile/edit.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/data/models/profile.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
-import 'package:mbw204_club_ina/views/basewidget/textfield/custom_textfield.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -46,18 +41,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     "Female",
   ];
 
-  void _choose() async {
+  void chooseProfileAvatar() async {
     final pickedFile = await picker.getImage(
       source: ImageSource.gallery, 
       imageQuality: 70,
       maxHeight: 500, 
       maxWidth: 500
     );
-    setState(() {
-      if (pickedFile != null) {
-        file = File(pickedFile.path);
-      } 
-    });
+    if (pickedFile != null) {
+      setState(() => file = File(pickedFile.path));
+    }
   }
 
   void updateProfile(context) async {
@@ -123,7 +116,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               Align(  
                 alignment: Alignment.bottomCenter,
                 child: Container(
-
                   margin: EdgeInsets.only(top: 70.0),
                   child: CircleAvatar(
                     radius: 50.0,
