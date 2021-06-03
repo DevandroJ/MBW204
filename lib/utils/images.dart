@@ -39,8 +39,14 @@ class Images {
   static const String media = 'assets/images/media.png';
   static const String mart = 'assets/images/mart.png';
   static const String ppob = 'assets/images/ppob.png';
-  static const String search_member = 'assets/images/search_member.png';
+  static const String search_member = 'assets/images/search-member.png';
   static const String help_center = 'assets/images/help_center.png';
+  static const String profile_drawer = 'assets/images/profile-drawer.png';
+  static const String settings_drawer = 'assets/images/settings-drawer.png';
+  static const String lock_drawer = 'assets/images/lock-drawer.png';
+  static const String bantuan_drawer = 'assets/images/bantuan-drawer.png';
+  static const String tos_drawer = 'assets/images/tos-drawer.png';
+  static const String logout_drawer = 'assets/images/logout-drawer.png';
   static const String language = 'assets/images/language.png';
   static const String notification_filled = 'assets/images/notification_filled.png';
   static const String notification = 'assets/images/notification.png';

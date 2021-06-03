@@ -205,7 +205,10 @@ class HomePage extends StatelessWidget {
                                 
                                 Row(
                                   children: [
-                                    Image.asset(Images.media),
+                                    Container(
+                                      height: 20.0,
+                                      child: Image.asset(Images.media)
+                                    ),
                                     SizedBox(width: 10.0),
                                     Text("Media")
                                   ],
@@ -218,7 +221,10 @@ class HomePage extends StatelessWidget {
 
                                 Row(
                                   children: [
-                                    Image.asset(Images.mart),
+                                    Container(
+                                      height: 20.0,
+                                      child: Image.asset(Images.mart)
+                                    ),
                                     SizedBox(width: 10.0),
                                     Text("MBW Mart")
                                   ],
@@ -231,7 +237,10 @@ class HomePage extends StatelessWidget {
 
                                 Row(
                                   children: [
-                                    Image.asset(Images.ppob),
+                                    Container(
+                                      height: 20.0,
+                                      child: Image.asset(Images.ppob)
+                                    ),
                                     SizedBox(width: 10.0),
                                     Text("PPOB")
                                   ],
@@ -244,7 +253,10 @@ class HomePage extends StatelessWidget {
 
                                 Row(
                                   children: [
-                                    Image.asset(Images.search_member),
+                                    Container(
+                                      height: 20.0,
+                                      child: Image.asset(Images.search_member)
+                                    ),
                                     SizedBox(width: 10.0),
                                     Text("Search\nMember")
                                   ],
@@ -321,75 +333,78 @@ class HomePage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: ColorResources.WHITE,
                             ),
-                            child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: 3,
-                              itemBuilder: (BuildContext context, int i) {
-                                return Container(
-                                  color: ColorResources.WHITE,
-                                  width: double.infinity,
-                                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                  child: Card(
-                                    elevation: 4.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0)
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10.0),
+                              child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: 3,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return Container(
+                                    color: ColorResources.WHITE,
+                                    width: double.infinity,
+                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                    child: Card(
+                                      elevation: 2.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0)
+                                      ),
+                                      child: InkWell(
+                                        onTap: () {
 
-                                      },
-                                      child: Stack(
-                                        children: [
+                                        },
+                                        child: Stack(
+                                          children: [
 
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CachedNetworkImage(
-                                                imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
-                                                  imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                  width: 120.0,
-                                                  height: 80.0,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                    image: DecorationImage(
-                                                      image: imageProvider, 
-                                                      fit: BoxFit.cover
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                CachedNetworkImage(
+                                                  imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                    imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                    width: 120.0,
+                                                    height: 80.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.0),
+                                                      image: DecorationImage(
+                                                        image: imageProvider, 
+                                                        fit: BoxFit.cover
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(width: 10.0),
-                                              Container(
-                                                width: 200.0,
-                                                margin: EdgeInsets.only(top: 10.0),
-                                                child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
-                                                  softWrap: true,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold
+                                                SizedBox(width: 10.0),
+                                                Container(
+                                                  width: 200.0,
+                                                  margin: EdgeInsets.only(top: 10.0),
+                                                  child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
+                                              ],
+                                            ),
 
-                                          Positioned(
-                                            top: 55.0,
-                                            right: 10.0,
-                                            child: Text("Baca Selengkapnya",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 12.0
-                                              ),
+                                            Positioned(
+                                              top: 55.0,
+                                              right: 10.0,
+                                              child: Text("Baca Selengkapnya",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 12.0
+                                                ),
+                                              )
                                             )
-                                          )
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             )
                           ),
 
@@ -398,75 +413,78 @@ class HomePage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: ColorResources.WHITE,
                             ),
-                            child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: 3,
-                              itemBuilder: (BuildContext context, int i) {
-                                return Container(
-                                  color: ColorResources.WHITE,
-                                  width: double.infinity,
-                                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                  child: Card(
-                                    elevation: 4.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0)
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10.0),
+                              child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: 3,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return Container(
+                                    color: ColorResources.WHITE,
+                                    width: double.infinity,
+                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                    child: Card(
+                                      elevation: 2.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0)
+                                      ),
+                                      child: InkWell(
+                                        onTap: () {
 
-                                      },
-                                      child: Stack(
-                                        children: [
+                                        },
+                                        child: Stack(
+                                          children: [
 
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CachedNetworkImage(
-                                                imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
-                                                  imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                  width: 120.0,
-                                                  height: 80.0,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                    image: DecorationImage(
-                                                      image: imageProvider, 
-                                                      fit: BoxFit.cover
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                CachedNetworkImage(
+                                                  imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                    imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                    width: 120.0,
+                                                    height: 80.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.0),
+                                                      image: DecorationImage(
+                                                        image: imageProvider, 
+                                                        fit: BoxFit.cover
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(width: 10.0),
-                                              Container(
-                                                width: 200.0,
-                                                margin: EdgeInsets.only(top: 10.0),
-                                                child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
-                                                  softWrap: true,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold
+                                                SizedBox(width: 10.0),
+                                                Container(
+                                                  width: 200.0,
+                                                  margin: EdgeInsets.only(top: 10.0),
+                                                  child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
+                                              ],
+                                            ),
 
-                                          Positioned(
-                                            top: 55.0,
-                                            right: 10.0,
-                                            child: Text("Baca Selengkapnya",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 12.0
-                                              ),
+                                            Positioned(
+                                              top: 55.0,
+                                              right: 10.0,
+                                              child: Text("Baca Selengkapnya",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 12.0
+                                                ),
+                                              )
                                             )
-                                          )
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             )
                           ),
 

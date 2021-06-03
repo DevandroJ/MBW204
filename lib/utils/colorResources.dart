@@ -84,6 +84,7 @@ class ColorResources {
   static const Color PINK_PRIMARY = Color(0xFFf66a6a);
   static const Color BG_GREY = Color(0xffF5F5F5);
   static const Color DIM_GRAY = Color(0xff6D6D6D);
+  static const Color GRAY_PRIMARY = Color(0xffCECECE);
   static const Color BLUE = Color(0xFF64B5F6);
   static const Color COLUMBIA_BLUE = Color(0xff92C6FF);
   static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);

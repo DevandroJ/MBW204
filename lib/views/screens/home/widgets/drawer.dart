@@ -24,8 +24,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           children: [
             drawerHeader(context),
             drawerUserDisplayName(context),
-            drawerItems(context, Images.logo_app, "Tentang MBW204\nClub Indonesia"),
-            drawerItems(context, Images.logo_app,"Profil")
+            Container(
+              padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
+              child: Column(
+                children: [
+                  drawerItems(context, Images.logo_app, "Tentang MBW204\nClub Indonesia"),
+                  drawerItems(context, Images.profile_drawer, "Profil"),
+                  drawerItems(context, Images.settings_drawer, "Pengaturan"),
+                  drawerItems(context, Images.lock_drawer, "Ubah Kata Sandi"),
+                  drawerItems(context, Images.tos_drawer, "Term of Service"),
+                  drawerItems(context, Images.bantuan_drawer, "Bantuan"),
+                  drawerItems(context, Images.logout_drawer, "Logout")
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -159,7 +171,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   Widget drawerUserDisplayName(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 5.0),
+      margin: EdgeInsets.only(top: 10.0),
       child: Column(
         children: [
           Text("NAMA LENGKAP",
@@ -189,16 +201,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         title: Text(title,
           style: titilliumRegular,
         ),
-        leading: Container(
-          width: 50.0,
-          height: 50.0,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: ColorResources.DIM_GRAY,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: Container(
+            color: ColorResources.GRAY_PRIMARY,
+            height: 40.0,
+            child: Container(
+              margin: EdgeInsets.all(11.0),
+              child: Image.asset(icon)
+            )
           ),
-          child: Image.asset(
-            icon,
-          )
         ),
       )
     );
