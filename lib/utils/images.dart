@@ -31,6 +31,7 @@ class Images {
   static const String instagram = 'assets/icons/ic-instagram.png';
   static const String card = 'assets/images/card.png';
   static const String chat_image = 'assets/images/chat.png';
+  static const String scan = 'assets/images/scan.png';
   static const String filter_image = 'assets/images/filter.png';
   static const String fast_delivery = 'assets/images/fast_delivery.png';
   static const String delivery = 'assets/images/delivery.png';

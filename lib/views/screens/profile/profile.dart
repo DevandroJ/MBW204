@@ -23,7 +23,8 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin{
+  TabController tabController;
   FocusNode fullnameFocus = FocusNode();
   FocusNode addressFocus = FocusNode();
   FocusNode cardNumberFocus = FocusNode();
@@ -79,6 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -146,121 +148,371 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
           Container(
-            margin: EdgeInsets.only(top: 40.0, left: 16.0, right: 16.0),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 180.0,
-                  height: 30.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      primary: ColorResources.BLACK,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)
-                      )
-                    ),
-                    onPressed: () {}, 
-                    child: Text("Profil",
-                      style: poppinsRegular.copyWith(
-                        color: ColorResources.YELLOW_PRIMARY
-                      ),
-                    )
-                  ),
+            child: TabBar(
+              controller:tabController,
+              indicatorColor: ColorResources.BLACK,
+              labelColor: ColorResources.BLACK,
+              unselectedLabelColor: ColorResources.GRAY_PRIMARY,
+              tabs: [
+                Tab(
+                  text: "Profil",
                 ),
-                Container(
-                  width: 180.0,
-                  height: 30.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      primary: ColorResources.BLACK,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)
-                      )
-                    ),
-                    onPressed: () {}, 
-                    child: Text("Kartu Digital",
-                      style: poppinsRegular.copyWith(
-                        color: ColorResources.YELLOW_PRIMARY
-                      ),
-                    )
-                  ),
+                Tab(
+                  text: "Kartu Digital",
                 ),
               ],
-            ),
+            )
           ),
 
           Container(
-            margin: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
-            width: double.infinity,
-            child: Column(
+            height: 520.0,
+            child: TabBarView(
+              controller: tabController,
               children: [
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    
-                    Row(
-                      children: [
-                        Text("Saldoku",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        SizedBox(width: 10.0),
-                        Text("125.000",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.normal
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Row(
-                      children: [
-                        Container(
-                          height: 30.0,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              primary: ColorResources.BLACK,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)
-                              )
-                            ),
-                            onPressed: () {}, 
-                            child: Text("Topup",
-                              style: poppinsRegular.copyWith(
-                                fontSize: 14.0,
-                                color: ColorResources.YELLOW_PRIMARY
-                              ),
-                            )
-                          ),
-                        ),
-                        SizedBox(width: 10.0),
-                        Icon(
-                          Icons.refresh,
-                          color: ColorResources.BLACK,
-                        )
-                      ],
-                    ),
-
-                  ]
-                )
-              
-              
-
+                profileAccount(context),
+                digitalCard(context),
               ],
-            )
-          )
+            ),
+          ),
           
         ],  
       ) 
+    );
+  }
+
+  Widget profileAccount(BuildContext context) {
+    return Column(
+      children: [
+    
+        Container(
+          margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  
+                  Row(
+                    children: [
+                      Text("Saldoku",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Text("125.000",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.normal
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Container(
+                        height: 30.0,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            primary: ColorResources.BLACK,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)
+                            )
+                          ),
+                          onPressed: () {}, 
+                          child: Text("Topup",
+                            style: poppinsRegular.copyWith(
+                              fontSize: 14.0,
+                              color: ColorResources.YELLOW_PRIMARY
+                            ),
+                          )
+                        ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Icon(
+                        Icons.refresh,
+                        color: ColorResources.BLACK,
+                      )
+                    ],
+                  ),
+
+                ]
+              ),
+
+              SizedBox(height: 20.0),
+
+              profileListAccount(context, "ID Anggota", "1234567890"),
+              SizedBox(height: 10.0),
+              profileListAccount(context, "Nomor Identitas KTP", "1234567890"),
+              SizedBox(height: 10.0),
+              profileListAccount(context, "Nomor Handphone", "089670558381"),
+              SizedBox(height: 10.0),
+              profileListAccount(context, "Alamat", "Cibinong, Bogor, Jawa Barat"),
+              SizedBox(height: 10.0),
+              profileListAccount(context, "Tempat Lahir", "Jakarta"),
+              SizedBox(height: 10.0),
+              profileListAccount(context, "Tanggal Lahir", "7 Juli 2000"),
+
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                  width: 130.0,
+                  height: 30.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: ColorResources.BLACK,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)
+                      )
+                    ),
+                    onPressed: () {}, 
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.edit,
+                          size: 16.0,
+                          color: ColorResources.YELLOW_PRIMARY
+                        ),
+                        SizedBox(width: 10.0),
+                        Text("Edit",
+                          style: poppinsRegular.copyWith(
+                            fontSize: 14.0,
+                            color: ColorResources.YELLOW_PRIMARY
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+                ),
+              ),
+
+            ],
+          )
+        )
+      ],
+    );
+  }
+
+  Widget profileListAccount(BuildContext context, String label, String title) {
+    return  Container(
+      margin: EdgeInsets.only(top: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+            style: poppinsRegular,
+          ),
+          SizedBox(height: 5.0),
+          Text(title,
+            style: poppinsRegular.copyWith(
+              color: ColorResources.BTN_PRIMARY_SECOND
+            ),
+          ),
+          Divider(
+            height: 1.0,
+          )
+        ],
+      ),
+    );
+  }
+ 
+  Widget digitalCard(BuildContext context) {
+    return Column(
+      children: [
+    
+        Container(
+          margin: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+          width: double.infinity,
+          child: Column(
+            children: [
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  
+                  Row(
+                    children: [
+                      Text("Saldoku",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Text("125.000",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.normal
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Container(
+                        height: 30.0,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            primary: ColorResources.BLACK,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)
+                            )
+                          ),
+                          onPressed: () {}, 
+                          child: Text("Topup",
+                            style: poppinsRegular.copyWith(
+                              fontSize: 14.0,
+                              color: ColorResources.YELLOW_PRIMARY
+                            ),
+                          )
+                        ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Icon(
+                        Icons.refresh,
+                        color: ColorResources.BLACK,
+                      )
+                    ],
+                  ),
+
+                ]
+              ),
+            
+              Container(
+                margin: EdgeInsets.only(top: 20.0),
+                child: Stack(
+                  children: [
+
+                    Image.asset(Images.card),
+
+                    Positioned(
+                      top: 125.0,
+                      left: 30.0,
+                      child: CircleAvatar(
+                        radius: 30.0,
+                        backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif") ,
+                      )
+                    ),
+
+                    Positioned(
+                      top: 130.0,
+                      left: 105.0,
+                      child: Text("Michi",
+                        style: poppinsRegular.copyWith(
+                          color: ColorResources.WHITE,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      top: 155.0,
+                      left: 105.0,
+                      child: Text("W204.01.043",
+                        style: poppinsRegular.copyWith(
+                          color: ColorResources.BTN_PRIMARY_SECOND,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      bottom: 10.0,
+                      right: 10.0,
+                      child: Container(
+                        height: 20.0,
+                        child: Image.asset(Images.logo_cx)
+                      )
+                    )
+
+                  ],
+                ),
+              ),
+
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                height: 30.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    primary: ColorResources.BLACK,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)
+                    )
+                  ),
+                  onPressed: () {}, 
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 20.0,
+                        child: Image.asset(Images.scan)
+                      ),
+                      SizedBox(width: 20.0),
+                      Text("Scan disini",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 14.0,
+                          color: ColorResources.YELLOW_PRIMARY
+                        ),
+                      )
+                    ],
+                  )
+                ),
+              ),
+
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                height: 30.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    primary: ColorResources.WHITE,
+                    side: BorderSide(
+                      color: ColorResources.BLACK
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)
+                    )
+                  ),
+                  onPressed: () {}, 
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 20.0,
+                        child: Image.asset(Images.profile_drawer)
+                      ),
+                      SizedBox(width: 20.0),
+                      Text("ID 2153524698567",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 14.0,
+                          color: ColorResources.BLACK
+                        ),
+                      )
+                    ],
+                  )
+                ),
+              ),
+
+            ],
+          )
+        )
+      ],
     );
   }
 }
