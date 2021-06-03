@@ -201,14 +201,14 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Total deduction",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 11.0,
                             fontWeight: FontWeight.w500
                           )
                         ),
                         SizedBox(height: 8.0),
                         Text(ConnexistHelper.formatCurrency(double.parse(widget.totalDeduction.toString())),
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                             color: ColorResources.getBlackToWhite(context)
@@ -226,7 +226,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                       children: [
 
                         Text("Cash out on",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 11.0,
                             fontWeight: FontWeight.w500
                           )
@@ -248,7 +248,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text("${ppobProvider.getGlobalPaymentMethodName} - ${ppobProvider.getGlobalPaymentAccount}",
-                                              style: titilliumRegular,
+                                              style: poppinsRegular,
                                             ),
                                             InkWell(
                                               onTap: () {
@@ -288,7 +288,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                               items: ppobProvider.bankDisbursement
                                             ))),
                                             child: Text("Bank Transfer",
-                                              style: titilliumRegular.copyWith(
+                                              style: poppinsRegular.copyWith(
                                                 color: ColorResources.getWhiteToBlack(context)
                                               ),
                                             )
@@ -311,7 +311,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                               items: ppobProvider.emoneyDisbursement
                                             ))), 
                                             child: Text("E-Money",
-                                              style: titilliumRegular.copyWith(
+                                              style: poppinsRegular.copyWith(
                                                 color: ColorResources.getWhiteToBlack(context)
                                               ),
                                             )
@@ -338,7 +338,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                       children: [
 
                         Text("Cash out detail",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 11.0,
                             fontWeight: FontWeight.w500
                           )
@@ -350,7 +350,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Cash out amount",
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 fontSize: 11.0
                               ),
                             ),
@@ -369,12 +369,12 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Admin fee",
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 fontSize: 11.0
                               ),
                             ),
                             Text(ConnexistHelper.formatCurrency(double.parse(widget.adminFee.toString())),
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 fontSize: 12.0,
                                 color: ColorResources.getBlackToWhite(context)
                               ),
@@ -393,7 +393,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                               ),
                             ),
                             Text(ConnexistHelper.formatCurrency(double.parse(grandTotal.toString())),
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 fontSize: 12.0,
                                 color: ColorResources.getBlackToWhite(context)
                               ),
@@ -444,7 +444,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           )
                         )
                       : Text(getTranslated("CONTINUE", context),
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           color: ColorResources.getWhiteToBlack(context)
                         ),
                       );

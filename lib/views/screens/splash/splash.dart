@@ -97,6 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   SizedBox(width: 10.0),
                   Container(
+                    height: 30.0,
                     child: Image.asset(Images.logo_cx),
                   )
                 ],

@@ -53,14 +53,14 @@ class SettingsScreen extends StatelessWidget {
                                 children: [
                                   Container(
                                     child: Text(getTranslated("DESTINATION_CASHOUT", context),
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     ),
                                   ),
                                   SizedBox(
                                     width: 10.0,
                                   ),
                                   Text("${ppobProvider.getGlobalPaymentMethodName} - ${ppobProvider.getGlobalPaymentAccount}",
-                                    style: titilliumRegular,
+                                    style: poppinsRegular,
                                   ),
                                   SizedBox(width: 10.0),
                                   InkWell(
@@ -84,7 +84,7 @@ class SettingsScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       child: Text(getTranslated("DESTINATION_CASHOUT", context),
-                                        style: titilliumRegular,
+                                        style: poppinsRegular,
                                       ),
                                     ),
                                     SizedBox(
@@ -101,7 +101,7 @@ class SettingsScreen extends StatelessWidget {
                                         )));
                                       }, 
                                       child: Text("Bank Transfer",
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           fontSize: 12.5,
                                           color: ColorResources.getWhiteToBlack(context)
                                         ),
@@ -121,7 +121,7 @@ class SettingsScreen extends StatelessWidget {
                                         )));
                                       }, 
                                       child: Text(getTranslated("E_MONEY", context),
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           fontSize: 12.5,
                                           color: ColorResources.getWhiteToBlack(context)
                                         ),
@@ -145,7 +145,7 @@ class SettingsScreen extends StatelessWidget {
                         showAnimatedDialog(context, LanguageDialog());
                       },
                       child: Text("${getTranslated('CHOOSE_LANGUAGE', context)}",
-                        style: titilliumRegular
+                        style: poppinsRegular
                       ),
                     ),
                   ),
@@ -160,7 +160,7 @@ class SettingsScreen extends StatelessWidget {
                         );
                       },
                       child: Text(getTranslated("CHANGE_PASSWORD", context),
-                        style: titilliumRegular,
+                        style: poppinsRegular,
                       ),
                     ),
                   )
@@ -200,7 +200,7 @@ class TitleButton extends StatelessWidget {
         color: ColorResources.getPrimary(context)
       ),
       title: Text(title, 
-        style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)
+        style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)
       ),
       onTap: onTap,
     );

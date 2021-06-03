@@ -43,7 +43,7 @@ class TitleRow extends StatelessWidget {
               child: Row(children: [
                 isDetailsPage == null
                     ? Text(getTranslated('VIEW_ALL', context),
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           color: ColorResources.PRIMARY,
                           fontSize: Dimensions.FONT_SIZE_SMALL,
                         ))

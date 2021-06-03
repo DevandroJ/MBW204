@@ -188,11 +188,11 @@ class VerifyScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           elevation: 3.0,
                           primary: ColorResources.WHITE,
-                          textStyle: titilliumRegular
+                          textStyle: poppinsRegular
                         ),
                         onPressed: () => Navigator.pop(context),
                         child: Text("Kembali",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             color: ColorResources.BLACK
                           ),
                         ),
@@ -204,7 +204,7 @@ class VerifyScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           elevation: 3.0,
                           primary: ColorResources.getPrimaryToWhite(context),
-                          textStyle: titilliumRegular
+                          textStyle: poppinsRegular
                         ),
                         onPressed: () {
                           Navigator.push(context,
@@ -220,7 +220,7 @@ class VerifyScreen extends StatelessWidget {
                           );
                         },
                         child: Text("Pilih Pembayaran",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             color: ColorResources.BLACK
                           ),
                         ),

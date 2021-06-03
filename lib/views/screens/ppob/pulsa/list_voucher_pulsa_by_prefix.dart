@@ -160,7 +160,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                           height: MediaQuery.of(context).size.height / 1.5,
                           child: Center(
                             child: Text(getTranslated("DATA_NOT_FOUND", context),
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 color: ColorResources.BLACK
                               ),
                             ),
@@ -172,7 +172,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                           height: MediaQuery.of(context).size.height / 1.5,
                           child: Center(
                             child: Text(getTranslated("THERE_WAS_PROBLEM", context),
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 color: ColorResources.BLACK
                               ),
                             ),
@@ -271,7 +271,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                           Container(
                                                             child: Text(getTranslated("DETAIL_PAYMENT", context),
                                                               softWrap: true,
-                                                              style: titilliumRegular.copyWith(
+                                                              style: poppinsRegular.copyWith(
                                                                 fontSize: 17.0,
                                                                 fontWeight: FontWeight.bold
                                                               ),
@@ -282,10 +282,10 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
                                                               Text(getTranslated("VOUCHER_PRICE", context),
-                                                                style: titilliumRegular,
+                                                                style: poppinsRegular,
                                                               ),
                                                               Text(ConnexistHelper.formatCurrency(ppobProvider.listVoucherPulsaByPrefixData[i].price),
-                                                                style: titilliumRegular,
+                                                                style: poppinsRegular,
                                                               )
                                                             ],
                                                           ),
@@ -299,7 +299,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
                                                               Text(getTranslated("TOTAL_PAYMENT", context),
-                                                                style: titilliumRegular.copyWith(
+                                                                style: poppinsRegular.copyWith(
                                                                   fontWeight: FontWeight.bold
                                                                 ),
                                                               ),
@@ -333,7 +333,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                               Navigator.of(ctx).pop();
                                                             },
                                                             child: Text(getTranslated("CHANGE", context),
-                                                              style: titilliumRegular.copyWith(
+                                                              style: poppinsRegular.copyWith(
                                                                 color: ColorResources.PURPLE_DARK
                                                               ),
                                                             ),
@@ -361,7 +361,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                               );
                                                             },
                                                             child: Text(getTranslated("CONFIRM", context),
-                                                              style: titilliumRegular.copyWith(
+                                                              style: poppinsRegular.copyWith(
                                                                 color: ColorResources.WHITE
                                                               ),
                                                             ),
@@ -396,7 +396,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                               children: [
                                                 Center(
                                                   child: Text(ppobProvider.listVoucherPulsaByPrefixData[i].name,
-                                                    style: titilliumRegular.copyWith(
+                                                    style: poppinsRegular.copyWith(
                                                       color: selected == i ? ColorResources.PURPLE_DARK : ColorResources.getDimGrayToWhite(context),
                                                       fontSize: 12.0
                                                     ),

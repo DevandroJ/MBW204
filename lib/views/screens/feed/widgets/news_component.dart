@@ -54,12 +54,12 @@ class _NewsComponentState extends State<NewsComponent> {
                 radius: 20.0,
               ),
               title: Text(widget.groupsBody[widget.i].user.nickname,
-                style: titilliumRegular.copyWith(
+                style: poppinsRegular.copyWith(
                   color: ColorResources.getBlackToWhite(context)
                 ),
               ),
               subtitle: Text(timeago.format((DateTime.parse(widget.groupsBody[widget.i].created).toLocal()), locale: 'id'),
-                style: titilliumRegular.copyWith(
+                style: poppinsRegular.copyWith(
                   fontSize: 12.0,
                   color: Colors.grey
                 ),
@@ -94,7 +94,7 @@ class _NewsComponentState extends State<NewsComponent> {
                       children: [
                         Container(
                           child: Text(widget.groupsBody[widget.i].numOfLikes.toString(), 
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               color: ColorResources.getBlackToWhite(context),
                               fontSize: 15.0
                             )
@@ -115,7 +115,7 @@ class _NewsComponentState extends State<NewsComponent> {
                     ),
                   ),
                   Text('${widget.groupsBody[widget.i].numOfComments.toString()} ${getTranslated("COMMENT", context)}',
-                    style: titilliumRegular.copyWith(
+                    style: poppinsRegular.copyWith(
                       fontSize: 14.0
                     ),
                   )
@@ -134,7 +134,7 @@ class _NewsComponentState extends State<NewsComponent> {
         return [
           PopupMenuItem(
             child: Text(getTranslated("DELETE_POST", context),
-              style: titilliumRegular.copyWith(
+              style: poppinsRegular.copyWith(
                 color: ColorResources.getPrimaryToWhite(context)
               )
             ), 
@@ -161,7 +161,7 @@ class _NewsComponentState extends State<NewsComponent> {
                     ),
                     SizedBox(height: 10.0),
                     Text(getTranslated("DELETE_POST", context),
-                      style: titilliumRegular.copyWith(
+                      style: poppinsRegular.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold
                       ),
@@ -173,7 +173,7 @@ class _NewsComponentState extends State<NewsComponent> {
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: Text(getTranslated("NO", context),
-                            style: titilliumRegular,
+                            style: poppinsRegular,
                           )
                         ), 
                         StatefulBuilder(
@@ -200,7 +200,7 @@ class _NewsComponentState extends State<NewsComponent> {
                               color: ColorResources.WHITE,
                             )
                             : Text(getTranslated("YES", context),
-                              style: titilliumRegular,
+                              style: poppinsRegular,
                             )
                           );
                         })

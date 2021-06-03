@@ -41,7 +41,7 @@ class SearchWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 10.0),
                   Text(hintText, 
-                    style: titilliumRegular.copyWith(
+                    style: poppinsRegular.copyWith(
                       color: ColorResources.BLACK 
                     ),
                     overflow: TextOverflow.ellipsis

@@ -584,7 +584,7 @@ class _ProductPageState extends State<ProductPage> {
               child: Text(
                 "Saat ini produk belum tersedia",
                 textAlign: TextAlign.center,
-                style: titilliumRegular,
+                style: poppinsRegular,
               ),
             ),
           ]

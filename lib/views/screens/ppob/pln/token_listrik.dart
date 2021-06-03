@@ -83,7 +83,7 @@ class _TokenListrikScreenState extends State<TokenListrikScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 10.0, left: 14.0),
                     child: Text("Nomor Meter",
-                      style: titilliumRegular.copyWith(
+                      style: poppinsRegular.copyWith(
                         color: ColorResources.BLACK,
                         fontSize: 13.0
                       ),
@@ -211,7 +211,7 @@ class _TokenListrikScreenState extends State<TokenListrikScreen> {
                                       children: [
                                         Center(
                                           child: Text(NumberFormat("###,000", "id_ID").format(ppobProvider.listPricePLNPrabayarData[i].price),
-                                            style: titilliumRegular.copyWith(
+                                            style: poppinsRegular.copyWith(
                                               color: selected == i ? ColorResources.PURPLE_DARK : ColorResources.DIM_GRAY.withOpacity(0.8),
                                               fontSize: 16.0
                                             ),

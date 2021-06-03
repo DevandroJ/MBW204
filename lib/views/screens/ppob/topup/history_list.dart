@@ -99,13 +99,13 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(ppobProvider.historyBalanceData[i].type,
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.getBlackToWhite(context), 
                                       fontSize: 16.0
                                     )
                                   ),
                                   Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.historyBalanceData[i].amount.toString())).toString(),
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     color: ppobProvider.historyBalanceData[i].type != "CREDIT" ? ColorResources.ERROR : ColorResources.SUCCESS, fontSize: 16.0)
                                   ),
                                 ],
@@ -114,7 +114,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                                 height: 2.0,
                               ),
                               Text(ppobProvider.historyBalanceData[i].description,
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   color: ColorResources.getBlackToWhite(context), 
                                   fontSize: ppobProvider.historyBalanceData[i].type != "CREDIT" ? 14.0 : 16.0 
                                 )
@@ -123,7 +123,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                                 height: 14.0,
                               ),
                               Text(ConnexistHelper.formatDate(DateTime.parse(ppobProvider.historyBalanceData[i].created)),
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   color: ColorResources.getBlackToWhite(context), 
                                   fontSize: 14.0
                                 )

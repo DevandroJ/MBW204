@@ -26,7 +26,7 @@ class _PostTextComponentState extends State<PostTextComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ReadMoreText(widget.item.text,
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               fontSize: 14.0,
               color: ColorResources.getBlackToWhite(context)
             ),

@@ -152,7 +152,7 @@ class OnBoardingScreen extends StatelessWidget {
                             margin: EdgeInsets.only(left: 16.0, right: 16.0),
                             child: Text(onBoardingProvider.onBoardingList[i].description, 
                               textAlign: TextAlign.center, 
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 color: ColorResources.DIM_GRAY,
                               )
                             )

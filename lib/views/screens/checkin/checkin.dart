@@ -166,12 +166,12 @@ class _CheckInScreenState extends State<CheckInScreen> {
                                                   
                                                   ListTile(
                                                     leading: Text("${getTranslated("DATE", context)} :",
-                                                      style: titilliumRegular.copyWith(
+                                                      style: poppinsRegular.copyWith(
                                                         fontSize: 14.0
                                                       )
                                                     ),
                                                     title: Text("${ DateFormat("dd MMM yyyy").format(checkInProvider.checkInDataAssign[i]["date"].add(Duration(hours: 7)))} ${checkInProvider.checkInDataAssign[i]["start"]} s/d ${checkInProvider.checkInDataAssign[i]["end"]}",
-                                                      style: titilliumRegular.copyWith(
+                                                      style: poppinsRegular.copyWith(
                                                         fontSize: 14.0,
                                                       )
                                                     ),
@@ -195,7 +195,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                                                     child: RichText(
                                                       text: TextSpan(
                                                         text: '* (${checkInProvider.checkInDataAssign[i]["total"]}) ',
-                                                        style: titilliumRegular.copyWith(
+                                                        style: poppinsRegular.copyWith(
                                                           color: ColorResources.getDimGrayToWhite(context), 
                                                           fontSize: 13.0
                                                         ),
@@ -217,7 +217,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                                                         ),
                                                         TextSpan(
                                                           text: 'siapa saja yang telah bergabung',
-                                                          style: titilliumRegular.copyWith(
+                                                          style: poppinsRegular.copyWith(
                                                             color: ColorResources.getDimGrayToWhite(context), 
                                                             fontSize: 13.0
                                                           ),
@@ -263,12 +263,12 @@ class _CheckInScreenState extends State<CheckInScreen> {
   Widget infoCheckIn(String key, String value) {
     return ListTile(
       leading: Text("${getTranslated(key, context)} :",
-        style: titilliumRegular.copyWith(
+        style: poppinsRegular.copyWith(
           fontSize: 14.0
         )
       ),
       title: Text(value,
-        style: titilliumRegular.copyWith(
+        style: poppinsRegular.copyWith(
           fontSize: 14.0,
         )
       ),

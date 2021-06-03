@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/views/screens/profile/profile.dart';
 
 class DrawerWidget extends StatefulWidget {
 
@@ -28,13 +29,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
               child: Column(
                 children: [
-                  drawerItems(context, Images.logo_app, "Tentang MBW204\nClub Indonesia"),
-                  drawerItems(context, Images.profile_drawer, "Profil"),
-                  drawerItems(context, Images.settings_drawer, "Pengaturan"),
-                  drawerItems(context, Images.lock_drawer, "Ubah Kata Sandi"),
-                  drawerItems(context, Images.tos_drawer, "Term of Service"),
-                  drawerItems(context, Images.bantuan_drawer, "Bantuan"),
-                  drawerItems(context, Images.logout_drawer, "Logout")
+                  drawerItems(context, ProfileScreen(), Images.logo_app, "Tentang MBW204\nClub Indonesia"),
+                  drawerItems(context, ProfileScreen(), Images.profile_drawer, "Profil"),
+                  drawerItems(context, ProfileScreen(), Images.settings_drawer, "Pengaturan"),
+                  drawerItems(context, ProfileScreen(), Images.lock_drawer, "Ubah Kata Sandi"),
+                  drawerItems(context, ProfileScreen(), Images.tos_drawer, "Term of Service"),
+                  drawerItems(context, ProfileScreen(), Images.bantuan_drawer, "Bantuan"),
+                  drawerItems(context, ProfileScreen(), Images.logout_drawer, "Logout")
                 ],
               ),
             )
@@ -104,7 +105,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                         SizedBox(height: 5.0),
                         Text("Edit Nama",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 11.0,
                             color: ColorResources.WHITE
                           ),
@@ -134,7 +135,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                         SizedBox(height: 5.0),
                         Text("Ganti Foto",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 11.0,
                             color: ColorResources.WHITE
                           ),
@@ -175,12 +176,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       child: Column(
         children: [
           Text("NAMA LENGKAP",
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               fontWeight: FontWeight.bold
             )
           ),
           Text("ID 0123456789",
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 12.0
             )
@@ -190,16 +191,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     );
   }
 
-  Widget drawerItems(BuildContext context, String icon, String title) {
+  Widget drawerItems(BuildContext context, Widget widget, String icon, String title) {
     return Container(
       margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
       child: ListTile(
         dense: true,
-        onTap: () {
-
-        },
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => widget)),
         title: Text(title,
-          style: titilliumRegular,
+          style: poppinsRegular,
         ),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(30.0),

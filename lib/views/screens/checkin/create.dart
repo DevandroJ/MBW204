@@ -101,7 +101,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 SizedBox(
                                   width: Dimensions.MARGIN_SIZE_EXTRA_SMALL
                                 ),
-                                Text(getTranslated('CAPTION', context), style: titilliumRegular)
+                                Text(getTranslated('CAPTION', context), style: poppinsRegular)
                               ],
                             ),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -140,7 +140,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 SizedBox(
                                   width: Dimensions.MARGIN_SIZE_EXTRA_SMALL
                                 ),
-                                Text(getTranslated('SET_DATE', context), style: titilliumRegular)
+                                Text(getTranslated('SET_DATE', context), style: poppinsRegular)
                               ],
                             ),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),                              
@@ -169,7 +169,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
                                   hintText: "Set Date",
-                                  hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+                                  hintStyle: poppinsRegular.copyWith(color: Theme.of(context).hintColor),
                                   counterText: "",
                                   isDense: true,
                                   border: InputBorder.none,
@@ -211,7 +211,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 SizedBox(
                                   width: Dimensions.MARGIN_SIZE_EXTRA_SMALL
                                 ),
-                                Text(getTranslated('SET_TIME_START', context), style: titilliumRegular)
+                                Text(getTranslated('SET_TIME_START', context), style: poppinsRegular)
                               ],
                             ),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),                              
@@ -239,7 +239,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
                                   hintText: "Set Time Start",
-                                  hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+                                  hintStyle: poppinsRegular.copyWith(color: Theme.of(context).hintColor),
                                   counterText: "",
                                   isDense: true,
                                   border: InputBorder.none,
@@ -281,7 +281,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 SizedBox(
                                   width: Dimensions.MARGIN_SIZE_EXTRA_SMALL
                                 ),
-                                Text(getTranslated('SET_TIME_END', context), style: titilliumRegular)
+                                Text(getTranslated('SET_TIME_END', context), style: poppinsRegular)
                               ],
                             ),
                             SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),                              
@@ -309,7 +309,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 decoration: InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
                                   hintText: "Set Time End",
-                                  hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+                                  hintStyle: poppinsRegular.copyWith(color: Theme.of(context).hintColor),
                                   counterText: "",
                                   isDense: true,
                                   border: InputBorder.none,
@@ -348,7 +348,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                               SizedBox(
                                 width: Dimensions.MARGIN_SIZE_EXTRA_SMALL
                               ),
-                              Text(getTranslated('LOCATION', context), style: titilliumRegular)
+                              Text(getTranslated('LOCATION', context), style: poppinsRegular)
                             ],
                           ),
                           SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
@@ -372,7 +372,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                                 }));
                               },
                               child: Text(getTranslated("SET_LOCATION", context),
-                                style: titilliumRegular
+                                style: poppinsRegular
                               )
                             ),
                           )
@@ -422,7 +422,7 @@ class _CreateCheckInScreenState extends State<CreateCheckInScreen> {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: Text(locationProvider.getCurrentNameAddressCreateCheckIn,
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   color: ColorResources.BLACK,
                                   height: 1.4
                                 )

@@ -23,7 +23,7 @@ class ErrorComponent extends StatelessWidget {
             height: height,
           ),
           Text("Ups! Server lagi ada Masalah",
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               color: ColorResources.BLACK
             ),
           )

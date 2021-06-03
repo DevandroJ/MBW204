@@ -60,7 +60,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                       ),
                       child: TextField(
                         controller: getController,
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           color: ColorResources.BLACK
                         ),
                         decoration: InputDecoration(

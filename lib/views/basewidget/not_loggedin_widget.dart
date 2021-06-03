@@ -36,7 +36,7 @@ class NotLoggedInWidget extends StatelessWidget {
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_LARGE, horizontal: 30),
-                child: Text(getTranslated('create_new_account', context), style: titilliumRegular.copyWith(
+                child: Text(getTranslated('create_new_account', context), style: poppinsRegular.copyWith(
                   color: Theme.of(context).primaryColor,
                   fontSize: Dimensions.FONT_SIZE_SMALL,
                 )),

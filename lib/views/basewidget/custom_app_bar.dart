@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: titilliumRegular.copyWith(fontSize: 20, color: Colors.white),
+                style: poppinsRegular.copyWith(fontSize: 20, color: Colors.white),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

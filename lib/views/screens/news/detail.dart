@@ -167,7 +167,7 @@ class _DetailInfoPageState extends State<DetailNewsScreen> {
                       duration: Duration(milliseconds: 250),
                       child: Text(title,
                       textAlign: TextAlign.start,
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           fontSize: 20.0,
                           color: ColorResources.BLACK,
                           fontWeight: FontWeight.bold,
@@ -179,7 +179,7 @@ class _DetailInfoPageState extends State<DetailNewsScreen> {
                     margin: EdgeInsets.only(bottom: 10.0),
                     child: Text(
                       DateFormat('dd MMM yyyy kk:mm').format(date),
-                      style: titilliumRegular.copyWith(color: Colors.grey, fontSize: 14.0),
+                      style: poppinsRegular.copyWith(color: Colors.grey, fontSize: 14.0),
                     )
                   ),
                   Divider(

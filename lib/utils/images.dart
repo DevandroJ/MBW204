@@ -29,7 +29,7 @@ class Images {
   static const String facebook = 'assets/icons/ic-facebook.png';
   static const String twitter = 'assets/icons/ic-twitter.png';
   static const String instagram = 'assets/icons/ic-instagram.png';
-  static const String coupon_banner_image = 'assets/images/coupon_banner.png';
+  static const String card = 'assets/images/card.png';
   static const String chat_image = 'assets/images/chat.png';
   static const String filter_image = 'assets/images/filter.png';
   static const String fast_delivery = 'assets/images/fast_delivery.png';

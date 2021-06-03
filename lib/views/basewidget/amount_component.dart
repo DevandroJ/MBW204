@@ -13,8 +13,8 @@ class AmountWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(title, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
-        Text(amount, style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+        Text(title, style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+        Text(amount, style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
       ]),
     );
   }

@@ -214,7 +214,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           indicatorColor: ColorResources.getPrimaryToWhite(context),
           tabBarIndicatorSize: TabBarIndicatorSize.tab,
         ),
-        labelStyle: titilliumRegular,
+        labelStyle: poppinsRegular,
       tabs: [
         Tab(text: getTranslated("LATEST", context)),
         Tab(text: getTranslated("POPULAR", context)),
@@ -236,12 +236,12 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           }
           if (feedState.groupsMostRecentStatus == GroupsMostRecentStatus.empty) {
             return Center(
-              child: Text(getTranslated("THERE_IS_NO_POST", context), style: titilliumRegular)
+              child: Text(getTranslated("THERE_IS_NO_POST", context), style: poppinsRegular)
             );
           }
           if (feedState.groupsMostRecentStatus == GroupsMostRecentStatus.error) {
             return Center(
-              child: Text(getTranslated("THERE_WAS_PROBLEM", context), style: titilliumRegular,)
+              child: Text(getTranslated("THERE_WAS_PROBLEM", context), style: poppinsRegular,)
             );
           }
           return NotificationListener<ScrollNotification>(
@@ -292,14 +292,14 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           if (feedState.groupsMostPopularStatus == GroupsMostPopularStatus.empty) {
             return Center(
               child: Text(getTranslated("THERE_IS_NO_POST", context),
-                style: titilliumRegular,
+                style: poppinsRegular,
               )
             );
           }
           if (feedState.groupsMostPopularStatus == GroupsMostPopularStatus.error) {
             return Center(
               child: Text(getTranslated("THERE_WAS_PROBLEM", context),
-                style: titilliumRegular,
+                style: poppinsRegular,
               )
             );
           }
@@ -425,7 +425,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
             brightness: Brightness.light,
             backgroundColor: Colors.white,
             title: Text('Community Feed',
-             style: titilliumRegular.copyWith(
+             style: poppinsRegular.copyWith(
                color: ColorResources.BLACK,
                fontSize: 16.0
               )

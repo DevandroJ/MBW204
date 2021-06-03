@@ -66,7 +66,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           isDense: true,
           filled: true,
           fillColor: Theme.of(context).accentColor,
-          hintStyle: titilliumRegular.copyWith(color: Theme.of(context).hintColor),
+          hintStyle: poppinsRegular.copyWith(color: Theme.of(context).hintColor),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Colors.grey,

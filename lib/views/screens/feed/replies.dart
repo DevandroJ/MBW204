@@ -65,7 +65,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
         trimMode: TrimMode.Line,
         trimCollapsedText: 'Tampilkan Lebih',
         trimExpandedText: 'Tutup',
-        style: titilliumRegular.copyWith(fontSize: 14.0),
+        style: poppinsRegular.copyWith(fontSize: 14.0),
         moreStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
         lessStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
       ),
@@ -83,7 +83,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
         trimMode: TrimMode.Line,
         trimCollapsedText: 'Tampilkan Lebih',
         trimExpandedText: 'Tutup',
-        style: titilliumRegular.copyWith(fontSize: 14.0),
+        style: poppinsRegular.copyWith(fontSize: 14.0),
         moreStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
         lessStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
       ),
@@ -127,7 +127,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                   children: [
                     Text(
                       groupsState.singleComment.body.user.nickname,
-                      style: titilliumRegular.copyWith(
+                      style: poppinsRegular.copyWith(
                         fontSize: 15.0,
                       ),
                     ),
@@ -135,7 +135,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                       margin: EdgeInsets.only(top: 5.0),
                       child: Text(
                         timeago.format(DateTime.parse(groupsState.singleComment.body.created).toLocal(), locale: 'id'),
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           fontSize: 12.0
                         ),
                       )
@@ -170,7 +170,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                           children: [
                             Container(
                               child: Text( groupsState.singleComment.body.numOfLikes.toString(),
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 fontSize: 15.0
                               )),
                             ),
@@ -188,7 +188,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                         ),
                       ),
                       Text('${groupsState.singleComment.body.numOfReplies.toString()} ${getTranslated("REPLY", context)}',
-                        style: titilliumRegular.copyWith(fontSize: 15.0),
+                        style: poppinsRegular.copyWith(fontSize: 15.0),
                       ),
                     ]
                   )
@@ -215,7 +215,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
             brightness: Brightness.light,
             backgroundColor: Colors.white,
             title: Text(getTranslated("REPLY_COMMENT", context), 
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               color: Colors.black
             )
           ),
@@ -244,7 +244,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
           if (groupsState.replyStatus == ReplyStatus.empty) {
             return Center(
               child: Text(getTranslated("THERE_IS_NO_REPLY", context),
-                style: titilliumRegular,
+                style: poppinsRegular,
               )
             );
           }
@@ -284,7 +284,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
 
                               Text(
                                 groupsState.replyList[i].user.nickname,
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   fontSize: 15.0,
                                   color: ColorResources.getBlackToWhite(context)
                                 ),
@@ -294,7 +294,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                 margin: EdgeInsets.only(top: 5.0),
                                 child: Text(
                                   timeago.format(DateTime.parse(groupsState.replyList[i].created).toLocal(), locale: 'id'),
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 12.0
                                   ),
                                 )
@@ -319,7 +319,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                     Container(
                                       child: Text(
                                         groupsState.replyList[i].numOfLikes.toString(),
-                                        style: titilliumRegular.copyWith(fontSize: 15.0),
+                                        style: poppinsRegular.copyWith(fontSize: 15.0),
                                       )
                                     ),
                                     InkWell(
@@ -374,13 +374,13 @@ class _RepliesScreenState extends State<RepliesScreen> {
               child: TextField(
                 focusNode: replyFocusNode,
                 controller: replyTextEditingController,
-                style: titilliumRegular.copyWith(
+                style: poppinsRegular.copyWith(
                   color: ColorResources.BLACK,
                   fontSize: 16.0
                 ),
                 decoration: InputDecoration.collapsed(
                   hintText: '${getTranslated("WRITE_REPLY", context)} ...',
-                  hintStyle: titilliumRegular.copyWith(color: Colors.grey),
+                  hintStyle: poppinsRegular.copyWith(color: Colors.grey),
                 ),
               ),
             ),

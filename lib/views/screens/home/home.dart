@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/basewidget/search.dart';
@@ -285,15 +286,16 @@ class HomePage extends StatelessWidget {
                           unselectedLabelColor: ColorResources.BLACK,
                           indicatorSize: TabBarIndicatorSize.tab,
                           labelColor: ColorResources.YELLOW_PRIMARY,
+                          labelStyle: poppinsRegular,
                           indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(20),
                             color: ColorResources.BLACK,
                           ),
                           tabs: [
                             Tab(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
+                                  borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color: ColorResources.BLACK, 
                                     width: 1.0
@@ -308,7 +310,7 @@ class HomePage extends StatelessWidget {
                             Tab(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
+                                  borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color: ColorResources.BLACK, 
                                     width: 1.0
@@ -408,7 +410,6 @@ class HomePage extends StatelessWidget {
                             )
                           ),
 
-                          
                           Container(
                             decoration: BoxDecoration(
                               color: ColorResources.WHITE,

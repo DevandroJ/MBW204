@@ -108,7 +108,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                           Column(
                             children: [
                               Text(getTranslated("PAYMENT", context),
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   fontSize: 12.0,
                                   color: ColorResources.DIM_GRAY.withOpacity(0.8)
                                 )
@@ -161,12 +161,12 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   if(widget.type == "pulsa" || widget.type == "register" || widget.type == "emoney" || widget.type == "topup")
-                                                    Text(getTranslated("PHONE_NUMBER", context), style: titilliumRegular),
+                                                    Text(getTranslated("PHONE_NUMBER", context), style: poppinsRegular),
                                                   if(widget.type == "pln-prabayar")
-                                                    Text(getTranslated("METER_NUMBER", context), style: titilliumRegular),
+                                                    Text(getTranslated("METER_NUMBER", context), style: poppinsRegular),
                                                   if(widget.type == "pln-pascabayar")
-                                                    Text(getTranslated("CUSTOMER_ID", context), style: titilliumRegular),
-                                                  Text(widget.accountNumber, style: titilliumRegular)
+                                                    Text(getTranslated("CUSTOMER_ID", context), style: poppinsRegular),
+                                                  Text(widget.accountNumber, style: poppinsRegular)
                                                 ],
                                               ),
                                               SizedBox(height: 8.0),
@@ -206,13 +206,13 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   if(widget.type == "register")
-                                                    Text(getTranslated("REGISTRATION_FEE", context), style: titilliumRegular),
+                                                    Text(getTranslated("REGISTRATION_FEE", context), style: poppinsRegular),
                                                   if(widget.type == "pulsa" || widget.type == "emoney" || widget.type == "topup")
-                                                    Text(getTranslated("VOUCHER_PRICE", context), style: titilliumRegular),
+                                                    Text(getTranslated("VOUCHER_PRICE", context), style: poppinsRegular),
                                                   if(widget.type == "pln-prabayar")
-                                                    Text(getTranslated("VOUCHER_PRICE", context), style: titilliumRegular),
+                                                    Text(getTranslated("VOUCHER_PRICE", context), style: poppinsRegular),
                                                   if(widget.type == "pln-pascabayar")
-                                                    Text(getTranslated("BILLS_TO_PAY", context), style: titilliumRegular),
+                                                    Text(getTranslated("BILLS_TO_PAY", context), style: poppinsRegular),
                                                   Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString())))
                                                 ],
                                               ),
@@ -248,7 +248,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                               );
                             },
                             child: Text(getTranslated("SEE_DETAILS", context),
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.w800,
                                 color: ColorResources.PRIMARY
@@ -379,7 +379,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("e-Rupiah",
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: ColorResources.BLACK
                                 ),
@@ -393,7 +393,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                     : ppobProvider.balanceStatus == BalanceStatus.error 
                                     ?  "..."
                                     : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: ColorResources.BLACK
                                     ),

@@ -37,7 +37,7 @@ class CustomExpandedAppBar extends StatelessWidget {
             right: Dimensions.PADDING_SIZE_SMALL,
             child: Row(children: [
               CupertinoNavigationBarBackButton(color: Colors.white, onPressed: () => Navigator.pop(context)),
-              Text(title, style: titilliumRegular.copyWith(
+              Text(title, style: poppinsRegular.copyWith(
                 fontSize: 20.0, 
                 color: Colors.white
               ), 

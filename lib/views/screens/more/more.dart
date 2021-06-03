@@ -86,7 +86,7 @@ class MoreScreen extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Container(
                           child: Text("Kartu Anggota",
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               color: ColorResources.WHITE,
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0 * MediaQuery.of(context).textScaleFactor
@@ -102,7 +102,7 @@ class MoreScreen extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Container(
                           child: Text("Indomini Club",
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               color: ColorResources.WHITE,
                               fontWeight: FontWeight.w200,
                               letterSpacing: 3.2,
@@ -132,7 +132,7 @@ class MoreScreen extends StatelessWidget {
                         alignment: Alignment.bottomLeft,
                         child: Container(
                           child: Text(profileProvider.userProfile == null ? "..." : profileProvider.getUserFullname,
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               color: ColorResources.WHITE,
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
@@ -149,7 +149,7 @@ class MoreScreen extends StatelessWidget {
                         alignment: Alignment.bottomLeft,
                         child: Container(
                           child: Text(profileProvider.userProfile == null ? "..." : profileProvider.getUserIdCardNumber,
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               color: ColorResources.WHITE,
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic,
@@ -248,7 +248,7 @@ class MoreScreen extends StatelessWidget {
                             ? getTranslated("THERE_WAS_PROBLEM", context)
                             : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
                             softWrap: true,
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               fontSize: 17.0,
                               fontWeight: FontWeight.bold
                             ) 
@@ -276,7 +276,7 @@ class MoreScreen extends StatelessWidget {
                       //
                       onPressed: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpHistoryScreen())),
                         child: Text("History Saldo",
-                          style: titilliumRegular.copyWith(
+                          style: poppinsRegular.copyWith(
                             color: ColorResources.getWhiteToBlack(context),
                             fontStyle: FontStyle.italic
                           )
@@ -297,7 +297,7 @@ class MoreScreen extends StatelessWidget {
                     value: Provider.of<ThemeProvider>(context).darkTheme,
                     onChanged: (bool isActive) => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
                     title: Text(getTranslated('DARK_THEME', context), 
-                    style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                   ),
                   ],
                 ),
@@ -341,7 +341,7 @@ class MoreScreen extends StatelessWidget {
                     color: ColorResources.getPrimaryToWhite(context)
                   ),
                   title: Text(getTranslated('MY_STORE', context), 
-                    style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     onTap: () {
                       int.parse(Provider.of<PPOBProvider>(context, listen: false).balance.toStringAsFixed(0)) >= 50000 
                       ? warungProvider.sellerStoreModel.code == 0 
@@ -367,7 +367,7 @@ class MoreScreen extends StatelessWidget {
                                   SizedBox(height: 8.0),
                                   Text("Tenant/Penjual diwajibkan mengisi e-Wallet \n minimal Rp. 50.000,- untuk mengcover beban \n biaya yang timbul, jika tidak memproses \n pemesanan pembeli dalam waktu yang ditentukan",
                                     softWrap: true,
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       height: 1.8
                                     ),
                                   ),
@@ -421,7 +421,7 @@ class MoreScreen extends StatelessWidget {
                   ),
                   title: Text(
                     getTranslated('SIGN_OUT', context), 
-                    style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)
+                    style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)
                   ),
                   onTap: () => custom_animated_dialog.showAnimatedDialog(context, SignOutConfirmationDialog(), isFlip: true),
                 ),
@@ -461,7 +461,7 @@ class SquareButton extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.center,
-            child: Text(title, style: titilliumRegular),
+            child: Text(title, style: poppinsRegular),
           ),
         ]
       ),
@@ -486,7 +486,7 @@ class TitleButton extends StatelessWidget {
           color: ColorResources.getPrimaryToWhite(context)
         ),
         title: Text(title, 
-          style: titilliumRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+          style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => navigateTo),
         ),
       ),

@@ -42,7 +42,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text(getTranslated("NOTIFICATION", context), 
-              style: titilliumRegular.copyWith(color: Colors.black)),
+              style: poppinsRegular.copyWith(color: Colors.black)),
               leading: IconButton(
                 icon: Icon(
                   Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
@@ -72,7 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               );
             }
             if (feedState.notificationStatus == NotificationStatus.empty) {
-              return Center(child: Text(getTranslated("THERE_IS_NO_NOTIFICATION", context), style: titilliumRegular));
+              return Center(child: Text(getTranslated("THERE_IS_NO_NOTIFICATION", context), style: poppinsRegular));
             }
             return NotificationListener<ScrollNotification>(
               child: ListView.separated(
@@ -139,11 +139,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       ),
                       title: Text(
                         feedState.notificationList[i].message,
-                        style: titilliumRegular.copyWith(fontSize: 14.0),
+                        style: poppinsRegular.copyWith(fontSize: 14.0),
                       ),
                       subtitle: Text(
                         timeago.format(DateTime.parse(feedState.notificationList[i].created).toLocal(),locale: 'id'),
-                        style: titilliumRegular.copyWith(fontSize: 12.0)
+                        style: poppinsRegular.copyWith(fontSize: 12.0)
                       ),
                     ),
                   );

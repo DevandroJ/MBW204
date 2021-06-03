@@ -79,18 +79,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    ProfileData userProfile = Provider.of<ProfileProvider>(context, listen: false).userProfile;
-    fullnameTextController.text = userProfile.fullname;
-    addressTextController.text = userProfile.address;
-    cardNumberTextController.text = userProfile.idCardNumber;   
-    shortBioTextController.text = userProfile.shortBio;
-    if(userProfile.gender.toLowerCase() == "male") {
-      setState(() => selectedGender = "Male");
-    } else if(userProfile.gender.toLowerCase() == "female") {
-      setState(() => selectedGender = "Female");
-    } else {
-      setState(() => selectedGender = "Select Your Gender");
-    }
   }
 
   @override
@@ -106,400 +94,189 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      body: Consumer<ProfileProvider>(
-        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
-          return Stack(
-            clipBehavior: Clip.none,
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text("My Account",
+          style: poppinsRegular,
+        ),
+        backgroundColor: ColorResources.GRAY_DARK_PRIMARY,
+      ),
+      body: ListView(
+        children: [
+
+          Stack(
             children: [
+              
+              ClipPath(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 200.0,
+                  color: ColorResources.GRAY_DARK_PRIMARY,
+                ),
+                clipper: CustomClipPath(),
+              ),
+              
+              Align(  
+                alignment: Alignment.bottomCenter,
+                child: Container(
 
-              // Background Profile
-              Image.asset(
-                Images.toolbar_background, fit: BoxFit.fill, height: 500.0,
-                color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
+                  margin: EdgeInsets.only(top: 70.0),
+                  child: CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif"),
+                  ),
+                ),
               ),
 
-              // Profile Title
-              Container(
-                padding: EdgeInsets.only(top: 35.0, left: 15.0),
-                child: Row(
-                  children: [
-                  CupertinoNavigationBarBackButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(getTranslated('PROFILE', context), 
-                    style: titilliumRegular.copyWith(
-                      fontSize: 20.0, 
-                      color: Colors.white
-                    ), 
-                    maxLines: 1, 
-                    overflow: TextOverflow.ellipsis
-                  ),
-                ]),
-              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 180.0),
+                  child: Text("Nurhalizah",
+                    style: poppinsRegular.copyWith(
+                      color: ColorResources.BTN_PRIMARY_SECOND,
+                      fontSize: 19.0
+                    ),
+                  )
+                ),
+              )
+    
+            ],
+          ),
 
-              Container(
-                padding: EdgeInsets.only(top: 55.0),
-                child: Column(
+          Container(
+            margin: EdgeInsets.only(top: 40.0, left: 16.0, right: 16.0),
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 180.0,
+                  height: 30.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: ColorResources.BLACK,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)
+                      )
+                    ),
+                    onPressed: () {}, 
+                    child: Text("Profil",
+                      style: poppinsRegular.copyWith(
+                        color: ColorResources.YELLOW_PRIMARY
+                      ),
+                    )
+                  ),
+                ),
+                Container(
+                  width: 180.0,
+                  height: 30.0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: ColorResources.BLACK,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)
+                      )
+                    ),
+                    onPressed: () {}, 
+                    child: Text("Kartu Digital",
+                      style: poppinsRegular.copyWith(
+                        color: ColorResources.YELLOW_PRIMARY
+                      ),
+                    )
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+            width: double.infinity,
+            child: Column(
+              children: [
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
+                    
+                    Row(
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(top: Dimensions.MARGIN_SIZE_EXTRA_LARGE),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [    
-
-                              // Profile Pic & Fullname
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50.0),
-                                child: file == null ? profileProvider.userProfile.profilePic == "" ? Icon(
-                                  Icons.person,
-                                  size: 90.0,
-                                  color: Colors.white,
-                                )  : Image.network("${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
-                                  width: 80.0,
-                                  height: 80.0,
-                                  fit: BoxFit.fitWidth
-                                ) : Image.file(file,
-                                  width: 80.0,
-                                  height: 80.0,
-                                  fit: BoxFit.fitWidth
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                right: -10,
-                                child: CircleAvatar(
-                                  backgroundColor: ColorResources.WHITE,
-                                  radius: 14.0,
-                                  child: IconButton(
-                                    onPressed: _choose,
-                                    padding: EdgeInsets.all(0),
-                                    icon: Icon(
-                                      Icons.edit, 
-                                      color: ColorResources.getPrimaryToBlack(context), 
-                                      size: 18.0
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                            ],
+                        Text("Saldoku",
+                          style: poppinsRegular.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold
                           ),
                         ),
-
-                        Text('${profileProvider.userProfile.fullname ?? ""}',
-                          style: titilliumRegular.copyWith(
-                            color: ColorResources.WHITE, 
-                            fontSize: 20.0
+                        SizedBox(width: 10.0),
+                        Text("125.000",
+                          style: poppinsRegular.copyWith(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.normal
                           ),
                         ),
-
-                        Text('${profileProvider.getUserPhoneNumber ?? ""}',
-                          style: titilliumRegular.copyWith(
-                            color: ColorResources.WHITE, 
-                            fontSize: 16.0
-                          ),
-                        )
-
                       ],
                     ),
 
-                    // Space for Form
-                    SizedBox(height: Dimensions.MARGIN_SIZE_DEFAULT),
-                    
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ColorResources.getBlackSoft(context),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(Dimensions.MARGIN_SIZE_DEFAULT),
-                            topRight: Radius.circular(Dimensions.MARGIN_SIZE_DEFAULT),
-                          )
-                        ),
-                        child: ListView(
-                          physics: BouncingScrollPhysics(),
-                          children: [
-
-                            // Form Fullname
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: Dimensions.MARGIN_SIZE_DEFAULT, 
-                                right: Dimensions.MARGIN_SIZE_DEFAULT
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.person, 
-                                              color: ColorResources.getPrimaryToWhite(context), 
-                                              size: 20.0
-                                            ),
-                                            SizedBox(
-                                              width: Dimensions.MARGIN_SIZE_EXTRA_SMALL
-                                            ),
-                                            Text(getTranslated('FULL_NAME', context), style: titilliumRegular)
-                                          ],
-                                        ),
-                                        SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                                        CustomTextField(
-                                          textInputType: TextInputType.text,
-                                          focusNode: fullnameFocus,
-                                          nextNode: addressFocus,
-                                          hintText: profileProvider.userProfile.fullname ?? "",
-                                          controller: fullnameTextController
-                                        ),
-                                      ],
-                                    )
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Form Address
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: Dimensions.MARGIN_SIZE_SMALL,
-                                left: Dimensions.MARGIN_SIZE_DEFAULT,
-                                right: Dimensions.MARGIN_SIZE_DEFAULT
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.home, 
-                                        color: ColorResources.getPrimaryToWhite(context), 
-                                        size: 20.0
-                                      ),
-                                      SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                      Text(getTranslated('ADDRESS', context), style: titilliumRegular)
-                                    ],
-                                  ),
-                                  SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                                  CustomTextField(
-                                    textInputType: TextInputType.text,
-                                    focusNode: addressFocus,
-                                    nextNode: shortBioFocus,
-                                    hintText: profileProvider.userProfile.address,
-                                    isAddress: true,
-                                    controller: addressTextController,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Form Short Bio
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: Dimensions.MARGIN_SIZE_SMALL,
-                                left: Dimensions.MARGIN_SIZE_DEFAULT,
-                                right: Dimensions.MARGIN_SIZE_DEFAULT
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.person_pin_rounded,
-                                        color: ColorResources.getPrimaryToWhite(context), 
-                                        size: 20.0
-                                      ),
-                                      SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                      Text(getTranslated('SHORT_BIO', context), style: titilliumRegular)
-                                    ],
-                                  ),
-                                  SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                                  CustomTextField(
-                                    textInputType: TextInputType.text,
-                                    focusNode: shortBioFocus,
-                                    hintText: profileProvider.userProfile.shortBio ?? "",
-                                    controller: shortBioTextController,
-                                    isShortBio: true,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Form Card Number 
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: Dimensions.MARGIN_SIZE_SMALL,
-                                left: Dimensions.MARGIN_SIZE_DEFAULT,
-                                right: Dimensions.MARGIN_SIZE_DEFAULT
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.credit_card,
-                                        color: ColorResources.getPrimaryToWhite(context), 
-                                        size: 20.0
-                                      ),
-                                      SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                      Text(getTranslated('MEMBER_NO', context), style: titilliumRegular)
-                                    ],
-                                  ),
-                                  SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                                  CustomTextField(
-                                    textInputType: TextInputType.text,
-                                    focusNode: cardNumberFocus,
-                                    hintText: profileProvider.userProfile.idCardNumber ?? "",
-                                    controller: cardNumberTextController,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Form Gender
-                            Container(
-                              margin: EdgeInsets.only(   
-                                top: Dimensions.MARGIN_SIZE_SMALL,
-                                left: Dimensions.MARGIN_SIZE_DEFAULT,
-                                right: Dimensions.MARGIN_SIZE_DEFAULT
-                              ),
-                              child: Column(
-                                children: [
-                                 Row(
-                                    children: [
-                                      Icon(
-                                        Icons.person_sharp,
-                                        color: ColorResources.getPrimaryToWhite(context), 
-                                        size: 20.0
-                                      ),
-                                      SizedBox(width: Dimensions.MARGIN_SIZE_EXTRA_SMALL),
-                                      Text(getTranslated('GENDER', context), style: titilliumRegular)
-                                    ],
-                                  ),  
-                                  SizedBox(height: Dimensions.MARGIN_SIZE_SMALL),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).accentColor,
-                                      borderRadius:  BorderRadius.circular(6.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.1), 
-                                          spreadRadius: 1.0, 
-                                          blurRadius: 3.0, 
-                                          offset: Offset(0.0, 1.0)
-                                        ) 
-                                      ],
-                                    ),
-                                    child: TextFormField(
-                                      readOnly: true,
-                                      onTap: () {
-                                        Picker(
-                                          adapter: PickerDataAdapter<String>(pickerdata: genders),
-                                          hideHeader: true,
-                                          confirmText: getTranslated("CONFIRM", context),
-                                          confirmTextStyle: TextStyle(
-                                            color: Colors.blue
-                                          ),
-                                          cancelText: getTranslated("CANCEL", context),
-                                          cancelTextStyle: TextStyle(
-                                            color: Colors.red
-                                          ),
-                                          selecteds: selectedGender.toLowerCase() == "male" ? [0] : selectedGender.toLowerCase() == "select your gender" ? [0] : [1],
-                                          title: Text(getTranslated("SELECT_GENDER", context)),
-                                          onConfirm: (Picker picker, List value) {
-                                            setState(() => selectedGender = picker.getSelectedValues()[0]);                        
-                                          }
-                                        ).showDialog(context);
-                                      },
-                                      cursorColor: Colors.black,
-                                      maxLines:  1,
-                                      keyboardType: TextInputType.text,
-                                      initialValue: null,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintText: selectedGender ?? selectedGender,
-                                        contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15.0),
-                                        isDense: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.grey, 
-                                            width: 0.5
-                                          ),
-                                        ),
-                                        hintStyle: titilliumRegular.copyWith(color: ColorResources.getBlackToWhite(context)),
-                                        errorStyle: TextStyle(height: 1.5),
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  )
-                                ]
+                    Row(
+                      children: [
+                        Container(
+                          height: 30.0,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0.0,
+                              primary: ColorResources.BLACK,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)
                               )
+                            ),
+                            onPressed: () {}, 
+                            child: Text("Topup",
+                              style: poppinsRegular.copyWith(
+                                fontSize: 14.0,
+                                color: ColorResources.YELLOW_PRIMARY
+                              ),
                             )
-                          ],
-                        ),
-                      ),
-                    ),
-
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: Dimensions.MARGIN_SIZE_LARGE, 
-                      vertical: Dimensions.MARGIN_SIZE_SMALL
-                    ),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero
-                      ),
-                      onPressed: () => updateProfile(context),
-                      child: Container(
-                        height: 45.0,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: ColorResources.getPrimaryToWhite(context),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2), 
-                              spreadRadius: 1.0, 
-                              blurRadius: 7.0, 
-                              offset: Offset(0, 1)
-                            ), 
-                          ],
-                          borderRadius: BorderRadius.circular(10.0)),
-                            child: profileProvider.updateProfileStatus == UpdateProfileStatus.loading 
-                            ? Center(
-                                child: SizedBox(
-                                  width: 18.0,
-                                  height: 18.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Theme.of(context).accentColor
-                                    )
-                                  )
-                                )
-                              ) 
-                            : Text(getTranslated('UPDATE_ACCOUNT', context),
-                              style: titilliumSemiBold.copyWith(
-                                fontSize: 16.0,
-                                color: ColorResources.getWhiteToBlack(context),
-                              )
-                            ),
                           ),
+                        ),
+                        SizedBox(width: 10.0),
+                        Icon(
+                          Icons.refresh,
+                          color: ColorResources.BLACK,
                         )
+                      ],
                     ),
 
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                  ]
+                )
+              
+              
+
+              ],
+            )
+          )
+          
+        ],  
+      ) 
     );
   }
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  var radius = 10.0;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 140);
+    path.quadraticBezierTo(size.width / 2, size.height, 
+    size.width, size.height - 140);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

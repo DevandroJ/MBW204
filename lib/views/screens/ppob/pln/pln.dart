@@ -36,7 +36,7 @@ class PlnScreen extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.only(left: 12.0),
                               child: Text("Token Listrik",
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   color: ColorResources.BLACK,
                                   fontWeight: FontWeight.bold
                                 ),
@@ -73,7 +73,7 @@ class PlnScreen extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.only(left: 12.0),
                               child: Text("Tagihan Listrik",
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   color: ColorResources.BLACK,
                                   fontWeight: FontWeight.bold
                                 ),

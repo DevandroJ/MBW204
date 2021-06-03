@@ -58,7 +58,7 @@ class SignInScreen extends StatelessWidget {
                                         color: ColorResources.WHITE,
                                       ),
                                       SizedBox(width: 15.0),
-                                      Text("Email", style: titilliumRegular.copyWith(
+                                      Text("Email", style: poppinsRegular.copyWith(
                                         color: ColorResources.WHITE
                                       ))
                                     ],
@@ -66,14 +66,14 @@ class SignInScreen extends StatelessWidget {
                                   Container(
                                     child: TextField(
                                       controller: emailController,
-                                      style: titilliumRegular.copyWith(
+                                      style: poppinsRegular.copyWith(
                                         color: ColorResources.WHITE
                                       ),
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         hintText: "ex. johndoe@gmail.com",
-                                        hintStyle: titilliumRegular,
+                                        hintStyle: poppinsRegular,
                                         isDense: true,
                                         enabledBorder: UnderlineInputBorder(      
                                           borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -101,7 +101,7 @@ class SignInScreen extends StatelessWidget {
                                         color: ColorResources.WHITE,
                                       ),
                                       SizedBox(width: 15.0),
-                                      Text("Password", style: titilliumRegular.copyWith(
+                                      Text("Password", style: poppinsRegular.copyWith(
                                         color: ColorResources.WHITE
                                       ))
                                     ],
@@ -111,7 +111,7 @@ class SignInScreen extends StatelessWidget {
                                       return TextField(
                                         controller: passwordController,
                                         obscureText: passwordObscure,
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           color: ColorResources.WHITE
                                         ),
                                         decoration: InputDecoration(
@@ -126,7 +126,7 @@ class SignInScreen extends StatelessWidget {
                                             ),
                                           ),
                                           contentPadding: EdgeInsets.only(top: 13),
-                                          hintStyle: titilliumRegular,
+                                          hintStyle: poppinsRegular,
                                           isDense: true,
                                           enabledBorder: UnderlineInputBorder(      
                                             borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -162,7 +162,7 @@ class SignInScreen extends StatelessWidget {
                                   primary: ColorResources.YELLOW_PRIMARY
                                 ),
                                 child: Text("Sign In",
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     color: ColorResources.BLACK
                                   ),
                                 ),

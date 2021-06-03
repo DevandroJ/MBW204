@@ -29,7 +29,7 @@ class GuestDialog extends StatelessWidget {
 
               Text(getTranslated('THIS_SECTION_IS_LOCK', context), style: robotoBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-              Text(getTranslated('GOTO_LOGIN_SCREEN_ANDTRYAGAIN', context), textAlign: TextAlign.center, style: titilliumRegular),
+              Text(getTranslated('GOTO_LOGIN_SCREEN_ANDTRYAGAIN', context), textAlign: TextAlign.center, style: poppinsRegular),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               Divider(height: 0, color: Theme.of(context).hintColor),

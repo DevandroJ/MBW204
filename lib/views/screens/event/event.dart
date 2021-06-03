@@ -131,7 +131,7 @@ class _EventScreenState extends State<EventScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(eventProvider.events[i][z],
-                                           style: titilliumRegular.copyWith(
+                                           style: poppinsRegular.copyWith(
                                               color: ColorResources.getWhiteToBlack(context)
                                             ),
                                           ),

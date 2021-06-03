@@ -134,7 +134,7 @@ class _PostImageComponentState extends State<PostImageComponent> {
           width: 250.0,
           margin: EdgeInsets.only(left: 70.0),
           child: ReadMoreText(widget.caption,
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               color: ColorResources.getBlackToWhite(context)
             ),
             trimLines: 2,

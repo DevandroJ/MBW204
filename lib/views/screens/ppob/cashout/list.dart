@@ -85,14 +85,14 @@ class _CashoutScreenState extends State<CashoutScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(getTranslated("AMOUNT", context),
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 12.0,
                                     color: Colors.grey
                                   )
                                 ),
                                 SizedBox(height: 2.0),
                                 Text(priceDisplay,
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 25.0,
                                     fontWeight: FontWeight.bold
                                   ),
@@ -104,7 +104,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(getTranslated("YOUR_BALANCE", context),
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 12.0,
                                     color: Colors.grey
                                   ),
@@ -118,7 +118,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                                         ? getTranslated("THERE_WAS_PROBLEM", context)
                                         : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
                                         softWrap: true,
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           fontSize: 17.0,
                                           fontWeight: FontWeight.bold
                                         ) 
@@ -183,7 +183,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                                             Expanded(
                                               child: Container(
                                                 child: Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.denomDisbursement[i].code)),
-                                                  style: titilliumRegular,
+                                                  style: poppinsRegular,
                                                 )
                                               ),
                                             ),
@@ -260,7 +260,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                         ),
                       )
                       : Text(getTranslated("CONTINUE", context),
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           color: ColorResources.getWhiteToBlack(context)
                         ),
                       );

@@ -83,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ),
                                           SizedBox(width: 15.0),
                                           Text("Your Registration",
-                                            style: titilliumRegular.copyWith(
+                                            style: poppinsRegular.copyWith(
                                               color: ColorResources.WHITE,
                                             ),
                                           ),
@@ -109,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       },
                                                       dense: true,
                                                       title: Text("Member",
-                                                        style: titilliumRegular.copyWith(
+                                                        style: poppinsRegular.copyWith(
                                                           color: ColorResources.WHITE
                                                         ),
                                                       ),
@@ -125,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       },
                                                       dense: true,
                                                       title: Text("Partnership",
-                                                        style: titilliumRegular.copyWith(
+                                                        style: poppinsRegular.copyWith(
                                                           color: ColorResources.WHITE
                                                         ),
                                                       ),
@@ -145,13 +145,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Container(
                                   child: TextField(
                                     controller: idMemberController,
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.WHITE
                                     ),
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
                                       hintText: "Enter your ID Member",
-                                      hintStyle: titilliumRegular,
+                                      hintStyle: poppinsRegular,
                                       isDense: true,
                                       enabledBorder: UnderlineInputBorder(      
                                         borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -291,20 +291,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Full Name", style: titilliumRegular.copyWith(
+                                          Text("Full Name", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
                                       ),
                                       TextField(
                                         controller: fullnameController,
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           color: ColorResources.WHITE
                                         ),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           hintText: "Enter your Name",
-                                          hintStyle: titilliumRegular,
+                                          hintStyle: poppinsRegular,
                                           isDense: true,
                                           enabledBorder: UnderlineInputBorder(      
                                             borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -331,20 +331,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("UserName", style: titilliumRegular.copyWith(
+                                          Text("UserName", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
                                       ),
                                       TextField(
                                         controller: usernameController,
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           color: ColorResources.WHITE
                                         ),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           hintText: "ex. @johndoe",
-                                          hintStyle: titilliumRegular,
+                                          hintStyle: poppinsRegular,
                                           isDense: true,
                                           enabledBorder: UnderlineInputBorder(      
                                             borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -371,21 +371,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Nomor Handphone", style: titilliumRegular.copyWith(
+                                          Text("Nomor Handphone", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
                                       ),
                                       TextField(
                                         controller: phoneController,
-                                        style: titilliumRegular.copyWith(
+                                        style: poppinsRegular.copyWith(
                                           color: ColorResources.WHITE
                                         ),
                                         keyboardType: TextInputType.number,
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           hintText: "Enter your phone number",
-                                          hintStyle: titilliumRegular,
+                                          hintStyle: poppinsRegular,
                                           isDense: true,
                                           enabledBorder: UnderlineInputBorder(      
                                             borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -412,7 +412,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Email", style: titilliumRegular.copyWith(
+                                          Text("Email", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
@@ -420,14 +420,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       Container(
                                         child: TextField(
                                           controller: emailController,
-                                          style: titilliumRegular.copyWith(
+                                          style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ),
                                           keyboardType: TextInputType.emailAddress,
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
                                             hintText: "ex. johndoe@gmail.com",
-                                            hintStyle: titilliumRegular,
+                                            hintStyle: poppinsRegular,
                                             isDense: true,
                                             enabledBorder: UnderlineInputBorder(      
                                               borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -455,7 +455,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Password", style: titilliumRegular.copyWith(
+                                          Text("Password", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
@@ -465,7 +465,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           return TextField(
                                             controller: passwordController,
                                             obscureText: passwordObscure,
-                                            style: titilliumRegular.copyWith(
+                                            style: poppinsRegular.copyWith(
                                               color: ColorResources.WHITE
                                             ),
                                             decoration: InputDecoration(
@@ -480,7 +480,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 ),
                                               ),
                                               contentPadding: EdgeInsets.only(top: 13),
-                                              hintStyle: titilliumRegular,
+                                              hintStyle: poppinsRegular,
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      
                                                 borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -510,7 +510,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Confirm Password", style: titilliumRegular.copyWith(
+                                          Text("Confirm Password", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
@@ -520,7 +520,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           return TextField(
                                             controller: passwordConfirmController,
                                             obscureText: passwordConfirmObscure,
-                                            style: titilliumRegular.copyWith(
+                                            style: poppinsRegular.copyWith(
                                               color: ColorResources.WHITE
                                             ),
                                             decoration: InputDecoration(
@@ -535,7 +535,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 ),
                                               ),
                                               contentPadding: EdgeInsets.only(top: 13),
-                                              hintStyle: titilliumRegular,
+                                              hintStyle: poppinsRegular,
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      
                                                 borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -566,7 +566,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       primary: ColorResources.BTN_PRIMARY_SECOND
                                     ),
                                     child: Text("Sign Up",
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     ),
                                   ),
                                 )
@@ -577,7 +577,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 //     // dropdownBuilder: (context, selectedItem, itemAsString) {
                                 //     //   return Container(
                                 //     //     child: Text("Chapter $selectedItem",
-                                //     //       style: titilliumRegular.copyWith(color: ColorResources.GREY),
+                                //     //       style: poppinsRegular.copyWith(color: ColorResources.GREY),
                                 //     //     ),
                                 //     //   );
                                 //     // },
@@ -612,7 +612,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   //     //   child: TextField(
                                   //     //     decoration: InputDecoration(
                                   //     //       hintText: "Chapter",
-                                  //     //       hintStyle: titilliumRegular,
+                                  //     //       hintStyle: poppinsRegular,
                                   //     //       enabledBorder: UnderlineInputBorder(      
                                   //     //         borderSide: BorderSide(color: ColorResources.WHITE),   
                                   //     //       ),  
@@ -689,7 +689,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //               onTap: () => pageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeInOut),
                   //               child: Column(
                   //                 children: [
-                  //                   Text(getTranslated('SIGN_IN', context), style: authProvider.selectedIndex == 0 ? titilliumSemiBold : titilliumRegular),
+                  //                   Text(getTranslated('SIGN_IN', context), style: authProvider.selectedIndex == 0 ? titilliumSemiBold : poppinsRegular),
                   //                   Container(
                   //                     height: 1.0,
                   //                     width: 40.0,
@@ -705,7 +705,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   //               child: Column(
                   //                 children: [
                   //                   Text(getTranslated('SIGN_UP', context), 
-                  //                     style: authProvider.selectedIndex == 1 ? titilliumSemiBold : titilliumRegular),
+                  //                     style: authProvider.selectedIndex == 1 ? titilliumSemiBold : poppinsRegular),
                   //                   Container(
                   //                       height: 1.0,
                   //                       width: 50.0,

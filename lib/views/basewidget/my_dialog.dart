@@ -38,7 +38,7 @@ class MyDialog extends StatelessWidget {
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Text(title, style: robotoBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-              Text(description, textAlign: TextAlign.center, style: titilliumRegular),
+              Text(description, textAlign: TextAlign.center, style: poppinsRegular),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE),

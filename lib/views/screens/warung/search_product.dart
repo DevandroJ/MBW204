@@ -150,7 +150,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
                           Expanded(
                             child: TextField(
                               keyboardType: TextInputType.text,
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 color: ColorResources.BLACK
                               ),
                               decoration: InputDecoration(
@@ -586,7 +586,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
                 Container(
                   child: Text(
                     "Saat ini produk belum tersedia",
-                    style: titilliumRegular,
+                    style: poppinsRegular,
                     textAlign: TextAlign.center
                   ),
                 ),

@@ -63,7 +63,7 @@ class CashoutSetAccountScreen extends StatelessWidget {
                       saveAccountPayment(context); 
                     }, 
                     child: Text(getTranslated("SAVE_ACCOUNT", context),
-                      style: titilliumRegular.copyWith(
+                      style: poppinsRegular.copyWith(
                         color: ColorResources.getWhiteToBlack(context)
                       ),
                     )

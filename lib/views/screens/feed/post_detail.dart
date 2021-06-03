@@ -73,7 +73,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       ReadMoreText(
         comment.text,
-        style: titilliumRegular.copyWith(
+        style: poppinsRegular.copyWith(
           color: ColorResources.getBlackToWhite(context),
           fontSize: 14.0
         ),
@@ -109,7 +109,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
           if(feedState.postStatus == PostStatus.empty) {
             return Center(
               child: Text(getTranslated("THERE_IS_NO_POST", context),
-                style: titilliumRegular,
+                style: poppinsRegular,
               )
             );
           }
@@ -123,12 +123,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   radius: 20.0,
                 ),
                 title: Text(feedState.post.body.user.nickname,
-                  style: titilliumRegular.copyWith(
+                  style: poppinsRegular.copyWith(
                     color: ColorResources.getBlackToWhite(context)
                   ),
                 ),
                 subtitle: Text(timeago.format((DateTime.parse(feedState.post.body.created).toLocal()), locale: 'id'),
-                  style: titilliumRegular.copyWith(
+                  style: poppinsRegular.copyWith(
                     fontSize: 12.0,
                     color: Colors.grey
                   ),
@@ -182,7 +182,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       ),
                     ),
                   Text('${feedState.post.body.numOfComments.toString()} ${getTranslated("COMMENT", context)}',
-                    style: titilliumRegular.copyWith(fontSize: 14.0),
+                    style: poppinsRegular.copyWith(fontSize: 14.0),
                   ),
                 ]
               )),
@@ -205,7 +205,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             SliverAppBar(
               brightness: Brightness.light,
               backgroundColor: Colors.white,
-              title: Text('Post', style: titilliumRegular.copyWith(color: Colors.black)),
+              title: Text('Post', style: poppinsRegular.copyWith(color: Colors.black)),
               leading: IconButton(
                 icon: Icon(
                   Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
@@ -231,7 +231,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               if (feedState.commentMostRecentStatus == CommentMostRecentStatus.empty) {
                 return Center(
                   child: Text(getTranslated("THERE_IS_NO_COMMENT", context),
-                    style: titilliumRegular,
+                    style: poppinsRegular,
                   )
                 );
               }
@@ -270,14 +270,14 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                 children: [
                                   Text(
                                     feedState.c1List[i].user.nickname,
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       fontSize: 15.0,
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 5.0),
                                     child: Text(timeago.format(DateTime.parse(feedState.c1List[i].created).toLocal(), locale: 'id'),
-                                      style: titilliumRegular.copyWith(fontSize: 12.0),
+                                      style: poppinsRegular.copyWith(fontSize: 12.0),
                                     )
                                   ),
                                   Container(
@@ -338,7 +338,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                 child: Container(
                                   padding: EdgeInsets.all(8.0),
                                   child: Text('${getTranslated("REPLY",context)} (${feedState.c1List[i].numOfReplies})',
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 14.0,
                                     fontStyle: FontStyle.italic)
                                   ),
@@ -397,7 +397,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         }
                         if (feedState.stickerStatus == StickerStatus.empty) {
                           return Center(child: Text(getTranslated("THERE_IS_NO_STICKER", context),
-                            style: titilliumRegular,
+                            style: poppinsRegular,
                           ));
                         }
                         return ListView.builder(
@@ -458,7 +458,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                 child: TextField(
                   focusNode: commentFocusNode,
                   controller: commentTextEditingController,
-                  style: titilliumRegular.copyWith(
+                  style: poppinsRegular.copyWith(
                     color: ColorResources.BLACK,
                     fontSize: 16.0
                   ),
@@ -500,7 +500,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
         return [
           PopupMenuItem(
             child: Text(getTranslated("DELETE_POST", context),
-              style: titilliumRegular.copyWith(
+              style: poppinsRegular.copyWith(
                 color: ColorResources.getPrimaryToWhite(context)
               )
             ), 
@@ -528,7 +528,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     ),
                     SizedBox(height: 10.0),
                     Text(getTranslated("DELETE_POST", context),
-                      style: titilliumRegular.copyWith(
+                      style: poppinsRegular.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold
                       ),
@@ -540,7 +540,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: Text(getTranslated("NO", context),
-                            style: titilliumRegular,
+                            style: poppinsRegular,
                           )
                         ), 
                         StatefulBuilder(
@@ -568,7 +568,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             color: ColorResources.WHITE,
                           )
                           : Text(getTranslated("YES", context),
-                            style: titilliumRegular,
+                            style: poppinsRegular,
                           )
                           );
                         })

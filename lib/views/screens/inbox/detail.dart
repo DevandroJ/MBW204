@@ -68,10 +68,10 @@ class InboxDetailScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("No Transaksi", 
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     ),
                                     Text(field1.toString() == null ? "-" : field1,
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     )
                                   ],
                                 ),
@@ -80,10 +80,10 @@ class InboxDetailScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("Harga",
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     ),
                                     Text(field2.toString() == null ? "-" : ConnexistHelper.formatCurrency(double.parse(field2)),
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     )
                                   ],
                                 ),
@@ -92,10 +92,10 @@ class InboxDetailScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("Status",
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     ),
                                     Text(subject.toString() == null ? "-" : subject,
-                                      style: titilliumRegular,
+                                      style: poppinsRegular,
                                     )
                                   ],
                                 ),
@@ -120,7 +120,7 @@ class InboxDetailScreen extends StatelessWidget {
                             children: [
                             
                               Text(body,
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   height: 1.8
                                 ),
                                 textAlign: TextAlign.justify,
@@ -130,7 +130,7 @@ class InboxDetailScreen extends StatelessWidget {
                               Text(field6.toString() == null ? "-" : field6, 
                                 textAlign: TextAlign.justify,
                                 softWrap: true,
-                                style: titilliumRegular,
+                                style: poppinsRegular,
                               ),
                               SizedBox(height: 10.0),
                               type == "payment.paid" || type == "purchase.success" || type == "disbursement.success"
@@ -149,7 +149,7 @@ class InboxDetailScreen extends StatelessWidget {
                                     backgroundColor: MaterialStateProperty.all(ColorResources.GREEN)
                                   ),
                                   child: Text("Lihat Tagihan",
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.WHITE
                                     ),
                                     textAlign: TextAlign.justify,
@@ -166,7 +166,7 @@ class InboxDetailScreen extends StatelessWidget {
                               //     }
                               //   },
                               //   child: Text(field5.toString() == null ? "-" : field5,
-                              //     style: titilliumRegular.copyWith(
+                              //     style: poppinsRegular.copyWith(
                               //       color: ColorResources.BLUE
                               //     ),
                               //     textAlign: TextAlign.justify,

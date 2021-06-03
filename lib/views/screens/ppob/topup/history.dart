@@ -107,7 +107,7 @@ class TopUpHistoryScreen extends StatelessWidget {
                               )
                             ),
                             child: Text("Submit",
-                              style: titilliumRegular.copyWith(
+                              style: poppinsRegular.copyWith(
                                 color: ColorResources.getWhiteToBlack(context)
                               ),
                             )

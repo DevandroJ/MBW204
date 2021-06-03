@@ -63,7 +63,7 @@ class _TagihanListrikScreenState extends State<TagihanListrikScreen> {
                 Container(
                   margin: EdgeInsets.only(top: 10.0, left: 14.0),
                   child: Text("ID Pelanggan",
-                    style: titilliumRegular.copyWith(
+                    style: poppinsRegular.copyWith(
                       fontSize: 13.0,
                       color: ColorResources.BLACK
                     )

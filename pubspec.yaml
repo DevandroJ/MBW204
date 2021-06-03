@@ -148,6 +148,11 @@ flutter:
   - assets/lottie/
 
   fonts:
+    - family: Poppins
+      fonts: 
+      - asset: assets/fonts/poppins/Poppins-Regular.ttf
+      - asset: assets/fonts/poppins/Poppins-Italic.ttf
+      - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
     - family: TitilliumWeb
       fonts:
         - asset: assets/fonts/titillium/TitilliumWeb-Regular.ttf
