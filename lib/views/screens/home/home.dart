@@ -283,44 +283,15 @@ class HomePage extends StatelessWidget {
                       delegate: StickyTabBarDelegate(
                         TabBar(
                           controller: tabController,
-                          unselectedLabelColor: ColorResources.BLACK,
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          labelColor: ColorResources.YELLOW_PRIMARY,
-                          labelStyle: poppinsRegular,
-                          indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: ColorResources.BLACK,
-                          ),
+                          indicatorColor: ColorResources.BLACK,
+                          labelColor: ColorResources.BLACK,
+                          unselectedLabelColor: ColorResources.GRAY_PRIMARY,
                           tabs: [
-                            Tab(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: ColorResources.BLACK, 
-                                    width: 1.0
-                                  )
-                                ),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text("Favorite News"),
-                                ),
-                              ),
+                            Tab(       
+                              text: "Favorite News"                             
                             ),
                             Tab(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: ColorResources.BLACK, 
-                                    width: 1.0
-                                  )
-                                ),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text("Latest News"),
-                                ),
-                              ),
+                              text: "Latest News",
                             ),
                           ],
                         ),
