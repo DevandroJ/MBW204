@@ -1,19 +1,12 @@
 import 'dart:ui';
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
-import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:provider/provider.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:readmore/readmore.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/views/basewidget/search.dart';
+import 'package:mbw204_club_ina/views/screens/home/widgets/drawer.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
@@ -21,18 +14,8 @@ import 'package:mbw204_club_ina/providers/banner.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:mbw204_club_ina/views/screens/home/widgets/banners.dart';
-import 'package:mbw204_club_ina/views/screens/home/widgets/category.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/container.dart';
-import 'package:mbw204_club_ina/mobx/feed.dart';
-import 'package:mbw204_club_ina/utils/loader.dart';
-import 'package:mbw204_club_ina/data/models/feed/feedposttype.dart';
-import 'package:mbw204_club_ina/views/screens/feed/post_detail.dart';
-import 'package:mbw204_club_ina/views/screens/feed/feed_index.dart';
 
 class HomePage extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
@@ -58,6 +41,8 @@ class HomePage extends StatelessWidget {
       },
       child: Scaffold(
         key: scaffoldKey,
+        endDrawerEnableOpenDragGesture: false,
+        endDrawer: DrawerWidget(),
         body: Stack(
           children: [
             
@@ -127,370 +112,371 @@ class HomePage extends StatelessWidget {
 
             DefaultTabController(
               length: 2,
-              child: CustomScrollView(
-                controller: scrollController,
-                slivers: [
+              child: SafeArea(
+                child: CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
 
-                  SliverAppBar(
-                    floating: true,
-                    elevation: 0.0,
-                    centerTitle: false,
-                    toolbarHeight: 10, 
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.transparent
-                  ),
-
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: SliverDelegate(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.PADDING_SIZE_SMALL, 
-                          vertical: 0.0 
-                        ),
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: SearchWidget(
-                                hintText: "Search",
-                              )
-                            ),
-                            SizedBox(width: 10.0),
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                width: 28.0,
-                                height: 28.0,
-                                decoration: BoxDecoration(
-                                  color: ColorResources.GREY,
-                                  borderRadius: BorderRadius.circular(20.0)
-                                ),
-                                child: Icon(
-                                  Icons.chat,
-                                  color: ColorResources.BLACK,
-                                  size: 17.0,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10.0),
-                            InkWell(
-                              onTap: () => {},
-                              child: Container(
-                                width: 28.0,
-                                height: 28.0,
-                                decoration: BoxDecoration(
-                                  color: ColorResources.GREY,
-                                  borderRadius: BorderRadius.circular(20.0)
-                                ),
-                                child: Icon(
-                                  Icons.menu,
-                                  color: ColorResources.BLACK,
-                                  size: 17.0,
-                                ),
-                              ),
-                            ),
-                          ]
-                        )
-                      )
-                    )
-                  ),
-
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 170.0,
+                    SliverAppBar(
+                      floating: true,
+                      elevation: 0.0,
+                      centerTitle: false,
+                      toolbarHeight: 10, 
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Colors.transparent
                     ),
-                  ),
 
-                  SliverToBoxAdapter(
-                    child: Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.transparent
-                      ),
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: SliverDelegate(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.PADDING_SIZE_SMALL, 
+                          ),
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: Row(
                             children: [
-                              
-                              Row(
-                                children: [
-                                  Image.asset(Images.media),
-                                  SizedBox(width: 10.0),
-                                  Text("Media")
-                                ],
-                              ),
-
-                              Container(
-                                height: 30, 
-                                child: VerticalDivider(color: ColorResources.DIM_GRAY)
-                              ),
-
-                              Row(
-                                children: [
-                                  Image.asset(Images.mart),
-                                  SizedBox(width: 10.0),
-                                  Text("MBW Mart")
-                                ],
-                              ),
-
-                              Container(
-                                height: 30, 
-                                child: VerticalDivider(color: ColorResources.DIM_GRAY)
-                              ),
-
-                              Row(
-                                children: [
-                                  Image.asset(Images.ppob),
-                                  SizedBox(width: 10.0),
-                                  Text("PPOB")
-                                ],
-                              ),
-
-                              Container(
-                                height: 30, 
-                                child: VerticalDivider(color: ColorResources.DIM_GRAY)
-                              ),
-
-                              Row(
-                                children: [
-                                  Image.asset(Images.search_member),
-                                  SizedBox(width: 10.0),
-                                  Text("Search\nMember")
-                                ],
-                              ),
-                              
-                            ],
-                          ),
-
-                          SizedBox(
-                            height: 10.0,
-                          ),
-
-                          Divider(
-                            color: ColorResources.DIM_GRAY,
-                          ),  
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: StickyTabBarDelegate(
-                      TabBar(
-                        labelColor: Colors.black,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        controller: tabController,
-                        tabs: [
-                          Tab(
-                            child: Container(
-                              width: 170.0,
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                color: ColorResources.WHITE,
-                                border: Border.all(
-                                  color: ColorResources.BLACK
+                              Expanded(
+                                child: SearchWidget(
+                                  hintText: "Search",
                                 )
                               ),
-                              child: Text("Favorite News",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: ColorResources.BLACK
+                              SizedBox(width: 10.0),
+                              InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  width: 28.0,
+                                  height: 28.0,
+                                  decoration: BoxDecoration(
+                                    color: ColorResources.GREY,
+                                    borderRadius: BorderRadius.circular(20.0)
+                                  ),
+                                  child: Icon(
+                                    Icons.chat,
+                                    color: ColorResources.BLACK,
+                                    size: 17.0,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Tab(
-                            child: Container(
-                              width: 170.0,
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
-                                color: ColorResources.BLACK
-                              ),
-                              child: Text("Latest News",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: ColorResources.YELLOW
+                              SizedBox(width: 10.0),
+                              InkWell(
+                                onTap: () => scaffoldKey.currentState.openEndDrawer(),
+                                child: Container(
+                                  width: 28.0,
+                                  height: 28.0,
+                                  decoration: BoxDecoration(
+                                    color: ColorResources.GREY,
+                                    borderRadius: BorderRadius.circular(20.0)
+                                  ),
+                                  child: Icon(
+                                    Icons.menu,
+                                    color: ColorResources.BLACK,
+                                    size: 17.0,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ]
                           )
+                        )
+                      )
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 170.0,
+                      ),
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                        decoration: BoxDecoration(
+                          color: ColorResources.WHITE
+                        ),
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                
+                                Row(
+                                  children: [
+                                    Image.asset(Images.media),
+                                    SizedBox(width: 10.0),
+                                    Text("Media")
+                                  ],
+                                ),
+
+                                Container(
+                                  height: 30, 
+                                  child: VerticalDivider(color: ColorResources.DIM_GRAY)
+                                ),
+
+                                Row(
+                                  children: [
+                                    Image.asset(Images.mart),
+                                    SizedBox(width: 10.0),
+                                    Text("MBW Mart")
+                                  ],
+                                ),
+
+                                Container(
+                                  height: 30, 
+                                  child: VerticalDivider(color: ColorResources.DIM_GRAY)
+                                ),
+
+                                Row(
+                                  children: [
+                                    Image.asset(Images.ppob),
+                                    SizedBox(width: 10.0),
+                                    Text("PPOB")
+                                  ],
+                                ),
+
+                                Container(
+                                  height: 30, 
+                                  child: VerticalDivider(color: ColorResources.DIM_GRAY)
+                                ),
+
+                                Row(
+                                  children: [
+                                    Image.asset(Images.search_member),
+                                    SizedBox(width: 10.0),
+                                    Text("Search\nMember")
+                                  ],
+                                ),
+                                
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 10.0,
+                            ),
+
+                            Divider(
+                              color: ColorResources.DIM_GRAY,
+                            ),  
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: StickyTabBarDelegate(
+                        TabBar(
+                          controller: tabController,
+                          unselectedLabelColor: ColorResources.BLACK,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          labelColor: ColorResources.YELLOW_PRIMARY,
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: ColorResources.BLACK,
+                          ),
+                          tabs: [
+                            Tab(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                    color: ColorResources.BLACK, 
+                                    width: 1.0
+                                  )
+                                ),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text("Favorite News"),
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                    color: ColorResources.BLACK, 
+                                    width: 1.0
+                                  )
+                                ),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text("Latest News"),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ),
+
+                    SliverFillRemaining(
+                      child: TabBarView(
+                        children: [
+
+                          Container(
+                            decoration: BoxDecoration(
+                              color: ColorResources.WHITE,
+                            ),
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (BuildContext context, int i) {
+                                return Container(
+                                  color: ColorResources.WHITE,
+                                  width: double.infinity,
+                                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                  child: Card(
+                                    elevation: 4.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0)
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+
+                                      },
+                                      child: Stack(
+                                        children: [
+
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                  imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                  width: 120.0,
+                                                  height: 80.0,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    image: DecorationImage(
+                                                      image: imageProvider, 
+                                                      fit: BoxFit.cover
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 10.0),
+                                              Container(
+                                                width: 200.0,
+                                                margin: EdgeInsets.only(top: 10.0),
+                                                child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                  softWrap: true,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          Positioned(
+                                            top: 55.0,
+                                            right: 10.0,
+                                            child: Text("Baca Selengkapnya",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 12.0
+                                              ),
+                                            )
+                                          )
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          ),
+
+                          
+                          Container(
+                            decoration: BoxDecoration(
+                              color: ColorResources.WHITE,
+                            ),
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (BuildContext context, int i) {
+                                return Container(
+                                  color: ColorResources.WHITE,
+                                  width: double.infinity,
+                                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                  child: Card(
+                                    elevation: 4.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0)
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+
+                                      },
+                                      child: Stack(
+                                        children: [
+
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                  imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                  width: 120.0,
+                                                  height: 80.0,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    image: DecorationImage(
+                                                      image: imageProvider, 
+                                                      fit: BoxFit.cover
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 10.0),
+                                              Container(
+                                                width: 200.0,
+                                                margin: EdgeInsets.only(top: 10.0),
+                                                child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                  softWrap: true,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          Positioned(
+                                            top: 55.0,
+                                            right: 10.0,
+                                            child: Text("Baca Selengkapnya",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 12.0
+                                              ),
+                                            )
+                                          )
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          ),
+
+
+
                         ],
                       ),
                     )
-                  ),
-
-                  SliverFillRemaining(
-                    child: TabBarView(
-                      children: [
-
-                        Container(
-                          decoration: BoxDecoration(
-                            color: ColorResources.WHITE,
-                          ),
-                          child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: (BuildContext context, int i) {
-                              return Container(
-                                color: ColorResources.WHITE,
-                                width: double.infinity,
-                                margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                child: Card(
-                                  elevation: 4.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-
-                                    },
-                                    child: Stack(
-                                      children: [
-
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
-                                                imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                width: 120.0,
-                                                height: 80.0,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10.0),
-                                                  image: DecorationImage(
-                                                    image: imageProvider, 
-                                                    fit: BoxFit.cover
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            Container(
-                                              width: 200.0,
-                                              margin: EdgeInsets.only(top: 10.0),
-                                              child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
-                                                softWrap: true,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        Positioned(
-                                          top: 55.0,
-                                          right: 10.0,
-                                          child: Text("Baca Selengkapnya",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12.0
-                                            ),
-                                          )
-                                        )
-
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        ),
-
-                        
-                        Container(
-                          decoration: BoxDecoration(
-                            color: ColorResources.WHITE,
-                          ),
-                          child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: (BuildContext context, int i) {
-                              return Container(
-                                color: ColorResources.WHITE,
-                                width: double.infinity,
-                                margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                child: Card(
-                                  elevation: 4.0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-
-                                    },
-                                    child: Stack(
-                                      children: [
-
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
-                                                imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                width: 120.0,
-                                                height: 80.0,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10.0),
-                                                  image: DecorationImage(
-                                                    image: imageProvider, 
-                                                    fit: BoxFit.cover
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 10.0),
-                                            Container(
-                                              width: 200.0,
-                                              margin: EdgeInsets.only(top: 10.0),
-                                              child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
-                                                softWrap: true,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        Positioned(
-                                          top: 55.0,
-                                          right: 10.0,
-                                          child: Text("Baca Selengkapnya",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12.0
-                                            ),
-                                          )
-                                        )
-
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        ),
-
-
-
-                      ],
-                    ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
 

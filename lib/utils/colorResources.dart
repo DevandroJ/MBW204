@@ -80,7 +80,8 @@ class ColorResources {
   static const Color BTN_PRIMARY_SECOND = Color(0xFFDD0000);
   static const Color BLUE_GREY = Color(0xffECEFF1);
   static const Color WHITE = Color(0xffFFFFFF);
-  static const Color PRIMARY = Color(0xffAF162B);
+  static const Color PRIMARY = Color(0xFFaf162b);
+  static const Color PINK_PRIMARY = Color(0xFFf66a6a);
   static const Color BG_GREY = Color(0xffF5F5F5);
   static const Color DIM_GRAY = Color(0xff6D6D6D);
   static const Color BLUE = Color(0xFF64B5F6);
@@ -93,7 +94,6 @@ class ColorResources {
   static const Color LAVENDER = Color(0xff0F5F8FD);
   static const Color SUCCESS = Color(0xff99CC33);
   static const Color ERROR = Color(0xffcc3300);
-  static const Color YELLOW = Color(0xffEDA63A);
   static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
   static const Color GAINS_BORO = Color(0xffE6E6E6);
   static const Color TEXT_BG = Color(0xffF3F9FF);

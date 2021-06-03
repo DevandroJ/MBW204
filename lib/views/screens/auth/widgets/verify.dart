@@ -150,7 +150,7 @@ class VerifyScreen extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                color: ColorResources.YELLOW,
+                                color: ColorResources.YELLOW_PRIMARY,
                                 borderRadius: BorderRadius.circular(8.0)
                               ),
                               child: Row(

@@ -65,7 +65,7 @@ class _EventScreenState extends State<EventScreen> {
                         calendarStyle: CalendarStyle(
                           selectedColor: ColorResources.PRIMARY,
                           todayColor: ColorResources.PRIMARY.withOpacity(0.3),
-                          markersColor: ColorResources.YELLOW,
+                          markersColor: ColorResources.YELLOW_PRIMARY,
                           outsideDaysVisible: false,
                         ),
                       );
