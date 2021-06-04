@@ -197,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Text("125.000",
+                      Text("125.000,-",
                         style: poppinsRegular.copyWith(
                           fontSize: 16.0,
                           fontWeight: FontWeight.normal
@@ -346,7 +346,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Text("125.000",
+                      Text("125.000,-",
                         style: poppinsRegular.copyWith(
                           fontSize: 16.0,
                           fontWeight: FontWeight.normal
