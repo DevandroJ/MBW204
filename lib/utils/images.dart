@@ -5,6 +5,13 @@ class Images {
   static const String home_image = 'assets/images/home.png';
   static const String cash_out = 'assets/icons/ic-cashout.png';
   static const String profile = 'assets/images/profile.png';
+  static const String ambulance = 'assets/images/ambulance.png';
+  static const String fire = 'assets/images/fire.png';
+  static const String thief = 'assets/images/thief.png';
+  static const String trouble = 'assets/images/trouble.png';
+  static const String strike = 'assets/images/strike.png';
+  static const String disaster = 'assets/images/disaster.png';
+  static const String workshop_info = 'assets/images/workshop-info.png';
   static const String logo_login = 'assets/images/logo-login.png';
   static const String sos_image = 'assets/images/sos.png';
   static const String default_avatar = 'assets/images/default-avatar.jpg';
@@ -18,6 +25,7 @@ class Images {
   static const String topup = 'assets/images/topup.png';
   static const String money = 'assets/images/money.png';
   static const String sos = 'assets/icons/ic-sos.png';
+  static const String sos_detail = 'assets/images/sos-detail.png';
   static const String logo_cx = 'assets/images/logo-cx.png';
   static const String logo_app = 'assets/images/logo-app.png';
   static const String inbox_image = 'assets/images/message.png';

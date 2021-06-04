@@ -70,99 +70,99 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 clipBehavior: Clip.none,
                 children: [
 
-                  Positioned(
-                    top: 12.0,
-                    right: 17.0,
-                    child: Container(
-                      width: 34.0,
-                      height: 34.0,
-                      decoration: BoxDecoration(
-                        color: ColorResources.BTN_PRIMARY_SECOND,
-                        borderRadius: BorderRadius.circular(20.0)
-                      ),
-                      child: Icon(
-                        Icons.more_vert,
-                        color: ColorResources.BLACK,
-                        size: 17.0,
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 12.0,
+                  //   right: 17.0,
+                  //   child: Container(
+                  //     width: 34.0,
+                  //     height: 34.0,
+                  //     decoration: BoxDecoration(
+                  //       color: ColorResources.BTN_PRIMARY_SECOND,
+                  //       borderRadius: BorderRadius.circular(20.0)
+                  //     ),
+                  //     child: Icon(
+                  //       Icons.more_vert,
+                  //       color: ColorResources.BLACK,
+                  //       size: 17.0,
+                  //     ),
+                  //   ),
+                  // ),
 
-                  Positioned(
-                    top: 60.0,
-                    right: 5.0,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 28.0,
-                          height: 28.0,
-                          decoration: BoxDecoration(
-                            color: ColorResources.PINK_PRIMARY,
-                            borderRadius: BorderRadius.circular(20.0)
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: ColorResources.BLACK,
-                            size: 17.0,
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Text("Edit Nama",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 11.0,
-                            color: ColorResources.WHITE
-                          ),
-                        )
-                      ],
-                    ) 
-                  ),
+                  // Positioned(
+                  //   top: 60.0,
+                  //   right: 5.0,
+                  //   child: Column(
+                  //     children: [
+                  //       Container(
+                  //         width: 28.0,
+                  //         height: 28.0,
+                  //         decoration: BoxDecoration(
+                  //           color: ColorResources.PINK_PRIMARY,
+                  //           borderRadius: BorderRadius.circular(20.0)
+                  //         ),
+                  //         child: Icon(
+                  //           Icons.edit,
+                  //           color: ColorResources.BLACK,
+                  //           size: 17.0,
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 5.0),
+                  //       Text("Edit Nama",
+                  //         style: poppinsRegular.copyWith(
+                  //           fontSize: 11.0,
+                  //           color: ColorResources.WHITE
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ) 
+                  // ),
 
-                  Positioned(
-                    top: 120.0,
-                    right: 5.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 28.0,
-                          height: 28.0,
-                          decoration: BoxDecoration(
-                            color: ColorResources.YELLOW_PRIMARY,
-                            borderRadius: BorderRadius.circular(20.0)
-                          ),
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: ColorResources.BLACK,
-                            size: 17.0,
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Text("Ganti Foto",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 11.0,
-                            color: ColorResources.WHITE
-                          ),
-                        )
-                      ],
-                    )
-                  ),
+                  // Positioned(
+                  //   top: 120.0,
+                  //   right: 5.0,
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: [
+                  //       Container(
+                  //         width: 28.0,
+                  //         height: 28.0,
+                  //         decoration: BoxDecoration(
+                  //           color: ColorResources.YELLOW_PRIMARY,
+                  //           borderRadius: BorderRadius.circular(20.0)
+                  //         ),
+                  //         child: Icon(
+                  //           Icons.camera_alt,
+                  //           color: ColorResources.BLACK,
+                  //           size: 17.0,
+                  //         ),
+                  //       ),
+                  //       SizedBox(height: 5.0),
+                  //       Text("Ganti Foto",
+                  //         style: poppinsRegular.copyWith(
+                  //           fontSize: 11.0,
+                  //           color: ColorResources.WHITE
+                  //         ),
+                  //       )
+                  //     ],
+                  //   )
+                  // ),
 
-                  Positioned(
-                    bottom: 0.0,
-                    child: Container(
-                      padding: EdgeInsets.zero,
-                      margin: EdgeInsets.zero,
-                      width: 303.0,
-                      height: 30.0,
-                      decoration: BoxDecoration(
-                        color: ColorResources.WHITE,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0)
-                        )
-                      ),   
-                    ),     
-                  ),
+                  // Positioned(
+                  //   bottom: 0.0,
+                  //   child: Container(
+                  //     padding: EdgeInsets.zero,
+                  //     margin: EdgeInsets.zero,
+                  //     width: 303.0,
+                  //     height: 30.0,
+                  //     decoration: BoxDecoration(
+                  //       color: ColorResources.WHITE,
+                  //       borderRadius: BorderRadius.only(
+                  //         topLeft: Radius.circular(20.0),
+                  //         topRight: Radius.circular(20.0)
+                  //       )
+                  //     ),   
+                  //   ),     
+                  // ),
                   
                 ]
               )

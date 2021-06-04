@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/auth.dart';
@@ -569,94 +570,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       style: poppinsRegular,
                                     ),
                                   ),
+                                ),
+
+
+                                Container(
+                                  width: double.infinity,
+                                  margin: EdgeInsets.only(top: 15.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Already have an account ?",
+                                        style: poppinsRegular.copyWith(
+                                          color: ColorResources.WHITE
+                                        ),
+                                      ),
+                                      SizedBox(width: 5.0),
+                                      InkWell(
+                                        onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
+                                        child: Text("Sign in",
+                                          style: poppinsRegular.copyWith(
+                                            color: ColorResources.YELLOW_PRIMARY
+                                          )
+                                        ),
+                                      )
+                                    ],
+                                  ) 
                                 )
-
-
-                                // Container(
-                                //   child: DropdownSearch<String>(
-                                //     // dropdownBuilder: (context, selectedItem, itemAsString) {
-                                //     //   return Container(
-                                //     //     child: Text("Chapter $selectedItem",
-                                //     //       style: poppinsRegular.copyWith(color: ColorResources.GREY),
-                                //     //     ),
-                                //     //   );
-                                //     // },
-                                //     dropdownSearchDecoration: InputDecoration(
-                                //       isDense: true,
-                                //       hintStyle: TextStyle(
-                                //         color: Colors.red
-                                //       ),
-                                //       enabledBorder: UnderlineInputBorder(      
-                                //         borderSide: BorderSide(color: ColorResources.WHITE),   
-                                //       ),  
-                                //       focusedBorder: UnderlineInputBorder(
-                                //         borderSide: BorderSide(color: ColorResources.WHITE),
-                                //       ),
-                                //       border: UnderlineInputBorder(
-                                //         borderSide: BorderSide(color: ColorResources.WHITE),
-                                //       ),                                      
-                                //     ),
-                                //     mode: Mode.MENU,                                    
-                                //     showSelectedItem: true,
-                                //     items: ["Brazil", "Tunisia", 'Canada'],
-                                //     hint: "TESTES",
-                                    
-                                //     onChanged: print,
-                                //     selectedItem: ""
-                                //   )
-                                //
-                                 
-                                  // Row(
-                                  //   children: [
-                                  //     // Flexible(
-                                  //     //   child: TextField(
-                                  //     //     decoration: InputDecoration(
-                                  //     //       hintText: "Chapter",
-                                  //     //       hintStyle: poppinsRegular,
-                                  //     //       enabledBorder: UnderlineInputBorder(      
-                                  //     //         borderSide: BorderSide(color: ColorResources.WHITE),   
-                                  //     //       ),  
-                                  //     //       focusedBorder: UnderlineInputBorder(
-                                  //     //         borderSide: BorderSide(color: ColorResources.WHITE),
-                                  //     //       ),
-                                  //     //       border: UnderlineInputBorder(
-                                  //     //         borderSide: BorderSide(color: ColorResources.WHITE),
-                                  //     //       ),
-                                  //     //     ),
-                                  //     //   ),
-                                  //     // ),
-                                  //     Container(
-                                  //       child: DropdownButton<String>(
-                                  //         value: "One",
-                                  //         icon: Icon(
-                                  //           Icons.arrow_downward,
-                                  //           color: ColorResources.WHITE,  
-                                  //         ),
-                                  //         iconSize: 15.0,
-                                  //         style: TextStyle(color: ColorResources.WHITE),
-                                  //         underline: Container(
-                                  //           margin: EdgeInsets.only(top: 10.0),
-                                  //           height: 1.0,
-                                  //           color: Colors.red,
-                                  //         ),
-                                  //         onChanged: (String newValue) {
-                                          
-                                  //         },
-                                  //         items: <String>['One', 'Two', 'Free', 'Four'].map<DropdownMenuItem<String>>((String value) {
-                                  //           return DropdownMenuItem<String>(
-                                  //             value: value,
-                                  //             child: Container(
-                                  //               child: Text(value)
-                                  //             ),
-                                  //           );
-                                  //         }).toList(),
-                                  //       ),
-                                  //     )                        
-                                  //   ],
-                                  // )
-
-
-                                // )
 
                                     
                               ]
@@ -667,79 +607,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: EdgeInsets.all(Dimensions.MARGIN_SIZE_LARGE),
-                  //   child: Stack(
-                  //     clipBehavior: Clip.none,
-                  //     children: [
-                  //       Positioned(
-                  //         bottom: 0,
-                  //         right: Dimensions.MARGIN_SIZE_EXTRA_SMALL,
-                  //         left: 0,
-                  //         child: Container(
-                  //           width: MediaQuery.of(context).size.width,
-                  //           height: 1,
-                  //           color: ColorResources.getGainsBoro(context),
-                  //         ),
-                  //       ),
-                  //       Consumer<AuthProvider>(
-                  //         builder: (BuildContext context, AuthProvider authProvider, Widget child) => Row(
-                  //           children: [
-                  //             InkWell(
-                  //               onTap: () => pageController.animateToPage(0, duration: Duration(seconds: 1), curve: Curves.easeInOut),
-                  //               child: Column(
-                  //                 children: [
-                  //                   Text(getTranslated('SIGN_IN', context), style: authProvider.selectedIndex == 0 ? titilliumSemiBold : poppinsRegular),
-                  //                   Container(
-                  //                     height: 1.0,
-                  //                     width: 40.0,
-                  //                     margin: EdgeInsets.only(top: 8.0),
-                  //                     color: authProvider.selectedIndex == 0 ? ColorResources.PRIMARY : Colors.transparent,
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             SizedBox(width: 25.0),
-                  //             InkWell(
-                  //               onTap: () => pageController.animateToPage(1, duration: Duration(seconds: 1), curve: Curves.easeInOut),
-                  //               child: Column(
-                  //                 children: [
-                  //                   Text(getTranslated('SIGN_UP', context), 
-                  //                     style: authProvider.selectedIndex == 1 ? titilliumSemiBold : poppinsRegular),
-                  //                   Container(
-                  //                       height: 1.0,
-                  //                       width: 50.0,
-                  //                       margin: EdgeInsets.only(top: 8.0),
-                  //                       color: authProvider.selectedIndex == 1 ? ColorResources.PRIMARY : Colors.transparent
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
-                  // Expanded(
-                  //   child: Consumer<AuthProvider>(
-                  //     builder: (BuildContext context, AuthProvider authProvider, Widget child)=> PageView.builder(
-                  //       itemCount: 2,
-                  //       controller: pageController,
-                  //       itemBuilder: (context, index) {
-                  //         if (authProvider.selectedIndex == 0) {
-                  //           return SignInWidget();
-                  //         } else {
-                  //           return SignUpWidget();
-                  //         }
-                  //       },
-                  //       onPageChanged: (index) {
-                  //         authProvider.updateSelectedIndex(index);
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
 
                 ],
               ),

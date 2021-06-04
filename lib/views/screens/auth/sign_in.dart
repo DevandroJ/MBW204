@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -117,9 +118,7 @@ class SignInScreen extends StatelessWidget {
                                         decoration: InputDecoration(
                                           hintText: "Enter your password",
                                           suffixIcon: InkWell(
-                                            onTap: () {
-                                              setState(() => passwordObscure = !passwordObscure);
-                                            }, 
+                                            onTap: () => setState(() => passwordObscure = !passwordObscure), 
                                             child: Icon(
                                               passwordObscure ? Icons.visibility_off : Icons.visibility,
                                               color: ColorResources.WHITE
@@ -150,11 +149,7 @@ class SignInScreen extends StatelessWidget {
                               width: double.infinity,
                               margin: EdgeInsets.only(top: 15.0),
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => DashBoardScreen()),
-                                  );
-                                },
+                                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen())),
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0)
@@ -167,7 +162,41 @@ class SignInScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),         
+                            ),   
+
+                            Container(
+                              margin: EdgeInsets.only(top: 30.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 10.0, right: 20.0),
+                                      child: Divider(
+                                        color: ColorResources.WHITE,
+                                        height: 36.0,
+                                      )
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen())),
+                                    child: Text("Create an Account",
+                                      style: poppinsRegular.copyWith(
+                                        color: ColorResources.YELLOW_PRIMARY
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 20.0, right: 10.0),
+                                      child: Divider(
+                                        color: ColorResources.WHITE,
+                                        height: 36.0,
+                                      )
+                                    ),
+                                  ),
+                                ]
+                              ),
+                            )      
 
                           ],
                         ),

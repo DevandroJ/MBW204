@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/inbox.dart';
@@ -21,7 +22,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
 
   final List<Widget> screens = [
     HomePage(),
-    HomePage(),
+    MemberNearScreen(whereFrom: "dashboard"),
     SosScreen(),
     EventScreen(),
     MoreScreen(),

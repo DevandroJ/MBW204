@@ -1,15 +1,13 @@
-import 'package:android_intent/android_intent.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
+import 'package:mbw204_club_ina/views/screens/sos/detail.dart';
+import 'package:mbw204_club_ina/utils/colorResources.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
-import 'package:mbw204_club_ina/views/screens/more/webview.dart';
 
 class SosScreen extends StatefulWidget {
   final bool isBacButtonExist;
@@ -21,38 +19,6 @@ class SosScreen extends StatefulWidget {
 
 class _SosScreenState extends State<SosScreen> {
 
-  Future checkGps() async {
-    if(!(await Geolocator.isLocationServiceEnabled())) {
-      if (Theme.of(context).platform == TargetPlatform.android) {
-        showDialog(context: context, builder: (BuildContext context) => AlertDialog(
-          title: Text("Can't get your location now"),
-          content: Text("Are you want to activate GPS"),
-          actions: [
-            TextButton(
-              child: Text("Activate"),
-                onPressed: () {
-                  AndroidIntent intent = AndroidIntent(
-                    action: "android.settings.LOCATION_SOURCE_SETTINGS"
-                  );
-                  intent.launch();
-                  Navigator.of(context).pop();
-                }
-              )
-            ],
-          )
-        );
-      }
-    }
-  }
-
-  Future gpsService() async {
-    if (!(await Geolocator.isLocationServiceEnabled())) {
-      checkGps();
-      return null;
-    } else {
-      return true;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,78 +47,114 @@ class _SosScreenState extends State<SosScreen> {
         return Future.value(true);
       },
       child: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              
-              CustomAppBar(title: getTranslated('PANIC_BUTTON', context), isBackButtonExist: false),
-
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 16.0, right: 16.0),
-                  child: ListView.builder(
-                    itemCount: Provider.of<SosProvider>(context, listen: false).sosList.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      
-                      String name = Provider.of<SosProvider>(context, listen: false).sosList[i].name;
-                      String desc = Provider.of<SosProvider>(context, listen: false).sosList[i].desc;
-                      String icon = Provider.of<SosProvider>(context, listen: false).sosList[i].icon;
-                      String type = Provider.of<SosProvider>(context, listen: false).sosList[i].type;
-
-                      return Card(
-                        elevation: 3.0,
-                        child: ListTile(
-                          onTap: i == 3 
-                          ? () {
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
-                              title: getTranslated('MANUAL_GUIDE', context),
-                              url: 'https://www.miniusa.com/owners/tools-support/owner-manuals.html',
-                            )));
-                          } 
-                          : () => {
-                            showAnimatedDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (BuildContext context) {
-                                return Consumer<SosProvider>(
-                                  builder: (BuildContext context, SosProvider sosProvider, Widget child) {
-                                    return ClassicGeneralDialogWidget(
-                                      titleText: 'Sebar Berita ?',
-                                      contentText: 'Anda akan ditegur apabila menyalahgunakan SOS tanpa informasi yang benar',
-                                      positiveText: sosProvider.sosConfirmStatus == SosConfirmStatus.loading ? '...' : 'Ya, Lakukan',
-                                      negativeText: 'Tidak',
-                                      onPositiveClick: () => submit(type, desc),
-                                      onNegativeClick: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                              animationType: DialogTransitionType.scale,
-                              curve: Curves.fastOutSlowIn,
-                              duration: Duration(seconds: 1),
-                            )
-                          },
-                          isThreeLine: true,
-                          dense: true,
-                          leading: Image.asset(icon,
-                            width: 32.0,
-                            height: 32.0,
-                          ),
-                          title: Text(name),
-                          subtitle: Text(desc),
-                        ),
-                      );
-                    }
-                  ),
-                ),
-              )
-
-            ],
+        appBar: AppBar(
+          elevation: 0.0,
+          centerTitle: true,
+          backgroundColor: ColorResources.GRAY_DARK_PRIMARY,
+          title: Text("Panic Button",
+            style: poppinsRegular,
           ),
-        ) 
+          automaticallyImplyLeading: false,
+          actions: [],
+        ),
+        body: ListView(
+          children: [
+            
+            Stack(
+              children: [
+
+                ClipPath(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 200.0,
+                    color: ColorResources.GRAY_DARK_PRIMARY,
+                  ),
+                  clipper: CustomClipPath(),
+                ),
+
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: Column(
+                      children: [
+                        getSosList(context, "AMBULANCE", Images.ambulance, "Sebar permintaan tolong Ambulan"),
+                        SizedBox(height: 10.0),
+                        getSosList(context, "KECELAKAAN", Images.strike, "Sebar permintaan tolong Kecelakaan"),
+                        SizedBox(height: 10.0),
+                        getSosList(context, "TROUBLE", Images.trouble, "Sebar permintaan tolong Mogok"),
+                        SizedBox(height: 10.0),
+                        getSosList(context, "PENCURIAN / PERAMPOKAN", Images.thief, "Sebar permintaan tolong Pencurian"),
+                        SizedBox(height: 10.0),
+                        getSosList(context, "KEBAKARAN", Images.fire, "Sebar permintaan tolong Kebakaran"),
+                        SizedBox(height: 10.0),
+                        getSosList(context, "INFO BENGKEL", Images.workshop_info, "Sebar permintaan Service Kendaraan"),
+                        SizedBox(height: 10.0),
+                        getSosList(context, "BENCANA", Images.disaster, "Sebar permintaan tolong Bencana"),
+                      ],
+                    ),
+                  ),
+                )
+
+              ],
+            ),
+
+          ],
+        )
       )
     );
   }
+}
+
+Widget getSosList(BuildContext context, String label, String images, String content) {
+  return GestureDetector(
+    onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
+      content: content,
+    ))),
+    child: Container(
+      width: double.infinity,
+      height: 80.0,
+      decoration: BoxDecoration(
+        color: ColorResources.GRAY_LIGHT_PRIMARY,
+        borderRadius: BorderRadius.circular(10.0)
+      ),
+      margin: EdgeInsets.only(left: 16.0, right: 16.0),
+      padding: EdgeInsets.all(10.0),
+      child: Container(
+        child: ListTile(
+          dense: true,
+          leading: Image.asset(images,
+            height: 30.0,
+            width: 30.0,
+          ),
+          title: Text(label,
+            style: poppinsRegular.copyWith(
+              color: ColorResources.BTN_PRIMARY_SECOND
+            ),
+          ),
+          subtitle: Text(content,
+            style: poppinsRegular.copyWith(
+              fontSize: 13.0
+            ),
+          ),
+        ),
+      )
+    ),
+  );
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  var radius = 10.0;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 140);
+    path.quadraticBezierTo(size.width / 2, size.height, 
+    size.width, size.height - 140);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

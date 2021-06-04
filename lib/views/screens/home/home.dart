@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/basewidget/search.dart';
@@ -193,66 +194,92 @@ class HomePage extends StatelessWidget {
                     SliverToBoxAdapter(
                       child: Container(
                         width: double.infinity,
-                        height: 90.0,
+                        height: 120.0,
                         decoration: BoxDecoration(
                           color: ColorResources.WHITE
                         ),
                         margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
-                        child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: 6,
-                          itemBuilder: (BuildContext context, int i) {
-                            return Container(
-                              margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    child: Container(
-                                      child: CachedNetworkImage(
-                                        imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
-                                        imageBuilder: (context, imageProvider) => Container(
-                                          width: 60.0,
-                                          height: 60.0,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover
-                                            )
-                                          ),
-                                      
-                                        ),
-                                        placeholder: (context, url) => Center(
-                                          child: SizedBox(
-                                            width: 18.0,
-                                            height: 18.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
-                                            )
-                                          ),
-                                        ),
-                                        errorWidget: (context, url, error) => Container(),
-                                      ),
-                                    ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 5.0, right: 5.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => MemberNearScreen(
+                                      whereFrom: "home",
+                                    )),
+                                  );
+                                },
+                                child: Text("Lihat semua",
+                                textAlign: TextAlign.end,
+                                  style: poppinsRegular.copyWith(
+                                    fontSize: 13.0
                                   ),
-                                  Container(
-                                    width: 65.0,
-                                    margin: EdgeInsets.only(top: 3.0),
-                                    child: Text("Agam",
-                                    textAlign: TextAlign.center,
-                                      softWrap: true,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: poppinsRegular.copyWith(
-                                        fontSize: 11.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            );
-                          }
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: 6,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return Container(
+                                    margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                          child: Container(
+                                            child: CachedNetworkImage(
+                                              imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                                              imageBuilder: (context, imageProvider) => Container(
+                                                width: 60.0,
+                                                height: 60.0,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover
+                                                  )
+                                                ),
+                                            
+                                              ),
+                                              placeholder: (context, url) => Center(
+                                                child: SizedBox(
+                                                  width: 18.0,
+                                                  height: 18.0,
+                                                  child: CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
+                                                  )
+                                                ),
+                                              ),
+                                              errorWidget: (context, url, error) => Container(),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 65.0,
+                                          margin: EdgeInsets.only(top: 3.0),
+                                          child: Text("Agam",
+                                          textAlign: TextAlign.center,
+                                            softWrap: true,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: poppinsRegular.copyWith(
+                                              fontSize: 11.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                              ),
+                            )
+                          ],
                         )
                       ),
                     ),
