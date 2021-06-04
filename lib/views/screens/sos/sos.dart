@@ -88,7 +88,7 @@ class _SosScreenState extends State<SosScreen> {
                         SizedBox(height: 10.0),
                         getSosList(context, "KEBAKARAN", Images.fire, "Sebar permintaan tolong Kebakaran"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "INFO BENGKEL", Images.workshop_info, "Sebar permintaan Service Kendaraan"),
+                        getSosList(context, "INFO BENGKEL", Images.workshop_info, "Sebar permintaan Info Bengkel"),
                         SizedBox(height: 10.0),
                         getSosList(context, "BENCANA", Images.disaster, "Sebar permintaan tolong Bencana"),
                       ],
