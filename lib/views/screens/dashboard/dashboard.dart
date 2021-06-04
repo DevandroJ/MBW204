@@ -1,8 +1,7 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
@@ -113,31 +112,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
           Tab(
             icon: Consumer<InboxProvider>(
               builder: (BuildContext context, InboxProvider inboxProvider, Widget child) {
-                return Badge(
-                  position: BadgePosition.topEnd(top: 0, end: 26.0),
-                  animationDuration: Duration(milliseconds: 300),
-                  animationType: BadgeAnimationType.slide,
-                  badgeContent: Text(
-                    inboxProvider.inboxStatus == InboxStatus.loading 
-                    ? "..." 
-                    : inboxProvider.inboxStatus == InboxStatus.error 
-                    ? "..."
-                    : inboxProvider.readCount.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  child: Container(
-                    width: 50.0,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage('assets/layer-icon.png')
-                      )
-                    ),
-                    child: Icon(
-                      Icons.notifications,
-                      size: 24.0,
-                    ),
+                return Container(
+                  width: 50.0,
+                  height: 60.0,
+                  child: Icon(
+                    Icons.notifications,
+                    size: 24.0,
                   ),
                 );
               },

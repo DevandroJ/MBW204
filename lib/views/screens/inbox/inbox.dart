@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,345 +27,132 @@ class _InboxScreenState extends State<InboxScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: ColorResources.GRAY_LIGHT_PRIMARY,
+        leading: InkWell(
+          onTap: () => Navigator.of(context).pop(),
+          child: Icon(
+            Icons.arrow_back,
+            color: ColorResources.BLACK,  
+          )
+        ),
+        title: Text("Message",
+          style: poppinsRegular.copyWith(
+            color: ColorResources.BLACK,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+      ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
+          
+            Stack(
+              children: [
 
-            CustomAppBar(title: getTranslated('INBOX', context), isBackButtonExist: false),
-
-            Consumer<InboxProvider>(
-              builder: (BuildContext context, InboxProvider inboxProvider, Widget child) {
-                if(inboxProvider.inboxStatus == InboxStatus.loading)
-                  return Expanded(
-                    child: Container(),
-                  );
-                if(inboxProvider.inboxStatus == InboxStatus.empty) 
-                  return Expanded(
-                    child: Center(
-                      child: Text(getTranslated("NO_INBOX_AVAILABLE", context)),
-                    ),
-                  );
-                
-                return Expanded(
+                ClipPath(
                   child: Container(
-                    margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 16.0, right: 16.0),
-                    child: RefreshIndicator(
-                      key: refreshIndicatorKey,
-                      backgroundColor: ColorResources.getPrimaryToBlack(context),
-                      color: ColorResources.getWhiteToBlack(context),
-                      onRefresh: () {
-                        return Provider.of<InboxProvider>(context, listen: false).getInboxes(context);    
-                      },
-                      child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: inboxProvider.inboxes.length,
-                        itemBuilder: (BuildContext context, int i) {
+                    width: MediaQuery.of(context).size.width,
+                    height: 160.0,
+                    color: ColorResources.GRAY_LIGHT_PRIMARY
+                  ),
+                  clipper: CustomClipPath(),
+                ),
 
-                          return Column(
-                            children: [
-                              Card(
-                                elevation: 3.0,
-                                child: Container(
-                                  child: ListTile(
-                                    onTap: () {
-                                      Future.delayed(Duration.zero, () async {
-                                        await Provider.of<InboxProvider>(context, listen: false).updateInbox(context, inboxProvider.inboxes[i].inboxId);
-                                      });
-                                      if(inboxProvider.inboxes[i].subject == "Emergency") {
-                                        Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, inboxProvider.inboxes[i].senderId);
-
-                                        showAnimatedDialog(
-                                          context: context,
-                                          barrierDismissible: true,
-                                          builder: (BuildContext context) {
-                                  
-                                            return Dialog(
-                                              child: Padding(
-                                                padding: EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  height: 330.0,
-                                                  child: Consumer<ProfileProvider>(
-                                                    builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
-                                                      return Column(
-                                                        children: [
-
-                                                          SizedBox(height: 20.0),
-
-                                                          Container(
-                                                            child: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                            ? SizedBox(
-                                                                width: 18.0,
-                                                                height: 18.0,
-                                                                child: CircularProgressIndicator(
-                                                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
-                                                                ),
-                                                              )
-                                                            : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                            ? CircleAvatar(
-                                                                backgroundColor: Colors.transparent,
-                                                                backgroundImage: NetworkImage("assets/images/profile.png"),
-                                                                radius: 30.0,
-                                                              )
-                                                            : CachedNetworkImage(
-                                                              imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getSingleUserProfilePic}",
-                                                              imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) {
-                                                                return CircleAvatar(
-                                                                  backgroundColor: Colors.transparent,
-                                                                  backgroundImage: imageProvider,
-                                                                  radius: 30.0,
-                                                                );
-                                                              },
-                                                              errorWidget: (BuildContext context, String url, dynamic error) {
-                                                                return CircleAvatar(
-                                                                  backgroundColor: Colors.transparent,
-                                                                  backgroundImage: AssetImage("assets/images/profile.png"),
-                                                                  radius: 30.0,
-                                                                );
-                                                              },
-                                                              placeholder: (BuildContext context, String text) => SizedBox(
-                                                                width: 18.0,
-                                                                height: 18.0,
-                                                                child: CircularProgressIndicator(
-                                                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
-                                                                ),
-                                                              ),
-                                                            )  
-                                                          ),
-
-                                                          SizedBox(height: 16.0),
-
-                                                          Container(
-                                                            width: double.infinity,
-                                                            margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                                            child: Card(
-                                                              elevation: 3.0,
-                                                              child: Padding(
-                                                                padding: EdgeInsets.all(8.0),
-                                                                child: Column(
-                                                                  children: [
-                                                                    Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text("Nama"),
-                                                                        Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                        ? "..." 
-                                                                        : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                        ? "..." 
-                                                                        : profileProvider.singleUserData.fullname)
-                                                                      ]
-                                                                    ),
-                                                                    SizedBox(height: 12.0),
-                                                                    Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text("No HP"),
-                                                                        Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                        ? "..." 
-                                                                        : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                        ? "..." 
-                                                                        : profileProvider.singleUserData.phoneNumber)
-                                                                      ]
-                                                                    ),
-                                                                  ],
-                                                                )
-                                                              ),
-                                                            ),
-                                                          ),
-
-                                                          Container(
-                                                            width: double.infinity,
-                                                            margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                                            child: Card(
-                                                              elevation: 3.0,
-                                                              child: Padding(
-                                                                padding: EdgeInsets.all(8.0),
-                                                                child: Column(
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-
-                                                                    Text(inboxProvider.inboxes[i].body,
-                                                                      textAlign: TextAlign.justify,
-                                                                      style: TextStyle(
-                                                                        height: 1.4
-                                                                      ),
-                                                                    ),
-
-                                                                    SizedBox(height: 10.0),
-
-                                                                    FractionallySizedBox(
-                                                                      widthFactor: 1.0,
-                                                                      child: Container(
-                                                                        child: Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            RaisedButton(
-                                                                              elevation: 3.0,
-                                                                              color: ColorResources.GREEN,
-                                                                              onPressed: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                              ? () {} 
-                                                                              : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                              ? () {}
-                                                                              : () async {
-                                                                                try {
-                                                                                  await launch("whatsapp://send?phone=${profileProvider.getSingleUserPhoneNumber}");
-                                                                                } catch(e) {
-                                                                                  print(e);
-                                                                                }
-                                                                              },
-                                                                              child: Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                                ? "..."
-                                                                                : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                                ? "..."
-                                                                                : "Whatsapp",
-                                                                                style: TextStyle(
-                                                                                  color: ColorResources.WHITE
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            RaisedButton(
-                                                                              elevation: 3.0,
-                                                                              color: ColorResources.BLUE,
-                                                                              onPressed: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                              ? () {} 
-                                                                              : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                              ? () {}
-                                                                              : () async {
-                                                                                try {
-                                                                                  await launch("tel:${profileProvider.getSingleUserPhoneNumber}");
-                                                                                } catch(e) {
-                                                                                  print(e);
-                                                                                }
-                                                                              },
-                                                                              child: Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                                ? "..."
-                                                                                : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                                ? "..."
-                                                                                : "Phone",
-                                                                                style: TextStyle(
-                                                                                  color: ColorResources.WHITE
-                                                                                ),
-                                                                              )
-                                                                            )
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                    
-                                                                  
-                                                                  ],
-                                                                )
-                                                              ),
-                                                            ),
-                                                          )
-                                              
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                              
-                                          },
-                                          animationType: DialogTransitionType.scale,
-                                          curve: Curves.fastOutSlowIn,
-                                          duration: Duration(seconds: 1),
-                                        );
-                                      } else {
-                                        Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => InboxDetailScreen(
-                                            type: inboxProvider.inboxes[i].type,
-                                            body: inboxProvider.inboxes[i].body,
-                                            subject: inboxProvider.inboxes[i].subject,
-                                            field1: inboxProvider.inboxes[i].field1,
-                                            field2: inboxProvider.inboxes[i].field2,
-                                            field5: inboxProvider.inboxes[i].field5,
-                                            field6: inboxProvider.inboxes[i].field6
-                                          )),
-                                        );
-                                      }
-                                    },
-                                    isThreeLine: true,
-                                    dense: true,
-                                    leading: Icon(
-                                      inboxProvider.inboxStatus == InboxStatus.loading  
-                                      ? Icons.label
-                                      : inboxProvider.inboxStatus == InboxStatus.error 
-                                      ? Icons.label
-                                      : inboxProvider.inboxes[i].subject == "Emergency" 
-                                      ? Icons.dangerous : Icons.phone_android,
-                                      color: ColorResources.getPrimaryToWhite(context),
-                                    ),
-                                    trailing: Icon(
-                                      inboxProvider.inboxStatus == InboxStatus.loading 
-                                    ? Icons.mark_as_unread 
-                                    : inboxProvider.inboxStatus == InboxStatus.error 
-                                    ? Icons.mark_as_unread 
-                                    : inboxProvider.inboxes[i].read 
-                                    ? Icons.mark_chat_read 
-                                    : Icons.mark_as_unread,
-                                      color: ColorResources.getPrimaryToWhite(context),
-                                    ),
-                                    title: Container(
-                                      margin: EdgeInsets.symmetric(vertical: 5.0),
-                                      child: Text(
-                                        inboxProvider.inboxStatus == InboxStatus.loading 
-                                      ? "..."
-                                      : inboxProvider.inboxStatus == InboxStatus.error 
-                                      ? "..." 
-                                      : inboxProvider.inboxes[i].subject),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.symmetric(vertical: 2.0),
-                                          child: Text(inboxProvider.inboxStatus == InboxStatus.loading 
-                                          ? "..."
-                                          : inboxProvider.inboxStatus == InboxStatus.error 
-                                          ? "..."
-                                          : inboxProvider.inboxes[i].body,
-                                            overflow: inboxProvider.inboxes[i].subject == "Emergency" 
-                                          ? TextOverflow.fade
-                                          : TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              height: 1.6
-                                            ),
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.symmetric(vertical: 6.0),
-                                          child: Text(inboxProvider.inboxStatus == InboxStatus.loading 
-                                          ? "..."
-                                          : inboxProvider.inboxStatus == InboxStatus.error 
-                                          ? "..."
-                                          : DateFormat('dd MMM yyyy kk:mm').format(inboxProvider.inboxes[i].created.add(Duration(hours: 7))),
-                                            style: TextStyle(
-                                              fontSize: 11.0
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ) 
-                                  ),
-                                ),
-                              ),
-                              Divider()
-                            ]
-                          );
-                          
-                        },
-                      ),
+                Container(
+                  margin: EdgeInsets.only(top: 20.0),
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 100.0,
+                    child: Image.asset(
+                      Images.wheel_btn
                     ),
                   ),
-                ); 
-              },
-            )
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                  alignment: Alignment.center,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Container(
+                        margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
+                        child: ListTile(
+                          dense: true,
+                          title: Text("FSHN Boutique",
+                            softWrap: true,
+                            style: poppinsRegular,
+                          ),
+                          trailing: Text("8:12 AM",
+                            softWrap: true,
+                            style: poppinsRegular.copyWith(
+                              fontSize: 11.0
+                            ),
+                          ),
+                          subtitle: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit…...",
+                            softWrap: true,
+                            style: poppinsRegular.copyWith(
+                              fontSize: 13.0
+                            ),
+                          ),
+                          leading: Container(
+                            child: CachedNetworkImage(
+                              imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                              imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
+                                backgroundImage: imageProvider,
+                                radius: 30.0,
+                              )
+                            ),
+                          ),
+                        ),
+                      );
+                    }, 
+                  ),
+                )
+
+              ],
+            ),
+
+            // Container(
+            //   margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            //   child: ListView.builder(
+            //     shrinkWrap: true,
+            //     itemCount: 4,
+            //     itemBuilder: (BuildContext context, int i) {
+            //       return Container(
+            //         child: Text("hello",
+            //           style: poppinsRegular.copyWith(
+            //             color: Colors.red
+            //           ),
+            //         ),
+            //       );
+            //     }, 
+            //   ),
+            // )
 
           ],
-        ),
+        ) 
       ),
     );
   }
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  var radius = 10.0;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 140);
+    path.quadraticBezierTo(size.width / 2, size.height, 
+    size.width, size.height - 140);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

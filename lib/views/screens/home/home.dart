@@ -1,10 +1,12 @@
 import 'dart:ui';
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:provider/provider.dart';
 
@@ -147,7 +149,7 @@ class HomePage extends StatelessWidget {
                               ),
                               SizedBox(width: 10.0),
                               InkWell(
-                                onTap: () {},
+                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
                                 child: Container(
                                   width: 28.0,
                                   height: 28.0,
@@ -155,10 +157,20 @@ class HomePage extends StatelessWidget {
                                     color: ColorResources.GREY,
                                     borderRadius: BorderRadius.circular(20.0)
                                   ),
-                                  child: Icon(
-                                    Icons.chat,
-                                    color: ColorResources.BLACK,
-                                    size: 17.0,
+                                  child: Badge(
+                                    position: BadgePosition(
+                                      top: -9.0,
+                                      end: 14.0
+                                    ),
+                                    badgeContent: Text(
+                                      "2",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    child: Icon(
+                                      Icons.chat,
+                                      color: ColorResources.BLACK,
+                                      size: 17.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -205,14 +217,7 @@ class HomePage extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.only(top: 5.0, right: 5.0),
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => MemberNearScreen(
-                                      whereFrom: "home",
-                                    )),
-                                  );
-                                },
+                                onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MemberNearScreen(whereFrom: "home"))),
                                 child: Text("Lihat semua",
                                 textAlign: TextAlign.end,
                                   style: poppinsRegular.copyWith(
@@ -237,7 +242,7 @@ class HomePage extends StatelessWidget {
                                           child: Container(
                                             child: CachedNetworkImage(
                                               imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
-                                              imageBuilder: (context, imageProvider) => Container(
+                                              imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
                                                 width: 60.0,
                                                 height: 60.0,
                                                 decoration: BoxDecoration(
@@ -246,7 +251,6 @@ class HomePage extends StatelessWidget {
                                                     fit: BoxFit.cover
                                                   )
                                                 ),
-                                            
                                               ),
                                               placeholder: (context, url) => Center(
                                                 child: SizedBox(
