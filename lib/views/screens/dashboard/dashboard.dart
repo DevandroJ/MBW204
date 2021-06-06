@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/feed/notification_demo.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/event/event.dart';
-import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
 import 'package:mbw204_club_ina/views/screens/home/home.dart';
 import 'package:mbw204_club_ina/views/screens/more/more.dart';
 
@@ -22,9 +22,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
   final List<Widget> screens = [
     HomePage(),
     MemberNearScreen(whereFrom: "dashboard"),
-    SosScreen(),
+    NotificatioDemoScreen(),
     EventScreen(),
-    MoreScreen(),
+    NotificatioDemoScreen(),
   ];
 
   @override
@@ -110,17 +110,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
             ),
           ),
           Tab(
-            icon: Consumer<InboxProvider>(
-              builder: (BuildContext context, InboxProvider inboxProvider, Widget child) {
-                return Container(
-                  width: 50.0,
-                  height: 60.0,
-                  child: Icon(
-                    Icons.notifications,
-                    size: 24.0,
-                  ),
-                );
-              },
+            icon: Container(
+              width: 50.0,
+              height: 60.0,
+              child: Icon(
+                Icons.notifications,
+                size: 24.0,
+              ),
             )
           ),
         ],

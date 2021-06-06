@@ -4,7 +4,7 @@ import 'package:timeago/src/messages/lookupmessages.dart';
 import 'package:mbw204_club_ina/data/models/language.dart';
 
 class AppConstants {
-  static const String BASE_URL = 'https://api-indomini.connexist.id';
+  static const String BASE_URL = 'https://api-w204.connexist.id';
   static const String BASE_URL_DISBURSEMENT_DENOM = 'https://pg-sandbox.connexist.id/disbursement/pub/v1/disbursement/denom';
   static const String BASE_URL_DISBURSEMENT_BANK = 'https://pg-sandbox.connexist.id/disbursement/pub/v1/disbursement/bank';
   static const String BASE_URL_DISBURSEMENT_EMONEY = 'https://pg-sandbox.connexist.id/disbursement/pub/v1/disbursement/emoney';

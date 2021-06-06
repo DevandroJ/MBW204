@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
@@ -162,8 +161,7 @@ class HomePage extends StatelessWidget {
                                       top: -9.0,
                                       end: 14.0
                                     ),
-                                    badgeContent: Text(
-                                      "2",
+                                    badgeContent: Text("2",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     child: Icon(
@@ -559,8 +557,6 @@ class HomePage extends StatelessWidget {
                             )
                           ),
 
-
-
                         ],
                       ),
                     )
@@ -568,9 +564,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-
-       
-
 
           ],
         )

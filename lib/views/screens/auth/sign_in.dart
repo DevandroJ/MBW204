@@ -6,9 +6,15 @@ import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 
-class SignInScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class SignInScreen extends StatefulWidget {
+  @override
+  _SignInScreenState createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   bool passwordObscure = false;
 
   @override

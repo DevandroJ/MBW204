@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/views/screens/chat/chat.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -82,6 +83,7 @@ class _InboxScreenState extends State<InboxScreen> {
                       return Container(
                         margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
                         child: ListTile(
+                          onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen())),
                           dense: true,
                           title: Text("FSHN Boutique",
                             softWrap: true,
@@ -116,24 +118,6 @@ class _InboxScreenState extends State<InboxScreen> {
 
               ],
             ),
-
-            // Container(
-            //   margin: EdgeInsets.only(left: 16.0, right: 16.0),
-            //   child: ListView.builder(
-            //     shrinkWrap: true,
-            //     itemCount: 4,
-            //     itemBuilder: (BuildContext context, int i) {
-            //       return Container(
-            //         child: Text("hello",
-            //           style: poppinsRegular.copyWith(
-            //             color: Colors.red
-            //           ),
-            //         ),
-            //       );
-            //     }, 
-            //   ),
-            // )
-
           ],
         ) 
       ),

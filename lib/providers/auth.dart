@@ -105,7 +105,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
     prefs.setString("role", user.body.user.role);
     prefs.setString("status", user.body.user.status);
     prefs.setString("userId", user.body.user.userId);
-    prefs.setString("userName", user.body.user.userName);
+    prefs.setString("userName", user.body.user.username);
     prefs.setString("userType", user.body.user.userType);
   }
 
@@ -249,34 +249,40 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setStateRegisterStatus(RegisterStatus.loading);
     try {
-      Response res = await dio.post("${AppConstants.BASE_URL}/user-service/register",
+      Response res = await dio.post("${AppConstants.BASE_URL}/user-service/${userData.statusRegister}/register",
         data: {
           "email_address": userData.emailAddress,
           "phone_number": userData.phoneNumber,
-          "user_fullname": userData.userName,
+          "user_fullname": userData.fullname,
           "password": userData.password,
           "address": userData.address ?? "",
-          "id_card_number": userData.idCardNumber ?? "",
+          "no_ktp": userData.idCardNumber ?? "",
+          "id_card_number": userData.idCardNumber ?? "", 
+          "id_member": userData.idMember ?? "",
+          "company_profile": userData.companyName ?? "",
           "no_anggota": userData.noAnggota ?? "",
+          "chapter": userData.chapter ?? "-",
+          "sub_modal": userData.subModel ?? "-",
+          "body_style": userData.bodyStyle ?? "-",
           "role": "user",
           "user_type": "generic"
         }
       );
       UserModel user = UserModel.fromJson(json.decode(res.data));
-      verify(context, json.decode(res.data)['body']['token'], user).then((val) {
-        if(val?.code == 0) {
-          prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
-          Future.delayed(Duration(seconds: 1), () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
-              accountName: val.body.data.accountName,
-              accountNumber: val.body.accountNumber2,
-              transactionId: val.body.transactionId,
-              productId: val.body.productId,
-              productPrice: val.body.productPrice,
-            )));
-          });
-        } 
-      });
+      // verify(context, json.decode(res.data)['body']['token'], user).then((val) {
+      //   if(val?.code == 0) {
+      //     prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
+      //     Future.delayed(Duration(seconds: 1), () {
+      //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
+      //         accountName: val.body.data.accountName,
+      //         accountNumber: val.body.accountNumber2,
+      //         transactionId: val.body.transactionId,
+      //         productId: val.body.productId,
+      //         productPrice: val.body.productPrice,
+      //       )));
+      //     });
+      //   } 
+      // });
       setStateRegisterStatus(RegisterStatus.loaded);
     } on DioError catch(e) {
       if(e.type == DioErrorType.CONNECT_TIMEOUT) {
@@ -289,7 +295,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       }
       if(e?.response?.statusCode == 400) {
         setStateRegisterStatus(RegisterStatus.error);
-        throw CustomException(json.decode(e.response.data)['error']);
+        throw CustomException(json.decode(e?.response?.data)['error']);
       }
       setStateRegisterStatus(RegisterStatus.error);
     } catch(e) {

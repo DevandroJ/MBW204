@@ -45,10 +45,19 @@ class UserData {
     this.phoneActivated,
     this.phoneNumber,
     this.role,
+    this.idCardNumber,
+    this.idMember,
+    this.address,
+    this.companyName,
     this.status,
     this.userId,
-    this.userName,
+    this.username,
+    this.fullname,
     this.userType,
+    this.chapter,
+    this.subModel,
+    this.bodyStyle,
+    this.statusRegister
   });
 
   DateTime created;
@@ -59,14 +68,21 @@ class UserData {
   String passwordNew;
   String passwordConfirm;
   String address;
+  String companyName;
   String idCardNumber;
+  String idMember;
   String phoneNumber;
   String noAnggota;
   String role;
   String status;
   String userId;
-  String userName;
+  String username;
+  String fullname;
   String userType;
+  String chapter;
+  String subModel;
+  String bodyStyle;
+  String statusRegister;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
     emailActivated: json["email_activated"],
@@ -76,8 +92,15 @@ class UserData {
     role: json["role"],
     status: json["status"],
     userId: json["user_id"],
-    userName: json["user_name"],
+    username: json["user_name"],
     userType: json["user_type"],
     created: DateTime.parse(json["created"]),
+    idMember: json["id_member"],
+    idCardNumber: json["id_card_number"],
+    companyName: json["company_name"],
+    chapter: json["chapter"],
+    subModel: json["sub_model"],
+    bodyStyle: json["body_style"],
+    statusRegister: json["status_register"]
   );
 }
