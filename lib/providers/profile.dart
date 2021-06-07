@@ -94,24 +94,24 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
-  String get getUserProfilePic => profileRepo.getUserProfilePic;
+  String get getUserProfilePic => profileRepo.getUserProfilePic ?? "-";
 
-  String get getSingleUserProfilePic => profileRepo.getSingleUserProfilePic;
+  String get getSingleUserProfilePic => profileRepo.getSingleUserProfilePic ?? "-";
   
-  String get getUserId => profileRepo.getUserId;
+  String get getUserId => profileRepo.getUserId ?? "-";
   
-  String get getUserName => profileRepo.getUserName;
+  String get getUserName => profileRepo.getUserName ?? "-";
 
-  String get getUserFullname => profileRepo.getUserFullname;
+  String get getUserFullname => profileRepo.getUserFullname ?? "-";
 
-  String get getSingleUserFullname => profileRepo.getSingleUserFullname;
+  String get getSingleUserFullname => profileRepo.getSingleUserFullname ?? "-";
   
-  String get getUserIdCardNumber => profileRepo.getUserCardNumber;
+  String get getUserIdCardNumber => profileRepo.getUserCardNumber ?? "-";
   
-  String get getUserEmail => profileRepo.getUserEmail;
+  String get getUserEmail => profileRepo.getUserEmail ?? "-";
   
-  String get getUserPhoneNumber => profileRepo.getUserPhoneNumber;
+  String get getUserPhoneNumber => profileRepo.getUserPhoneNumber ?? "-";
   
-  String get getSingleUserPhoneNumber => profileRepo.getSingleUserPhoneNumber;
+  String get getSingleUserPhoneNumber => profileRepo.getSingleUserPhoneNumber ?? "-"; 
   
 }

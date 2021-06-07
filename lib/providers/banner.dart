@@ -39,6 +39,9 @@ class BannerProvider extends ChangeNotifier {
           setStateBannerStatus(BannerStatus.loaded);
         }
       } 
+      if(bannerListMap.isEmpty) {
+        setStateBannerStatus(BannerStatus.empty);
+      }
       _currentIndex = 0;
     } on ServerErrorException catch(_) {
       setStateBannerStatus(BannerStatus.error);

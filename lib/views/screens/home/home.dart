@@ -20,6 +20,7 @@ import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
@@ -49,70 +50,117 @@ class HomePage extends StatelessWidget {
         endDrawer: DrawerWidget(),
         body: Stack(
           children: [
-            
-            Container(
-              width: double.infinity,
-              height: 230.0,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  
-                  CarouselSlider.builder(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 1.0,
-                      onPageChanged: (int index, CarouselPageChangedReason reason) {
-                       
-                      },
-                    ),
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int i) {
-                      return InkWell(
-                        onTap: () { 
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0)
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0)
-                            ),
-                            child: Image.network("https://lektur.id/wp-content/uploads/2020/04/dummy.jpg",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )
-                      );                  
-                    },
-                  ),
-
-                  Positioned(
-                    bottom: 5.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          
+            Consumer<BannerProvider>(
+              builder: (BuildContext context, BannerProvider bannerProvider, Widget child) {
+                
+                if(bannerProvider.bannerStatus == BannerStatus.loading) {
+                  return Container(
+                    width: double.infinity,
+                    height: 230.0,
+                    child: Stack(
+                      fit: StackFit.expand,
                       children: [
-                        TabPageSelectorIndicator(
-                          backgroundColor: ColorResources.WHITE,
-                          borderColor: Colors.white,
-                          size: 10.0,
-                        )
-                      ]
-                    ),
-                  ),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300],
+                          highlightColor: Colors.grey[200],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: ColorResources.WHITE,
+                            )
+                          ),
+                        ),
+                      ],
+                    ) 
+                  );
+                }
 
-                ],
-              )
+                if(bannerProvider.bannerStatus == BannerStatus.empty)      
+                  return Container(
+                    width: double.infinity,
+                    height: 230.0,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 120.0),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("No Banner Available"),
+                          ),
+                        )
+                      ],
+                    ) 
+                  );
+            
+
+                return Container(
+                  width: double.infinity,
+                  height: 230.0,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      
+                      CarouselSlider.builder(
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 1.0,
+                          onPageChanged: (int index, CarouselPageChangedReason reason) {
+                          
+                          },
+                        ),
+                        itemCount: 3,
+                        itemBuilder: (BuildContext context, int i) {
+                          return InkWell(
+                            onTap: () { 
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0)
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0)
+                                ),
+                                child: Image.network("https://lektur.id/wp-content/uploads/2020/04/dummy.jpg",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          );                  
+                        },
+                      ),
+
+                      Positioned(
+                        bottom: 5.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TabPageSelectorIndicator(
+                              backgroundColor: ColorResources.WHITE,
+                              borderColor: Colors.white,
+                              size: 10.0,
+                            )
+                          ]
+                        ),
+                      ),
+
+                    ],
+                  )
+                );
+              },
             ),
+           
 
             DefaultTabController(
               length: 2,

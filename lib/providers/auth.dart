@@ -187,19 +187,19 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         }
       );   
       UserModel user = UserModel.fromJson(json.decode(res.data));
-      InquiryRegisterModel inquiryRegisterModel = await verify(context, user.body.token, user);
-      if(inquiryRegisterModel?.code == 0) {
-        prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
-        Future.delayed(Duration(seconds: 1), () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
-            accountName: inquiryRegisterModel.body.data.accountName,
-            accountNumber: inquiryRegisterModel.body.accountNumber2,
-            transactionId: inquiryRegisterModel.body.transactionId,
-            productId: inquiryRegisterModel.body.productId,
-            productPrice: inquiryRegisterModel.body.productPrice,
-          )));
-        });
-      } else {
+    //   InquiryRegisterModel inquiryRegisterModel = await verify(context, user.body.token, user);
+    //   if(inquiryRegisterModel?.code == 0) {
+    //     prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
+    //     Future.delayed(Duration(seconds: 1), () {
+    //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
+    //         accountName: inquiryRegisterModel.body.data.accountName,
+    //         accountNumber: inquiryRegisterModel.body.accountNumber2,
+    //         transactionId: inquiryRegisterModel.body.transactionId,
+    //         productId: inquiryRegisterModel.body.productId,
+    //         productPrice: inquiryRegisterModel.body.productPrice,
+    //       )));
+    //     });
+    //   } else {
         showAnimatedDialog(
           context: context,
           barrierDismissible: true,
@@ -222,20 +222,22 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       );
       writeData(user);
       Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
-    }
+    // }
       setStateLoginStatus(LoginStatus.loaded);
     } on DioError catch(e) {
-      if(e.type == DioErrorType.CONNECT_TIMEOUT) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+      if(e?.type == DioErrorType.CONNECT_TIMEOUT) {
         setStateLoginStatus(LoginStatus.error);
         throw CustomException("CONNECTION_TIMEOUT");
       }
-      if(e.response?.statusCode == 500) {
+      if(e?.response?.statusCode == 500) {
         setStateLoginStatus(LoginStatus.error);
         throw json.decode(e.response.data);
       }
-      if(e.response?.statusCode == 400) {
+      if(e?.response?.statusCode == 400) {
         setStateLoginStatus(LoginStatus.error);
-        throw CustomException(json.decode(e.response.data)['error']);
+        throw CustomException(json.decode(e?.response?.data)['error']);
       }
       setStateLoginStatus(LoginStatus.error);
     } catch (e) {
@@ -285,11 +287,11 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       // });
       setStateRegisterStatus(RegisterStatus.loaded);
     } on DioError catch(e) {
-      if(e.type == DioErrorType.CONNECT_TIMEOUT) {
+      if(e?.type == DioErrorType.CONNECT_TIMEOUT) {
         setStateRegisterStatus(RegisterStatus.error);
         throw CustomException("CONNECTION_TIMEOUT");
       }
-      if(e.response?.statusCode == 500) {
+      if(e?.response?.statusCode == 500) {
         setStateRegisterStatus(RegisterStatus.error);
         throw json.decode(e.response.data);
       }

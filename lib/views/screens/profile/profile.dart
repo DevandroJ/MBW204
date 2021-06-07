@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/profile/edit.dart';
@@ -129,7 +130,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   margin: EdgeInsets.only(top: 180.0),
-                  child: Text("Nurhalizah",
+                  child: Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
+                  ? "..." 
+                  : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                  ? "..." 
+                  : Provider.of<ProfileProvider>(context, listen: false).getUserFullname, 
                     style: poppinsRegular.copyWith(
                       color: ColorResources.BTN_PRIMARY_SECOND,
                       fontSize: 19.0
@@ -243,9 +248,17 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
               profileListAccount(context, "ID Anggota", "1234567890"),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Nomor Identitas KTP", "1234567890"),
+              profileListAccount(context, "Nomor Identitas KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              ? "..." 
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..." 
+              : Provider.of<ProfileProvider>(context, listen: false).getUserIdCardNumber),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Nomor Handphone", "089670558381"),
+              profileListAccount(context, "Nomor Handphone", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              ? "..." 
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..." 
+              : Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber),
               SizedBox(height: 10.0),
               profileListAccount(context, "Alamat", "Cibinong, Bogor, Jawa Barat"),
               SizedBox(height: 10.0),

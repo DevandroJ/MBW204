@@ -124,7 +124,7 @@ class VerifyScreen extends StatelessWidget {
                                 Container(
                                   width: 150.0,
                                   child: Text(
-                                    "Biaya Kartu Anggota",
+                                    "Biaya Registrasi dan Merchandise",
                                     style: TextStyle(fontSize: 14.0),
                                   ),
                                 ),
