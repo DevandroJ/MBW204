@@ -70,7 +70,7 @@ class _EventScreenState extends State<EventScreen> {
                         if(eventProvider.eventStatus == EventStatus.loading) 
                           return Expanded(
                             child: Loader(
-                              color: ColorResources.getPrimaryToWhite(context),
+                              color: ColorResources.BTN_PRIMARY_SECOND,
                             ),
                           );
                         return TableCalendar(
@@ -96,7 +96,7 @@ class _EventScreenState extends State<EventScreen> {
                         if(eventProvider.eventStatus == EventStatus.loading) 
                           return Expanded(
                             child: Loader(
-                              color: ColorResources.getPrimaryToWhite(context),
+                              color: ColorResources.BTN_PRIMARY_SECOND,
                             ),
                           );
                         return Expanded(

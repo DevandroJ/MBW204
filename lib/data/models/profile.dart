@@ -24,6 +24,7 @@ class ProfileData {
     this.fullname,
     this.gender,
     this.idCardNumber,
+    this.idMember,
     this.shortBio,
     this.profilePic,
     this.status,
@@ -40,6 +41,7 @@ class ProfileData {
   String fullname;
   String gender;
   String idCardNumber;
+  String idMember;
   String shortBio;
   String profilePic;
   bool status;
@@ -56,6 +58,7 @@ class ProfileData {
     fullname: json["fullname"],
     gender: json["gender"],
     idCardNumber: json["id_card_number"],
+    idMember: json["id_member"],
     shortBio: json["short_bio"],
     profilePic: json["profile_pic"],
     status: json["status"],

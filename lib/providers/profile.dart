@@ -106,9 +106,13 @@ class ProfileProvider extends ChangeNotifier {
 
   String get getSingleUserFullname => profileRepo.getSingleUserFullname ?? "-";
   
+  String get getUserIdNumber => profileRepo.getUserIdMember ?? "-";
+
   String get getUserIdCardNumber => profileRepo.getUserCardNumber ?? "-";
   
   String get getUserEmail => profileRepo.getUserEmail ?? "-";
+ 
+  String get getUserAddress => profileRepo.getUserAddress ?? "-";
   
   String get getUserPhoneNumber => profileRepo.getUserPhoneNumber ?? "-";
   

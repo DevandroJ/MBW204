@@ -1,14 +1,16 @@
 import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
+
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
-import 'package:provider/provider.dart';
-
 import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/views/screens/home/widgets/drawer.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';
@@ -20,7 +22,6 @@ import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
@@ -94,7 +95,6 @@ class HomePage extends StatelessWidget {
                     ) 
                   );
             
-
                 return Container(
                   width: double.infinity,
                   height: 230.0,

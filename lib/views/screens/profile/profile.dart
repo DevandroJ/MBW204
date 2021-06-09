@@ -246,7 +246,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
               SizedBox(height: 20.0),
 
-              profileListAccount(context, "ID Anggota", "1234567890"),
+              profileListAccount(context, "ID Anggota", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserIdCardNumber
+              ),
               SizedBox(height: 10.0),
               profileListAccount(context, "Nomor Identitas KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
@@ -260,7 +265,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Alamat", "Cibinong, Bogor, Jawa Barat"),
+              profileListAccount(context, "Alamat", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              ? "..." 
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..." 
+              : Provider.of<ProfileProvider>(context, listen: false).getUserAddress),
               SizedBox(height: 10.0),
               profileListAccount(context, "Tempat Lahir", "Jakarta"),
               SizedBox(height: 10.0),

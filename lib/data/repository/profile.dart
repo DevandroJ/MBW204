@@ -81,6 +81,8 @@ class ProfileRepo {
 
   String get getUserGender => profileData.gender ?? "-";
 
+  String get getUserIdMember => profileData.idMember ?? "-";
+
   String get getUserCardNumber => profileData.idCardNumber ?? "-";
 
   String get getUserShortBio => profileData.shortBio ?? "-";

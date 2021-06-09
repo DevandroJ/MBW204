@@ -32,15 +32,20 @@ class EventProvider with ChangeNotifier {
 
   void getEvent(BuildContext context) async {
     try {
+      setStateEventStatus(EventStatus.loading);
       List<EventData> eventData = await eventRepo.getEvent(context);
-      _eventData.addAll(eventData);
-      setStateEventStatus(EventStatus.loaded);
-      for (int i = 0; i < _eventData.length; i++) {
-        createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].eventDate.toString())] = [
-          _eventData[i].description,
-        ];
-        DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
-        events = createEvent[dateNow] ?? [];
+      if(eventData == null) {
+        setStateEventStatus(EventStatus.empty);
+      } else {
+        _eventData.addAll(eventData);
+        setStateEventStatus(EventStatus.loaded);
+        for (int i = 0; i < _eventData.length; i++) {
+          createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].eventDate.toString())] = [
+            _eventData[i].description,
+          ];
+          DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+          events = createEvent[dateNow] ?? [];
+        }
       }
       if(_eventData.isEmpty) {
         setStateEventStatus(EventStatus.empty);
