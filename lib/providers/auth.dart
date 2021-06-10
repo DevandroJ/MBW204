@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mbw204_club_ina/data/models/ppob/register/inquiry.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
-import 'package:mbw204_club_ina/views/screens/auth/widgets/verify.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/data/models/user.dart';
 import 'package:mbw204_club_ina/data/repository/auth.dart';

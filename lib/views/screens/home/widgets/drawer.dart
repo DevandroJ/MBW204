@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -8,7 +9,6 @@ import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/about/about.dart';
 import 'package:mbw204_club_ina/views/screens/auth/change_password.dart';
 import 'package:mbw204_club_ina/views/screens/profile/profile.dart';
-import 'package:provider/provider.dart';
 
 class DrawerWidget extends StatefulWidget {
 
@@ -189,7 +189,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               fontWeight: FontWeight.bold
             )
           ),
-          Text("ID 0123456789",
+          Text("ID ${Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+            ? "..." 
+            : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+            ? "..." 
+            : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber}",
             style: poppinsRegular.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 12.0

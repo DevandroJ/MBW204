@@ -83,7 +83,7 @@ class _EventScreenState extends State<EventScreen> {
                           onCalendarCreated: (DateTime first, DateTime last, CalendarFormat format) {},
                           calendarStyle: CalendarStyle(
                             selectedColor: ColorResources.BTN_PRIMARY_SECOND,
-                            todayColor: ColorResources.PRIMARY.withOpacity(0.3),
+                            todayColor: ColorResources.BTN_PRIMARY_SECOND.withOpacity(0.3),
                             markersColor: ColorResources.YELLOW_PRIMARY,
                             outsideDaysVisible: false,
                           ),
@@ -113,7 +113,7 @@ class _EventScreenState extends State<EventScreen> {
                                     elevation: 0.3,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: ColorResources.getPrimaryToWhite(context),
+                                        color: ColorResources.BTN_PRIMARY_SECOND,
                                         borderRadius: BorderRadius.circular(5.0)
                                       ),
                                       padding: EdgeInsets.all(8.0),

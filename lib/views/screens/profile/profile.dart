@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/providers/auth.dart';
+import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/profile/edit.dart';
@@ -203,12 +204,20 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Text("125.000,-",
-                        style: poppinsRegular.copyWith(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal
-                        ),
-                      ),
+                      Consumer<PPOBProvider>(
+                        builder: (context, PPOBProvider ppobProvider, Widget child) {
+                          return Text(ppobProvider.balanceStatus == BalanceStatus.loading 
+                            ? "..." 
+                            : ppobProvider.balanceStatus == BalanceStatus.error 
+                            ? "..."
+                            : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
+                            style: poppinsRegular.copyWith(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.normal
+                            ),
+                          );
+                        },
+                      )
                     ],
                   ),
 
@@ -369,12 +378,20 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Text("125.000,-",
-                        style: poppinsRegular.copyWith(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal
-                        ),
-                      ),
+                      Consumer<PPOBProvider>(
+                        builder: (context, PPOBProvider ppobProvider, Widget child) {
+                          return Text(ppobProvider.balanceStatus == BalanceStatus.loading 
+                            ? "..." 
+                            : ppobProvider.balanceStatus == BalanceStatus.error 
+                            ? "..."
+                            : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
+                            style: poppinsRegular.copyWith(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.normal
+                            ),
+                          );
+                        },
+                      )
                     ],
                   ),
 
@@ -422,6 +439,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       left: 30.0,
                       child: CircleAvatar(
                         radius: 30.0,
+                        backgroundColor: ColorResources.WHITE,
                         backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif") ,
                       )
                     ),
@@ -429,7 +447,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     Positioned(
                       top: 130.0,
                       left: 105.0,
-                      child: Text("Michi",
+                      child: Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).getUserFullname,
                         style: poppinsRegular.copyWith(
                           color: ColorResources.WHITE,
                           fontWeight: FontWeight.bold,
@@ -519,7 +541,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         child: Image.asset(Images.profile_drawer)
                       ),
                       SizedBox(width: 20.0),
-                      Text("ID 2153524698567",
+                      Text("ID ${Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber}",
                         style: poppinsRegular.copyWith(
                           fontSize: 14.0,
                           color: ColorResources.BLACK
