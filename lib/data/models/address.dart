@@ -10,17 +10,18 @@ class AddressModel {
   String createdAt;
   String updatedAt;
 
-  AddressModel(
-      {this.id,
-        this.customerId,
-        this.contactPersonName,
-        this.addressType,
-        this.address,
-        this.city,
-        this.zip,
-        this.phone,
-        this.createdAt,
-        this.updatedAt});
+  AddressModel({
+    this.id,
+    this.customerId,
+    this.contactPersonName,
+    this.addressType,
+    this.address,
+    this.city,
+    this.zip,
+    this.phone,
+    this.createdAt,
+    this.updatedAt
+  });
 
   AddressModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

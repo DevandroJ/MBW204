@@ -31,6 +31,7 @@ class ChatScreen extends StatelessWidget {
       title: Row(
         children: [
           CircleAvatar(
+            backgroundColor: ColorResources.WHITE,
             backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif"),
           ),
           SizedBox(width: 10.0),

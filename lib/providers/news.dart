@@ -16,7 +16,7 @@ class NewsProvider with ChangeNotifier {
   GetNewsStatus get getNewsStatus => _getNewsStatus;
 
   List<NewsBody> _newsBody = [];
-  List<NewsBody> get newsBody => _newsBody;
+  List<NewsBody> get newsBody => [..._newsBody];
 
   void setStateGetNewsStatus(GetNewsStatus getNewsStatus) {
     _getNewsStatus = getNewsStatus;
@@ -32,6 +32,9 @@ class NewsProvider with ChangeNotifier {
       List<NewsBody> listNewsBody = newsModel.body;
       _newsBody.addAll(listNewsBody);
       setStateGetNewsStatus(GetNewsStatus.loaded);
+      if(_newsBody.isEmpty) {
+        setStateGetNewsStatus(GetNewsStatus.empty);
+      }
     } on ServerErrorException catch(_) {
       setStateGetNewsStatus(GetNewsStatus.error);
     } catch(e) {

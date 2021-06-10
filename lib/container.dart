@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/mobx/feed.dart';
@@ -69,6 +70,7 @@ Future<void> init() async {
   getIt.registerFactory(() => MediaProvider(mediaRepo: getIt()));
   getIt.registerFactory(() => PPOBProvider(sharedPreferences: getIt()));
   getIt.registerFactory(() => NewsProvider());
+  getIt.registerFactory(() => NearMemberProvider(sharedPreferences: getIt()));
   getIt.registerFactory(() => WarungProvider());
   getIt.registerFactory(() => InboxProvider());
   getIt.registerFactory(() => FcmProvider());

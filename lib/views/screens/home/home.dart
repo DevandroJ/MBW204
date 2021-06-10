@@ -22,6 +22,8 @@ import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/providers/news.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
 
 class HomePage extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
@@ -40,6 +42,7 @@ class HomePage extends StatelessWidget {
     Provider.of<InboxProvider>(context, listen: false).getInboxes(context);
     Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
     Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
+    Provider.of<NewsProvider>(context, listen: false).getNews(context);
     
     return WillPopScope(
       onWillPop: () {
@@ -451,78 +454,97 @@ class HomePage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: ColorResources.WHITE,
                             ),
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10.0),
-                              child: ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: 3,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return Container(
-                                    color: ColorResources.WHITE,
-                                    width: double.infinity,
-                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                    child: Card(
-                                      elevation: 2.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
+                            child: Consumer<NewsProvider>(
+                              builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
+                                
+                                if(newsProvider.getNewsStatus == GetNewsStatus.loading) {
+                                  return Loader(
+                                    color: ColorResources.BTN_PRIMARY_SECOND,
+                                  );
+                                }
 
-                                        },
-                                        child: Stack(
-                                          children: [
-
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                CachedNetworkImage(
-                                                  imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
-                                                    imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                    width: 120.0,
-                                                    height: 80.0,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10.0),
-                                                      image: DecorationImage(
-                                                        image: imageProvider, 
-                                                        fit: BoxFit.cover
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 10.0),
-                                                Container(
-                                                  width: 200.0,
-                                                  margin: EdgeInsets.only(top: 10.0),
-                                                  child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
-                                                    softWrap: true,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.bold
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-
-                                            Positioned(
-                                              top: 55.0,
-                                              right: 10.0,
-                                              child: Text("Baca Selengkapnya",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0
-                                                ),
-                                              )
-                                            )
-
-                                          ],
-                                        ),
-                                      ),
+                                if(newsProvider.getNewsStatus == GetNewsStatus.empty) {
+                                  return Center(
+                                    child: Text("No News Available", 
+                                      style: poppinsRegular,
                                     ),
                                   );
-                                },
-                              ),
+                                }
+
+                                return Container(
+                                  margin: EdgeInsets.only(top: 10.0),
+                                  child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: newsProvider.newsBody.length,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      return Container(
+                                        color: ColorResources.WHITE,
+                                        width: double.infinity,
+                                        margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                        child: Card(
+                                          elevation: 2.0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0)
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+
+                                            },
+                                            child: Stack(
+                                              children: [
+
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CachedNetworkImage(
+                                                      imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                        imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                        width: 120.0,
+                                                        height: 80.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          image: DecorationImage(
+                                                            image: imageProvider, 
+                                                            fit: BoxFit.cover
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10.0),
+                                                    Container(
+                                                      width: 200.0,
+                                                      margin: EdgeInsets.only(top: 10.0),
+                                                      child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                        softWrap: true,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                Positioned(
+                                                  top: 55.0,
+                                                  right: 10.0,
+                                                  child: Text("Baca Selengkapnya",
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 12.0
+                                                    ),
+                                                  )
+                                                )
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ); 
+                              },
                             )
                           ),
 
@@ -530,80 +552,178 @@ class HomePage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: ColorResources.WHITE,
                             ),
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10.0),
-                              child: ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: 3,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return Container(
-                                    color: ColorResources.WHITE,
-                                    width: double.infinity,
-                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                    child: Card(
-                                      elevation: 2.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      child: InkWell(
-                                        onTap: () {
+                            child: Consumer<NewsProvider>(
+                              builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
+                                
+                                if(newsProvider.getNewsStatus == GetNewsStatus.loading) {
+                                  return Loader(
+                                    color: ColorResources.BTN_PRIMARY_SECOND,
+                                  );
+                                }
 
-                                        },
-                                        child: Stack(
-                                          children: [
-
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                CachedNetworkImage(
-                                                  imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
-                                                    imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                    width: 120.0,
-                                                    height: 80.0,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10.0),
-                                                      image: DecorationImage(
-                                                        image: imageProvider, 
-                                                        fit: BoxFit.cover
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 10.0),
-                                                Container(
-                                                  width: 200.0,
-                                                  margin: EdgeInsets.only(top: 10.0),
-                                                  child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
-                                                    softWrap: true,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.bold
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-
-                                            Positioned(
-                                              top: 55.0,
-                                              right: 10.0,
-                                              child: Text("Baca Selengkapnya",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0
-                                                ),
-                                              )
-                                            )
-
-                                          ],
-                                        ),
-                                      ),
+                                if(newsProvider.getNewsStatus == GetNewsStatus.empty) {
+                                  return Center(
+                                    child: Text("No News Available", 
+                                      style: poppinsRegular,
                                     ),
                                   );
-                                },
-                              ),
+                                }
+
+                                return Container(
+                                  margin: EdgeInsets.only(top: 10.0),
+                                  child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: newsProvider.newsBody.length,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      return Container(
+                                        color: ColorResources.WHITE,
+                                        width: double.infinity,
+                                        margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                        child: Card(
+                                          elevation: 2.0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0)
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+
+                                            },
+                                            child: Stack(
+                                              children: [
+
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CachedNetworkImage(
+                                                      imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                        imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                        width: 120.0,
+                                                        height: 80.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          image: DecorationImage(
+                                                            image: imageProvider, 
+                                                            fit: BoxFit.cover
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10.0),
+                                                    Container(
+                                                      width: 200.0,
+                                                      margin: EdgeInsets.only(top: 10.0),
+                                                      child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                        softWrap: true,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontWeight: FontWeight.bold
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+
+                                                Positioned(
+                                                  top: 55.0,
+                                                  right: 10.0,
+                                                  child: Text("Baca Selengkapnya",
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 12.0
+                                                    ),
+                                                  )
+                                                )
+
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ); 
+                              },
                             )
                           ),
+
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //     color: ColorResources.WHITE,
+                          //   ),
+                          //   child: Container(
+                          //     margin: EdgeInsets.only(top: 10.0),
+                          //     child: ListView.builder(
+                          //       physics: NeverScrollableScrollPhysics(),
+                          //       itemCount: 3,
+                          //       itemBuilder: (BuildContext context, int i) {
+                          //         return Container(
+                          //           color: ColorResources.WHITE,
+                          //           width: double.infinity,
+                          //           margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                          //           child: Card(
+                          //             elevation: 2.0,
+                          //             shape: RoundedRectangleBorder(
+                          //               borderRadius: BorderRadius.circular(10.0)
+                          //             ),
+                          //             child: InkWell(
+                          //               onTap: () {
+
+                          //               },
+                          //               child: Stack(
+                          //                 children: [
+
+                          //                   Row(
+                          //                     crossAxisAlignment: CrossAxisAlignment.start,
+                          //                     children: [
+                          //                       CachedNetworkImage(
+                          //                         imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                          //                           imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                          //                           width: 120.0,
+                          //                           height: 80.0,
+                          //                           decoration: BoxDecoration(
+                          //                             borderRadius: BorderRadius.circular(10.0),
+                          //                             image: DecorationImage(
+                          //                               image: imageProvider, 
+                          //                               fit: BoxFit.cover
+                          //                             ),
+                          //                           ),
+                          //                         ),
+                          //                       ),
+                          //                       SizedBox(width: 10.0),
+                          //                       Container(
+                          //                         width: 200.0,
+                          //                         margin: EdgeInsets.only(top: 10.0),
+                          //                         child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                          //                           softWrap: true,
+                          //                           overflow: TextOverflow.ellipsis,
+                          //                           style: TextStyle(
+                          //                             fontWeight: FontWeight.bold
+                          //                           ),
+                          //                         ),
+                          //                       ),
+                          //                     ],
+                          //                   ),
+
+                          //                   Positioned(
+                          //                     top: 55.0,
+                          //                     right: 10.0,
+                          //                     child: Text("Baca Selengkapnya",
+                          //                       style: TextStyle(
+                          //                         fontWeight: FontWeight.normal,
+                          //                         fontSize: 12.0
+                          //                       ),
+                          //                     )
+                          //                   )
+
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         );
+                          //       },
+                          //     ),
+                          //   )
+                          // ),
 
                         ],
                       ),
