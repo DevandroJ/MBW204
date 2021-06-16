@@ -14,7 +14,6 @@ class NewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
     Provider.of<NewsProvider>(context, listen: false).getNews(context);
 
     return Scaffold(
@@ -27,6 +26,11 @@ class NewsScreen extends StatelessWidget {
             Expanded(
               child: Consumer<NewsProvider>(
                 builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
+
+                  if(newsProvider.getNewsStatus == GetNewsStatus.empty) 
+                    return Center(
+                      child: Text("There is no News"),
+                    );
                   return Container(
                     margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 5.0, right: 5.0),
                     child: ListView.builder(

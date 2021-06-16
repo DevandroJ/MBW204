@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 
@@ -9,7 +11,8 @@ class ProfileEditScreen extends StatefulWidget {
 }
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
-  
+  bool loading = false;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
   TextEditingController noKtpController = TextEditingController();
@@ -18,6 +21,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   TextEditingController passwordController = TextEditingController();
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

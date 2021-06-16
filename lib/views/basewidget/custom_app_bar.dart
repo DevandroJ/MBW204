@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-
 
 class CustomAppBar extends StatelessWidget {
   final String title;
@@ -25,17 +25,8 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-      ClipRRect(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5)),
-        child: Image.asset(
-          Images.toolbar_background, 
-          fit: BoxFit.fill,
-          height: 50 + MediaQuery.of(context).padding.top, 
-          width: MediaQuery.of(context).size.width,
-          color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
-        ),
-      ),
       Container(
+        color: ColorResources.BTN_PRIMARY,
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         height: 50.0,
         alignment: Alignment.center,

@@ -7,10 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/data/models/nearmember.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NearMemberRepo {
+  final SharedPreferences sharedPreferences;
+  NearMemberRepo({
+    @required this.sharedPreferences
+  });
 
-  Future<List<NearMemberData>> nearMember(BuildContext context, String lat, String long) async {
+  Future<List<NearMemberData>> getNearMember(BuildContext context, double lat, double long) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL}/data/nearme?lat=$lat&lng=$long");

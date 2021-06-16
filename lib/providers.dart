@@ -1,8 +1,9 @@
-import 'package:mbw204_club_ina/providers/region.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'container.dart' as c;
 
+import 'package:mbw204_club_ina/providers/nearmember.dart';
+import 'package:mbw204_club_ina/providers/region.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
@@ -43,6 +44,7 @@ List<SingleChildWidget> independentServices = [
   ChangeNotifierProvider(create: (_) => c.getIt<ProfileProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<SplashProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<PPOBProvider>()),
+  ChangeNotifierProvider(create: (_) => c.getIt<NearMemberProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<RegionProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<LocalizationProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<ThemeProvider>()),

@@ -35,6 +35,9 @@ class NewsProvider with ChangeNotifier {
       if(_newsBody.isEmpty) {
         setStateGetNewsStatus(GetNewsStatus.empty);
       }
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
     } on ServerErrorException catch(_) {
       setStateGetNewsStatus(GetNewsStatus.error);
     } catch(e) {

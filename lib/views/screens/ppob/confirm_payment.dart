@@ -251,7 +251,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                               style: poppinsRegular.copyWith(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.w800,
-                                color: ColorResources.PRIMARY
+                                color: ColorResources.BTN_PRIMARY
                               ),
                             ),
                           )
@@ -293,7 +293,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                               borderRadius: BorderRadius.circular(8.0),
                               side: BorderSide(
                                 width: 1, 
-                                color: ColorResources.PRIMARY
+                                color: ColorResources.BTN_PRIMARY
                               )
                             ),
                             color: ColorResources.WHITE,
@@ -307,7 +307,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                             child: Container(
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: selectedIndex == i ? ColorResources.PRIMARY : Colors.transparent,
+                                color: selectedIndex == i ? ColorResources.BTN_PRIMARY : Colors.transparent,
                                 borderRadius: BorderRadius.circular(4.0)
                               ),
                               child: Column(
@@ -342,7 +342,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                         child: Text(
                                           ppobProvider.listVa[i].name,
                                           style: TextStyle(
-                                            color: selectedIndex == i ? ColorResources.WHITE : ColorResources.PRIMARY
+                                            color: selectedIndex == i ? ColorResources.WHITE : ColorResources.BTN_PRIMARY
                                           ),
                                         ),
                                       )

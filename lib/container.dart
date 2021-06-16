@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mbw204_club_ina/data/repository/nearmember.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,6 +53,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => CategoryRepo());
   getIt.registerLazySingleton(() => SosRepo());
   getIt.registerLazySingleton(() => BannerRepo());
+  getIt.registerLazySingleton(() => NearMemberRepo(sharedPreferences: getIt()));
   getIt.registerLazySingleton(() => EventRepo());
   getIt.registerLazySingleton(() => OnBoardingRepo());
   getIt.registerLazySingleton(() => MediaRepo());
@@ -70,7 +72,7 @@ Future<void> init() async {
   getIt.registerFactory(() => MediaProvider(mediaRepo: getIt()));
   getIt.registerFactory(() => PPOBProvider(sharedPreferences: getIt()));
   getIt.registerFactory(() => NewsProvider());
-  getIt.registerFactory(() => NearMemberProvider(sharedPreferences: getIt()));
+  getIt.registerFactory(() => NearMemberProvider(nearMemberRepo: getIt()));
   getIt.registerFactory(() => WarungProvider());
   getIt.registerFactory(() => InboxProvider());
   getIt.registerFactory(() => FcmProvider());

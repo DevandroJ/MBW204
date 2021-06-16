@@ -135,7 +135,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
 
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(top: 60.0, bottom: 20.0),
+                          margin: EdgeInsets.only(top: 40.0, bottom: 20.0),
                           child: Consumer<PPOBProvider>(
                             builder: (BuildContext context, PPOBProvider ppobProvider, Widget child) {
                               

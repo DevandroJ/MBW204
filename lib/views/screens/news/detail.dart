@@ -1,13 +1,12 @@
 import 'dart:io';
-import 'package:flutter_html/flutter_html.dart';
+
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DetailNewsScreen extends StatefulWidget {
   final String title;
@@ -187,7 +186,7 @@ class _DetailInfoPageState extends State<DetailNewsScreen> {
                     thickness: 1.0,
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 5.0, right: 8.0, left: 8.0, bottom: 10.0),
+                    margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
                     child: Text(removeAllHtmlTags(content))
                   ),
                 ],

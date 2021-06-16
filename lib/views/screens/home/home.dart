@@ -5,9 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/views/screens/news/detail.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
@@ -43,6 +46,7 @@ class HomePage extends StatelessWidget {
     Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
     Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
     Provider.of<NewsProvider>(context, listen: false).getNews(context);
+    Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context, 0, 0);
     
     return WillPopScope(
       onWillPop: () {
@@ -66,7 +70,7 @@ class HomePage extends StatelessWidget {
                       fit: StackFit.expand,
                       children: [
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300],
+                          baseColor: Colors.grey[200],
                           highlightColor: Colors.grey[200],
                           child: Container(
                             decoration: BoxDecoration(
@@ -115,29 +119,46 @@ class HomePage extends StatelessWidget {
                           
                           },
                         ),
-                        itemCount: 3,
+                        itemCount: bannerProvider.bannerListMap.length,
                         itemBuilder: (BuildContext context, int i) {
-                          return InkWell(
-                            onTap: () { 
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20.0),
-                                  bottomRight: Radius.circular(20.0)
-                                ),
+                          return Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0)
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(20.0),
-                                  bottomRight: Radius.circular(20.0)
-                                ),
-                                child: Image.network("https://lektur.id/wp-content/uploads/2020/04/dummy.jpg",
-                                  fit: BoxFit.cover,
-                                ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0)
                               ),
-                            )
+                              child: CachedNetworkImage(
+                              imageUrl: "${AppConstants.BASE_URL_IMG}/${ bannerProvider.bannerListMap[i]["path"]}",
+                              fit: BoxFit.cover,
+                                // child: Container(
+                                //   width: double.infinity,
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.only(
+                                //       bottomLeft: Radius.circular(20.0),
+                                //       bottomRight: Radius.circular(20.0)
+                                //     ),
+                                //   ),
+                                //   child: ClipRRect(
+                                //     borderRadius: BorderRadius.only(
+                                //       bottomLeft: Radius.circular(20.0),
+                                //       bottomRight: Radius.circular(20.0)
+                                //     ),
+                                //     child: 
+                                    
+                                //     // Image.network("https://lektur.id/wp-content/uploads/2020/04/dummy.jpg",
+                                //     //   fit: BoxFit.cover,
+                                //     // ),
+                                //   ),
+                                // ),
+                              ),
+                            ),
                           );                  
                         },
                       ),
@@ -275,63 +296,85 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: ListView.builder(
-                                physics: AlwaysScrollableScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemCount: 6,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return Container(
-                                    margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(50.0),
-                                          child: Container(
-                                            child: CachedNetworkImage(
-                                              imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
-                                              imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
-                                                width: 60.0,
-                                                height: 60.0,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.cover
-                                                  )
-                                                ),
-                                              ),
-                                              placeholder: (context, url) => Center(
-                                                child: SizedBox(
-                                                  width: 18.0,
-                                                  height: 18.0,
-                                                  child: CircularProgressIndicator(
-                                                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
-                                                  )
-                                                ),
-                                              ),
-                                              errorWidget: (context, url, error) => Container(),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 65.0,
-                                          margin: EdgeInsets.only(top: 3.0),
-                                          child: Text("Agam",
-                                          textAlign: TextAlign.center,
-                                            softWrap: true,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: poppinsRegular.copyWith(
-                                              fontSize: 11.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+
+                            Consumer<NearMemberProvider>(
+                              builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
+                                if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
+                                  return Expanded(
+                                    child: Loader(
+                                      color: ColorResources.BTN_PRIMARY_SECOND,
                                     ),
                                   );
                                 }
-                              ),
-                            )
+                                if(nearMemberProvider.nearMemberStatus == NearMemberStatus.empty) {
+                                  return Expanded(
+                                    child: Center(
+                                      child: Text("No Member Available",
+                                        style: poppinsRegular,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return Expanded(
+                                  child: ListView.builder(
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemCount: 6,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      return Container(
+                                        margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
+                                        child: Column(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.circular(50.0),
+                                              child: Container(
+                                                child: CachedNetworkImage(
+                                                  imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                                                  imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
+                                                    width: 60.0,
+                                                    height: 60.0,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover
+                                                      )
+                                                    ),
+                                                  ),
+                                                  placeholder: (context, url) => Center(
+                                                    child: SizedBox(
+                                                      width: 18.0,
+                                                      height: 18.0,
+                                                      child: CircularProgressIndicator(
+                                                        valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
+                                                      )
+                                                    ),
+                                                  ),
+                                                  errorWidget: (context, url, error) => Container(),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 65.0,
+                                              margin: EdgeInsets.only(top: 3.0),
+                                              child: Text("Agam",
+                                              textAlign: TextAlign.center,
+                                                softWrap: true,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: poppinsRegular.copyWith(
+                                                  fontSize: 11.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  ),
+                                );
+                              },
+                            ),
+
                           ],
                         )
                       ),
@@ -487,9 +530,15 @@ class HomePage extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(10.0)
                                           ),
                                           child: InkWell(
-                                            onTap: () {
-
-                                            },
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            onTap: () => Navigator.push(context,
+                                              MaterialPageRoute(builder: (context) => DetailNewsScreen(
+                                                title: newsProvider.newsBody[i].title,
+                                                content: newsProvider.newsBody[i].content,
+                                                date: newsProvider.newsBody[i].created,
+                                                imageUrl: newsProvider.newsBody[i].media[0].path,
+                                              )),
+                                            ),     
                                             child: Stack(
                                               children: [
 
@@ -497,7 +546,7 @@ class HomePage extends StatelessWidget {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     CachedNetworkImage(
-                                                      imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                      imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
                                                         imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
                                                         width: 120.0,
                                                         height: 80.0,
@@ -514,7 +563,7 @@ class HomePage extends StatelessWidget {
                                                     Container(
                                                       width: 200.0,
                                                       margin: EdgeInsets.only(top: 10.0),
-                                                      child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                      child: Text(newsProvider.newsBody[i].title,
                                                         softWrap: true,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
@@ -585,9 +634,15 @@ class HomePage extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(10.0)
                                           ),
                                           child: InkWell(
-                                            onTap: () {
-
-                                            },
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            onTap: () => Navigator.push(context,
+                                              MaterialPageRoute(builder: (context) => DetailNewsScreen(
+                                                title: newsProvider.newsBody[i].title,
+                                                content: newsProvider.newsBody[i].content,
+                                                date: newsProvider.newsBody[i].created,
+                                                imageUrl: newsProvider.newsBody[i].media[0].path,
+                                              )),
+                                            ),  
                                             child: Stack(
                                               children: [
 
@@ -595,7 +650,7 @@ class HomePage extends StatelessWidget {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     CachedNetworkImage(
-                                                      imageUrl: "https://akcdn.detik.net.id/community/media/visual/2021/05/29/aksi-panggung-abdee-slank_169.jpeg?w=700&q=90",
+                                                      imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
                                                         imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
                                                         width: 120.0,
                                                         height: 80.0,
@@ -612,7 +667,7 @@ class HomePage extends StatelessWidget {
                                                     Container(
                                                       width: 200.0,
                                                       margin: EdgeInsets.only(top: 10.0),
-                                                      child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
+                                                      child: Text(newsProvider.newsBody[i].title,
                                                         softWrap: true,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(

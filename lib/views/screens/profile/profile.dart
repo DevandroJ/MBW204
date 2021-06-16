@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/helpers/helper.dart';
-import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/ppob/topup/topup.dart';
+import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/views/screens/profile/edit.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
@@ -233,7 +234,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               borderRadius: BorderRadius.circular(20.0)
                             )
                           ),
-                          onPressed: () {}, 
+                          onPressed: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => TopUpScreen()),
+                          ), 
                           child: Text("Topup",
                             style: poppinsRegular.copyWith(
                               fontSize: 14.0,
@@ -463,7 +466,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     Positioned(
                       top: 155.0,
                       left: 105.0,
-                      child: Text("W204.01.043",
+                      child: Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber,
                         style: poppinsRegular.copyWith(
                           color: ColorResources.BTN_PRIMARY_SECOND,
                           fontWeight: FontWeight.bold,

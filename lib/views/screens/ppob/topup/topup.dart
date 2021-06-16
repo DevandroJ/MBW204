@@ -1,4 +1,3 @@
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
@@ -69,10 +69,10 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                         borderRadius: BorderRadius.circular(15.0),
                                         side: BorderSide(
                                           width: 1.0,
-                                          color: ColorResources.PRIMARY
+                                          color: ColorResources.BTN_PRIMARY
                                         )
                                       ),
-                                      color: selected == i ? ColorResources.PRIMARY : ColorResources.WHITE,
+                                      color: selected == i ? ColorResources.BTN_PRIMARY : ColorResources.WHITE,
                                       child: GestureDetector(
                                         onTap: () {
                                           s(() => selected = i);
@@ -191,7 +191,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                               },
                                                               child: Text("Ubah",
                                                                 style: TextStyle(
-                                                                  color: ColorResources.PRIMARY
+                                                                  color: ColorResources.BTN_PRIMARY
                                                                 ),
                                                               ),
                                                             ),
@@ -200,7 +200,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                             width: 140.0,
                                                             child: RaisedButton(
                                                               elevation: 0.0,
-                                                              color: ColorResources.PRIMARY,
+                                                              color: ColorResources.BTN_PRIMARY,
                                                               shape: RoundedRectangleBorder(
                                                                 borderRadius: BorderRadius.circular(20.0),
                                                                 side: BorderSide.none
@@ -241,26 +241,13 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Column(
-                                                children: [
-                                                  // Center(
-                                                  //   child: Text(ppobProvider.listTopUpEmoney[i].category,
-                                                  //     style: TextStyle(
-                                                  //       color: selected == i ? ColorResources.WHITE : ColorResources.PRIMARY,
-                                                  //       fontSize:16.0
-                                                  //     ),
-                                                  //   )
-                                                  // // ),
-                                                  // SizedBox(height: 10.0),
-                                                  Center(
-                                                    child: Text(NumberFormat("###,000", "id_ID").format(ppobProvider.listTopUpEmoney[i].price),
-                                                      style: TextStyle(
-                                                        color: selected == i ? ColorResources.WHITE : ColorResources.PRIMARY,
-                                                        fontSize:16.0
-                                                      ),
-                                                    )
+                                              Center(
+                                                child: Text(NumberFormat("###,000", "id_ID").format(ppobProvider.listTopUpEmoney[i].price),
+                                                  style: TextStyle(
+                                                    color: selected == i ? ColorResources.WHITE : ColorResources.BTN_PRIMARY,
+                                                    fontSize:16.0
                                                   ),
-                                                ],
+                                                )
                                               )
                                             ],
                                           ),

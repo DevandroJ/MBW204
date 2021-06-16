@@ -23,7 +23,7 @@ class EventProvider with ChangeNotifier {
   EventStatus get eventStatus => _eventStatus;
   
   List<EventData> _eventData = [];
-  List<EventData> get eventData => _eventData;
+  List<EventData> get eventData => [..._eventData];
 
   void setStateEventStatus(EventStatus eventStatus) {
     _eventStatus = eventStatus;
