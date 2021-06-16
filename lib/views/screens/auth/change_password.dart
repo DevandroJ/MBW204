@@ -125,25 +125,25 @@ class ChangePasswordScreen extends StatelessWidget {
                     StatefulBuilder(
                       builder: (BuildContext context, Function setState) {
                         return TextField(
-                        controller: passwordOldController,
-                        obscureText: passwordOldObscure,
-                        decoration: InputDecoration(
-                          hintText: "Kata Sandi Lama",
-                          hintStyle: TextStyle(
-                            fontSize: 14.0
-                          ),
-                          contentPadding: EdgeInsets.only(
-                            top: 15.0
-                          ),
-                          isDense: true,
-                          suffixIcon: InkWell(
-                            onTap: () => setState(() => passwordOldObscure = !passwordOldObscure),
-                            child: Icon(
-                              passwordOldObscure ? Icons.visibility_off : Icons.visibility
+                          controller: passwordOldController,
+                          obscureText: passwordOldObscure,
+                          decoration: InputDecoration(
+                            hintText: "Kata Sandi Lama",
+                            hintStyle: TextStyle(
+                              fontSize: 14.0
                             ),
-                          )
-                        ),
-                      );
+                            contentPadding: EdgeInsets.only(
+                              top: 15.0
+                            ),
+                            isDense: true,
+                            suffixIcon: InkWell(
+                              onTap: () => setState(() => passwordOldObscure = !passwordOldObscure),
+                              child: Icon(
+                                passwordOldObscure ? Icons.visibility_off : Icons.visibility
+                              ),
+                            )
+                          ),
+                        );
                       },
                     ),
 

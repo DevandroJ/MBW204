@@ -63,21 +63,26 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: message.isSender 
-      ? MainAxisAlignment.end 
-      : MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 15.0),
-          padding: EdgeInsets.symmetric(
-            horizontal: 10.0,
-            vertical: 10.0
+      ? MainAxisAlignment.start 
+      : MainAxisAlignment.end,
+      children: [       
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width - 45,
           ),
-          decoration: BoxDecoration(
-            color: ColorResources.GRAY_LIGHT_PRIMARY,
-            borderRadius: BorderRadius.circular(30.0)
-          ),
-          child: Text(message.text,
-            style: poppinsRegular,
+          child: Container(
+            margin: EdgeInsets.only(top: 15.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 15.0,
+              vertical: 15.0
+            ),
+            decoration: BoxDecoration(
+              color: ColorResources.GRAY_LIGHT_PRIMARY,
+              borderRadius: BorderRadius.circular(20.0)
+            ),
+            child: Text(message.text,
+              style: poppinsRegular,
+            ),
           ),
         )
       ],
