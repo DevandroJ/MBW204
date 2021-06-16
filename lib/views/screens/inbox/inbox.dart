@@ -1,21 +1,10 @@
-import 'package:intl/intl.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/chat/chat.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:mbw204_club_ina/providers/profile.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
-import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
-import 'package:mbw204_club_ina/views/screens/inbox/detail.dart';
 
 class InboxScreen extends StatefulWidget {
   @override
@@ -46,39 +35,37 @@ class _InboxScreenState extends State<InboxScreen> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: ListView(
-          children: [
-          
-            Stack(
-              children: [
+      body: Stack(
+        children: [
 
-                ClipPath(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 160.0,
-                    color: ColorResources.GRAY_LIGHT_PRIMARY
-                  ),
-                  clipper: CustomClipPath(),
-                ),
+          ClipPath(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 160.0,
+              color: ColorResources.GRAY_LIGHT_PRIMARY
+            ),
+            clipper: CustomClipPath(),
+          ),
 
-                Container(
-                  margin: EdgeInsets.only(top: 20.0),
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 100.0,
-                    child: Image.asset(
-                      Images.wheel_btn
-                    ),
-                  ),
-                ),
+          Container(
+            margin: EdgeInsets.only(top: 20.0),
+            alignment: Alignment.center,
+            child: Container(
+              height: 100.0,
+              child: Image.asset(
+                Images.wheel_btn
+              ),
+            ),
+          ),
 
-                Container(
+          Column(
+            children: [
+
+              Expanded(
+                child: Container(
                   margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                  alignment: Alignment.center,
                   child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 4,
+                    itemCount: 10,
                     itemBuilder: (BuildContext context, int i) {
                       return Container(
                         margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
@@ -107,20 +94,30 @@ class _InboxScreenState extends State<InboxScreen> {
                               imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
                                 backgroundImage: imageProvider,
                                 radius: 30.0,
-                              )
+                              ),
+                              placeholder: (context, string) => SizedBox(
+                                width: 18.0,
+                                height: 18.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
+                                ),
+                              ),
+                              filterQuality: FilterQuality.medium,
                             ),
                           ),
                         ),
                       );
                     }, 
                   ),
-                )
+                ),
+              )
 
-              ],
-            ),
-          ],
-        ) 
+            ],
+          )  
+              
+        ],
       ),
+     
     );
   }
 }

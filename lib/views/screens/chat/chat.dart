@@ -20,9 +20,7 @@ class ChatScreen extends StatelessWidget {
       elevation: 0.0,
       backgroundColor: ColorResources.GRAY_LIGHT_PRIMARY,
       leading: InkWell(
-        onTap: () {
-          Navigator.of(context).pop();
-        },
+        onTap: () => Navigator.of(context).pop(),
         child: Icon(
           Icons.arrow_back,
           color: ColorResources.BLACK,

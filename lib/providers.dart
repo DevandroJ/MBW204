@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'container.dart' as c;
 
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/providers/region.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
@@ -29,6 +30,7 @@ List<SingleChildWidget> providers = [
 
 List<SingleChildWidget> independentServices = [
   ChangeNotifierProvider(create: (_) => c.getIt<AuthProvider>()),
+  ChangeNotifierProvider(create: (_) => c.getIt<ChatProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<CategoryProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<SosProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<CheckInProvider>()),

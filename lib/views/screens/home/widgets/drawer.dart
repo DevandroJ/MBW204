@@ -1,5 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart' as custom_widget;
+import 'package:mbw204_club_ina/views/screens/more/webview.dart';
+import 'package:mbw204_club_ina/views/screens/more/widgets/signout.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/profile.dart';
@@ -34,13 +38,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
               child: Column(
                 children: [
-                  drawerItems(context, AboutUsScreen(), Images.logo_app, "Tentang MBW204\nClub Indonesia"),
-                  drawerItems(context, ProfileScreen(), Images.profile_drawer, "Profil"),
-                  drawerItems(context, ProfileScreen(), Images.settings_drawer, "Pengaturan"),
-                  drawerItems(context, ChangePasswordScreen(), Images.lock_drawer, "Ubah Kata Sandi"),
-                  drawerItems(context, ProfileScreen(), Images.tos_drawer, "Term of Service"),
-                  drawerItems(context, ProfileScreen(), Images.bantuan_drawer, "Bantuan"),
-                  drawerItems(context, AboutUsScreen(), Images.logout_drawer, "Logout")
+                  drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "Tentang MBW204\nClub Indonesia"),
+                  drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, "Profil"),
+                  drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, "Pengaturan"),
+                  drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, "Ubah Kata Sandi"),
+                  drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, "Term of Service"),
+                  drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, "Bantuan"),
+                  drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, "Logout")
                 ],
               ),
             )
@@ -204,12 +208,71 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     );
   }
 
-  Widget drawerItems(BuildContext context, Widget widget, String icon, String title) {
+  Widget drawerItems(BuildContext context, Widget widget, String menu, String icon, String title) {
     return Container(
       margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
       child: ListTile(
         dense: true,
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => widget)),
+        onTap: () { 
+          if(menu == "logout") {
+            custom_widget.showAnimatedDialog(
+              context,
+              SignOutConfirmationDialog(),
+              isFlip: true
+            );
+            // showAnimatedDialog(
+            //   barrierDismissible: true,
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return Dialog(
+            //       child: Padding(
+            //         padding: EdgeInsets.all(8.0),
+            //         child: Container(
+            //           height: 110.0,
+            //           child: Container(
+            //             margin: EdgeInsets.only(top: 20.0),
+            //             child: Column(
+            //               mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 Text("Apa kamu ingin Logout?",
+            //                   style: poppinsRegular.copyWith(
+            //                     fontWeight: FontWeight.bold
+            //                   ),
+            //                 ),
+            //                 SizedBox(height: 15.0),
+            //                 Container(
+            //                   child: Row(
+            //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //                     children: [
+            //                       ElevatedButton(
+            //                         style: ElevatedButton.styleFrom(
+            //                           primary: ColorResources.BTN_PRIMARY,
+            //                         ),
+            //                         onPressed: () => Navigator.of(context).pop(), 
+            //                         child: Text("Tidak")
+            //                       ),
+            //                       ElevatedButton(
+            //                         style: ElevatedButton.styleFrom(
+            //                           primary: ColorResources.BTN_PRIMARY_SECOND
+            //                         ),
+            //                         onPressed: () => SignOutConfirmationDialog(), 
+            //                         child: Text("Ya")
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 )
+            //               ],
+            //             )
+            //           )
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // );
+          } else {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+          }
+        },  
         title: Text(title,
           style: poppinsRegular,
         ),

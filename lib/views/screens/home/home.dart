@@ -116,7 +116,7 @@ class HomePage extends StatelessWidget {
                           aspectRatio: 16 / 9,
                           viewportFraction: 1.0,
                           onPageChanged: (int index, CarouselPageChangedReason reason) {
-                          
+                            bannerProvider.setCurrentIndex(index);
                           },
                         ),
                         itemCount: bannerProvider.bannerListMap.length,
@@ -137,26 +137,6 @@ class HomePage extends StatelessWidget {
                               child: CachedNetworkImage(
                               imageUrl: "${AppConstants.BASE_URL_IMG}/${ bannerProvider.bannerListMap[i]["path"]}",
                               fit: BoxFit.cover,
-                                // child: Container(
-                                //   width: double.infinity,
-                                //   decoration: BoxDecoration(
-                                //     borderRadius: BorderRadius.only(
-                                //       bottomLeft: Radius.circular(20.0),
-                                //       bottomRight: Radius.circular(20.0)
-                                //     ),
-                                //   ),
-                                //   child: ClipRRect(
-                                //     borderRadius: BorderRadius.only(
-                                //       bottomLeft: Radius.circular(20.0),
-                                //       bottomRight: Radius.circular(20.0)
-                                //     ),
-                                //     child: 
-                                    
-                                //     // Image.network("https://lektur.id/wp-content/uploads/2020/04/dummy.jpg",
-                                //     //   fit: BoxFit.cover,
-                                //     // ),
-                                //   ),
-                                // ),
                               ),
                             ),
                           );                  
@@ -169,13 +149,16 @@ class HomePage extends StatelessWidget {
                         right: 0.0,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TabPageSelectorIndicator(
-                              backgroundColor: ColorResources.WHITE,
+                          children: bannerProvider.bannerListMap.map((banner) {
+                            int index = bannerProvider.bannerListMap.indexOf(banner);
+                            return TabPageSelectorIndicator(
+                              backgroundColor: index == bannerProvider.currentIndex 
+                              ? ColorResources.BTN_PRIMARY 
+                              : ColorResources.WHITE,
                               borderColor: Colors.white,
                               size: 10.0,
-                            )
-                          ]
+                            );
+                          }).toList(),
                         ),
                       ),
 

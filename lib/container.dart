@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mbw204_club_ina/data/repository/nearmember.dart';
-import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/mobx/feed.dart';
-
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/providers/region.dart';
 import 'package:mbw204_club_ina/providers/warung.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
@@ -25,7 +23,9 @@ import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/media.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
+import 'package:mbw204_club_ina/providers/nearmember.dart';
 
+import 'package:mbw204_club_ina/data/repository/nearmember.dart';
 import 'package:mbw204_club_ina/data/repository/event.dart';
 import 'package:mbw204_club_ina/data/repository/media.dart';
 import 'package:mbw204_club_ina/data/repository/checkin.dart';
@@ -63,6 +63,7 @@ Future<void> init() async {
 
   // Provider
   getIt.registerFactory(() => AuthProvider(authRepo: getIt()));
+  getIt.registerFactory(() => ChatProvider());
   getIt.registerFactory(() => CategoryProvider(categoryRepo: getIt()));
   getIt.registerFactory(() => SosProvider(sosRepo: getIt()));
   getIt.registerFactory(() => CheckInProvider(checkInRepo: getIt()));

@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/data/models/chat_message.dart';
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/chat/input.dart';
 
-class ChatBody extends StatelessWidget {
+class ChatBody extends StatefulWidget {
+
+  @override
+  _ChatBodyState createState() => _ChatBodyState();
+}
+
+class _ChatBodyState extends State<ChatBody> {
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +31,17 @@ class ChatBody extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: ListView.builder(
-              itemCount: demoChatMessages.length,
-              itemBuilder: (BuildContext context, int i) => Message(
-                message: demoChatMessages[i]
-              ),
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            child: Consumer<ChatProvider>(
+              builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
+                return ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: chatProvider.chatMessage.length,
+                  itemBuilder: (BuildContext context, int i) => Message(
+                    message: chatProvider.chatMessage[i]
+                  ),
+                );
+              },
             ),
           )
         ),

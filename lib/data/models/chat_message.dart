@@ -8,33 +8,13 @@ class ChatMessage {
   });
 }
 
-List demoChatMessages = [
+List<ChatMessage> demoChatMessages = [
   ChatMessage(
-    text: "Hi Sajol,",
+    text: "Hi John doe",
     isSender: false,
   ),
   ChatMessage(
     text: "Hello, How are you?",
-    isSender: true,
-  ),
-  ChatMessage(
-    text: "Im Fine, Thankyou",
-    isSender: false,
-  ),
-  ChatMessage(
-    text: "What happened",
-    isSender: true,
-  ),
-  ChatMessage(
-    text: "Error happend",
-    isSender: true,
-  ),
-  ChatMessage(
-    text: "This looks great man!!",
-    isSender: false,
-  ),
-  ChatMessage(
-    text: "Glad you like it",
     isSender: true,
   ),
 ];

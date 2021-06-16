@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/data/models/user.dart';
+import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/data/models/user.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -9,7 +10,6 @@ import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
-import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   @override

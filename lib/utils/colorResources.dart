@@ -27,7 +27,7 @@ class ColorResources {
     return Provider.of<ThemeProvider>(context, listen: false).darkTheme ? Color(0xffFFFFFF) : Color(0xff58595B) ;
   }
   static Color getPrimaryToBlack(BuildContext context) {
-    return Provider.of<ThemeProvider>(context, listen: false).darkTheme ? Color(0xff2E2E2E) : Color(0xffAF162B) ;
+    return Provider.of<ThemeProvider>(context, listen: false).darkTheme ? Color(0xff2E2E2E) : Color(0xff58595B) ;
   }
   static Color getDimGrayToWhite(BuildContext context) {
     return  Provider.of<ThemeProvider>(context, listen: false).darkTheme ? Color(0xffFFFFFF) : Color(0xff6D6D6D).withOpacity(0.8);
