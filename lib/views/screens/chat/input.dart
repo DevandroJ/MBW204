@@ -4,9 +4,33 @@ import 'package:provider/provider.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 
-class ChatInput extends StatelessWidget {
+class ChatInput extends StatefulWidget {
+  @override
+  _ChatInputState createState() => _ChatInputState();
+}
+
+class _ChatInputState extends State<ChatInput> {
   final TextEditingController inputMsgController = TextEditingController();
- 
+  bool isSend = false;
+
+  @override
+  void initState() {
+    super.initState();
+    inputMsgController.addListener(() {
+      if(inputMsgController.text.trim().length >= 1) {
+        setState(() => isSend = true); 
+      } else {
+        setState(() => isSend = false); 
+      }
+    });
+  }
+
+  @override 
+  void dispose() {
+    inputMsgController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,10 +86,15 @@ class ChatInput extends StatelessWidget {
             ),
             Container(
               child: IconButton(
-                onPressed: () { 
+                onPressed: isSend 
+                ? () { 
+                  if(inputMsgController.text.trim() == "") {
+                    return;
+                  }
                   Provider.of<ChatProvider>(context, listen: false).sendMessage(inputMsgController.text);
                   inputMsgController.text = "";
-                },
+                } 
+                : null,
                 icon: Icon(
                   Icons.send,
                   size: 20.0,
