@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/chat.dart';
@@ -12,6 +16,45 @@ class ChatInput extends StatefulWidget {
 class _ChatInputState extends State<ChatInput> {
   final TextEditingController inputMsgController = TextEditingController();
   bool isSend = false;
+  File _file;
+
+
+  void pickImage() async {
+    final imageSource = await showDialog<ImageSource>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Pilih sumber gambar",
+          style: poppinsRegular.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.teal
+          ),
+        ),
+        actions: [
+          MaterialButton(
+            child: Text(
+              "Camera",
+              style: TextStyle(color: ColorResources.PRIMARY),
+            ),
+            onPressed: () => Navigator.pop(context, ImageSource.camera),
+          ),
+          MaterialButton(
+            child: Text(
+              "Gallery",
+              style: TextStyle(color: ColorResources.PRIMARY),
+            ),
+            onPressed: () => Navigator.pop(context, ImageSource.gallery),
+          )
+        ],
+      )
+    );
+
+    if (imageSource != null) {
+      final file = await ImagePicker.pickImage(source: imageSource, maxHeight: 720);
+      if (file != null) {
+        setState(() => _file = file);
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -53,9 +96,7 @@ class _ChatInputState extends State<ChatInput> {
           children: [
             Container(
               child: IconButton(
-                onPressed: () { 
-                  
-                },
+                onPressed: () => pickImage(),
                 icon: Icon(
                   Icons.image,
                   size: 20.0,

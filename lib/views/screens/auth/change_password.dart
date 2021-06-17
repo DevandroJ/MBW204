@@ -13,7 +13,7 @@ class ChangePasswordScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> formkey = GlobalKey();
   final UserData userData = UserData();
 
-  bool passwordOldObscure = false;
+   bool passwordOldObscure = false;
   bool passwordNewObscure = false;
   bool passwordConfirmObscure = false;
   
@@ -49,7 +49,7 @@ class ChangePasswordScreen extends StatelessWidget {
         }
         if(passwordNewController.text != passwordConfirmController.text) {
           Fluttertoast.showToast(
-            msg: getTranslated("PASSWORD_CONFIRM_IS_REQUIRED", context),
+            msg: getTranslated("PASSWORD_CONFIRM_DOES_NOT_MATCH", context),
             backgroundColor: ColorResources.ERROR
           );
           return;
@@ -117,10 +117,6 @@ class ChangePasswordScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-                    Text("Kata Sandi Baru", 
-                      style: poppinsRegular,
-                    ),
 
                     StatefulBuilder(
                       builder: (BuildContext context, Function setState) {
@@ -224,7 +220,7 @@ class ChangePasswordScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.0)
                   )
                 ),
-                onPressed: () {}, 
+                onPressed: () => changePassword(), 
                 child: Text("Simpan",
                   style: poppinsRegular.copyWith(
                     color: ColorResources.YELLOW_PRIMARY
