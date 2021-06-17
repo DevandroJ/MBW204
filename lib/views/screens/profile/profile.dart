@@ -526,7 +526,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                 height: 30.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

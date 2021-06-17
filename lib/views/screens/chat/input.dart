@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 
@@ -17,7 +17,6 @@ class _ChatInputState extends State<ChatInput> {
   final TextEditingController inputMsgController = TextEditingController();
   bool isSend = false;
   File _file;
-
 
   void pickImage() async {
     final imageSource = await showDialog<ImageSource>(
@@ -129,18 +128,18 @@ class _ChatInputState extends State<ChatInput> {
               child: IconButton(
                 onPressed: isSend 
                 ? () { 
-                  if(inputMsgController.text.trim() == "") {
-                    return;
-                  }
-                  Provider.of<ChatProvider>(context, listen: false).sendMessage(inputMsgController.text);
-                  inputMsgController.text = "";
-                } 
+                    if(inputMsgController.text.trim() == "") {
+                      return;
+                    }
+                    Provider.of<ChatProvider>(context, listen: false).sendMessage(inputMsgController.text);
+                    inputMsgController.text = "";
+                  } 
                 : null,
-                icon: Icon(
-                  Icons.send,
-                  size: 20.0,
+                  icon: Icon(
+                    Icons.send,
+                    size: 20.0,
+                  ),
                 ),
-              ),
             )
           ],
         ),

@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart' as custom_widget;
-import 'package:mbw204_club_ina/views/screens/more/webview.dart';
-import 'package:mbw204_club_ina/views/screens/more/widgets/signout.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart' as custom_widget;
+import 'package:mbw204_club_ina/views/screens/more/widgets/signout.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -182,28 +180,32 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   Widget drawerUserDisplayName(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10.0),
-      child: Column(
-        children: [
-          Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
-            ? "..." 
-            : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-            ? "..." 
-            : Provider.of<ProfileProvider>(context, listen: false).getUserFullname,
-            style: poppinsRegular.copyWith(
-              fontWeight: FontWeight.bold
-            )
-          ),
-          Text("ID ${Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
-            ? "..." 
-            : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-            ? "..." 
-            : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber}",
-            style: poppinsRegular.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 12.0
-            )
-          )
-        ],
+      child: Consumer<ProfileProvider>(
+        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+          return Column(
+            children: [
+              Text(profileProvider.profileStatus == ProfileStatus.loading 
+                ? "..." 
+                : profileProvider.profileStatus == ProfileStatus.error 
+                ? "..." 
+                : profileProvider.getUserFullname,
+                style: poppinsRegular.copyWith(
+                  fontWeight: FontWeight.bold
+                )
+              ),
+              Text("ID ${profileProvider.profileStatus == ProfileStatus.loading 
+                ? "..." 
+                : profileProvider.profileStatus == ProfileStatus.error 
+                ? "..." 
+                : profileProvider.getUserIdNumber}",
+                style: poppinsRegular.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12.0
+                )
+              )
+            ],
+          );
+        },
       ),
     );
   }
