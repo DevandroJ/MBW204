@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/more/mywebview.dart';
-import 'package:mbw204_club_ina/views/screens/more/webview.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/more/webview.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
@@ -110,6 +109,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 color: ColorResources.BLACK,
               ),
               child: Image.asset('assets/images/logo.png'),
+            );
+          },
+          placeholder: (BuildContext context, String url) {
+            return Center(
+              child: SizedBox(
+                width: 18.0,
+                height: 18.0,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(ColorResources.BTN_PRIMARY_SECOND),
+                ),
+              ),
             );
           },
           imageUrl: "${AppConstants.BASE_URL_IMG}/",

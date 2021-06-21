@@ -32,9 +32,11 @@ class DioManager {
         return response;
       },
       onError: (DioError e) async {
-        bool isTokenExpired = JwtDecoder.isExpired(prefs.getString('token'));
-        if(isTokenExpired) {
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInScreen()), (Route<dynamic> route) => false);
+        if(e?.response?.statusCode != 401) {
+          bool isTokenExpired = JwtDecoder.isExpired(prefs.getString('token'));
+          if(isTokenExpired) {
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInScreen()), (Route<dynamic> route) => false);
+          }
         }
       }
     ));

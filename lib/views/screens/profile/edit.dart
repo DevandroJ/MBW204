@@ -15,7 +15,7 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   bool loading = false;
-  File _file;
+  File file;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
@@ -31,9 +31,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
       profileData.fullname = fullnameController.text;
       profileData.noKtp = noKtpController.text;
+      profileData.noHp = 
       profileData.address = addressController.text;
 
-      await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, "");  
+      await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, file);  
     } catch(e) {
       print(e);
     }

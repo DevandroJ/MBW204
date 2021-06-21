@@ -1,10 +1,14 @@
 import 'dart:ui';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/providers/auth.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -257,110 +261,155 @@ class HomePage extends StatelessWidget {
                     ),
 
                     SliverToBoxAdapter(
-                      child: Container(
-                        width: double.infinity,
-                        height: 120.0,
-                        decoration: BoxDecoration(
-                          color: ColorResources.WHITE
-                        ),
-                        margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 5.0, right: 5.0),
-                              child: InkWell(
-                                onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MemberNearScreen(whereFrom: "home"))),
-                                child: Text("Lihat semua",
-                                textAlign: TextAlign.end,
-                                  style: poppinsRegular.copyWith(
-                                    fontSize: 13.0
-                                  ),
-                                ),
+                      child: Consumer<AuthProvider>(
+                        builder: (BuildContext context, AuthProvider authProvider, Widget child) {
+                          if(authProvider.isLoggedIn()) {
+                            return Container(
+                              width: double.infinity,
+                              height: 120.0,
+                              decoration: BoxDecoration(
+                                color: ColorResources.WHITE
                               ),
-                            ),
+                              margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
 
-                            Consumer<NearMemberProvider>(
-                              builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
-                                if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
-                                  return Expanded(
-                                    child: Loader(
-                                      color: ColorResources.BTN_PRIMARY_SECOND,
-                                    ),
-                                  );
-                                }
-                                if(nearMemberProvider.nearMemberStatus == NearMemberStatus.empty) {
-                                  return Expanded(
-                                    child: Center(
-                                      child: Text("No Member Available",
-                                        style: poppinsRegular,
+                                  Container(
+                                    margin: EdgeInsets.only(top: 5.0, right: 5.0),
+                                    child: InkWell(
+                                      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MemberNearScreen(whereFrom: "home"))),
+                                      child: Text("Lihat semua",
+                                      textAlign: TextAlign.end,
+                                        style: poppinsRegular.copyWith(
+                                          fontSize: 13.0
+                                        ),
                                       ),
                                     ),
-                                  );
-                                }
-                                return Expanded(
-                                  child: ListView.builder(
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemCount: 6,
-                                    itemBuilder: (BuildContext context, int i) {
-                                      return Container(
-                                        margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
-                                        child: Column(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.circular(50.0),
-                                              child: Container(
-                                                child: CachedNetworkImage(
-                                                  imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
-                                                  imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
-                                                    width: 60.0,
-                                                    height: 60.0,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.cover
-                                                      )
+                                  ),
+
+                                  Consumer<NearMemberProvider>(
+                                    builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
+                                      if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
+                                        return Expanded(
+                                          child: Loader(
+                                            color: ColorResources.BTN_PRIMARY_SECOND,
+                                          ),
+                                        );
+                                      }
+                                      if(nearMemberProvider.nearMemberStatus == NearMemberStatus.empty) {
+                                        return Expanded(
+                                          child: Center(
+                                            child: Text("No Member Available",
+                                              style: poppinsRegular,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return Expanded(
+                                        child: ListView.builder(
+                                          physics: AlwaysScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemCount: 6,
+                                          itemBuilder: (BuildContext context, int i) {
+                                            return Container(
+                                              margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
+                                              child: Column(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius: BorderRadius.circular(50.0),
+                                                    child: Container(
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                                                        imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
+                                                          width: 60.0,
+                                                          height: 60.0,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: imageProvider,
+                                                              fit: BoxFit.cover
+                                                            )
+                                                          ),
+                                                        ),
+                                                        placeholder: (context, url) => Center(
+                                                          child: SizedBox(
+                                                            width: 18.0,
+                                                            height: 18.0,
+                                                            child: CircularProgressIndicator(
+                                                              valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
+                                                            )
+                                                          ),
+                                                        ),
+                                                        errorWidget: (context, url, error) => Container(),
+                                                      ),
                                                     ),
                                                   ),
-                                                  placeholder: (context, url) => Center(
-                                                    child: SizedBox(
-                                                      width: 18.0,
-                                                      height: 18.0,
-                                                      child: CircularProgressIndicator(
-                                                        valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
-                                                      )
+                                                  Container(
+                                                    width: 65.0,
+                                                    margin: EdgeInsets.only(top: 3.0),
+                                                    child: Text("Agam",
+                                                    textAlign: TextAlign.center,
+                                                      softWrap: true,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: poppinsRegular.copyWith(
+                                                        fontSize: 11.0,
+                                                      ),
                                                     ),
                                                   ),
-                                                  errorWidget: (context, url, error) => Container(),
-                                                ),
+                                                ],
                                               ),
-                                            ),
-                                            Container(
-                                              width: 65.0,
-                                              margin: EdgeInsets.only(top: 3.0),
-                                              child: Text("Agam",
-                                              textAlign: TextAlign.center,
-                                                softWrap: true,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: poppinsRegular.copyWith(
-                                                  fontSize: 11.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                            );
+                                          }
                                         ),
                                       );
-                                    }
-                                  ),
-                                );
-                              },
+                                    },
+                                  )
+                                  
+                                ],
+                              )
+                            );
+                          }
+                          return Container(
+                            width: double.infinity,
+                            height: 80.0,
+                            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                            decoration: BoxDecoration(
+                              color: ColorResources.WHITE
                             ),
-
-                          ],
-                        )
-                      ),
+                            child: Center(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Anda harus ",
+                                  style: TextStyle(
+                                    color: ColorResources.BLACK
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(text: 'Login',
+                                      style: TextStyle(
+                                        color: ColorResources.BTN_PRIMARY_SECOND,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                      recognizer: TapGestureRecognizer()..onTap = () => Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                                      ) 
+                                    ),
+                                    TextSpan(text: ' untuk melihat ini',
+                                      style: TextStyle(
+                                      color: ColorResources.BLACK
+                                    ),
+                                      recognizer: TapGestureRecognizer()..onTap = () {
+                                           
+                                      }
+                                    )
+                                  ]
+                                ),
+                              )
+                            )
+                          );
+                        },
+                      )
+                  
                     ),
 
                     SliverToBoxAdapter(
@@ -378,20 +427,91 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20.0,
-                                      child: Image.asset(Images.media)
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    Text("Media")
-                                  ],
+                                InkWell(
+                                  onTap: () {
+                                  if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                                      print("loggedin");
+                                    } else {
+                                      return showAnimatedDialog(
+                                        context: context, 
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0)
+                                            ),
+                                            backgroundColor: ColorResources.BLACK,
+                                            child: Container(
+                                              height: 250.0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text("Silahkan Login atau Buat Akun\nUntuk Bergabung!",
+                                                    style: poppinsRegular.copyWith(
+                                                      color: ColorResources.WHITE,
+                                                      fontSize: 16.0
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(height: 10.0),
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: ColorResources.GRAY_LIGHT_PRIMARY,
+                                                        width: 1.0
+                                                      ),
+                                                      borderRadius: BorderRadius.circular(30.0),
+                                                        image: DecorationImage(
+                                                          alignment: Alignment.centerLeft,
+                                                          image: AssetImage(Images.wheel_btn)
+                                                        )
+                                                    ),
+                                                    child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(30.0),
+                                                        ),
+                                                        backgroundColor: Colors.transparent
+                                                      ),
+                                                      onPressed: () {
+
+                                                      },
+                                                      child: Text("Login",
+                                                        style: poppinsRegular.copyWith(
+                                                          color: ColorResources.GRAY_LIGHT_PRIMARY
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      );
+                                    }
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 20.0,
+                                        child: Image.asset(Images.media)
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text("Media")
+                                    ],
+                                  ),
                                 ),
 
                                 Container(
-                                  height: 30, 
-                                  child: VerticalDivider(color: ColorResources.DIM_GRAY)
+                                  height: 30.0, 
+                                  child: VerticalDivider(
+                                    color: ColorResources.DIM_GRAY
+                                  )
                                 ),
 
                                 Row(
@@ -406,8 +526,10 @@ class HomePage extends StatelessWidget {
                                 ),
 
                                 Container(
-                                  height: 30, 
-                                  child: VerticalDivider(color: ColorResources.DIM_GRAY)
+                                  height: 30.0, 
+                                  child: VerticalDivider(
+                                    color: ColorResources.DIM_GRAY
+                                  )
                                 ),
 
                                 Row(
@@ -422,8 +544,10 @@ class HomePage extends StatelessWidget {
                                 ),
 
                                 Container(
-                                  height: 30, 
-                                  child: VerticalDivider(color: ColorResources.DIM_GRAY)
+                                  height: 30.0, 
+                                  child: VerticalDivider(
+                                    color: ColorResources.DIM_GRAY
+                                  )
                                 ),
 
                                 Row(
