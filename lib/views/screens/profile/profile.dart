@@ -16,6 +16,7 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/data/models/profile.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -257,19 +258,25 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ),
 
               SizedBox(height: 20.0),
-
+              profileListAccount(context, "E-mail Address", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserEmail
+              ),
+              SizedBox(height: 10.0),
               profileListAccount(context, "ID Anggota", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserIdCardNumber
+              : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber
               ),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Nomor Identitas KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              profileListAccount(context, "Address", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..." 
-              : Provider.of<ProfileProvider>(context, listen: false).getUserIdCardNumber),
+              : Provider.of<ProfileProvider>(context, listen: false).getUserAddress),
               SizedBox(height: 10.0),
               profileListAccount(context, "Nomor Handphone", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
@@ -277,16 +284,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Alamat", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
-              ? "..." 
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..." 
-              : Provider.of<ProfileProvider>(context, listen: false).getUserAddress),
-              SizedBox(height: 10.0),
-              profileListAccount(context, "Tempat Lahir", "Jakarta"),
-              SizedBox(height: 10.0),
-              profileListAccount(context, "Tanggal Lahir", "7 Juli 2000"),
-
               Center(
                 child: Container(
                   margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
@@ -486,43 +483,62 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         height: 20.0,
                         child: Image.asset(Images.logo_cx)
                       )
-                    )
+                    ),
+
+                    Positioned(
+                      right: 10.0,
+                      bottom: 40.0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorResources.WHITE
+                        ),
+                        child: QrImage(
+                          data: Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                      ? "..." 
+                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber,
+                          version: QrVersions.auto,
+                          size: 70.0,
+                        ),
+                      ),
+                    ),
 
                   ],
                 ),
               ),
 
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                height: 30.0,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    primary: ColorResources.BLACK,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)
-                    )
-                  ),
-                  onPressed: () {}, 
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 20.0,
-                        child: Image.asset(Images.scan)
-                      ),
-                      SizedBox(width: 20.0),
-                      Text("Scan disini",
-                        style: poppinsRegular.copyWith(
-                          fontSize: 14.0,
-                          color: ColorResources.YELLOW_PRIMARY
-                        ),
-                      )
-                    ],
-                  )
-                ),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+              //   height: 30.0,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       elevation: 0.0,
+              //       primary: ColorResources.BLACK,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(20.0)
+              //       )
+              //     ),
+              //     onPressed: () {}, 
+              //     child: Row(
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: [
+              //         Container(
+              //           height: 20.0,
+              //           child: Image.asset(Images.scan)
+              //         ),
+              //         SizedBox(width: 20.0),
+              //         Text("Scan disini",
+              //           style: poppinsRegular.copyWith(
+              //             fontSize: 14.0,
+              //             color: ColorResources.YELLOW_PRIMARY
+              //           ),
+              //         )
+              //       ],
+              //     )
+              //   ),
+              // ),
 
               Container(
                 width: double.infinity,

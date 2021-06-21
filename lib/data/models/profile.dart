@@ -23,6 +23,7 @@ class ProfileData {
     this.address,
     this.fullname,
     this.gender,
+    this.noKtp,
     this.idCardNumber,
     this.idMember,
     this.shortBio,
@@ -40,6 +41,7 @@ class ProfileData {
   String address;
   String fullname;
   String gender;
+  String noKtp;
   String idCardNumber;
   String idMember;
   String shortBio;
@@ -57,6 +59,7 @@ class ProfileData {
     address: json["address"],
     fullname: json["fullname"],
     gender: json["gender"],
+    noKtp: json["noKtp"],
     idCardNumber: json["id_card_number"],
     idMember: json["id_member"],
     shortBio: json["short_bio"],

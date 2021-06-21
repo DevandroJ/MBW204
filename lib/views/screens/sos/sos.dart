@@ -26,7 +26,7 @@ class _SosScreenState extends State<SosScreen> {
     Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
     Provider.of<SosProvider>(context, listen: false).initSosList();
 
-    submit(String type, String body) async {
+    Future submit(String type, String body) async {
       try {
         String userId = Provider.of<ProfileProvider>(context, listen: false).getUserId;
         String sender = Provider.of<ProfileProvider>(context, listen: false).getUserFullname;
@@ -144,13 +144,12 @@ Widget getSosList(BuildContext context, String label, String images, String cont
 }
 
 class CustomClipPath extends CustomClipper<Path> {
-  var radius = 10.0;
+  double radius = 10.0;
   @override
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 140);
-    path.quadraticBezierTo(size.width / 2, size.height, 
-    size.width, size.height - 140);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 140);
     path.lineTo(size.width, 0);
     path.close();
     return path;

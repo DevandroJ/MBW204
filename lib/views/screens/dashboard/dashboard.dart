@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/feed/notification_demo.dart';
@@ -8,7 +9,6 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/event/event.dart';
 import 'package:mbw204_club_ina/views/screens/home/home.dart';
-import 'package:mbw204_club_ina/views/screens/more/more.dart';
 
 class DashBoardScreen extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
   final List<Widget> screens = [
     HomePage(),
     MemberNearScreen(whereFrom: "dashboard"),
-    NotificatioDemoScreen(),
+    SosScreen(),
     EventScreen(),
     NotificatioDemoScreen(),
   ];

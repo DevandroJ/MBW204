@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/providers/auth.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/views/screens/more/mywebview.dart';
+import 'package:mbw204_club_ina/views/screens/more/webview.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/providers/auth.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart' as custom_widget;
 import 'package:mbw204_club_ina/views/screens/more/widgets/signout.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
@@ -66,9 +69,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       width: double.infinity,
                       margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                       child: TextButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
                         style: TextButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0)
@@ -322,6 +323,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             //     );
             //   },
             // );
+          } else if(menu == "tos") {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
+              title: 'Term of Service',
+              url: 'https://connexist.com/mobile-bantuan'
+            )));
           } else {
             Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
           }

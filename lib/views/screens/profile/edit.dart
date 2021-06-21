@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/data/models/profile.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -12,21 +15,40 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   bool loading = false;
+  File _file;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
   TextEditingController noKtpController = TextEditingController();
   TextEditingController noHpController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  ProfileData profileData = ProfileData();
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Future save(BuildContext context) async {
+    try {
+
+      profileData.fullname = fullnameController.text;
+      profileData.noKtp = noKtpController.text;
+      profileData.address = addressController.text;
+
+      await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, "");  
+    } catch(e) {
+      print(e);
+    }
+  }
+   
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
+      fullnameController.text = Provider.of<ProfileProvider>(context, listen: false).userProfile.fullname;
+      emailController.text = Provider.of<ProfileProvider>(context, listen: false).getUserEmail;
+      noKtpController.text = Provider.of<ProfileProvider>(context, listen: false).userProfile.idCardNumber;
+      noHpController.text = Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber;
     });
   }
 
@@ -124,13 +146,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      inputComponent(context, "Email", emailController),
+                      inputComponent(context, "Email", emailController, true),
                       SizedBox(height: 10.0),
-                      inputComponent(context, "Nomor Identitas KTP", noKtpController),
+                      inputComponent(context, "Nomor Identitas KTP", noKtpController, false),
                       SizedBox(height: 10.0),
-                      inputComponent(context, "Nomor Handphone", noKtpController),
+                      inputComponent(context, "Nomor Handphone", noHpController, false),
                       SizedBox(height: 10.0),
-                      inputComponent(context, "Alamat", addressController),
+                      inputComponent(context, "Alamat", addressController, false),
                       SizedBox(height: 10.0),
                     ],
                   ),
@@ -193,7 +215,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     );
   }
 
-  Widget inputComponent(BuildContext context, String label, TextEditingController textEditingController) {
+  Widget inputComponent(BuildContext context, String label, TextEditingController textEditingController, bool readOnly) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -201,6 +223,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           style: poppinsRegular,
         ),
         TextField(
+          readOnly: readOnly,
           controller: textEditingController,
           decoration: InputDecoration(
             isDense: true
