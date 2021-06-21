@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/providers/auth.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart' as custom_widget;
@@ -31,21 +33,61 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           padding: EdgeInsets.zero,
           children: [
             drawerHeader(context),
-            drawerUserDisplayName(context),
-            Container(
-              padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
-              child: Column(
-                children: [
-                  drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "Tentang MBW204\nClub Indonesia"),
-                  drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, "Profil"),
-                  drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, "Pengaturan"),
-                  drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, "Ubah Kata Sandi"),
-                  drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, "Term of Service"),
-                  drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, "Bantuan"),
-                  drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, "Logout")
-                ],
-              ),
-            )
+
+            Consumer<AuthProvider>(
+              builder: (BuildContext context, AuthProvider authProvider, Widget child) {
+                if(authProvider.isLoggedIn()) {
+                  return drawerUserDisplayName(context);
+                }
+                return Container();
+              },
+            ),
+            
+            Consumer<AuthProvider>(
+              builder: (BuildContext context, AuthProvider authProvider, Widget child) {
+                if(authProvider.isLoggedIn()) {
+                  return Container(
+                    padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
+                    child: Column(
+                      children: [
+                        drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "Tentang MBW204\nClub Indonesia"),
+                        drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, "Profil"),
+                        drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, "Pengaturan"),
+                        drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, "Ubah Kata Sandi"),
+                        drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, "Term of Service"),
+                        drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, "Bantuan"),
+                        drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, "Logout")
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                      child: TextButton(
+                        onPressed: () {
+
+                        },
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)
+                          ),
+                          backgroundColor: ColorResources.YELLOW_PRIMARY
+                        ),
+                        child: Text("Sign In",
+                          style: poppinsRegular.copyWith(
+                            color: ColorResources.BLACK
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+
+    
           ],
         ),
       ),
@@ -60,7 +102,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
         child: CachedNetworkImage(
-          imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+          errorWidget: (BuildContext context, String url, dynamic error) {
+            return Container(
+              padding: EdgeInsets.only(left: 30.0, right: 30.0),
+              decoration: BoxDecoration(
+                color: ColorResources.BLACK,
+              ),
+              child: Image.asset('assets/images/logo.png'),
+            );
+          },
+          imageUrl: "${AppConstants.BASE_URL_IMG}/",
           imageBuilder: (BuildContext context, ImageProvider imageProvider) {
             return Container(
               decoration: BoxDecoration(
@@ -188,7 +239,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ? "..." 
                 : profileProvider.profileStatus == ProfileStatus.error 
                 ? "..." 
-                : profileProvider.getUserFullname,
+                : profileProvider?.getUserFullname,
                 style: poppinsRegular.copyWith(
                   fontWeight: FontWeight.bold
                 )
@@ -197,7 +248,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ? "..." 
                 : profileProvider.profileStatus == ProfileStatus.error 
                 ? "..." 
-                : profileProvider.getUserIdNumber}",
+                : profileProvider?.getUserIdNumber}",
                 style: poppinsRegular.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12.0

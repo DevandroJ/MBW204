@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/data/models/user.dart';
@@ -214,20 +215,16 @@ class _SignInScreenState extends State<SignInScreen> {
                                   width: double.infinity,
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: ElevatedButton(
-                                    onPressed: () => {
-
-                                    },
+                                    onPressed: () =>  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => DashBoardScreen()),
+                                    ),
                                     style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30.0)
                                       ),
                                       primary: ColorResources.BTN_PRIMARY_SECOND
                                     ),
-                                    child: authProvider.loginStatus == LoginStatus.loading 
-                                    ? Loader(
-                                      color: ColorResources.BTN_PRIMARY_SECOND,
-                                    )
-                                    : Text("Masuk tanpa Login",
+                                    child: Text("Masuk sebagai Anonim",
                                       style: poppinsRegular.copyWith(
                                         color: ColorResources.WHITE
                                       ),

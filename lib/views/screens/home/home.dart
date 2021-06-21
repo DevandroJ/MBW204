@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/views/screens/news/detail.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/views/screens/news/detail.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
