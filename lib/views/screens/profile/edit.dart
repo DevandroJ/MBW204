@@ -30,7 +30,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   TextEditingController noHpController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
-
   void uploadPic() async {
     imageSource = await showDialog<ImageSource>(context: context, builder: (context) => 
       AlertDialog(
