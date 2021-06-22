@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/topup/topup.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
@@ -18,7 +19,6 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/data/models/profile.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text("My Account",
+        title: Text("Akun Saya",
           style: poppinsRegular,
         ),
         backgroundColor: ColorResources.GRAY_DARK_PRIMARY,
@@ -123,11 +123,40 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   margin: EdgeInsets.only(top: 70.0),
-                  child: CircleAvatar(
-                    radius: 50.0,
-                    backgroundColor: ColorResources.WHITE,
-                    backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif"),
-                  ),
+                  child: Consumer<ProfileProvider>(
+                    builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                      return CachedNetworkImage(
+                        imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
+                        imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(50.0),
+                            child: Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover
+                                )
+                              ),
+                            ),
+                          );
+                        },
+                        placeholder: (BuildContext context, String url) {
+                          return Center(
+                            child: SizedBox(
+                              width: 18.0,
+                              height: 18.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation(ColorResources.BTN_PRIMARY_SECOND),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  )
                 ),
               ),
 
@@ -237,9 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               borderRadius: BorderRadius.circular(20.0)
                             )
                           ),
-                          onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => TopUpScreen()),
-                          ), 
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpScreen())), 
                           child: Text("Topup",
                             style: poppinsRegular.copyWith(
                               fontSize: 14.0,
@@ -249,9 +276,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Icon(
-                        Icons.refresh,
-                        color: ColorResources.BLACK,
+                      InkWell(
+                        onTap: () => Provider.of<PPOBProvider>(context, listen: false).getBalance(context),
+                        child: Icon(
+                          Icons.refresh,
+                          color: ColorResources.BLACK,
+                        ),
                       )
                     ],
                   ),
@@ -409,7 +439,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               borderRadius: BorderRadius.circular(20.0)
                             )
                           ),
-                          onPressed: () {}, 
+                          onPressed: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpScreen())), 
                           child: Text("Topup",
                             style: poppinsRegular.copyWith(
                               fontSize: 14.0,
@@ -419,9 +449,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                       SizedBox(width: 10.0),
-                      Icon(
-                        Icons.refresh,
-                        color: ColorResources.BLACK,
+                      InkWell(
+                        onTap: () => Provider.of<PPOBProvider>(context, listen: false).getBalance(context),
+                        child: Icon(
+                          Icons.refresh,
+                          color: ColorResources.BLACK,
+                        ),
                       )
                     ],
                   ),

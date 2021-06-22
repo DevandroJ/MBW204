@@ -128,13 +128,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        leading: InkWell(
-          onTap: () => Navigator.of(context).pop(),
-          child: Icon(
-            Icons.arrow_back,
-            color: ColorResources.BLACK,
-          ),
-        ),
+        automaticallyImplyLeading: false,
         title: Text("Profil Saya",
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
@@ -168,62 +162,94 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       Consumer<ProfileProvider>(
                         builder: (BuildContext context, ProfileProvider profileProvider,  Widget child) {
                           return profileProvider.profileStatus == ProfileStatus.loading 
-                          ? Text("...") 
-                          : profileProvider.profileStatus == ProfileStatus.error 
-                          ? Text("...") 
-                          : file == null ? CachedNetworkImage(
-                            imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
-                            imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(50.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: ColorResources.BLACK,
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover
-                                    )
-                                  ),
-                                  width: 100.0,
-                                  height: 100.0,
-                                ),
-                              );
-                            },
-                            placeholder: (BuildContext context, String url) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                            errorWidget: (BuildContext context, String url, dynamic error) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(50.0),
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                                  decoration: BoxDecoration(
-                                    color: ColorResources.BLACK,
-                                    borderRadius: BorderRadius.circular(50.0)
-                                  ),
-                                  width: 100.0,
-                                  height: 100.0,
-                                  child: Image.asset('assets/images/logo.png'),
-                                ),
-                              );
-                            },
-                          ) : ClipRRect(
-                                borderRadius: BorderRadius.circular(50.0),
-                                child: Container(
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: Container(
                                 decoration: BoxDecoration(
                                   color: ColorResources.BLACK,
                                   borderRadius: BorderRadius.circular(50.0),
                                 ),
+                                child: Center(
+                                  child: Text("...",
+                                    style: poppinsRegular.copyWith(
+                                      color: ColorResources.WHITE
+                                    )
+                                  ),
+                                ),
                                 width: 100.0,
                                 height: 100.0,
-                                child: Image.file(
-                                file,
-                                fit: BoxFit.cover,
-                              )
-                            ),
+                              ),
+                            )
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorResources.BLACK,
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  image: DecorationImage(
+                                    image: AssetImage('assets/images/logo.png'),
+                                    fit: BoxFit.cover
+                                  )
+                                ),
+                                width: 100.0,
+                                height: 100.0,
+                              ),
+                            )
+                          : file == null 
+                          ? CachedNetworkImage(
+                              imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
+                              imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: ColorResources.BLACK,
+                                      borderRadius: BorderRadius.circular(50.0),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover
+                                      )
+                                    ),
+                                    width: 100.0,
+                                    height: 100.0,
+                                  ),
+                                );
+                              },
+                              placeholder: (BuildContext context, String url) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              },
+                              errorWidget: (BuildContext context, String url, dynamic error) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                    decoration: BoxDecoration(
+                                      color: ColorResources.BLACK,
+                                      borderRadius: BorderRadius.circular(50.0)
+                                    ),
+                                    width: 100.0,
+                                    height: 100.0,
+                                    child: Image.asset('assets/images/logo.png'),
+                                  ),
+                                );
+                              },
+                            ) 
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(50.0),
+                              child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorResources.BLACK,
+                                borderRadius: BorderRadius.circular(50.0),
+                              ),
+                              width: 100.0,
+                              height: 100.0,
+                              child: Image.file(
+                              file,
+                              fit: BoxFit.cover,
+                            )),
                           );
                         },
                       ),         
