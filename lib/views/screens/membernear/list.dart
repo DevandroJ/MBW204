@@ -4,8 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
+import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+
+import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -17,7 +21,6 @@ class MemberNearScreen extends StatefulWidget {
     this.whereFrom
   });
 
-
   @override
   _MemberNearScreenState createState() => _MemberNearScreenState();
 }
@@ -27,7 +30,6 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
   Completer<GoogleMapController> _mapsController = Completer();
   GoogleMapController _controller;
   List<Marker> markers = [];
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,9 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
           ),
         ),
         backgroundColor: ColorResources.GRAY_LIGHT_PRIMARY,
-        leading: widget.whereFrom == "dashboard" ? SizedBox() : InkWell(
+        leading: widget.whereFrom == "dashboard" 
+        ? SizedBox() 
+        : InkWell(
           onTap: () => Navigator.of(context).pop(),
           child: Icon(
             Icons.arrow_back,
@@ -113,7 +117,6 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                               initialPosition: null,
                             );
                           }));
-
                         },
                         child: Text("Ubah Lokasi",
                           style: poppinsRegular.copyWith(
@@ -174,70 +177,89 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
             ],
           ),
 
-          Container(
-            margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
-            width: double.infinity,
-            height: 300.0,
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                childAspectRatio: 1 / 1,
-              ), 
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 8,
-              itemBuilder: (BuildContext context, int i) {
-                return Container(
-                  margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: Container(
-                          child: CachedNetworkImage(
-                            imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: 60.0,
-                              height: 60.0,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover
-                                )
-                              ),
-                          
-                            ),
-                            placeholder: (context, url) => Center(
-                              child: SizedBox(
-                                width: 18.0,
-                                height: 18.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
-                                )
-                              ),
-                            ),
-                            errorWidget: (context, url, error) => Container(),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 65.0,
-                        margin: EdgeInsets.only(top: 3.0),
-                        child: Text("Agam",
-                        textAlign: TextAlign.center,
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                          style: poppinsRegular.copyWith(
-                            fontSize: 11.0,
-                          ),
-                        ),
-                      ),
-                    ],
+          Consumer<NearMemberProvider>(
+            builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
+              if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
+                return Loader(
+                  color: ColorResources.BTN_PRIMARY,
+                );
+              }
+              if(nearMemberProvider.nearMemberStatus == NearMemberStatus.empty) {
+                return Center(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 60.0),
+                    child: Text("Belum ada anggota",
+                      style: poppinsRegular,
+                    )
                   ),
                 );
-              },
-            ),
-          )
-          
+              }
+              return Container(
+                margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+                width: double.infinity,
+                height: 300.0,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    childAspectRatio: 1 / 1,
+                  ), 
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 8,
+                  itemBuilder: (BuildContext context, int i) {
+                    return Container(
+                      margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50.0),
+                            child: Container(
+                              child: CachedNetworkImage(
+                                imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                                imageBuilder: (context, imageProvider) => Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover
+                                    )
+                                  ),
+                              
+                                ),
+                                placeholder: (context, url) => Center(
+                                  child: SizedBox(
+                                    width: 18.0,
+                                    height: 18.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
+                                    )
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) => Container(),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 65.0,
+                            margin: EdgeInsets.only(top: 3.0),
+                            child: Text("Agam",
+                            textAlign: TextAlign.center,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                              style: poppinsRegular.copyWith(
+                                fontSize: 11.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+    
         ],
       ),
     );

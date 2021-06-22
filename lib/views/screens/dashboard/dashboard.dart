@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
 import 'package:mbw204_club_ina/views/screens/feed/notification_demo.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
