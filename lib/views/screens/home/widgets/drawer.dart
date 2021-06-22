@@ -101,140 +101,144 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       child: DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
-        child: CachedNetworkImage(
-          errorWidget: (BuildContext context, String url, dynamic error) {
-            return Container(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0),
-              decoration: BoxDecoration(
-                color: ColorResources.BLACK,
-              ),
-              child: Image.asset('assets/images/logo.png'),
+        child: Consumer<ProfileProvider>(
+          builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+            return CachedNetworkImage(
+              errorWidget: (BuildContext context, String url, dynamic error) {
+                return Container(
+                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                  decoration: BoxDecoration(
+                    color: ColorResources.BLACK,
+                  ),
+                  child: Image.asset('assets/images/logo.png'),
+                );
+              },
+              placeholder: (BuildContext context, String url) {
+                return Center(
+                  child: SizedBox(
+                    width: 18.0,
+                    height: 18.0,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation(ColorResources.BTN_PRIMARY_SECOND),
+                    ),
+                  ),
+                );
+              },
+              imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
+              imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.fill
+                    ),
+                  ),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+
+                      // Positioned(
+                      //   top: 12.0,
+                      //   right: 17.0,
+                      //   child: Container(
+                      //     width: 34.0,
+                      //     height: 34.0,
+                      //     decoration: BoxDecoration(
+                      //       color: ColorResources.BTN_PRIMARY_SECOND,
+                      //       borderRadius: BorderRadius.circular(20.0)
+                      //     ),
+                      //     child: Icon(
+                      //       Icons.more_vert,
+                      //       color: ColorResources.BLACK,
+                      //       size: 17.0,
+                      //     ),
+                      //   ),
+                      // ),
+
+                      // Positioned(
+                      //   top: 60.0,
+                      //   right: 5.0,
+                      //   child: Column(
+                      //     children: [
+                      //       Container(
+                      //         width: 28.0,
+                      //         height: 28.0,
+                      //         decoration: BoxDecoration(
+                      //           color: ColorResources.PINK_PRIMARY,
+                      //           borderRadius: BorderRadius.circular(20.0)
+                      //         ),
+                      //         child: Icon(
+                      //           Icons.edit,
+                      //           color: ColorResources.BLACK,
+                      //           size: 17.0,
+                      //         ),
+                      //       ),
+                      //       SizedBox(height: 5.0),
+                      //       Text("Edit Nama",
+                      //         style: poppinsRegular.copyWith(
+                      //           fontSize: 11.0,
+                      //           color: ColorResources.WHITE
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ) 
+                      // ),
+
+                      // Positioned(
+                      //   top: 120.0,
+                      //   right: 5.0,
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: [
+                      //       Container(
+                      //         width: 28.0,
+                      //         height: 28.0,
+                      //         decoration: BoxDecoration(
+                      //           color: ColorResources.YELLOW_PRIMARY,
+                      //           borderRadius: BorderRadius.circular(20.0)
+                      //         ),
+                      //         child: Icon(
+                      //           Icons.camera_alt,
+                      //           color: ColorResources.BLACK,
+                      //           size: 17.0,
+                      //         ),
+                      //       ),
+                      //       SizedBox(height: 5.0),
+                      //       Text("Ganti Foto",
+                      //         style: poppinsRegular.copyWith(
+                      //           fontSize: 11.0,
+                      //           color: ColorResources.WHITE
+                      //         ),
+                      //       )
+                      //     ],
+                      //   )
+                      // ),
+
+                      // Positioned(
+                      //   bottom: 0.0,
+                      //   child: Container(
+                      //     padding: EdgeInsets.zero,
+                      //     margin: EdgeInsets.zero,
+                      //     width: 303.0,
+                      //     height: 30.0,
+                      //     decoration: BoxDecoration(
+                      //       color: ColorResources.WHITE,
+                      //       borderRadius: BorderRadius.only(
+                      //         topLeft: Radius.circular(20.0),
+                      //         topRight: Radius.circular(20.0)
+                      //       )
+                      //     ),   
+                      //   ),     
+                      // ),
+                      
+                    ]
+                  )
+                );
+              },
             );
           },
-          placeholder: (BuildContext context, String url) {
-            return Center(
-              child: SizedBox(
-                width: 18.0,
-                height: 18.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(ColorResources.BTN_PRIMARY_SECOND),
-                ),
-              ),
-            );
-          },
-          imageUrl: "${AppConstants.BASE_URL_IMG}/",
-          imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.fill
-                ),
-              ),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-
-                  // Positioned(
-                  //   top: 12.0,
-                  //   right: 17.0,
-                  //   child: Container(
-                  //     width: 34.0,
-                  //     height: 34.0,
-                  //     decoration: BoxDecoration(
-                  //       color: ColorResources.BTN_PRIMARY_SECOND,
-                  //       borderRadius: BorderRadius.circular(20.0)
-                  //     ),
-                  //     child: Icon(
-                  //       Icons.more_vert,
-                  //       color: ColorResources.BLACK,
-                  //       size: 17.0,
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // Positioned(
-                  //   top: 60.0,
-                  //   right: 5.0,
-                  //   child: Column(
-                  //     children: [
-                  //       Container(
-                  //         width: 28.0,
-                  //         height: 28.0,
-                  //         decoration: BoxDecoration(
-                  //           color: ColorResources.PINK_PRIMARY,
-                  //           borderRadius: BorderRadius.circular(20.0)
-                  //         ),
-                  //         child: Icon(
-                  //           Icons.edit,
-                  //           color: ColorResources.BLACK,
-                  //           size: 17.0,
-                  //         ),
-                  //       ),
-                  //       SizedBox(height: 5.0),
-                  //       Text("Edit Nama",
-                  //         style: poppinsRegular.copyWith(
-                  //           fontSize: 11.0,
-                  //           color: ColorResources.WHITE
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ) 
-                  // ),
-
-                  // Positioned(
-                  //   top: 120.0,
-                  //   right: 5.0,
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       Container(
-                  //         width: 28.0,
-                  //         height: 28.0,
-                  //         decoration: BoxDecoration(
-                  //           color: ColorResources.YELLOW_PRIMARY,
-                  //           borderRadius: BorderRadius.circular(20.0)
-                  //         ),
-                  //         child: Icon(
-                  //           Icons.camera_alt,
-                  //           color: ColorResources.BLACK,
-                  //           size: 17.0,
-                  //         ),
-                  //       ),
-                  //       SizedBox(height: 5.0),
-                  //       Text("Ganti Foto",
-                  //         style: poppinsRegular.copyWith(
-                  //           fontSize: 11.0,
-                  //           color: ColorResources.WHITE
-                  //         ),
-                  //       )
-                  //     ],
-                  //   )
-                  // ),
-
-                  // Positioned(
-                  //   bottom: 0.0,
-                  //   child: Container(
-                  //     padding: EdgeInsets.zero,
-                  //     margin: EdgeInsets.zero,
-                  //     width: 303.0,
-                  //     height: 30.0,
-                  //     decoration: BoxDecoration(
-                  //       color: ColorResources.WHITE,
-                  //       borderRadius: BorderRadius.only(
-                  //         topLeft: Radius.circular(20.0),
-                  //         topRight: Radius.circular(20.0)
-                  //       )
-                  //     ),   
-                  //   ),     
-                  // ),
-                  
-                ]
-              )
-            );
-          },
-        )
+        ) 
       ),
     );
   }

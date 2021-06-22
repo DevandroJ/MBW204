@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/utils/exceptions.dart';
@@ -86,7 +88,14 @@ class ProfileProvider extends ChangeNotifier {
       }
       await profileRepo.updateProfile(context, profileData);
       getUserProfile(context);
+      Future.delayed(Duration(seconds: 1), () {
+        Navigator.of(context).pop();
+      });
       setStateUpdateProfileStatus(UpdateProfileStatus.loaded);
+      Fluttertoast.showToast(
+        msg: "Ubah Profil berhasil",
+        backgroundColor: ColorResources.SUCCESS
+      );
     } catch(e) {
       setStateUpdateProfileStatus(UpdateProfileStatus.error);
       notifyListeners();

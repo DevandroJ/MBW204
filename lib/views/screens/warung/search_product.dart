@@ -234,7 +234,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
     width: double.infinity,
     child: CupertinoTextField(
       keyboardType: TextInputType.text,
-      placeholder: 'Cari Produk di Toko Indomini Mart',
+      placeholder: 'Cari Produk di Toko MBW204 Club INA',
       placeholderStyle: TextStyle(
         color: Color(0xffC4C6CC),
         fontSize: 14.0,

@@ -73,7 +73,7 @@ class _JualBeliPageState extends State<JualBeliPage> with SingleTickerProviderSt
 
                     // Custom App Bar
                     SliverToBoxAdapter(
-                      child: CustomAppBar(title: "Indomini Mart", isBackButtonExist: true),
+                      child: CustomAppBar(title: "Benz Mart", isBackButtonExist: true),
                     ),
 
                     // Search Button
@@ -91,7 +91,7 @@ class _JualBeliPageState extends State<JualBeliPage> with SingleTickerProviderSt
                           children: [
                             Expanded(
                               child: SearchWidget(
-                                hintText: "Cari Produk di Toko Indomini Mart",
+                                hintText: "Cari Produk di Benz Mart",
                               )
                             ),
                             Consumer<WarungProvider>(

@@ -7,11 +7,14 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/providers/auth.dart';
-import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/views/screens/media/media.dart';
+import 'package:mbw204_club_ina/views/screens/ppob/ppob.dart';
+import 'package:mbw204_club_ina/views/screens/warung/warung_index.dart';
+import 'package:mbw204_club_ina/providers/auth.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/views/screens/news/detail.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
@@ -398,9 +401,6 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                       color: ColorResources.BLACK
                                     ),
-                                      recognizer: TapGestureRecognizer()..onTap = () {
-                                           
-                                      }
                                     )
                                   ]
                                 ),
@@ -429,8 +429,10 @@ class HomePage extends StatelessWidget {
                                 
                                 InkWell(
                                   onTap: () {
-                                  if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-                                      print("loggedin");
+                                    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                                      return Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => MediaScreen()),
+                                      );
                                     } else {
                                       return showAnimatedDialog(
                                         context: context, 
@@ -477,9 +479,7 @@ class HomePage extends StatelessWidget {
                                                         ),
                                                         backgroundColor: Colors.transparent
                                                       ),
-                                                      onPressed: () {
-
-                                                      },
+                                                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
                                                       child: Text("Login",
                                                         style: poppinsRegular.copyWith(
                                                           color: ColorResources.GRAY_LIGHT_PRIMARY
@@ -514,15 +514,84 @@ class HomePage extends StatelessWidget {
                                   )
                                 ),
 
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20.0,
-                                      child: Image.asset(Images.mart)
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    Text("MBW Mart")
-                                  ],
+                                InkWell(
+                                  onTap: () {
+                                    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                                      return Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => JualBeliPage()),
+                                      );
+                                    } else {
+                                      return showAnimatedDialog(
+                                        context: context, 
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0)
+                                            ),
+                                            backgroundColor: ColorResources.BLACK,
+                                            child: Container(
+                                              height: 250.0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text("Silahkan Login atau Buat Akun\nUntuk Bergabung!",
+                                                    style: poppinsRegular.copyWith(
+                                                      color: ColorResources.WHITE,
+                                                      fontSize: 16.0
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(height: 10.0),
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: ColorResources.GRAY_LIGHT_PRIMARY,
+                                                        width: 1.0
+                                                      ),
+                                                      borderRadius: BorderRadius.circular(30.0),
+                                                        image: DecorationImage(
+                                                          alignment: Alignment.centerLeft,
+                                                          image: AssetImage(Images.wheel_btn)
+                                                        )
+                                                    ),
+                                                    child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(30.0),
+                                                        ),
+                                                        backgroundColor: Colors.transparent
+                                                      ),
+                                                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
+                                                      child: Text("Login",
+                                                        style: poppinsRegular.copyWith(
+                                                          color: ColorResources.GRAY_LIGHT_PRIMARY
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      );
+                                    }
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 20.0,
+                                        child: Image.asset(Images.mart)
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text("MBW Mart")
+                                    ],
+                                  ),
                                 ),
 
                                 Container(
@@ -532,15 +601,84 @@ class HomePage extends StatelessWidget {
                                   )
                                 ),
 
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20.0,
-                                      child: Image.asset(Images.ppob)
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    Text("PPOB")
-                                  ],
+                                InkWell(
+                                  onTap: () {
+                                    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                                      return Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => PPOBScreen())
+                                      );
+                                    } else {
+                                      return showAnimatedDialog(
+                                        context: context, 
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0)
+                                            ),
+                                            backgroundColor: ColorResources.BLACK,
+                                            child: Container(
+                                              height: 250.0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text("Silahkan Login atau Buat Akun\nUntuk Bergabung!",
+                                                    style: poppinsRegular.copyWith(
+                                                      color: ColorResources.WHITE,
+                                                      fontSize: 16.0
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(height: 10.0),
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: ColorResources.GRAY_LIGHT_PRIMARY,
+                                                        width: 1.0
+                                                      ),
+                                                      borderRadius: BorderRadius.circular(30.0),
+                                                        image: DecorationImage(
+                                                          alignment: Alignment.centerLeft,
+                                                          image: AssetImage(Images.wheel_btn)
+                                                        )
+                                                    ),
+                                                    child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(30.0),
+                                                        ),
+                                                        backgroundColor: Colors.transparent
+                                                      ),
+                                                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
+                                                      child: Text("Login",
+                                                        style: poppinsRegular.copyWith(
+                                                          color: ColorResources.GRAY_LIGHT_PRIMARY
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      );
+                                    }
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 20.0,
+                                        child: Image.asset(Images.ppob)
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text("PPOB")
+                                    ],
+                                  ),
                                 ),
 
                                 Container(
@@ -550,15 +688,84 @@ class HomePage extends StatelessWidget {
                                   )
                                 ),
 
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 20.0,
-                                      child: Image.asset(Images.search_member)
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    Text("Search\nMember")
-                                  ],
+                                InkWell(
+                                  onTap: () {
+                                    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                                      return Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => MemberNearScreen()),
+                                      );
+                                    } else {
+                                      return showAnimatedDialog(
+                                        context: context, 
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10.0)
+                                            ),
+                                            backgroundColor: ColorResources.BLACK,
+                                            child: Container(
+                                              height: 250.0,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text("Silahkan Login atau Buat Akun\nUntuk Bergabung!",
+                                                    style: poppinsRegular.copyWith(
+                                                      color: ColorResources.WHITE,
+                                                      fontSize: 16.0
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  SizedBox(height: 10.0),
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 40.0,
+                                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: ColorResources.GRAY_LIGHT_PRIMARY,
+                                                        width: 1.0
+                                                      ),
+                                                      borderRadius: BorderRadius.circular(30.0),
+                                                        image: DecorationImage(
+                                                          alignment: Alignment.centerLeft,
+                                                          image: AssetImage(Images.wheel_btn)
+                                                        )
+                                                    ),
+                                                    child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(30.0),
+                                                        ),
+                                                        backgroundColor: Colors.transparent
+                                                      ),
+                                                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
+                                                      child: Text("Login",
+                                                        style: poppinsRegular.copyWith(
+                                                          color: ColorResources.GRAY_LIGHT_PRIMARY
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      );
+                                    }
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 20.0,
+                                        child: Image.asset(Images.search_member)
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text("Search\nMember")
+                                    ],
+                                  ),
                                 ),
                                 
                               ],

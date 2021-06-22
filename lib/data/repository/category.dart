@@ -12,7 +12,7 @@ class CategoryRepo {
       Category(id: 5, name: 'Info', icon: 'assets/icons/ic-info.png'),
       Category(id: 6, name: getTranslated("NEWS", context), icon: 'assets/icons/ic-news.png'),
       Category(id: 7, name: 'PPOB', icon: 'assets/icons/ic-ppob.png'),
-      Category(id: 8, name: 'Indomini Mart', icon: 'assets/icons/ic-indomini-mart.png'),
+      Category(id: 8, name: 'MBW204 Club INA', icon: 'assets/icons/ic-indomini-mart.png'),
     ];
     return categoryList;
   }

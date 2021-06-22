@@ -122,7 +122,7 @@ class _ProductPageState extends State<ProductPage> {
                   children: [
                   Expanded(
                     child: SearchWidget(
-                      hintText: "Cari Produk di Toko Indomini Mart",
+                      hintText: "Cari Produk di Toko MBW204 Club INA",
                     )
                   ),
                   Consumer<WarungProvider>(

@@ -850,7 +850,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 ),
               ),
               Text(
-                "Cari Produk di Indomini Mart",
+                "Cari Produk di MBW204 Club INA",
                 style: TextStyle(
                   color: Color(0xffC4C6CC),
                   fontSize: 14.0,

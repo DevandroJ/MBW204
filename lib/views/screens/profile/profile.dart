@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/ppob/topup/topup.dart';
@@ -278,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).getUserAddress),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Nomor Handphone", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              profileListAccount(context, "Nomor HP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..." 
@@ -437,43 +439,56 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     Positioned(
                       top: 125.0,
                       left: 30.0,
-                      child: CircleAvatar(
-                        radius: 30.0,
-                        backgroundColor: ColorResources.WHITE,
-                        backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif") ,
+                      child: CachedNetworkImage(
+                        imageUrl: "${AppConstants.BASE_URL_IMG}${Provider.of<ProfileProvider>(context, listen: false).getUserProfilePic}",
+                        imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                          return CircleAvatar(
+                            radius: 30.0,
+                            backgroundColor: ColorResources.WHITE,
+                            backgroundImage: imageProvider,
+                          );
+                        },
                       )
                     ),
 
                     Positioned(
                       top: 130.0,
                       left: 105.0,
-                      child: Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserFullname,
-                        style: poppinsRegular.copyWith(
-                          color: ColorResources.WHITE,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0
-                        ),
-                      ),
+                      child: Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return Text(profileProvider.profileStatus == ProfileStatus.loading  
+                          ? "..." 
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..." 
+                          : profileProvider.getUserFullname,
+                            style: poppinsRegular.copyWith(
+                              color: ColorResources.WHITE,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0
+                            ),
+                          );
+                        },
+                      )
                     ),
 
                     Positioned(
                       top: 155.0,
                       left: 105.0,
-                      child: Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber,
-                        style: poppinsRegular.copyWith(
-                          color: ColorResources.BTN_PRIMARY_SECOND,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0
-                        ),
-                      ),
+                      child: Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return Text(profileProvider.profileStatus == ProfileStatus.loading  
+                          ? "..." 
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..." 
+                          : profileProvider.getUserIdNumber,
+                            style: poppinsRegular.copyWith(
+                              color: ColorResources.BTN_PRIMARY_SECOND,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0
+                            ),
+                          );
+                        },
+                      )
                     ),
 
                     Positioned(
@@ -492,14 +507,18 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         decoration: BoxDecoration(
                           color: ColorResources.WHITE
                         ),
-                        child: QrImage(
-                          data: Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber,
-                          version: QrVersions.auto,
-                          size: 70.0,
+                        child: Consumer<ProfileProvider>(
+                          builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                            return profileProvider.profileStatus == ProfileStatus.loading 
+                            ? Text("...") 
+                            : profileProvider.profileStatus == ProfileStatus.error 
+                            ? Text("...")
+                            : QrImage(
+                              data: profileProvider.getUserIdNumber,
+                              version: QrVersions.auto,
+                              size: 70.0,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -564,16 +583,31 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         child: Image.asset(Images.profile_drawer)
                       ),
                       SizedBox(width: 20.0),
-                      Text("ID ${Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..." 
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber}",
-                        style: poppinsRegular.copyWith(
-                          fontSize: 14.0,
-                          color: ColorResources.BLACK
-                        ),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileProvider.profileStatus == ProfileStatus.loading 
+                          ? Text("...",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: ColorResources.BLACK
+                            ),
+                          )
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? Text("...",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: ColorResources.BLACK
+                            ),
+                          )
+                          : Text("ID ${profileProvider.getUserIdNumber}",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: ColorResources.BLACK
+                            ),
+                          );
+                        },
                       )
+
                     ],
                   )
                 ),
