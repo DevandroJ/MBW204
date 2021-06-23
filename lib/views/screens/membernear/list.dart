@@ -4,11 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -26,11 +26,9 @@ class MemberNearScreen extends StatefulWidget {
 }
 
 class _MemberNearScreenState extends State<MemberNearScreen> {
-  
-  Completer<GoogleMapController> _mapsController = Completer();
-  GoogleMapController _controller;
-  List<Marker> markers = [];
 
+  Completer<GoogleMapController> mapsController = Completer();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,20 +95,8 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                             return PlacePicker(
                               apiKey: AppConstants.API_KEY_GMAPS,
                               useCurrentLocation: true,
-                              onPlacePicked: (result) async {
-                                markers.add(Marker(
-                                  markerId: MarkerId("currentPosition"),
-                                  position: LatLng(result.geometry.location.lat, result.geometry.location.lng),
-                                  icon: BitmapDescriptor.defaultMarker,
-                                ));
-                                _controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: LatLng(result.geometry.location.lat, result.geometry.location.lng),
-                                      zoom: 15.0
-                                    )
-                                  )
-                                );                              
+                              onPlacePicked: (result) async {        
+                                await Provider.of<NearMemberProvider>(context, listen: false).updateNearMember(context, result);              
                                 Navigator.of(context).pop();
                               },
                               autocompleteLanguage: "id",
@@ -129,50 +115,60 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                 ),
               ),
 
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: double.infinity,
-                  height: 200.0,
-                  margin: EdgeInsets.only(top: 110.0, left: 16.0, right: 16.0),
-                  child: GoogleMap(
-                    mapType: MapType.normal,
-                    gestureRecognizers: Set()..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
-                    myLocationEnabled: false,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(-6.1753871, 106.8249641),
-                      zoom: 15,
-                    ),
-                    // markers: Set.from(markers),
-                    onMapCreated: (GoogleMapController controller) {
-                      _mapsController.complete(controller);
-                      _controller = controller;
-                    },
-                  ),
-                )
+              Consumer<NearMemberProvider>(
+                builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: double.infinity,
+                      height: 200.0,
+                      margin: EdgeInsets.only(top: 110.0, left: 16.0, right: 16.0),
+                      child: GoogleMap(
+                        mapType: MapType.normal,
+                        gestureRecognizers: Set()..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
+                        myLocationEnabled: false,
+                        initialCameraPosition: CameraPosition(
+                          target: nearMemberProvider.latLng,
+                          zoom: 15,
+                        ),
+                        markers: Set.from(nearMemberProvider.markers),
+                        onMapCreated: (GoogleMapController controller) {
+                          mapsController.complete(controller);
+                          nearMemberProvider.googleMapController = controller;
+                        },
+                      ),
+                    )
+                  );
+                },
               ),
 
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: double.infinity,
-                  height: 90.0,
-                  margin: EdgeInsets.only(top: 312.0, left: 16.0, right: 16.0),
-                  child: Container(
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: ColorResources.WHITE
-                    ),
-                    child: Text("Gg. Bambu Kuning No.3B, RW.4, Bekasi, Kec. Bekasi, Kota Bekasi, Indonesia 40560",
-                      softWrap: true,
-                      style: poppinsRegular.copyWith(
-                        height: 1.6,
-                        fontSize: 12.0
+              Consumer<NearMemberProvider>(
+                builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: double.infinity,
+                      height: 90.0,
+                      margin: EdgeInsets.only(top: 312.0, left: 16.0, right: 16.0),
+                      child: Container(
+                        padding: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: ColorResources.WHITE
+                        ),
+                        child: Text(nearMemberProvider.nearMemberAddress,
+                          softWrap: true,
+                          style: poppinsRegular.copyWith(
+                            height: 1.6,
+                            fontSize: 12.0
+                          )
+                        ),
                       )
-                    ),
-                  )
-                )
+                    )
+                  ); 
+                },
               ),
+
+              
 
             ],
           ),
@@ -180,8 +176,11 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
           Consumer<NearMemberProvider>(
             builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
               if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
-                return Loader(
-                  color: ColorResources.BTN_PRIMARY,
+                return Container(
+                  margin: EdgeInsets.only(top: 60.0),
+                  child: Loader(
+                    color: ColorResources.BTN_PRIMARY,
+                  ),
                 );
               }
               if(nearMemberProvider.nearMemberStatus == NearMemberStatus.empty) {

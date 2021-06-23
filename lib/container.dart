@@ -73,7 +73,7 @@ Future<void> init() async {
   getIt.registerFactory(() => MediaProvider(mediaRepo: getIt()));
   getIt.registerFactory(() => PPOBProvider(sharedPreferences: getIt()));
   getIt.registerFactory(() => NewsProvider());
-  getIt.registerFactory(() => NearMemberProvider(nearMemberRepo: getIt()));
+  getIt.registerFactory(() => NearMemberProvider(nearMemberRepo: getIt(), sharedPreferences: getIt()));
   getIt.registerFactory(() => WarungProvider());
   getIt.registerFactory(() => InboxProvider());
   getIt.registerFactory(() => FcmProvider());

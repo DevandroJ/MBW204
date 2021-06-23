@@ -312,19 +312,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               dataSource: [
                                                 {
                                                   "display": "Jakarta",
-                                                  "value": "001",
+                                                  "value": "01",
                                                 },
                                                 {
                                                   "display": "Bandung",
-                                                  "value": "002",
+                                                  "value": "02",
                                                 },
                                                 {
                                                   "display": "Tangerang",
-                                                  "value": "003",
+                                                  "value": "03",
                                                 },
                                                 {
                                                   "display": "Surabaya",
-                                                  "value": "004"
+                                                  "value": "04"
                                                 }
                                               ],
                                               textField: 'display',
@@ -366,6 +366,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   "value": "C 230",
                                                 },
                                                 {
+                                                  "display": "C 250",
+                                                  "value":"C 250"
+                                                },
+                                                {
                                                   "display": "C 280",
                                                   "value": "C 280",
                                                 },
@@ -382,14 +386,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   "value": "C 220 CDI",
                                                 },
                                                 {
+                                                  "display": "C 250 CDI",
+                                                  "value": "C 250 CDI"
+                                                },
+                                                {
                                                   "display": "C 320 CDI",
                                                   "value": "C 320 CDI",
                                                 },
+                                                {
+                                                  "display": "C 180 CGI",
+                                                  "value": "C 180 CGI"
+                                                },
+                                                {
+                                                  "display": "C 200 CGI",
+                                                  "value": "C 200 CGI"
+                                                },
+                                                {
+                                                  "display": "C 250 CGI",
+                                                  "value": "C 250 CGI"
+                                                },
+                                                {
+                                                  "display": "C 350 CGI",
+                                                  "value": "C 350 CGI"
+                                                },
+                                                {
+                                                  "display": "C 63",
+                                                  "value": "C 63 AMG"
+                                                }
                                               ],
                                               textField: 'display',
                                               valueField: 'value',
                                             );
-                                            
                                           }, 
                                         ),
                                       ),

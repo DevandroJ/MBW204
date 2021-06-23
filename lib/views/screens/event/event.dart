@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -196,6 +196,7 @@ class _EventScreenState extends State<EventScreen> {
                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                         children: [
                                                           Flexible(
+                                                            flex: 3,
                                                             child: ListTile(
                                                             dense: true,
                                                               leading: Text("Start :",
@@ -210,8 +211,12 @@ class _EventScreenState extends State<EventScreen> {
                                                               ),
                                                             ),
                                                           ),
-                                                          Text("-"),
                                                           Flexible(
+                                                            flex: 1,
+                                                            child: Text("-"),
+                                                          ),
+                                                          Flexible(
+                                                            flex: 3,
                                                             child: ListTile(
                                                               dense: true,
                                                               leading: Text("End :",
