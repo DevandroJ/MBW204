@@ -13,12 +13,14 @@ class EventRepo {
   Future<List<EventData>> getEvent(BuildContext context) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
-      Response res = await dio.get("${AppConstants.BASE_URL}/content-service/event-app");
+      Response res = await dio.get("${AppConstants.BASE_URL}/content-service/event-cms");
       EventModel eventModel = EventModel.fromJson(json.decode(res.data));
       List<EventData> _eventData = eventModel.body;
       eventData = _eventData; 
       return eventData;
-    } on DioError catch(_) {
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
       throw ServerErrorException(null);
     } catch(e) {
       print(e);

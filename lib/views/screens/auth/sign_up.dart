@@ -312,16 +312,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               dataSource: [
                                                 {
                                                   "display": "Jakarta",
-                                                  "value": "jakarta",
+                                                  "value": "001",
                                                 },
                                                 {
                                                   "display": "Bandung",
-                                                  "value": "bandung",
+                                                  "value": "002",
                                                 },
                                                 {
-                                                  "display": "Bali",
-                                                  "value": "bali",
+                                                  "display": "Tangerang",
+                                                  "value": "003",
                                                 },
+                                                {
+                                                  "display": "Surabaya",
+                                                  "value": "004"
+                                                }
                                               ],
                                               textField: 'display',
                                               valueField: 'value',
@@ -350,16 +354,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               },
                                               dataSource: [
                                                 {
-                                                  "display": "Jakarta",
-                                                  "value": "jakarta",
+                                                  "display": "C 180 Kompressor",
+                                                  "value": "C 180 Kompressor",
                                                 },
                                                 {
-                                                  "display": "Bandung",
-                                                  "value": "bandung",
+                                                  "display": "C 200 Kompressor",
+                                                  "value": "C 200 Kompressor",
                                                 },
                                                 {
-                                                  "display": "Bali",
-                                                  "value": "bali",
+                                                  "display": "C 230",
+                                                  "value": "C 230",
+                                                },
+                                                {
+                                                  "display": "C 280",
+                                                  "value": "C 280",
+                                                },
+                                                {
+                                                  "display": "C 350",
+                                                  "value": "C 350",
+                                                },
+                                                {
+                                                  "display": "C 200 CDI",
+                                                  "value": "C 200 CDI",
+                                                },
+                                                {
+                                                  "display": "C 220 CDI",
+                                                  "value": "C 220 CDI",
+                                                },
+                                                {
+                                                  "display": "C 320 CDI",
+                                                  "value": "C 320 CDI",
                                                 },
                                               ],
                                               textField: 'display',
@@ -389,16 +413,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               },
                                               dataSource: [
                                                 {
-                                                  "display": "Jakarta",
-                                                  "value": "jakarta",
+                                                  "display": "Station Wagon",
+                                                  "value": "Station Wagon",
                                                 },
                                                 {
-                                                  "display": "Bandung",
-                                                  "value": "bandung",
+                                                  "display": "Saloon",
+                                                  "value": "Saloon",
                                                 },
                                                 {
-                                                  "display": "Bali",
-                                                  "value": "bali",
+                                                  "display": "Coupe",
+                                                  "value": "Coupe",
                                                 },
                                               ],
                                               textField: 'display',

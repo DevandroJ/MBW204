@@ -41,12 +41,20 @@ class EventProvider with ChangeNotifier {
         setStateEventStatus(EventStatus.loaded);
         for (int i = 0; i < _eventData.length; i++) {
           createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].eventDate.toString())] = [
-            _eventData[i].description,
+            [{
+              "description": _eventData[i].description,
+              "location": _eventData[i].location,
+              "summary": _eventData[i].summary,
+              "start": _eventData[i].start,
+              "end": _eventData[i].end,
+              "path": _eventData[i].media[0].path
+            }]
           ];
           DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
           events = createEvent[dateNow] ?? [];
         }
       }
+     
       if(_eventData.isEmpty) {
         setStateEventStatus(EventStatus.empty);
       }

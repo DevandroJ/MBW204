@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 
@@ -44,15 +45,16 @@ class CustomDropDownFormField extends FormField<dynamic> {
                     decoration: InputDecoration(
                       contentPadding: contentPadding,
                       labelText: titleText,
-                      labelStyle: TextStyle(
-                        color: ColorResources.WHITE
+                      labelStyle: poppinsRegular.copyWith(
+                        color: ColorResources.WHITE,
+                        fontSize: 20.0
                       ),
                       filled: filled,
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<dynamic>(
                         hint: Text(hintText,
-                          style: TextStyle(
+                          style: poppinsRegular.copyWith(
                             color: Colors.grey.shade500,
                             fontSize: 14.0
                           ),
@@ -67,7 +69,7 @@ class CustomDropDownFormField extends FormField<dynamic> {
                             value: item[valueField],
                             child: Text(item[textField],
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: poppinsRegular.copyWith(
                                 color: ColorResources.BTN_PRIMARY_SECOND,
                                 fontSize: 14.0
                               ),

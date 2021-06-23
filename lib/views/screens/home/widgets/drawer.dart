@@ -124,7 +124,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                 );
               },
-              imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
+              imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider?.userProfile?.profilePic}",
               imageBuilder: (BuildContext context, ImageProvider imageProvider) {
                 return Container(
                   decoration: BoxDecoration(
