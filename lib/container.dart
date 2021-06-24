@@ -54,7 +54,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => SosRepo());
   getIt.registerLazySingleton(() => BannerRepo());
   getIt.registerLazySingleton(() => NearMemberRepo(sharedPreferences: getIt()));
-  getIt.registerLazySingleton(() => EventRepo());
+  getIt.registerLazySingleton(() => EventRepo(sharedPreferences: getIt()));
   getIt.registerLazySingleton(() => OnBoardingRepo());
   getIt.registerLazySingleton(() => MediaRepo());
   getIt.registerLazySingleton(() => NotificationRepo());

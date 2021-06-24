@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
@@ -10,7 +10,6 @@ import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/basewidget/textfield/custom_password_textfield.dart';
-import 'package:provider/provider.dart';
 
 class AuthDisbursementScreen extends StatefulWidget {
   @override

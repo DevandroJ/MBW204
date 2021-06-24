@@ -167,9 +167,6 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                   ); 
                 },
               ),
-
-              
-
             ],
           ),
 

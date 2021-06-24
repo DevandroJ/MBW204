@@ -140,7 +140,7 @@ class _EventScreenState extends State<EventScreen> {
                                                   margin: EdgeInsets.all(12.0),
                                                   child: Column(
                                                     mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
                                                     children: [
                                                       CachedNetworkImage(
                                                         imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${eventProvider.events[i][0]["path"].toString()}",
@@ -233,14 +233,45 @@ class _EventScreenState extends State<EventScreen> {
                                                           ),
                                                         ],
                                                       ),
+                                                      Consumer<EventProvider>(
+                                                        builder: (BuildContext context, EventProvider eventProvider, Widget child) {
+                                                          return Container(
+                                                            width: double.infinity,
+                                                            child: eventProvider.events[i][0]["user_joined"] 
+                                                            ? TextButton(
+                                                              style: TextButton.styleFrom(
+                                                                backgroundColor: ColorResources.DIM_GRAY
+                                                              ),
+                                                              onPressed: null,
+                                                              child: Text("Anda telah bergabung",
+                                                                style: poppinsRegular.copyWith(
+                                                                  color: ColorResources.WHITE
+                                                                ),
+                                                              ),                            
+                                                            )
+                                                            : TextButton(
+                                                              style: TextButton.styleFrom(
+                                                                backgroundColor: ColorResources.BTN_PRIMARY_SECOND
+                                                              ),
+                                                              onPressed: () async => await eventProvider.eventJoin(context, eventProvider.events[i][0]["event_id"]),
+                                                              child: eventProvider.eventJoinStatus == EventJoinStatus.loading 
+                                                              ? Loader(
+                                                                  color: ColorResources.YELLOW_PRIMARY,
+                                                                ) 
+                                                              : Text("Gabung",
+                                                                style: poppinsRegular.copyWith(
+                                                                  color: ColorResources.WHITE
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      )
                                                     ],
                                                   ),
                                                 ),
                                               )
-                                              
-                                              
-                                            
-
+                  
 
                                             ),
                                           );
