@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -41,6 +42,8 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
     )
   );
   AuthProvider({@required this.authRepo});
+
+  SearchBarController<dynamic> searchBarProvinsi;
 
   LoginStatus _loginStatus = LoginStatus.idle;
   LoginStatus get loginStatus => _loginStatus;
