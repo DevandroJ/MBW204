@@ -342,6 +342,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               title: 'Term of Service',
               url: 'https://connexist.com/mobile-bantuan'
             )));
+          } else if(menu == "bantuan") {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
+              title: 'Bantuan',
+              url: 'https://connexist.com/mobile-bantuan'
+            )));
           } else {
             Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
           }

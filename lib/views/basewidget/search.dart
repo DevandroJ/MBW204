@@ -9,6 +9,7 @@ import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
+import 'package:mbw204_club_ina/views/screens/event/detail.dart';
 import 'package:provider/provider.dart';
 
 class SearchWidget extends StatelessWidget {
@@ -18,78 +19,6 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // return Padding(
-    //   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-    //   child: Container(
-    //   decoration: BoxDecoration(color: Colors.white),
-    //   height: 220.0,
-    //   child: SearchBar(
-    //     searchBarPadding: EdgeInsets.symmetric(horizontal: 8.0),
-    //     headerPadding: EdgeInsets.symmetric(horizontal: 8.0),
-    //     listPadding: EdgeInsets.symmetric(horizontal: 8.0),
-    //     onSearch: Provider.of<AuthProvider>(context, listen: false).getAllProvinsi,
-    //     searchBarController: Provider.of<AuthProvider>(context, listen: false).searchBarProvinsi,
-    //     debounceDuration: Duration(milliseconds: 500),
-    //     placeHolder: ListView.separated(
-    //       separatorBuilder: (BuildContext context, int i) {
-    //         return Divider();
-    //       },
-    //       // itemCount: Provider.of<AuthProvider>(context, listen: false).provinsiData.length,
-    //       itemBuilder: (BuildContext context, int i) {
-    //         return InkWell(
-    //         onTap: () {
-    //           Navigator.pop(context);
-    //         },
-    //         // child: Container(
-    //         //   margin: EdgeInsets.only(top: 10.0, left:12.0),
-    //         //     child: Text(Provider.of<AuthProvider>(context, listen: false).provinsiData[i].nama,
-    //         //       style: titilliumRegular.copyWith(
-    //         //         fontSize: 14.0,
-    //         //         fontWeight: FontWeight.bold
-    //         //       )
-    //         //     )
-    //         //   )
-    //         );
-    //       },
-    //     ),
-    //     cancellationWidget: Text("Batal"),
-    //     emptyWidget: Container(
-    //     margin: EdgeInsets.only(top: 5.0, left: 12.0),
-    //     child: Text( "Data tidak ditemukan",
-    //       style: TextStyle(
-    //           fontSize: 16.0,
-    //           fontWeight: FontWeight.bold
-    //         )
-    //       )
-    //     ),
-    //     indexedScaledTileBuilder: (int index) => ScaledTile.count(1, index.isEven ? 2 : 1),
-    //     header: Row(),
-    //     onCancelled: () {},
-    //     mainAxisSpacing: 10.0,
-    //     crossAxisSpacing: 10.0,
-    //     crossAxisCount: 2,
-    //     onItemFound: (EventSearchData event, int i) {
-
-    //       return Container(
-    //         child: ListTile(
-    //           title: Text(event.description,
-    //           style: titilliumRegular.copyWith(
-    //               fontSize: 16.0,
-    //               fontWeight: FontWeight.bold
-    //             )
-    //           ),
-    //           onTap: () {
-               
-    //           },
-    //         ),
-    //       );
-
-    //     },
-    //     ),
-    //   ),
-    // );
-
-    
     return InkWell(
       onTap: () {
         showSearch(context: context, delegate: EventSearch());
@@ -236,6 +165,16 @@ class EventSearch extends SearchDelegate {
             final suggestion = suggestions[i];
             return ListTile(
               dense: true,
+              onTap: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DetailEventScreen(
+                    title: suggestion.description,
+                    date: suggestion.created,
+                    imageUrl: suggestion.media[0].path,
+                    content: suggestion.summary,
+                  )),
+                );
+              },
               visualDensity: VisualDensity(
                 vertical: 4.0,
                 horizontal: 0.0

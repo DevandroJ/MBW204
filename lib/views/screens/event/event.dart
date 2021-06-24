@@ -167,7 +167,7 @@ class _EventScreenState extends State<EventScreen> {
                                                       ),
                                                       ListTile(
                                                         dense: true,
-                                                        leading: Text("Description :",
+                                                        leading: Text("Deskripsi :",
                                                           style: poppinsRegular.copyWith(
                                                             fontSize: 12.0
                                                           )
@@ -181,7 +181,7 @@ class _EventScreenState extends State<EventScreen> {
                                                       SizedBox(height: 5.0),
                                                       ListTile(
                                                         dense: true,
-                                                        leading: Text("Location :",
+                                                        leading: Text("Lokasi :",
                                                           style: poppinsRegular.copyWith(  
                                                             fontSize: 12.0                                                       
                                                           )
@@ -199,7 +199,7 @@ class _EventScreenState extends State<EventScreen> {
                                                             flex: 3,
                                                             child: ListTile(
                                                             dense: true,
-                                                              leading: Text("Start :",
+                                                              leading: Text("Mulai :",
                                                                 style: poppinsRegular.copyWith(
                                                                   fontSize: 12.0
                                                                 )
@@ -219,7 +219,7 @@ class _EventScreenState extends State<EventScreen> {
                                                             flex: 3,
                                                             child: ListTile(
                                                               dense: true,
-                                                              leading: Text("End :",
+                                                              leading: Text("Selesai :",
                                                                 style: poppinsRegular.copyWith(
                                                                   fontSize: 12.0
                                                                 )
