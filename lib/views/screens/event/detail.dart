@@ -187,7 +187,12 @@ class _DetailEventPageState extends State<DetailEventScreen> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
-                    child: Text(content)
+                    child: Text(content,
+                    textAlign: TextAlign.justify,
+                      style: poppinsRegular.copyWith(
+                        height: 1.8
+                      ),
+                    )
                   ),
                 ],
               ),

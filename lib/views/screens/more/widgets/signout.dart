@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
@@ -30,6 +31,7 @@ class SignOutConfirmationDialog extends StatelessWidget {
             Expanded(
               child: InkWell(
               onTap: () {
+                Provider.of<ProfileProvider>(context, listen: false).userProfile.profilePic = null;
                 Provider.of<AuthProvider>(context, listen: false).logout().then((condition) {
                   Navigator.pop(context);
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInScreen()), (route) => false);

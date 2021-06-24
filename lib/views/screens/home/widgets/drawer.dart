@@ -103,6 +103,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         padding: EdgeInsets.zero,
         child: Consumer<ProfileProvider>(
           builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+            if(profileProvider.profileStatus == ProfileStatus.loading) {
+              return CircularProgressIndicator();
+            }
+            
             return CachedNetworkImage(
               errorWidget: (BuildContext context, String url, dynamic error) {
                 return Container(
@@ -237,6 +241,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 );
               },
             );
+
+            
           },
         ) 
       ),
