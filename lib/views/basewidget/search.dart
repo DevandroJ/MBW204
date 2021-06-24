@@ -92,12 +92,7 @@ class SearchWidget extends StatelessWidget {
     
     return InkWell(
       onTap: () {
-        showSearch(
-          context: context, 
-          delegate: EventSearch(
-          
-          ),
-        );
+        showSearch(context: context, delegate: EventSearch());
       },
       child: Container(
         height: 50.0,
@@ -147,111 +142,129 @@ class SearchWidget extends StatelessWidget {
 
 class EventSearch extends SearchDelegate {
 
-  List cities = [
-    "Jakarta",
-    "Bandung"
+  @override
+  String get searchFieldLabel => "Cari Event";
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return Theme.of(context).copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: poppinsRegular.copyWith(
+          color: Colors.white,
+          fontSize: 16.0
+        ),
+        border: InputBorder.none
+      ),
+      textTheme: TextTheme(
+      headline6: poppinsRegular.copyWith(
+        color: Colors.white, fontSize: 16.0
+        )
+      ),
+      appBarTheme: AppBarTheme(
+        elevation: 0.0,
+        backgroundColor: ColorResources.DIM_GRAY,  
+      )
+    );
+  }
+
+  @override
+  List<Widget> buildActions(BuildContext context) => [
+    IconButton(
+      icon: Icon(Icons.clear), 
+      onPressed: () {
+        if(query.isEmpty) {
+          close(context, null);
+        } else {
+          query = '';
+        }
+      }
+    )
   ];
 
+  @override
+  Widget buildLeading(BuildContext context) =>  IconButton(
+    icon: Icon(Icons.arrow_back), 
+    onPressed: () {
+      Navigator.of(context).pop();
+    }
+  );
+  
+  @override
+  Widget buildResults(BuildContext context) => Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.location_city,
+          size: 120.0,
+        ),
+        SizedBox(height: 48.0),
+        Text(query)
+      ],
+    ),
+  );
+  
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    Future fetchEventSearchData(String query) async {
+      await Provider.of<EventProvider>(context, listen: false).getEventSearch(context, query);
+    }
+    fetchEventSearchData(query);
+    return buildSuggestionsSuccess();
+  }
 
-    @override
-    List<Widget> buildActions(BuildContext context) => [
-      IconButton(
-        icon: Icon(Icons.clear), 
-        onPressed: () {
-          if(query.isEmpty) {
-            close(context, null);
-          } else {
-            query = '';
-          }
+  Widget buildSuggestionsSuccess() {
+    return Consumer<EventProvider>(
+      builder: (BuildContext context, EventProvider eventProvider, Widget child) {
+        if(eventProvider.eventSearchStatus == EventSearchStatus.loading) {
+          return Loader(
+            color: ColorResources.BTN_PRIMARY_SECOND,
+          );
         }
-      )
-    ];
-  
-    @override
-    Widget buildLeading(BuildContext context) =>  IconButton(
-      icon: Icon(Icons.arrow_back), 
-      onPressed: () {
-        Navigator.of(context).pop();
-      }
-    );
-  
-    @override
-    Widget buildResults(BuildContext context) => Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.location_city,
-            size: 120.0,
-          ),
-          SizedBox(height: 48.0),
-          Text(query)
-        ],
-      ),
-    );
-  
-    @override
-    Widget buildSuggestions(BuildContext context) {
-      Future fetchEventSearchData(String query) async {
-        await Provider.of<EventProvider>(context, listen: false).getEventSearch(context, query);
-      }
-      fetchEventSearchData(query);
-      return buildSuggestionsSuccess();
-    }
-
-    Widget buildSuggestionsSuccess() {
-      return Consumer<EventProvider>(
-        builder: (BuildContext context, EventProvider eventProvider, Widget child) {
-          if(eventProvider.eventSearchStatus == EventSearchStatus.loading) {
-            return Loader(
-              color: ColorResources.BTN_PRIMARY_SECOND,
+        if(eventProvider.eventSearchStatus == EventSearchStatus.empty) {
+          return Center(
+            child: Text("Belum ada event"),
+          );
+        }
+        List<EventSearchData> suggestions = query.isEmpty ? [] : eventProvider.eventSearchData.where((event) {
+          final descLower = event.description.toLowerCase();
+          final queryLower = query.toLowerCase();
+          return descLower.contains(queryLower);
+        }).toList();
+        return ListView.builder(
+          itemBuilder: (BuildContext context, int i) {
+            final suggestion = suggestions[i];
+            return ListTile(
+              dense: true,
+              visualDensity: VisualDensity(
+                vertical: 4.0,
+                horizontal: 0.0
+              ),
+              leading: ClipOval(
+                child: Image.network(
+                  "${AppConstants.BASE_URL_FEED_IMG}${suggestion.media[0].path}",
+                  fit: BoxFit.cover,
+                  width: 50.0,
+                  height: 50.0,
+                )
+              ),
+              title: Text(suggestion.description,
+                style: poppinsRegular.copyWith(
+                  fontSize: 13.0,
+                  color: ColorResources.BLACK
+                ),
+              ),
+              subtitle: Text(suggestion.location,
+                style: poppinsRegular.copyWith(
+                  fontSize: 12.0,
+                  color: ColorResources.BLACK
+                ),
+              ),
             );
-          }
-          if(eventProvider.eventSearchStatus == EventSearchStatus.empty) {
-            return Center(
-              child: Text("Belum ada event"),
-            );
-          }
-          List<EventSearchData> suggestions = query.isEmpty ? [] : eventProvider.eventSearchData.where((event) {
-            final descLower = event.description.toLowerCase();
-            final queryLower = query.toLowerCase();
-            return descLower.contains(queryLower);
-          }).toList();
-          return ListView.builder(
-            itemBuilder: (BuildContext context, int i) {
-              final suggestion = suggestions[i];
-              return ListTile(
-                dense: true,
-                visualDensity: VisualDensity(
-                  vertical: 4.0,
-                  horizontal: 0.0
-                ),
-                leading: ClipOval(
-                  child: Image.network(
-                    "${AppConstants.BASE_URL_FEED_IMG}${suggestion.media[0].path}",
-                    fit: BoxFit.cover,
-                    width: 50.0,
-                    height: 50.0,
-                  )
-                ),
-                title: Text(suggestion.description,
-                  style: poppinsRegular.copyWith(
-                    fontSize: 13.0
-                  ),
-                ),
-                subtitle: Text(suggestion.location,
-                  style: poppinsRegular.copyWith(
-                    fontSize: 12.0
-                  ),
-                ),
-              );
-            },
-            itemCount: suggestions.length,
-          ); 
-        },
-      );
-    }
-    
+          },
+        itemCount: suggestions.length,
+      ); 
+    });
+  }
   
-
 }
