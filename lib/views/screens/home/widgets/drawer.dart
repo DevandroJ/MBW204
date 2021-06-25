@@ -56,7 +56,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
                         drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
-                        drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, "Ubah Kata Sandi"),
+                        drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, getTranslated("CHANGE_PASSWORD", context)),
                         drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, getTranslated("TOS", context)),
                         drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
                         drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
@@ -76,7 +76,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           ),
                           backgroundColor: ColorResources.YELLOW_PRIMARY
                         ),
-                        child: Text("Sign In",
+                        child: Text(getTranslated("SIGN_IN", context),
                           style: poppinsRegular.copyWith(
                             color: ColorResources.BLACK
                           ),

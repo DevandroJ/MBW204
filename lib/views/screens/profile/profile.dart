@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text("Akun Saya",
+        title: Text(getTranslated("MY_ACCOUNT", context),
           style: poppinsRegular,
         ),
         backgroundColor: ColorResources.GRAY_DARK_PRIMARY,
@@ -188,10 +188,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               unselectedLabelColor: ColorResources.GRAY_PRIMARY,
               tabs: [
                 Tab(
-                  text: "Profil",
+                  text: getTranslated("PROFILE", context),
                 ),
                 Tab(
-                  text: "Kartu Digital",
+                  text: getTranslated("CARD_DIGITAL", context),
                 ),
               ],
             )
@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   
                   Row(
                     children: [
-                      Text("Saldoku",
+                      Text(getTranslated("MY_BALANCE", context),
                         style: poppinsRegular.copyWith(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold
@@ -290,27 +290,27 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ),
 
               SizedBox(height: 20.0),
-              profileListAccount(context, "E-mail Address", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              profileListAccount(context, getTranslated("EMAIL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).getUserEmail
               ),
               SizedBox(height: 10.0),
-              profileListAccount(context, "ID Anggota", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              profileListAccount(context, getTranslated("MEMBER_NO", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber
               ),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Address", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              profileListAccount(context, getTranslated("ADDRESS", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).getUserAddress),
               SizedBox(height: 10.0),
-              profileListAccount(context, "Nomor HP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+              profileListAccount(context, getTranslated("PHONE_NUMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
               ? "..." 
@@ -345,7 +345,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           color: ColorResources.YELLOW_PRIMARY
                         ),
                         SizedBox(width: 10.0),
-                        Text("Edit",
+                        Text(getTranslated("EDIT", context),
                           style: poppinsRegular.copyWith(
                             fontSize: 14.0,
                             color: ColorResources.YELLOW_PRIMARY
@@ -403,7 +403,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   
                   Row(
                     children: [
-                      Text("Saldoku",
+                      Text(getTranslated("MY_BALANCE", context),
                         style: poppinsRegular.copyWith(
                           fontSize: 15.0,
                           fontWeight: FontWeight.bold
@@ -440,7 +440,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             )
                           ),
                           onPressed: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpScreen())), 
-                          child: Text("Topup",
+                          child: Text(getTranslated("TOPUP", context),
                             style: poppinsRegular.copyWith(
                               fontSize: 14.0,
                               color: ColorResources.YELLOW_PRIMARY
@@ -513,7 +513,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           ? "..." 
                           : profileProvider.profileStatus == ProfileStatus.error 
                           ? "..." 
-                          : profileProvider.getUserIdNumber,
+                          : "W204.03.${profileProvider.getUserIdNumber}",
                             style: poppinsRegular.copyWith(
                               color: ColorResources.BTN_PRIMARY_SECOND,
                               fontWeight: FontWeight.bold,

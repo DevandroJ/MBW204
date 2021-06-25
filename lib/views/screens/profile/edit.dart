@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/data/models/profile.dart';
@@ -33,7 +34,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   void uploadPic() async {
     imageSource = await showDialog<ImageSource>(context: context, builder: (context) => 
       AlertDialog(
-        title: Text("Pilih Sumber Gambar",
+        title: Text(getTranslated("SOURCE_IMAGE", context),
         style: TextStyle(
           color: ColorResources.PRIMARY,
           fontWeight: FontWeight.bold, 
@@ -41,7 +42,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       ),
       actions: [
         MaterialButton(
-          child: Text("Kamera",
+          child: Text(getTranslated("CAMERA", context),
             style: TextStyle(
               color: Colors.black
             )
@@ -49,7 +50,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           onPressed: () => Navigator.pop(context, ImageSource.camera),
         ),
         MaterialButton(
-          child: Text("Galeri",
+          child: Text(getTranslated("GALLERY", context),
             style: TextStyle(color: Colors.black),
           ),
           onPressed: () => Navigator.pop(context, ImageSource.gallery)
@@ -128,7 +129,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         elevation: 0.0,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Text("Profil Saya",
+        title: Text(getTranslated("MY_PROFILE", context),
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
             fontSize: 17.0,
@@ -301,13 +302,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      inputComponent(context, "E-mail Address", emailController, true),
+                      inputComponent(context, getTranslated("EMAIL", context), emailController, true),
                       SizedBox(height: 10.0),
-                      inputComponent(context, "ID Anggota", noAnggotaController, true),
+                      inputComponent(context, getTranslated("MEMBER_NO", context), noAnggotaController, true),
                       SizedBox(height: 10.0),
-                      inputComponent(context, "Nomor HP", noHpController, false),
+                      inputComponent(context, getTranslated("PHONE_NUMBER", context), noHpController, false),
                       SizedBox(height: 10.0),
-                      inputComponent(context, "Alamat", addressController, false),
+                      inputComponent(context, getTranslated("ADDRESS", context), addressController, false),
                       SizedBox(height: 10.0),
                     ],
                   ),
@@ -333,7 +334,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       )
                     ),
                     onPressed: () => Navigator.of(context).pop(), 
-                    child: Text("Kembali",
+                    child: Text(getTranslated("BACK", context),
                       style: poppinsRegular.copyWith(
                         fontSize: 14.0,
                         color: ColorResources.YELLOW_PRIMARY
@@ -359,7 +360,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ? Loader(
                           color: ColorResources.WHITE,
                         ) 
-                        : Text("Simpan",
+                        : Text(getTranslated("SAVE", context),
                           style: poppinsRegular.copyWith(
                             fontSize: 14.0,
                             color: ColorResources.YELLOW_PRIMARY

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/utils/colorResources.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 
@@ -12,7 +13,7 @@ class AboutUsScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: ColorResources.GRAY_LIGHT_PRIMARY,
-        title: Text("About us",
+        title: Text(getTranslated("ABOUT_US", context),
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
             fontSize: 18.0,
