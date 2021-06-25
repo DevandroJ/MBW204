@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/providers/localization.dart';
+import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart';
+import 'package:mbw204_club_ina/views/screens/setting/widgets/language_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/data/models/user.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
@@ -100,7 +104,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Phone Number", style: poppinsRegular.copyWith(
+                                          Text(getTranslated("PHONE_NUMBER", context), style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
@@ -143,7 +147,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text("Password", style: poppinsRegular.copyWith(
+                                          Text(getTranslated("PASSWORD", context), style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
@@ -203,7 +207,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     ? Loader(
                                       color: ColorResources.BTN_PRIMARY_SECOND,
                                     )
-                                    : Text("Sign In",
+                                    : Text(getTranslated("SIGN_IN", context),
                                       style: poppinsRegular.copyWith(
                                         color: ColorResources.BLACK
                                       ),
@@ -229,6 +233,23 @@ class _SignInScreenState extends State<SignInScreen> {
                                         color: ColorResources.WHITE
                                       ),
                                     ),
+                                  ),
+                                ),
+
+                                Container(
+                                  alignment: Alignment.centerRight,
+                                  margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                                  child: InkWell(
+                                    onTap: () => showAnimatedDialog(context, LanguageDialog()),
+                                    child: Consumer<LocalizationProvider>(
+                                      builder: (BuildContext context, LocalizationProvider localizationProvider, Widget child) {
+                                        return Text("Choose Language - ${localizationProvider.locale}",
+                                          style: titilliumRegular.copyWith(
+                                            color: ColorResources.WHITE
+                                          ), 
+                                        );
+                                      },
+                                    )
                                   ),
                                 ),
                                     

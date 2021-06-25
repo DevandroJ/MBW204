@@ -106,7 +106,7 @@ class EventProvider with ChangeNotifier {
         setStateEventSearchStatus(EventSearchStatus.empty);
       }
     } catch(e) {
-       setStateEventSearchStatus(EventSearchStatus.error);
+      setStateEventSearchStatus(EventSearchStatus.error);
       print(e);
     }
   }

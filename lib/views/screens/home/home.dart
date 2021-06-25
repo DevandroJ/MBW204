@@ -175,7 +175,6 @@ class HomePage extends StatelessWidget {
               },
             ),
            
-
             DefaultTabController(
               length: 2,
               child: SafeArea(
@@ -202,7 +201,9 @@ class HomePage extends StatelessWidget {
                           color: Colors.transparent,
                           alignment: Alignment.center,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) 
                               Expanded(
                                 child: SearchWidget(
                                   hintText: "Search",
@@ -373,40 +374,42 @@ class HomePage extends StatelessWidget {
                               )
                             );
                           }
-                          return Container(
-                            width: double.infinity,
-                            height: 80.0,
-                            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
-                            decoration: BoxDecoration(
-                              color: ColorResources.WHITE
-                            ),
-                            child: Center(
-                              child: RichText(
-                                text: TextSpan(
-                                  text: "Anda harus ",
-                                  style: TextStyle(
-                                    color: ColorResources.BLACK
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(text: 'Login',
-                                      style: TextStyle(
-                                        color: ColorResources.BTN_PRIMARY_SECOND,
-                                        fontWeight: FontWeight.bold
-                                      ),
-                                      recognizer: TapGestureRecognizer()..onTap = () => Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => SignInScreen()),
-                                      ) 
-                                    ),
-                                    TextSpan(text: ' untuk melihat ini',
-                                      style: TextStyle(
-                                      color: ColorResources.BLACK
-                                    ),
-                                    )
-                                  ]
-                                ),
-                              )
-                            )
-                          );
+                          return Container();
+                            // width: double.infinity,
+                            // height: 80.0,
+                            // margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                            // decoration: BoxDecoration(
+                            //   color: ColorResources.WHITE
+                            // ),                            
+                            // Center(
+                            //   child: RichText(
+                            //     text: TextSpan(
+                            //       text: "Anda harus ",
+                            //       style: TextStyle(
+                            //         color: ColorResources.BLACK
+                            //       ),
+                            //       children: <TextSpan>[
+                            //         TextSpan(text: 'Login',
+                            //           style: TextStyle(
+                            //             color: ColorResources.BTN_PRIMARY_SECOND,
+                            //             fontWeight: FontWeight.bold
+                            //           ),
+                            //           recognizer: TapGestureRecognizer()..onTap = () => Navigator.push(context,
+                            //             MaterialPageRoute(builder: (context) => SignInScreen()),
+                            //           ) 
+                            //         ),
+                            //         TextSpan(text: ' untuk melihat ini',
+                            //           style: TextStyle(
+                            //           color: ColorResources.BLACK
+                            //         ),
+                            //         )
+                            //       ]
+                            //     ),
+                            //   )
+                            // )
+
+                            
+                          // );
                         },
                       )
                   
@@ -497,12 +500,30 @@ class HomePage extends StatelessWidget {
                                   },
                                   child: Row(
                                     children: [
-                                      Container(
-                                        height: 20.0,
-                                        child: Image.asset(Images.media)
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 20.0,
+                                            child: Image.asset(Images.media)
+                                          ),
+                                          SizedBox(width: 10.0),
+                                          Text("Media")
+                                        ],
                                       ),
-                                      SizedBox(width: 10.0),
-                                      Text("Media")
+                                      if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
+                                        SizedBox(width: 10.0),
+                                      if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
+                                        Container(
+                                          width: 284.0,
+                                          padding: EdgeInsets.only(left: 12.0, right: 12.0),
+                                          decoration: BoxDecoration(
+                                            color: ColorResources.BLACK
+                                          ),
+                                          child: Image.asset(Images.logo,
+                                            width: 70.0,
+                                            height: 70.0,
+                                          ),
+                                        )
                                     ],
                                   ),
                                 ),

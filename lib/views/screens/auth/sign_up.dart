@@ -410,7 +410,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   "value": "C 350 CGI"
                                                 },
                                                 {
-                                                  "display": "C 63",
+                                                  "display": "C 63 AMG",
                                                   "value": "C 63 AMG"
                                                 }
                                               ],
