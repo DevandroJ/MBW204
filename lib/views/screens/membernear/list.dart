@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -35,7 +36,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        title: Text("Member Nears",
+        title: Text(getTranslated("MEMBER_NEARS", context),
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
             fontWeight: FontWeight.bold,
@@ -71,7 +72,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                 alignment: Alignment.topLeft,
                 child: Container(
                   margin: EdgeInsets.only(top: 40.0, left: 15.0),
-                  child: Text("Find the closest member",
+                  child: Text(getTranslated("FIND_THE_CLOSEST_MEMBER", context),
                     style: poppinsRegular.copyWith(
                       color: ColorResources.BTN_PRIMARY_SECOND
                     ),

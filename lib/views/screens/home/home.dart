@@ -7,6 +7,7 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -206,7 +207,7 @@ class HomePage extends StatelessWidget {
                               if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) 
                               Expanded(
                                 child: SearchWidget(
-                                  hintText: "Search",
+                                  hintText: getTranslated("SEARCH", context),
                                 )
                               ),
                               SizedBox(width: 10.0),
@@ -283,7 +284,7 @@ class HomePage extends StatelessWidget {
                                     margin: EdgeInsets.only(top: 5.0, right: 5.0),
                                     child: InkWell(
                                       onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MemberNearScreen(whereFrom: "home"))),
-                                      child: Text("Lihat semua",
+                                      child: Text(getTranslated("ALL_MEMBER", context),
                                       textAlign: TextAlign.end,
                                         style: poppinsRegular.copyWith(
                                           fontSize: 13.0
@@ -304,7 +305,7 @@ class HomePage extends StatelessWidget {
                                       if(nearMemberProvider.nearMemberStatus == NearMemberStatus.empty) {
                                         return Expanded(
                                           child: Center(
-                                            child: Text("No Member Available",
+                                            child: Text(getTranslated("NO_MEMBER_AVAILABLE", context),
                                               style: poppinsRegular,
                                             ),
                                           ),
@@ -820,10 +821,10 @@ class HomePage extends StatelessWidget {
                           unselectedLabelColor: ColorResources.GRAY_PRIMARY,
                           tabs: [
                             Tab(       
-                              text: "Favorite News"                             
+                              text: getTranslated("FAVORITE_NEWS", context)                            
                             ),
                             Tab(
-                              text: "Latest News",
+                              text: getTranslated("LATEST_NEWS", context),
                             ),
                           ],
                         ),
@@ -918,7 +919,7 @@ class HomePage extends StatelessWidget {
                                                 Positioned(
                                                   top: 55.0,
                                                   right: 10.0,
-                                                  child: Text("Baca Selengkapnya",
+                                                  child: Text(getTranslated("READ_MORE", context),
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.normal,
                                                       fontSize: 12.0

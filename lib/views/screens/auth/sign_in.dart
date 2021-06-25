@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/localization.dart';
 import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart';
 import 'package:mbw204_club_ina/views/screens/setting/widgets/language_dialog.dart';
-import 'package:provider/provider.dart';
-
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/data/models/user.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
@@ -228,7 +228,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       ),
                                       primary: ColorResources.BTN_PRIMARY_SECOND
                                     ),
-                                    child: Text("Masuk sebagai Anonim",
+                                    child: Text(getTranslated("SIGN_AS_ANONYM", context),
                                       style: poppinsRegular.copyWith(
                                         color: ColorResources.WHITE
                                       ),
@@ -243,7 +243,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     onTap: () => showAnimatedDialog(context, LanguageDialog()),
                                     child: Consumer<LocalizationProvider>(
                                       builder: (BuildContext context, LocalizationProvider localizationProvider, Widget child) {
-                                        return Text("Choose Language - ${localizationProvider.locale}",
+                                        return Text("${getTranslated("CHOOSE_LANGUAGE", context)} - ${localizationProvider.locale}",
                                           style: titilliumRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ), 
@@ -268,7 +268,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       ),
                                       InkWell(
                                         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen())),
-                                        child: Text("Create an Account",
+                                        child: Text(getTranslated("CREATE_ACCOUNT", context),
                                           style: poppinsRegular.copyWith(
                                             color: ColorResources.YELLOW_PRIMARY
                                           ),

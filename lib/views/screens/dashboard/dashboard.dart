@@ -45,7 +45,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
     return Scaffold(
       body: TabBarView(
         controller: tabController,
-        children: screens
+        children: screens,
+         physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(8.0),

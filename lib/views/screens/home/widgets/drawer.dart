@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/more/webview.dart';
@@ -52,13 +53,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
                     child: Column(
                       children: [
-                        drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "Tentang MBW204\nClub Indonesia"),
-                        drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, "Profil"),
-                        drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, "Pengaturan"),
+                        drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
+                        drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
+                        drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
                         drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, "Ubah Kata Sandi"),
-                        drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, "Term of Service"),
-                        drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, "Bantuan"),
-                        drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, "Logout")
+                        drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, getTranslated("TOS", context)),
+                        drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
+                        drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
                       ],
                     ),
                   );

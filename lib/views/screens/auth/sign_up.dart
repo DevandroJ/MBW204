@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/data/models/user.dart';
@@ -205,7 +206,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("Your Registration",
+                                              Text(getTranslated("YOUR_REGISTRATION", context),
                                                 style: poppinsRegular.copyWith(
                                                   color: ColorResources.WHITE,
                                                 ),
@@ -231,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         });
                                                       },
                                                       
-                                                      title: Text("Member",
+                                                      title: Text(getTranslated("MEMBER", context),
                                                         style: poppinsRegular.copyWith(
                                                           color: ColorResources.WHITE
                                                         ),
@@ -249,7 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                         });
                                                       },
                                               
-                                                      title: Text("Partnership",
+                                                      title: Text(getTranslated("PARTNERSHIP", context),
                                                         style: poppinsRegular.copyWith(
                                                           color: ColorResources.WHITE
                                                         ),
@@ -276,7 +277,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ),
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
-                                            hintText: "Enter your ID Member",
+                                            hintText: getTranslated("MEMBER_NO", context),
                                             hintStyle: poppinsRegular,
                                             isDense: true,
                                             enabledBorder: UnderlineInputBorder(      
@@ -505,7 +506,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     color: ColorResources.WHITE,
                                                   ),
                                                   SizedBox(width: 15.0),
-                                                  Text("Company Name", style: poppinsRegular.copyWith(
+                                                  Text(getTranslated("COMPANY_NAME", context), style: poppinsRegular.copyWith(
                                                     color: ColorResources.WHITE
                                                   ))
                                                 ],
@@ -517,7 +518,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 ),
                                                 textInputAction: TextInputAction.next,
                                                 decoration: InputDecoration(
-                                                  hintText: "Enter your Company Name",
+                                                  hintText: getTranslated("COMPANY_NAME", context),
                                                   hintStyle: poppinsRegular,
                                                   isDense: true,
                                                   enabledBorder: UnderlineInputBorder(      
@@ -546,7 +547,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE,
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("Full Name", style: poppinsRegular.copyWith(
+                                              Text(getTranslated("FULL_NAME", context), style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ))
                                             ],
@@ -558,7 +559,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             ),
                                             textInputAction: TextInputAction.next,
                                             decoration: InputDecoration(
-                                              hintText: "Enter your Name",
+                                              hintText: getTranslated("FULL_NAME", context),
                                               hintStyle: poppinsRegular,
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      
@@ -586,7 +587,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE,
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("UserName", style: poppinsRegular.copyWith(
+                                              Text(getTranslated("USER_NAME", context), style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ))
                                             ],
@@ -626,7 +627,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE,
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("Nomor Handphone", style: poppinsRegular.copyWith(
+                                              Text(getTranslated("PHONE_NUMBER", context), style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ))
                                             ],
@@ -639,7 +640,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             keyboardType: TextInputType.number,
                                             textInputAction: TextInputAction.next,
                                             decoration: InputDecoration(
-                                              hintText: "Enter your phone number",
+                                              hintText: getTranslated("PHONE_NUMBER", context),
                                               hintStyle: poppinsRegular,
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      
@@ -667,7 +668,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE,
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("Email", style: poppinsRegular.copyWith(
+                                              Text(getTranslated("EMAIL", context), style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ))
                                             ],
@@ -710,7 +711,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE,
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("Password", style: poppinsRegular.copyWith(
+                                              Text(getTranslated("PASSWORD", context), style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ))
                                             ],
@@ -724,7 +725,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   color: ColorResources.WHITE
                                                 ),
                                                 decoration: InputDecoration(
-                                                  hintText: "Enter your password",
+                                                  hintText: getTranslated("PASSWORD", context),
                                                   suffixIcon: InkWell(
                                                     onTap: () {
                                                       s(() => passwordObscure = !passwordObscure);
@@ -765,7 +766,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 color: ColorResources.WHITE,
                                               ),
                                               SizedBox(width: 15.0),
-                                              Text("Confirm Password", style: poppinsRegular.copyWith(
+                                              Text(getTranslated("PASSWORD_CONFIRM", context), style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ))
                                             ],
@@ -779,7 +780,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   color: ColorResources.WHITE
                                                 ),
                                                 decoration: InputDecoration(
-                                                  hintText: "Enter your confirm password",
+                                                  hintText: getTranslated("PASSWORD_CONFIRM", context),
                                                   suffixIcon: InkWell(
                                                     onTap: () {
                                                       s(() => passwordConfirmObscure = !passwordConfirmObscure);
@@ -824,7 +825,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ? Loader(
                                             color: ColorResources.YELLOW_PRIMARY
                                           )
-                                          : Text("Sign Up",
+                                          : Text(getTranslated("SIGN_UP", context),
                                           style: poppinsRegular,
                                         ),
                                       ),
@@ -837,7 +838,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Already have an account ?",
+                                          Text(getTranslated("ALREADY_HAVE_A_ACCOUNT", context),
                                             style: poppinsRegular.copyWith(
                                               color: ColorResources.WHITE
                                             ),
@@ -845,7 +846,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           SizedBox(width: 5.0),
                                           InkWell(
                                             onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
-                                            child: Text("Sign in",
+                                            child: Text(getTranslated("SIGN_IN", context),
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.YELLOW_PRIMARY
                                               )
