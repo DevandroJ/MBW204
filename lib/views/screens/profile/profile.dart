@@ -267,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             )
                           ),
                           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpScreen())), 
-                          child: Text("Topup",
+                          child: Text(getTranslated("TOPUP", context),
                             style: poppinsRegular.copyWith(
                               fontSize: 14.0,
                               color: ColorResources.YELLOW_PRIMARY
