@@ -13,7 +13,7 @@ class ChangePasswordScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> formkey = GlobalKey();
   final UserData userData = UserData();
 
-   bool passwordOldObscure = false;
+  bool passwordOldObscure = false;
   bool passwordNewObscure = false;
   bool passwordConfirmObscure = false;
   
@@ -87,7 +87,7 @@ class ChangePasswordScreen extends StatelessWidget {
             color: ColorResources.BLACK,
           ),
         ),
-        title: Text("Ubah Kata Sandi",
+        title: Text(getTranslated("CHANGE_PASSWORD", context),
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
             fontWeight: FontWeight.bold
@@ -124,7 +124,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           controller: passwordOldController,
                           obscureText: passwordOldObscure,
                           decoration: InputDecoration(
-                            hintText: "Kata Sandi Lama",
+                            hintText: getTranslated("OLD_PASSWORD", context),
                             hintStyle: TextStyle(
                               fontSize: 14.0
                             ),
@@ -151,7 +151,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           controller: passwordNewController,
                           obscureText: passwordNewObscure,
                           decoration: InputDecoration(
-                            hintText: "Kata Sandi Baru",
+                            hintText: "${getTranslated("ENTER_YOUR_NEW_PASSWORD", context)}",
                             hintStyle: TextStyle(
                               fontSize: 14.0
                             ),
@@ -178,7 +178,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           controller: passwordConfirmController,
                           obscureText: passwordConfirmObscure,
                           decoration: InputDecoration(
-                            hintText: "Konfirmasi Kata Sandi Baru",
+                            hintText: getTranslated("CONFIRM_YOUR_NEW_PASSWORD", context),
                             hintStyle: TextStyle(
                               fontSize: 14.0
                             ),
@@ -221,7 +221,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   )
                 ),
                 onPressed: () => changePassword(), 
-                child: Text("Simpan",
+                child: Text(getTranslated("SAVE", context),
                   style: poppinsRegular.copyWith(
                     color: ColorResources.YELLOW_PRIMARY
                   ),

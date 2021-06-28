@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
                                 bottomRight: Radius.circular(20.0)
                               ),
                               child: CachedNetworkImage(
-                              imageUrl: "${AppConstants.BASE_URL_IMG}/${ bannerProvider.bannerListMap[i]["path"]}",
+                              imageUrl: "${AppConstants.BASE_URL_IMG}/${bannerProvider.bannerListMap[i]["path"]}",
                               fit: BoxFit.cover,
                               ),
                             ),

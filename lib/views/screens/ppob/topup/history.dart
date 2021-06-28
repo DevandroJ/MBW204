@@ -1,8 +1,9 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:intl/intl.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/topup/history_list.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -20,7 +21,7 @@ class TopUpHistoryScreen extends StatelessWidget {
         child: Column(
           children: [
 
-            CustomAppBar(title: "History Saldo", isBackButtonExist: true),
+            CustomAppBar(title: getTranslated("HISTORY_BALANCE", context), isBackButtonExist: true),
 
             Container(
               margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 16.0, right: 16.0),

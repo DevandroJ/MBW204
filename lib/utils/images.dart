@@ -28,6 +28,7 @@ class Images {
   static const String sos_detail = 'assets/images/sos-detail.png';
   static const String logo_cx = 'assets/images/logo-cx.png';
   static const String logo_app = 'assets/images/logo-app.png';
+  static const String history_balance = 'assets/icons/ic-history-balance.png';
   static const String inbox_image = 'assets/images/message.png';
   static const String more_image = 'assets/images/more.png';
   static const String shopping_image = 'assets/images/shopping.png';
@@ -63,11 +64,7 @@ class Images {
   static const String preference = 'assets/images/preference.png';
   static const String privacy_policy = 'assets/images/privacy_policy.png';
   static const String settings = 'assets/images/settings.png';
-  static const String wishlist = 'assets/images/wishlist.png';
-  static const String more_page_header = 'assets/images/more_page_header.png';
-  static const String visa = 'assets/images/visa.png';
   static const String no_internet = 'assets/images/opps_internet.png';
-  static const String mastercard = 'assets/images/mastercard.png';
   static const String edit = 'assets/images/edit.png';
   static const String currency = 'assets/images/currency.png';
   static const String no_data = 'assets/images/no_data.png';

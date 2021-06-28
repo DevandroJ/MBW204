@@ -1,9 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
-import 'package:mbw204_club_ina/views/screens/setting/settings.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/providers/ppob.dart';
+import 'package:mbw204_club_ina/providers/warung.dart';
+import 'package:mbw204_club_ina/views/screens/ppob/topup/history.dart';
+import 'package:mbw204_club_ina/views/screens/setting/settings.dart';
+import 'package:mbw204_club_ina/views/screens/warung/beranda_toko.dart';
+import 'package:mbw204_club_ina/views/screens/warung/form_toko.dart';
 import 'package:mbw204_club_ina/views/screens/more/webview.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -15,7 +21,6 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/about/about.dart';
-import 'package:mbw204_club_ina/views/screens/auth/change_password.dart';
 import 'package:mbw204_club_ina/views/screens/profile/profile.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -51,14 +56,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               builder: (BuildContext context, AuthProvider authProvider, Widget child) {
                 if(authProvider.isLoggedIn()) {
                   return Container(
-                    padding: EdgeInsets.only(top: 0, bottom: 20.0, left: 10.0, right: 10.0),
+                    padding: EdgeInsets.only(top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
                     child: Column(
                       children: [
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
+                        drawerItems(context, null, "store", Images.shopping_image, getTranslated("MY_STORE", context)),
+                        drawerItems(context, TopUpHistoryScreen(), "history-balance", Images.history_balance, getTranslated("HISTORY_BALANCE", context)),
                         drawerItems(context, SettingsScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
-                        drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, getTranslated("CHANGE_PASSWORD", context)),
-                        drawerItems(context, null, "tos", Images.tos_drawer, getTranslated("TOS", context)),
                         drawerItems(context, null, "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
                         drawerItems(context, null, "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
                       ],
@@ -345,6 +350,55 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             //     );
             //   },
             // );
+          } else if(menu == "store") {
+            int balance = int.parse(Provider.of<PPOBProvider>(context, listen: false).balance.toStringAsFixed(0));
+            if(balance >= 50000) {
+              if(Provider.of<WarungProvider>(context, listen: false).sellerStoreModel.code == 0) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BerandaTokoPage()));
+              } else {
+                Navigator.push(context,  MaterialPageRoute(builder: (context) => FormTokoPage()));
+              }
+            } else {
+              showAnimatedDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (context) {
+                  return Dialog( 
+                    child: Container(
+                      height: 210.0,
+                      padding: EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Text("${getTranslated("ATTENTION", context)} !",
+                            style: titilliumBold,
+                          ),
+                          SizedBox(height: 8.0),
+                          Text("Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
+                            softWrap: true,
+                            textAlign: TextAlign.justify,
+                            style: titilliumRegular.copyWith(
+                              height: 1.8
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: ColorResources.DIM_GRAY
+                              ),
+                              onPressed: () => Navigator.of(context).pop(), 
+                              child: Text("OK")
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );      
+                }
+              );
+            }
           } else if(menu == "tos") {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
               title: 'Term of Service',
@@ -365,11 +419,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(30.0),
           child: Container(
-            color: ColorResources.GRAY_PRIMARY,
+            decoration: BoxDecoration(
+              color: ColorResources.GRAY_PRIMARY
+            ),
             height: 40.0,
             child: Container(
               margin: EdgeInsets.all(11.0),
-              child: Image.asset(icon)
+              child: Image.asset(icon,
+                color: menu == "store" ? ColorResources.BLACK : null,
+              )
             )
           ),
         ),

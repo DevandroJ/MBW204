@@ -15,8 +15,8 @@ class BannerProvider extends ChangeNotifier {
 
   List<Map<String, dynamic>> _bannerListMap = [];
   List<BannerData> _bannerList = [];
-  List<BannerData> get bannerList => _bannerList;
-  List<Map<String, dynamic>> get bannerListMap => _bannerListMap;
+  List<BannerData> get bannerList => [..._bannerList];
+  List<Map<String, dynamic>> get bannerListMap => [..._bannerListMap];
   
   int _currentIndex;
   int get currentIndex => _currentIndex;
