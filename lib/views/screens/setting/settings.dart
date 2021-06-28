@@ -7,7 +7,6 @@ import 'package:mbw204_club_ina/views/basewidget/list_component.dart';
 import 'package:mbw204_club_ina/views/basewidget/animated_custom_dialog.dart';
 import 'package:mbw204_club_ina/views/screens/setting/widgets/language_dialog.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
-import 'package:mbw204_club_ina/providers/splash.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
@@ -18,13 +17,11 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<SplashProvider>(context, listen: false).setFromSetting(true);
     Provider.of<PPOBProvider>(context, listen: false).getBankDisbursement(context);
     Provider.of<PPOBProvider>(context, listen: false).getEmoneyDisbursement(context);
 
     return WillPopScope(
       onWillPop: () {
-        Provider.of<SplashProvider>(context, listen: false).setFromSetting(false);
         return Future.value(true);
       },
       child: CustomExpandedAppBar(

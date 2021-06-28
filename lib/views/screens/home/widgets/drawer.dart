@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/views/screens/setting/settings.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/more/webview.dart';
@@ -55,11 +56,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       children: [
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
-                        drawerItems(context, ProfileScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
+                        drawerItems(context, SettingsScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
                         drawerItems(context, ChangePasswordScreen(), "ubah-kata-sandi", Images.lock_drawer, getTranslated("CHANGE_PASSWORD", context)),
-                        drawerItems(context, ProfileScreen(), "tos", Images.tos_drawer, getTranslated("TOS", context)),
-                        drawerItems(context, ProfileScreen(), "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
-                        drawerItems(context, ProfileScreen(), "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
+                        drawerItems(context, null, "tos", Images.tos_drawer, getTranslated("TOS", context)),
+                        drawerItems(context, null, "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
+                        drawerItems(context, null, "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
                       ],
                     ),
                   );

@@ -10,10 +10,8 @@ class SplashProvider extends ChangeNotifier {
   ConfigModel _configModel;
   List<String> _languageList;
   int _languageIndex = 0;
-  bool _fromSetting = false;
 
   ConfigModel get configModel => _configModel;
-  bool get fromSetting => _fromSetting;
   List<String> get languageList => _languageList;
   int get languageIndex => _languageIndex;
 
@@ -24,7 +22,4 @@ class SplashProvider extends ChangeNotifier {
     return Future.value(true);
   }
  
-  void setFromSetting(bool isSetting) {
-    _fromSetting = isSetting;
-  }
 }

@@ -26,25 +26,31 @@ class CustomExpandedAppBar extends StatelessWidget {
       body: Stack(
         children: [
 
-          Image.asset(
-            Images.more_page_header, height: 150, fit: BoxFit.fill, width: MediaQuery.of(context).size.width,
-            color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
-          ),
+          // Image.asset(
+          //   Images.more_page_header, height: 150, fit: BoxFit.fill, width: MediaQuery.of(context).size.width,
+          //   color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
+          // ),
 
           Positioned(
-            top: 40,
+            top: 40.0,
             left: Dimensions.PADDING_SIZE_SMALL,
             right: Dimensions.PADDING_SIZE_SMALL,
-            child: Row(children: [
-              CupertinoNavigationBarBackButton(color: Colors.white, onPressed: () => Navigator.pop(context)),
-              Text(title, style: poppinsRegular.copyWith(
-                fontSize: 20.0, 
-                color: Colors.white
-              ), 
-                maxLines: 1, 
-                overflow: TextOverflow.ellipsis
-              ),
-            ]),
+            child: Row(
+              children: [
+                CupertinoNavigationBarBackButton(
+                  color: ColorResources.GRAY_DARK_PRIMARY, 
+                  onPressed: () => Navigator.pop(context)
+                ),
+                Text(title, 
+                  style: poppinsRegular.copyWith(
+                  fontSize: 18.0, 
+                  color: ColorResources.GRAY_DARK_PRIMARY
+                ), 
+                  maxLines: 1, 
+                  overflow: TextOverflow.ellipsis
+                ),
+              ]
+            ),
           ),
 
           Container(
