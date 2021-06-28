@@ -44,7 +44,7 @@ class SearchWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 90.0,
+              width: 110.0,
               child: Row(
                 children: [
                   Icon(
@@ -65,7 +65,6 @@ class SearchWidget extends StatelessWidget {
         ),
       ),
     );
-
 
   }
 }

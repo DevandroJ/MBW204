@@ -206,7 +206,7 @@ class HomePage extends StatelessWidget {
                               if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) 
                               Expanded(
                                 child: SearchWidget(
-                                  hintText: getTranslated("SEARCH", context),
+                                  hintText: "${getTranslated("SEARCH", context)} Event",
                                 )
                               ),
                               SizedBox(width: 10.0),

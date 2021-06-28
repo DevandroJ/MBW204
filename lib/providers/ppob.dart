@@ -398,10 +398,10 @@ class PPOBProvider with ChangeNotifier {
       Future.delayed(Duration.zero, () => notifyListeners());
       Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpSuccessScreen()));
     } on DioError catch(e) {
-      if(e.response?.statusCode == 400) {
+      if(e?.response?.statusCode == 400) {
         loadingBuyBtn = false;
         Future.delayed(Duration.zero, () => notifyListeners());
-        throw ServerErrorException("Ups! Terjadi kesalahan, mohon ulangi");
+        throw ServerErrorException(e?.response?.data["message"]);
       }
       loadingBuyBtn = false;
       Future.delayed(Duration.zero, () => notifyListeners());
@@ -429,7 +429,7 @@ class PPOBProvider with ChangeNotifier {
       if(e?.response?.statusCode == 400) {
         loadingBuyBtn = false;
         Future.delayed(Duration.zero, () => notifyListeners());
-        throw ServerErrorException("Ups! Saldo Anda tidak cukup / Terjadi kesalahan, mohon ulangi");
+        throw ServerErrorException(e?.response?.data["message"]);
       } 
       loadingBuyBtn = false;
       Future.delayed(Duration.zero, () => notifyListeners());
@@ -457,7 +457,7 @@ class PPOBProvider with ChangeNotifier {
       if(e.response?.statusCode == 400) {
         loadingBuyBtn = false;
         notifyListeners();
-        throw ServerErrorException("Ups! Saldo Anda tidak cukup / Terjadi kesalahan, mohon ulangi");
+        throw ServerErrorException(e?.response?.data["message"]);
       }
       loadingBuyBtn = false;
       notifyListeners();
