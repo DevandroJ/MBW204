@@ -1,5 +1,8 @@
 {
   "MANUAL_GUIDE": "Manual Guide",
+  "CHAPTER": "Chapter",
+  "BODY_STYLE": "Body Style",
+  "SUB_MODEL": "Sub Model",
   "NO_BANNER_AVAILABLE": "No Banner Available",
   "NO_CHECKIN_AVAILABLE": "No Check In Available",
   "NO_INBOX_AVAILABLE": "No Inbox Available",
@@ -50,7 +53,7 @@
   "MEMBER_NO": "No Member",
   "MEMBER": "Member",
   "MEMBER_NEARS": "Member Nears",
-  "REFERALL_CODE": "Referral Code",
+  "REFERRAL_CODE": "Referral Code",
   "PARTNERSHIP_MEMBER": "Partnership Member",
   "RELATIONSHIP_MEMBER": "Relationship Member",
   "NO_MEMBER_AVAILABLE": "No Member Available",

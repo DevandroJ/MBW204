@@ -27,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     
     /* Member & Partnership */ 
-    TextEditingController referralCodeController = TextEditingController(); 
+    TextEditingController codeReferralController = TextEditingController();
     TextEditingController fullnameController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
     TextEditingController emailController = TextEditingController();  
@@ -46,9 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     /* Partnership */ 
     TextEditingController noKtpController = TextEditingController();
     TextEditingController companyNameController = TextEditingController();
-
-    /* Relationship Member */
-    TextEditingController relationshipMemberController = TextEditingController();
 
     bool passwordObscure = false;
     bool passwordConfirmObscure = false;
@@ -147,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
         if(_statusRegister == StatusRegister.relationship_member) {
           userUrlRegister = "relatives";
-          if(relationshipMemberController.text.trim().isEmpty) {
+          if(codeReferralController.text.trim().isEmpty) {
             ShowSnackbar.snackbar(context, "Code Referral is Required", "", ColorResources.ERROR);
             return;
           }
@@ -155,7 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           userData.phoneNumber = phoneNumberController.text;
           userData.emailAddress = emailController.text;
           userData.password = passwordController.text;
-          userData.codeReferfall = referralCodeController.text;
+          userData.codeReferfall = codeReferralController.text;
         }
 
         await Provider.of<AuthProvider>(context, listen: false).register(context, userData, userUrlRegister);
@@ -337,19 +334,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   color: ColorResources.WHITE,
                                                 ),
                                                 SizedBox(width: 15.0),
-                                                Text(getTranslated("REFERALL_CODE", context), style: poppinsRegular.copyWith(
+                                                Text(getTranslated("REFFERAL_CODE", context), style: poppinsRegular.copyWith(
                                                   color: ColorResources.WHITE
                                                 ))
                                               ],
                                             ),
                                             TextField(
-                                              controller: referralCodeController,
+                                              controller: codeReferralController,
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ),
                                               textInputAction: TextInputAction.next,
                                               decoration: InputDecoration(
-                                                hintText: getTranslated("REFERALL_CODE", context),
+                                                hintText: getTranslated("REFERRAL_CODE", context),
                                                 hintStyle: poppinsRegular,
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      

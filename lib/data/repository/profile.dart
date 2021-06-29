@@ -53,7 +53,7 @@ class ProfileRepo {
           "fullname" : profileData.fullname ?? "",
           "gender" : profileData.gender ?? "",
           "profile_pic": profileData.profilePic ?? "",
-          "id_card_number": profileData.idCardNumber ?? "",
+          // "id_card_number": profileData.idCardNumber ?? "",
           "short_bio": profileData.shortBio ?? "",
         } 
       );
@@ -74,6 +74,18 @@ class ProfileRepo {
   String get getUserId => sharedPreferences.getString("userId") ?? null;
 
   String get getUserFullname => profileData?.fullname ?? "-";
+
+  String get getUserChapter => profileData?.chapter ?? "-";
+
+  String get getUserSubModel => profileData?.subModel ?? "-";
+
+  String get getUserNoKtp => profileData?.noKtp ?? "-";
+
+  String get getUserCompany => profileData?.companyName ?? "-";
+
+  String get getUserBodyStyle => profileData?.bodyStyle ?? "-";
+
+  String get getUserCodeReferral => profileData?.referralCode ?? "-";
   
   String get getSingleUserFullname => singleUserData?.fullname ?? "-";
 
@@ -82,8 +94,6 @@ class ProfileRepo {
   String get getUserGender => profileData?.gender ?? "-";
 
   String get getUserIdMember => profileData?.idMember ?? "-";
-
-  String get getUserCardNumber => profileData?.idCardNumber ?? "-";
 
   String get getUserShortBio => profileData?.shortBio ?? "-";
 

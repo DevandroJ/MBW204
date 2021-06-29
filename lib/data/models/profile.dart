@@ -23,16 +23,16 @@ class ProfileData {
     this.address,
     this.fullname,
     this.gender,
-    this.noKtp,
-    this.idCardNumber,
-    this.idMember,
-    this.noHp,
     this.shortBio,
     this.profilePic,
     this.status,
-    this.noAnggota,
-    this.golonganDarah,
-    this.disabilitas,
+    this.idMember,
+    this.chapter,
+    this.subModel,
+    this.bodyStyle,
+    this.noKtp,
+    this.companyName,
+    this.referralCode,
     this.created,
     this.updated,
   });
@@ -42,16 +42,16 @@ class ProfileData {
   String address;
   String fullname;
   String gender;
-  String noKtp;
-  String idCardNumber;
-  String idMember;
-  String noHp;
   String shortBio;
   String profilePic;
   bool status;
-  String noAnggota;
-  String golonganDarah;
-  String disabilitas;
+  String idMember;
+  String chapter;
+  String subModel;
+  String bodyStyle;
+  String noKtp;
+  String companyName;
+  String referralCode;
   DateTime created;
   DateTime updated;
 
@@ -61,16 +61,16 @@ class ProfileData {
     address: json["address"],
     fullname: json["fullname"],
     gender: json["gender"],
-    noKtp: json["noKtp"],
-    idCardNumber: json["id_card_number"],
-    idMember: json["id_member"],
-    noHp: json["noHp"],
     shortBio: json["short_bio"],
     profilePic: json["profile_pic"],
     status: json["status"],
-    noAnggota: json["no_anggota"],
-    golonganDarah: json["golongan_darah"],
-    disabilitas: json["disabilitas"],
+    idMember: json["id_member"],
+    chapter: json["chapter"],
+    subModel: json["sub_modal"],
+    bodyStyle: json["body_style"],
+    noKtp: json["no_ktp"],
+    companyName: json["company_name"],
+    referralCode: json["referral_code"],
     created: DateTime.parse(json["created"]),
     updated: DateTime.parse(json["updated"]),
   );

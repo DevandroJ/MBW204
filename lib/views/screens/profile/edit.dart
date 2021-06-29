@@ -98,7 +98,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       }
 
       profileData.fullname = fullnameController.text;
-      profileData.noHp = noHpController.text;
+      // profileData.noHp = noHpController.text;
       profileData.address = addressController.text;
 
       await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, file);  

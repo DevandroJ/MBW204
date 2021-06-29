@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/data/models/single_user.dart';
 import 'package:mbw204_club_ina/providers/media.dart';
@@ -111,13 +111,23 @@ class ProfileProvider extends ChangeNotifier {
   
   String get getUserName => profileRepo.getUserName ?? "-";
 
+  String get getUserChapter => profileRepo.getUserChapter ?? "-";
+
   String get getUserFullname => profileRepo.getUserFullname ?? "-";
+
+  String get getUserSubModel => profileRepo.getUserSubModel ?? "-";
+
+  String get getUserBodyStyle => profileRepo.getUserBodyStyle ?? "-";
 
   String get getSingleUserFullname => profileRepo.getSingleUserFullname ?? "-";
   
   String get getUserIdNumber => profileRepo.getUserIdMember ?? "-";
 
-  String get getUserIdCardNumber => profileRepo.getUserCardNumber ?? "-";
+  String get getUserCodeReferral => profileRepo.getUserCodeReferral ?? "-";
+
+  String get getUserNoKtp => profileRepo.getUserNoKtp ?? "-";
+
+  String get getUserCompany => profileRepo.getUserCompany ?? "-";
   
   String get getUserEmail => profileRepo.getUserEmail ?? "-";
  

@@ -1,5 +1,8 @@
 {
   "MANUAL_GUIDE": "Manual Guide",
+  "CHAPTER": "Cabang",
+  "BODY_STYLE": "Body Style",
+  "SUB_MODEL": "Sub Model",
   "NO_BANNER_AVAILABLE": "Belum ada banner",
   "NO_CHECKIN_AVAILABLE": "Belum ada Check In",
   "NO_INBOX_AVAILABLE": "Belum ada pesan masuk",
@@ -49,7 +52,7 @@
   "MEMBER_NO": "Nomor Anggota",
   "MEMBER": "Anggota",
   "MEMBER_NEARS": "Anggota Terdekat",
-  "REFERALL_CODE": "Kode Referral",
+  "REFERRAL_CODE": "Kode Referral",
   "PARTNERSHIP_MEMBER": "Anggota Kemitraan",
   "RELATIONSHIP_MEMBER": "Anggota Kerabat",
   "NO_MEMBER_AVAILABLE": "Belum ada Anggota",

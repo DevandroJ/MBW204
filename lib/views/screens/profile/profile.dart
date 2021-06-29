@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       profileData.fullname = fullnameTextController.text;
       profileData.address = addressTextController.text;
       profileData.shortBio = shortBioTextController.text;
-      profileData.idCardNumber = cardNumberTextController.text;
+      // profileData.idCardNumber = cardNumberTextController.text;
       profileData.gender = selectedGender;
       await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, file);
       ShowSnackbar.snackbar(context, getTranslated("UPDATE_ACCOUNT_SUCCESSFUL" ,context), "", Colors.green);
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Consumer<ProfileProvider>(
                     builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
                       return CachedNetworkImage(
-                        imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.userProfile.profilePic}",
+                        imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getUserProfilePic}",
                         imageBuilder: (BuildContext context, ImageProvider imageProvider) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(50.0),
@@ -143,6 +143,22 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             ),
                           );
                         },
+                        errorWidget: (BuildContext context, String url, dynamic error) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(50.0),
+                            child: Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/profile-drawer.png'),
+                                  fit: BoxFit.cover
+                                )
+                              ),
+                            ),
+                          );
+                        },  
                         placeholder: (BuildContext context, String url) {
                           return Center(
                             child: SizedBox(
@@ -198,7 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           ),
 
           Container(
-            height: 520.0,
+            height: 800.0,
             child: TabBarView(
               controller: tabController,
               children: [
@@ -289,7 +305,49 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 ]
               ),
 
-              SizedBox(height: 20.0),
+              SizedBox(height: 10.0),
+              profileListAccount(context, getTranslated("REFERRAL_CODE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserCodeReferral
+              ),
+              SizedBox(height: 10.0),
+              profileListAccount(context, getTranslated("CHAPTER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserChapter
+              ),
+              SizedBox(height: 10.0),
+              profileListAccount(context, getTranslated("SUB_MODEL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserSubModel
+              ),
+              SizedBox(height: 10.0),
+              profileListAccount(context, getTranslated("BODY_STYLE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserBodyStyle
+              ),
+              SizedBox(height: 10.0),
+              profileListAccount(context, "No KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserNoKtp
+              ),
+              SizedBox(height: 10.0),
+              profileListAccount(context, getTranslated("COMPANY_NAME", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+              ? "..."
+              : Provider.of<ProfileProvider>(context, listen: false).getUserCompany
+              ),
+              SizedBox(height: 10.0),
               profileListAccount(context, getTranslated("EMAIL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
@@ -513,7 +571,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           ? "..." 
                           : profileProvider.profileStatus == ProfileStatus.error 
                           ? "..." 
-                          : "W204.03.${profileProvider.getUserIdNumber}",
+                          : "${profileProvider.getUserIdNumber}",
                             style: poppinsRegular.copyWith(
                               color: ColorResources.BTN_PRIMARY_SECOND,
                               fontWeight: FontWeight.bold,

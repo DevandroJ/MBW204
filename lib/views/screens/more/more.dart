@@ -148,7 +148,7 @@ class MoreScreen extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: Container(
-                          child: Text(profileProvider.userProfile == null ? "..." : profileProvider.getUserIdCardNumber,
+                          child: Text(profileProvider.userProfile == null ? "..." : profileProvider.getUserIdNumber,
                             style: poppinsRegular.copyWith(
                               color: ColorResources.WHITE,
                               fontWeight: FontWeight.bold,
