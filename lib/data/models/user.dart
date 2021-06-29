@@ -43,10 +43,12 @@ class UserData {
     this.passwordNew,
     this.passwordConfirm,
     this.phoneActivated,
+    this.codeReferfall,
     this.phoneNumber,
     this.role,
     this.idCardNumber,
-    this.idMember,
+    this.noKtp,
+    this.noMember,
     this.address,
     this.companyName,
     this.status,
@@ -55,14 +57,15 @@ class UserData {
     this.fullname,
     this.userType,
     this.chapter,
+    this.codeChapter,
     this.subModel,
     this.bodyStyle,
-    this.statusRegister
   });
 
   DateTime created;
   bool emailActivated;
   bool phoneActivated;
+  String codeReferfall;
   String emailAddress;
   String password;
   String passwordNew;
@@ -70,9 +73,9 @@ class UserData {
   String address;
   String companyName;
   String idCardNumber;
-  String idMember;
+  String noKtp;
+  String noMember;
   String phoneNumber;
-  String noAnggota;
   String role;
   String status;
   String userId;
@@ -80,13 +83,15 @@ class UserData {
   String fullname;
   String userType;
   String chapter;
+  String codeChapter;
   String subModel;
   String bodyStyle;
-  String statusRegister;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+    created: DateTime.parse(json["created"]),
     emailActivated: json["email_activated"],
     emailAddress: json["email_address"],
+    fullname: json["fullname"],
     phoneActivated: json["phone_activated"],
     phoneNumber: json["phone_number"],
     role: json["role"],
@@ -94,13 +99,5 @@ class UserData {
     userId: json["user_id"],
     username: json["user_name"],
     userType: json["user_type"],
-    created: DateTime.parse(json["created"]),
-    idMember: json["id_member"],
-    idCardNumber: json["id_card_number"],
-    companyName: json["company_name"],
-    chapter: json["chapter"],
-    subModel: json["sub_model"],
-    bodyStyle: json["body_style"],
-    statusRegister: json["status_register"]
   );
 }

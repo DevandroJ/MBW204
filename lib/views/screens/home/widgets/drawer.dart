@@ -267,7 +267,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ? "..." 
                 : profileProvider.profileStatus == ProfileStatus.error 
                 ? "..." 
-                : profileProvider?.getUserFullname,
+                : profileProvider.getUserFullname,
                 style: poppinsRegular.copyWith(
                   fontWeight: FontWeight.bold
                 )
@@ -276,7 +276,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ? "..." 
                 : profileProvider.profileStatus == ProfileStatus.error 
                 ? "..." 
-                : profileProvider?.getUserIdNumber}",
+                : profileProvider.getUserIdNumber}",
                 style: poppinsRegular.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12.0

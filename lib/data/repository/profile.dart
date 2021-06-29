@@ -69,26 +69,26 @@ class ProfileRepo {
 
   String get getUserPhoneNumber => sharedPreferences.getString("phoneNumber") ?? "-";
 
-  String get getSingleUserPhoneNumber => singleUserData.phoneNumber ?? "-";
+  String get getSingleUserPhoneNumber => singleUserData?.phoneNumber ?? "-";
 
   String get getUserId => sharedPreferences.getString("userId") ?? null;
 
-  String get getUserFullname => profileData.fullname ?? "-";
+  String get getUserFullname => profileData?.fullname ?? "-";
   
-  String get getSingleUserFullname => singleUserData.fullname ?? "-";
+  String get getSingleUserFullname => singleUserData?.fullname ?? "-";
 
-  String get getUserAddress => profileData.address ?? "-";
+  String get getUserAddress => profileData?.address ?? "-";
 
-  String get getUserGender => profileData.gender ?? "-";
+  String get getUserGender => profileData?.gender ?? "-";
 
-  String get getUserIdMember => profileData.idMember ?? "-";
+  String get getUserIdMember => profileData?.idMember ?? "-";
 
-  String get getUserCardNumber => profileData.idCardNumber ?? "-";
+  String get getUserCardNumber => profileData?.idCardNumber ?? "-";
 
-  String get getUserShortBio => profileData.shortBio ?? "-";
+  String get getUserShortBio => profileData?.shortBio ?? "-";
 
-  String get getUserProfilePic => profileData.profilePic ?? null;
+  String get getUserProfilePic => profileData?.profilePic ?? null;
   
-  String get getSingleUserProfilePic => singleUserData.profilePic ?? null;
+  String get getSingleUserProfilePic => singleUserData?.profilePic ?? null;
 
 }

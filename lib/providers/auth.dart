@@ -21,7 +21,7 @@ enum ForgotPasswordStatus { loading, loaded, error, idle }
 enum LoginStatus { loading, loaded, error, idle }
 
 abstract class BaseAuth {
-  Future register(BuildContext context, UserData userData);
+  Future register(BuildContext context, UserData userData, String userType);
   Future login(BuildContext context, UserData userData);
   Future forgotPassword(BuildContext context, UserData userData);
   Future<InquiryRegisterModel> verify(BuildContext context, String token, UserModel user);
@@ -179,9 +179,9 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
 
   @override
   Future login(BuildContext context, UserData userData) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setStateLoginStatus(LoginStatus.loading);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
+      setStateLoginStatus(LoginStatus.loading);
       Response res = await dio.post("${AppConstants.BASE_URL}/user-service/login",
         data: {
           "phone_number": userData.phoneNumber, 
@@ -249,28 +249,57 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
   }
 
   @override
-  Future register(BuildContext context, UserData userData) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setStateRegisterStatus(RegisterStatus.loading);
+  Future register(BuildContext context, UserData userData, String userType) async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    Object data = {};
+    if(userType == "user") {
+      data = {
+        "user_fullname": userData.fullname,
+        "phone_number": userData.phoneNumber,
+        "email_address": userData.emailAddress,
+        "password": userData.password,
+        "id_member": userData.noMember,
+        "chapter": userData.chapter == "001" 
+        ? "Jakarta" 
+        : userData.chapter == "002" 
+        ? "Bandung" 
+        : userData.chapter == "003" 
+        ? "Tangerang" 
+        : userData.chapter == "004" 
+        ? "Surabaya" 
+        : "-",
+        "code_chapter": userData.chapter,
+        "sub_modal": userData.subModel,
+        "body_style": userData.bodyStyle,
+        "role": "user",
+        "user_type": "generic"
+      };
+    } else if(userType == "relatives") {
+      data = {
+        "user_fullname": userData.fullname,
+        "phone_number": userData.phoneNumber,
+        "email_address": userData.emailAddress,
+        "password": userData.password,
+        "referral_code": userData.codeReferfall,
+        "role": "user",
+        "user_type": "generic"
+      };
+    } else if(userType == "partnership") {
+      data = {   
+        "user_fullname" : userData.fullname,
+        "phone_number" : userData.phoneNumber,
+        "email_address" : userData.emailAddress,
+        "password" : userData.password,
+        "no_ktp" : userData.noKtp,
+        "company_name": userData.companyName,
+        "role": "user",
+        "user_type": "generic"
+      };
+    } 
     try {
-      Response res = await dio.post("${AppConstants.BASE_URL}/user-service/${userData.statusRegister}/register",
-        data: {
-          "email_address": userData.emailAddress,
-          "phone_number": userData.phoneNumber,
-          "user_fullname": userData.fullname,
-          "password": userData.password,
-          "address": userData.address ?? "",
-          "no_ktp": userData.idCardNumber ?? "",
-          "id_card_number": userData.idCardNumber ?? "", 
-          "id_member": userData.idMember ?? "",
-          "company_profile": userData.companyName ?? "",
-          "no_anggota": userData.noAnggota ?? "",
-          "chapter": userData.chapter ?? "-",
-          "sub_modal": userData.subModel ?? "-",
-          "body_style": userData.bodyStyle ?? "-",
-          "role": "user",
-          "user_type": "generic"
-        }
+      setStateRegisterStatus(RegisterStatus.loading);
+      Response res = await dio.post("${AppConstants.BASE_URL}/user-service/$userType/register",
+        data: data
       );
       UserModel user = UserModel.fromJson(json.decode(res.data));
       // verify(context, json.decode(res.data)['body']['token'], user).then((val) {
@@ -287,6 +316,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       //     });
       //   } 
       // });
+      writeData(user);
       setStateRegisterStatus(RegisterStatus.loaded);
     } on DioError catch(e) {
       if(e?.type == DioErrorType.CONNECT_TIMEOUT) {

@@ -14,7 +14,7 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 
-enum StatusRegister { member, partnership, relationship_member }
+enum StatusRegister { member, partnership, partnership_member, relationship_member }
 
 class SignUpScreen extends StatefulWidget{
 
@@ -27,17 +27,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     
     /* Member & Partnership */ 
+    TextEditingController referralCodeController = TextEditingController(); 
     TextEditingController fullnameController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
+    TextEditingController emailController = TextEditingController();  
     TextEditingController phoneNumberController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController passwordConfirmController = TextEditingController();
 
-    String userStatusRegister = "";
+    String userUrlRegister = "";
 
     /* Member */ 
-    TextEditingController idMemberController = TextEditingController();
+    TextEditingController noMemberController = TextEditingController();
     String chapter = "";
     String subModel = "";
     String bodyStyle = "";
@@ -78,17 +79,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return;
         }
         
-        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailController.text);
-       
         if(emailController.text.trim().isEmpty) {
           ShowSnackbar.snackbar(context, "Email Address is Required", "", ColorResources.ERROR);
           return;
         }
+        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailController.text); 
         if(!emailValid) {
           ShowSnackbar.snackbar(context, "ex. johndoe@gmail.com", "", ColorResources.ERROR);
           return;
         }
-        
         if(passwordController.text.trim().isEmpty) {
           ShowSnackbar.snackbar(context, "Password is Required", "", ColorResources.ERROR);
           return;
@@ -102,9 +101,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return;
         }
         if(_statusRegister == StatusRegister.member) {
-          userStatusRegister = "user";
-          if(idMemberController.text.trim().isEmpty) {
-            ShowSnackbar.snackbar(context, "ID Member is Required", "", ColorResources.ERROR);
+          userUrlRegister = "user";
+          if(noMemberController.text.trim().isEmpty) {
+            ShowSnackbar.snackbar(context, "No Member is Required", "", ColorResources.ERROR);
             return;
           }
           if(chapter.trim().isEmpty) {
@@ -119,44 +118,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ShowSnackbar.snackbar(context, "Body Style is Required", "", ColorResources.ERROR);
             return;
           }
+          userData.fullname = fullnameController.text;
+          userData.phoneNumber = phoneNumberController.text;
+          userData.emailAddress = emailController.text;
+          userData.password = passwordController.text;
+          userData.noMember = noMemberController.text;
+          userData.chapter = chapter;
+          userData.codeChapter = chapter;
+          userData.subModel = subModel;
+          userData.bodyStyle = bodyStyle;
         }
-        if(_statusRegister == StatusRegister.partnership) {
-          userStatusRegister = "partnership";
+        if(_statusRegister == StatusRegister.partnership_member) {
+          userUrlRegister = "partnership";
           if(noKtpController.text.trim().isEmpty) {
             ShowSnackbar.snackbar(context, "No KTP is Required", "", ColorResources.ERROR);
-            return;      
-          }
-          if(noKtpController.text.trim().length < 16) {
-            ShowSnackbar.snackbar(context, "No KTP Must be 16 Character", "", ColorResources.ERROR);
-            return;      
-          }
-          if(companyNameController.text.trim().isEmpty) {
-            ShowSnackbar.snackbar(context, "Company Name is Required", "", ColorResources.ERROR);
             return; 
           }
+          if(companyNameController.text.trim().isEmpty) {
+            ShowSnackbar.snackbar(context, "Company is Required", "", ColorResources.ERROR);
+            return; 
+          }
+          userData.fullname = fullnameController.text;
+          userData.phoneNumber = phoneNumberController.text;
+          userData.emailAddress = emailController.text;
+          userData.password = passwordController.text;
+          userData.noKtp = noKtpController.text;
+          userData.companyName = companyNameController.text;
         }
         if(_statusRegister == StatusRegister.relationship_member) {
-          userStatusRegister = "relationship_member";
+          userUrlRegister = "relatives";
           if(relationshipMemberController.text.trim().isEmpty) {
-            ShowSnackbar.snackbar(context, "Code Referral", "", ColorResources.ERROR);
+            ShowSnackbar.snackbar(context, "Code Referral is Required", "", ColorResources.ERROR);
             return;
           }
+          userData.fullname = fullnameController.text;
+          userData.phoneNumber = phoneNumberController.text;
+          userData.emailAddress = emailController.text;
+          userData.password = passwordController.text;
+          userData.codeReferfall = referralCodeController.text;
         }
 
-        userData.companyName = companyNameController.text;
-        userData.idCardNumber = noKtpController.text; 
-        userData.idMember = idMemberController.text;
-        userData.chapter = chapter;
-        userData.subModel = subModel;
-        userData.bodyStyle = bodyStyle;
-        userData.fullname = fullnameController.text; 
-        userData.username = usernameController.text;
-        userData.phoneNumber = phoneNumberController.text;
-        userData.emailAddress = emailController.text;
-        userData.password = passwordController.text;
-        userData.statusRegister = userStatusRegister;
-
-        await Provider.of<AuthProvider>(context, listen: false).register(context, userData);
+        await Provider.of<AuthProvider>(context, listen: false).register(context, userData, userUrlRegister);
 
       } on CustomException catch(e) {
         String error = e.toString();
@@ -275,24 +277,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             ),
                                           ),
 
+                                        if(_statusRegister == StatusRegister.partnership 
+                                        || _statusRegister == StatusRegister.partnership_member 
+                                        || _statusRegister == StatusRegister.relationship_member)
                                           Theme(
                                             data: Theme.of(context).copyWith(
                                               unselectedWidgetColor: ColorResources.WHITE,
                                             ),
-                                            child: RadioListTile<StatusRegister>(
-                                              value: StatusRegister.relationship_member, 
-                                              groupValue: _statusRegister, 
-                                              onChanged: (val) {
-                                                s(() {
-                                                  _statusRegister = val;
-                                                });
-                                              },
-                                              title: Text(getTranslated("RELATIONSHIP_MEMBER", context),
-                                                style: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                            child: Row(
+                                              children: [
+                                                Flexible(
+                                                  child: RadioListTile<StatusRegister>(
+                                                    value: StatusRegister.relationship_member, 
+                                                    groupValue: _statusRegister, 
+                                                    onChanged: (val) {
+                                                      s(() {
+                                                        _statusRegister = val;
+                                                      });
+                                                    },
+                                                    title: Text(getTranslated("RELATIONSHIP_MEMBER", context),
+                                                      style: poppinsRegular.copyWith(
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
+                                                Flexible(
+                                                  child: RadioListTile<StatusRegister>(
+                                                    value: StatusRegister.partnership_member, 
+                                                    groupValue: _statusRegister, 
+                                                    onChanged: (val) {
+                                                      s(() {
+                                                        _statusRegister = val;
+                                                      });
+                                                    },
+                                                    title: Text(getTranslated("PARTNERSHIP_MEMBER", context),
+                                                      style: poppinsRegular.copyWith(
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )                                     
                                           ),
 
                                         ],
@@ -316,7 +343,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               ],
                                             ),
                                             TextField(
-                                              controller: companyNameController,
+                                              controller: referralCodeController,
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ),
@@ -357,7 +384,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               ],
                                             ),
                                             TextField(
-                                              controller: idMemberController,
+                                              controller: noMemberController,
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ),
@@ -401,19 +428,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               dataSource: [
                                                 {
                                                   "display": "Jakarta",
-                                                  "value": "01",
+                                                  "value": "001",
                                                 },
                                                 {
                                                   "display": "Bandung",
-                                                  "value": "02",
+                                                  "value": "002",
                                                 },
                                                 {
                                                   "display": "Tangerang",
-                                                  "value": "03",
+                                                  "value": "003",
                                                 },
                                                 {
                                                   "display": "Surabaya",
-                                                  "value": "04"
+                                                  "value": "004"
                                                 }
                                               ],
                                               textField: 'display',
@@ -549,41 +576,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       ),
                                     
-                                    // if(_statusRegister == StatusRegister.partnership)
-                                    //   Container(
-                                    //     margin: EdgeInsets.only(top: 15.0),
-                                    //     child: Column(
-                                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                                    //       children: [
-                                    //         Text("No KTP", style: poppinsRegular.copyWith(
-                                    //           color: ColorResources.WHITE
-                                    //         )),
-                                    //         TextField(
-                                    //           controller: noKtpController,
-                                    //           style: poppinsRegular.copyWith(
-                                    //             color: ColorResources.WHITE
-                                    //           ),
-                                    //           textInputAction: TextInputAction.next,
-                                    //           decoration: InputDecoration(
-                                    //             hintText: "Enter your KTP",
-                                    //             hintStyle: poppinsRegular,
-                                    //             isDense: true,
-                                    //             enabledBorder: UnderlineInputBorder(      
-                                    //               borderSide: BorderSide(color: ColorResources.WHITE),   
-                                    //             ),  
-                                    //             focusedBorder: UnderlineInputBorder(
-                                    //               borderSide: BorderSide(color: ColorResources.WHITE),
-                                    //             ),
-                                    //             border: UnderlineInputBorder(
-                                    //               borderSide: BorderSide(color: ColorResources.WHITE),
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       ],
-                                    //     ),
-                                    //   ),
+                                    if(_statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.calendar_view_day_sharp,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text("No KTP", style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            TextField(
+                                              controller: noKtpController,
+                                              style: poppinsRegular.copyWith(
+                                                color: ColorResources.WHITE
+                                              ),
+                                              textInputAction: TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: "Enter your KTP",
+                                                hintStyle: poppinsRegular,
+                                                isDense: true,
+                                                enabledBorder: UnderlineInputBorder(      
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                ),  
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
-                                    if(_statusRegister == StatusRegister.partnership)
+                                    if(_statusRegister == StatusRegister.partnership_member)
                                       Container(
                                         margin: EdgeInsets.only(top: 15.0),
                                         child: Column(

@@ -31,7 +31,7 @@ class SignOutConfirmationDialog extends StatelessWidget {
             Expanded(
               child: InkWell(
               onTap: () {
-                Provider.of<ProfileProvider>(context, listen: false).userProfile.profilePic = null;
+                Provider.of<ProfileProvider>(context, listen: false).userProfile?.profilePic = null;
                 Provider.of<AuthProvider>(context, listen: false).logout().then((condition) {
                   Navigator.pop(context);
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInScreen()), (route) => false);
