@@ -46,6 +46,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     TextEditingController noKtpController = TextEditingController();
     TextEditingController companyNameController = TextEditingController();
 
+    /* Relationship Member */
+    TextEditingController relationshipMemberController = TextEditingController();
+
     bool passwordObscure = false;
     bool passwordConfirmObscure = false;
 
@@ -130,6 +133,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if(companyNameController.text.trim().isEmpty) {
             ShowSnackbar.snackbar(context, "Company Name is Required", "", ColorResources.ERROR);
             return; 
+          }
+        }
+        if(_statusRegister == StatusRegister.relationship_member) {
+          userStatusRegister = "relationship_member";
+          if(relationshipMemberController.text.trim().isEmpty) {
+            ShowSnackbar.snackbar(context, "Code Referral", "", ColorResources.ERROR);
+            return;
           }
         }
 
