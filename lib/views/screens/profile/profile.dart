@@ -539,6 +539,24 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             backgroundImage: imageProvider,
                           );
                         },
+                        placeholder: (BuildContext context, String url) {
+                          return Container(
+                            margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: 18.0,
+                              height: 18.0,
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        },
+                        errorWidget: (BuildContext context, String url, dynamic error) {
+                          return CircleAvatar(
+                            radius: 30.0,
+                            backgroundColor: ColorResources.WHITE,
+                            backgroundImage: AssetImage('assets/images/profile-drawer.png'),
+                          );
+                        },
                       )
                     ),
 

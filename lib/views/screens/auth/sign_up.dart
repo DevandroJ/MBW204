@@ -334,7 +334,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   color: ColorResources.WHITE,
                                                 ),
                                                 SizedBox(width: 15.0),
-                                                Text(getTranslated("REFFERAL_CODE", context), style: poppinsRegular.copyWith(
+                                                Text(getTranslated("REFERRAL_CODE", context), style: poppinsRegular.copyWith(
                                                   color: ColorResources.WHITE
                                                 ))
                                               ],
@@ -656,153 +656,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       ),
                                     
-
-                                    Container(
-                                      margin: EdgeInsets.only(top: 15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.people,
-                                                color: ColorResources.WHITE,
-                                              ),
-                                              SizedBox(width: 15.0),
-                                              Text(getTranslated("FULL_NAME", context), style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ))
-                                            ],
-                                          ),
-                                          TextField(
-                                            controller: fullnameController,
-                                            style: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
+                                    if(_statusRegister == StatusRegister.member || _statusRegister == StatusRegister.relationship_member || _statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.people,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("FULL_NAME", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
                                             ),
-                                            textInputAction: TextInputAction.next,
-                                            decoration: InputDecoration(
-                                              hintText: getTranslated("FULL_NAME", context),
-                                              hintStyle: poppinsRegular,
-                                              isDense: true,
-                                              enabledBorder: UnderlineInputBorder(      
-                                                borderSide: BorderSide(color: ColorResources.WHITE),   
-                                              ),  
-                                              focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: ColorResources.WHITE),
-                                              ),
-                                              border: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: ColorResources.WHITE),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                      margin: EdgeInsets.only(top: 15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.person,
-                                                color: ColorResources.WHITE,
-                                              ),
-                                              SizedBox(width: 15.0),
-                                              Text(getTranslated("USER_NAME", context), style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ))
-                                            ],
-                                          ),
-                                          TextField(
-                                            controller: usernameController,
-                                            style: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
-                                            ),
-                                            textInputAction: TextInputAction.next,
-                                            decoration: InputDecoration(
-                                              hintText: "ex. @johndoe",
-                                              hintStyle: poppinsRegular,
-                                              isDense: true,
-                                              enabledBorder: UnderlineInputBorder(      
-                                                borderSide: BorderSide(color: ColorResources.WHITE),   
-                                              ),  
-                                              focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: ColorResources.WHITE),
-                                              ),
-                                              border: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: ColorResources.WHITE),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                      margin: EdgeInsets.only(top: 15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.phone_android,
-                                                color: ColorResources.WHITE,
-                                              ),
-                                              SizedBox(width: 15.0),
-                                              Text(getTranslated("PHONE_NUMBER", context), style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ))
-                                            ],
-                                          ),
-                                          TextField(
-                                            controller: phoneNumberController,
-                                            style: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
-                                            ),
-                                            keyboardType: TextInputType.number,
-                                            textInputAction: TextInputAction.next,
-                                            decoration: InputDecoration(
-                                              hintText: getTranslated("PHONE_NUMBER", context),
-                                              hintStyle: poppinsRegular,
-                                              isDense: true,
-                                              enabledBorder: UnderlineInputBorder(      
-                                                borderSide: BorderSide(color: ColorResources.WHITE),   
-                                              ),  
-                                              focusedBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: ColorResources.WHITE),
-                                              ),
-                                              border: UnderlineInputBorder(
-                                                borderSide: BorderSide(color: ColorResources.WHITE),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                      margin: EdgeInsets.only(top: 15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.email,
-                                                color: ColorResources.WHITE,
-                                              ),
-                                              SizedBox(width: 15.0),
-                                              Text(getTranslated("EMAIL", context), style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ))
-                                            ],
-                                          ),
-                                          Container(
-                                            child: TextField(
-                                              controller: emailController,
+                                            TextField(
+                                              controller: fullnameController,
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ),
-                                              keyboardType: TextInputType.emailAddress,
                                               textInputAction: TextInputAction.next,
                                               decoration: InputDecoration(
-                                                hintText: "ex. johndoe@gmail.com",
+                                                hintText: getTranslated("FULL_NAME", context),
                                                 hintStyle: poppinsRegular,
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -816,101 +693,119 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
 
-                                    Container(
-                                      margin: EdgeInsets.only(top: 15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.lock,
-                                                color: ColorResources.WHITE,
-                                              ),
-                                              SizedBox(width: 15.0),
-                                              Text(getTranslated("PASSWORD", context), style: poppinsRegular.copyWith(
+                                    if(_statusRegister == StatusRegister.member || _statusRegister == StatusRegister.relationship_member || _statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.person,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("USER_NAME", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            TextField(
+                                              controller: usernameController,
+                                              style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
-                                              ))
-                                            ],
-                                          ),
-                                          StatefulBuilder(
-                                            builder: (BuildContext context, Function setState) {
-                                              return TextField(
-                                                controller: passwordController,
-                                                obscureText: passwordObscure,
+                                              ),
+                                              textInputAction: TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: "ex. @johndoe",
+                                                hintStyle: poppinsRegular,
+                                                isDense: true,
+                                                enabledBorder: UnderlineInputBorder(      
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                ),  
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                    if(_statusRegister == StatusRegister.member || _statusRegister == StatusRegister.relationship_member || _statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.phone_android,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("PHONE_NUMBER", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            TextField(
+                                              controller: phoneNumberController,
+                                              style: poppinsRegular.copyWith(
+                                                color: ColorResources.WHITE
+                                              ),
+                                              keyboardType: TextInputType.number,
+                                              textInputAction: TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: getTranslated("PHONE_NUMBER", context),
+                                                hintStyle: poppinsRegular,
+                                                isDense: true,
+                                                enabledBorder: UnderlineInputBorder(      
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                ),  
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                  
+                                    if(_statusRegister == StatusRegister.member || _statusRegister == StatusRegister.relationship_member || _statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.email,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("EMAIL", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            Container(
+                                              child: TextField(
+                                                controller: emailController,
                                                 style: poppinsRegular.copyWith(
                                                   color: ColorResources.WHITE
                                                 ),
-                                                decoration: InputDecoration(
-                                                  hintText: getTranslated("PASSWORD", context),
-                                                  suffixIcon: InkWell(
-                                                    onTap: () {
-                                                      s(() => passwordObscure = !passwordObscure);
-                                                    }, 
-                                                    child: Icon(
-                                                      passwordObscure ? Icons.visibility_off : Icons.visibility,
-                                                      color: ColorResources.WHITE
-                                                    ),
-                                                  ),
-                                                  contentPadding: EdgeInsets.only(top: 13),
-                                                  hintStyle: poppinsRegular,
-                                                  isDense: true,
-                                                  enabledBorder: UnderlineInputBorder(      
-                                                    borderSide: BorderSide(color: ColorResources.WHITE),   
-                                                  ),  
-                                                  focusedBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorResources.WHITE),
-                                                  ),
-                                                  border: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorResources.WHITE),
-                                                  ),
-                                                ),
+                                                keyboardType: TextInputType.emailAddress,
                                                 textInputAction: TextInputAction.next,
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    Container(
-                                      margin: EdgeInsets.only(top: 15.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.lock,
-                                                color: ColorResources.WHITE,
-                                              ),
-                                              SizedBox(width: 15.0),
-                                              Text(getTranslated("PASSWORD_CONFIRM", context), style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ))
-                                            ],
-                                          ),
-                                          StatefulBuilder(
-                                            builder: (BuildContext context, Function setState) {
-                                              return TextField(
-                                                controller: passwordConfirmController,
-                                                obscureText: passwordConfirmObscure,
-                                                style: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
-                                                ),
                                                 decoration: InputDecoration(
-                                                  hintText: getTranslated("PASSWORD_CONFIRM", context),
-                                                  suffixIcon: InkWell(
-                                                    onTap: () {
-                                                      s(() => passwordConfirmObscure = !passwordConfirmObscure);
-                                                    }, 
-                                                    child: Icon(
-                                                      passwordConfirmObscure ? Icons.visibility_off : Icons.visibility,
-                                                      color: ColorResources.WHITE
-                                                    ),
-                                                  ),
-                                                  contentPadding: EdgeInsets.only(top: 13),
+                                                  hintText: "ex. johndoe@gmail.com",
                                                   hintStyle: poppinsRegular,
                                                   isDense: true,
                                                   enabledBorder: UnderlineInputBorder(      
@@ -923,12 +818,122 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     borderSide: BorderSide(color: ColorResources.WHITE),
                                                   ),
                                                 ),
-                                              );
-                                            },  
-                                          ),
-                                        ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+
+                                    if(_statusRegister == StatusRegister.member || _statusRegister == StatusRegister.relationship_member || _statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.lock,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("PASSWORD", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            StatefulBuilder(
+                                              builder: (BuildContext context, Function setState) {
+                                                return TextField(
+                                                  controller: passwordController,
+                                                  obscureText: passwordObscure,
+                                                  style: poppinsRegular.copyWith(
+                                                    color: ColorResources.WHITE
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    hintText: getTranslated("PASSWORD", context),
+                                                    suffixIcon: InkWell(
+                                                      onTap: () {
+                                                        s(() => passwordObscure = !passwordObscure);
+                                                      }, 
+                                                      child: Icon(
+                                                        passwordObscure ? Icons.visibility_off : Icons.visibility,
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ),
+                                                    contentPadding: EdgeInsets.only(top: 13),
+                                                    hintStyle: poppinsRegular,
+                                                    isDense: true,
+                                                    enabledBorder: UnderlineInputBorder(      
+                                                      borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                    ),  
+                                                    focusedBorder: UnderlineInputBorder(
+                                                      borderSide: BorderSide(color: ColorResources.WHITE),
+                                                    ),
+                                                    border: UnderlineInputBorder(
+                                                      borderSide: BorderSide(color: ColorResources.WHITE),
+                                                    ),
+                                                  ),
+                                                  textInputAction: TextInputAction.next,
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                    if(_statusRegister == StatusRegister.member || _statusRegister == StatusRegister.relationship_member || _statusRegister == StatusRegister.partnership_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.lock,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("PASSWORD_CONFIRM", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            StatefulBuilder(
+                                              builder: (BuildContext context, Function setState) {
+                                                return TextField(
+                                                  controller: passwordConfirmController,
+                                                  obscureText: passwordConfirmObscure,
+                                                  style: poppinsRegular.copyWith(
+                                                    color: ColorResources.WHITE
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    hintText: getTranslated("PASSWORD_CONFIRM", context),
+                                                    suffixIcon: InkWell(
+                                                      onTap: () {
+                                                        s(() => passwordConfirmObscure = !passwordConfirmObscure);
+                                                      }, 
+                                                      child: Icon(
+                                                        passwordConfirmObscure ? Icons.visibility_off : Icons.visibility,
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ),
+                                                    contentPadding: EdgeInsets.only(top: 13),
+                                                    hintStyle: poppinsRegular,
+                                                    isDense: true,
+                                                    enabledBorder: UnderlineInputBorder(      
+                                                      borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                    ),  
+                                                    focusedBorder: UnderlineInputBorder(
+                                                      borderSide: BorderSide(color: ColorResources.WHITE),
+                                                    ),
+                                                    border: UnderlineInputBorder(
+                                                      borderSide: BorderSide(color: ColorResources.WHITE),
+                                                    ),
+                                                  ),
+                                                );
+                                              },  
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
                                     Container(
                                       width: double.infinity,
