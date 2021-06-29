@@ -14,7 +14,7 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 
-enum StatusRegister { member, partnership }
+enum StatusRegister { member, partnership, relationship_member }
 
 class SignUpScreen extends StatefulWidget{
 
@@ -264,33 +264,111 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               
                                             ),
                                           ),
+
+                                          Theme(
+                                            data: Theme.of(context).copyWith(
+                                              unselectedWidgetColor: ColorResources.WHITE,
+                                            ),
+                                            child: RadioListTile<StatusRegister>(
+                                              value: StatusRegister.relationship_member, 
+                                              groupValue: _statusRegister, 
+                                              onChanged: (val) {
+                                                s(() {
+                                                  _statusRegister = val;
+                                                });
+                                              },
+                                              title: Text(getTranslated("RELATIONSHIP_MEMBER", context),
+                                                style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+
                                         ],
                                       ) 
                                     ),
 
+                                    if(_statusRegister == StatusRegister.relationship_member)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.confirmation_number_outlined,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("REFERALL_CODE", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
+                                            TextField(
+                                              controller: companyNameController,
+                                              style: poppinsRegular.copyWith(
+                                                color: ColorResources.WHITE
+                                              ),
+                                              textInputAction: TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: getTranslated("REFERALL_CODE", context),
+                                                hintStyle: poppinsRegular,
+                                                isDense: true,
+                                                enabledBorder: UnderlineInputBorder(      
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                ),  
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
                                     if(_statusRegister == StatusRegister.member)        
                                       Container(
-                                        child: TextField(
-                                          controller: idMemberController,
-                                          style: poppinsRegular.copyWith(
-                                            color: ColorResources.WHITE
-                                          ),
-                                          textInputAction: TextInputAction.next,
-                                          decoration: InputDecoration(
-                                            hintText: getTranslated("MEMBER_NO", context),
-                                            hintStyle: poppinsRegular,
-                                            isDense: true,
-                                            enabledBorder: UnderlineInputBorder(      
-                                              borderSide: BorderSide(color: ColorResources.WHITE),   
-                                            ),  
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(color: ColorResources.WHITE),
+                                        margin: EdgeInsets.only(top: 15.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.card_membership,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("MEMBER_NO", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
                                             ),
-                                            border: UnderlineInputBorder(
-                                              borderSide: BorderSide(color: ColorResources.WHITE),
+                                            TextField(
+                                              controller: idMemberController,
+                                              style: poppinsRegular.copyWith(
+                                                color: ColorResources.WHITE
+                                              ),
+                                              textInputAction: TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: getTranslated("MEMBER_NO", context),
+                                                hintStyle: poppinsRegular,
+                                                isDense: true,
+                                                enabledBorder: UnderlineInputBorder(      
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),   
+                                                ),  
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                                border: UnderlineInputBorder(
+                                                  borderSide: BorderSide(color: ColorResources.WHITE),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
+                                          ],
+                                        )                                   
                                       ),
 
                                     if(_statusRegister == StatusRegister.member)
@@ -461,23 +539,64 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       ),
                                     
+                                    // if(_statusRegister == StatusRegister.partnership)
+                                    //   Container(
+                                    //     margin: EdgeInsets.only(top: 15.0),
+                                    //     child: Column(
+                                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                                    //       children: [
+                                    //         Text("No KTP", style: poppinsRegular.copyWith(
+                                    //           color: ColorResources.WHITE
+                                    //         )),
+                                    //         TextField(
+                                    //           controller: noKtpController,
+                                    //           style: poppinsRegular.copyWith(
+                                    //             color: ColorResources.WHITE
+                                    //           ),
+                                    //           textInputAction: TextInputAction.next,
+                                    //           decoration: InputDecoration(
+                                    //             hintText: "Enter your KTP",
+                                    //             hintStyle: poppinsRegular,
+                                    //             isDense: true,
+                                    //             enabledBorder: UnderlineInputBorder(      
+                                    //               borderSide: BorderSide(color: ColorResources.WHITE),   
+                                    //             ),  
+                                    //             focusedBorder: UnderlineInputBorder(
+                                    //               borderSide: BorderSide(color: ColorResources.WHITE),
+                                    //             ),
+                                    //             border: UnderlineInputBorder(
+                                    //               borderSide: BorderSide(color: ColorResources.WHITE),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //   ),
+
                                     if(_statusRegister == StatusRegister.partnership)
                                       Container(
                                         margin: EdgeInsets.only(top: 15.0),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("No KTP", style: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
-                                            )),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.location_city,
+                                                  color: ColorResources.WHITE,
+                                                ),
+                                                SizedBox(width: 15.0),
+                                                Text(getTranslated("COMPANY_NAME", context), style: poppinsRegular.copyWith(
+                                                  color: ColorResources.WHITE
+                                                ))
+                                              ],
+                                            ),
                                             TextField(
-                                              controller: noKtpController,
+                                              controller: companyNameController,
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ),
                                               textInputAction: TextInputAction.next,
                                               decoration: InputDecoration(
-                                                hintText: "Enter your KTP",
+                                                hintText: getTranslated("COMPANY_NAME", context),
                                                 hintStyle: poppinsRegular,
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -494,47 +613,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ],
                                         ),
                                       ),
-
-                                    if(_statusRegister == StatusRegister.partnership)
-                                        Container(
-                                          margin: EdgeInsets.only(top: 15.0),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Icon(Icons.location_city,
-                                                    color: ColorResources.WHITE,
-                                                  ),
-                                                  SizedBox(width: 15.0),
-                                                  Text(getTranslated("COMPANY_NAME", context), style: poppinsRegular.copyWith(
-                                                    color: ColorResources.WHITE
-                                                  ))
-                                                ],
-                                              ),
-                                              TextField(
-                                                controller: companyNameController,
-                                                style: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
-                                                ),
-                                                textInputAction: TextInputAction.next,
-                                                decoration: InputDecoration(
-                                                  hintText: getTranslated("COMPANY_NAME", context),
-                                                  hintStyle: poppinsRegular,
-                                                  isDense: true,
-                                                  enabledBorder: UnderlineInputBorder(      
-                                                    borderSide: BorderSide(color: ColorResources.WHITE),   
-                                                  ),  
-                                                  focusedBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorResources.WHITE),
-                                                  ),
-                                                  border: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorResources.WHITE),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
                                     
 
                                     Container(
