@@ -1,5 +1,6 @@
 // import 'package:flappy_search_bar/flappy_search_bar.dart';
 // import 'package:flappy_search_bar/scaled_tile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class SearchWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 110.0,
+              width: 125.0,
               child: Row(
                 children: [
                   Icon(
@@ -181,8 +182,8 @@ class EventSearch extends SearchDelegate {
                 horizontal: 0.0
               ),
               leading: ClipOval(
-                child: Image.network(
-                  "${AppConstants.BASE_URL_FEED_IMG}${suggestion.media[0].path}",
+                child: CachedNetworkImage(
+                  imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${suggestion.media[0].path}",
                   fit: BoxFit.cover,
                   width: 50.0,
                   height: 50.0,
@@ -205,68 +206,6 @@ class EventSearch extends SearchDelegate {
         ); 
       }
     );
-    // Provider.of<EventProvider>(context, listen: false).getEventSearch(context, query);
-    // return Consumer<EventProvider>(
-    //   builder: (BuildContext context, EventProvider eventProvider, Widget child) {
-    //     if(eventProvider.eventSearchStatus == EventSearchStatus.loading) {
-    //       return Loader(
-    //         color: ColorResources.BTN_PRIMARY_SECOND,
-    //       );
-    //     }
-    //     if(eventProvider.eventSearchStatus == EventSearchStatus.empty) {
-    //       return Center(
-    //         child: Text("Belum ada event"),
-    //       );
-    //     }
-    //     List<EventSearchData> suggestions = query.isEmpty ? [] : eventProvider.eventSearchData.where((event) {
-    //       final descLower = event.description.toLowerCase();
-    //       final queryLower = query.toLowerCase();
-    //       return descLower.contains(queryLower);
-    //     }).toList();
-    //     return ListView.builder(
-    //       itemBuilder: (BuildContext context, int i) {
-    //         final suggestion = suggestions[i];
-    //         return ListTile(
-    //           dense: true,
-    //           onTap: () {
-    //             Navigator.push(context,
-    //               MaterialPageRoute(builder: (context) => DetailEventScreen(
-    //                 title: suggestion.description,
-    //                 date: suggestion.created,
-    //                 imageUrl: suggestion.media[0].path,
-    //                 content: suggestion.summary,
-    //               )),
-    //             );
-    //           },
-    //           visualDensity: VisualDensity(
-    //             vertical: 4.0,
-    //             horizontal: 0.0
-    //           ),
-    //           leading: ClipOval(
-    //             child: Image.network(
-    //               "${AppConstants.BASE_URL_FEED_IMG}${suggestion.media[0].path}",
-    //               fit: BoxFit.cover,
-    //               width: 50.0,
-    //               height: 50.0,
-    //             )
-    //           ),
-    //           title: Text(suggestion.description,
-    //             style: poppinsRegular.copyWith(
-    //               fontSize: 13.0,
-    //               color: ColorResources.BLACK
-    //             ),
-    //           ),
-    //           subtitle: Text(suggestion.location,
-    //             style: poppinsRegular.copyWith(
-    //               fontSize: 12.0,
-    //               color: ColorResources.BLACK
-    //             ),
-    //           ),
-    //         );
-    //       },
-    //     itemCount: suggestions.length,
-    //   ); 
-    // });
   }
   
 }
