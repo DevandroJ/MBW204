@@ -231,7 +231,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                     )
                                   ),
                                 ),
-                                errorWidget: (BuildContext context, String url, dynamic error) => Container(
+                                errorWidget: (BuildContext context, String url, dynamic error)=> Container(
                                   width: 60.0,
                                   height: 60.0,
                                   decoration: BoxDecoration(
