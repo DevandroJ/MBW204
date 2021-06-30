@@ -305,48 +305,79 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 ]
               ),
 
-              SizedBox(height: 10.0),
-              profileListAccount(context, getTranslated("REFERRAL_CODE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserCodeReferral
-              ),
-              SizedBox(height: 10.0),
-              profileListAccount(context, getTranslated("CHAPTER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserChapter
-              ),
-              SizedBox(height: 10.0),
-              profileListAccount(context, getTranslated("SUB_MODEL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserSubModel
-              ),
-              SizedBox(height: 10.0),
-              profileListAccount(context, getTranslated("BODY_STYLE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserBodyStyle
-              ),
-              SizedBox(height: 10.0),
-              profileListAccount(context, "No KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserNoKtp
-              ),
-              SizedBox(height: 10.0),
-              profileListAccount(context, getTranslated("COMPANY_NAME", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserCompany
-              ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
+                Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    profileListAccount(context, getTranslated("REFERRAL_CODE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserCodeReferral
+                    ),
+                  ],
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+                Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    profileListAccount(context, getTranslated("CHAPTER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserChapter
+                    ),
+                  ],  
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+                Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    profileListAccount(context, getTranslated("SUB_MODEL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserSubModel
+                    ),
+                  ],
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+                Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    profileListAccount(context, getTranslated("BODY_STYLE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserBodyStyle
+                    ),
+                  ],
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                Column(
+                  children: [
+                  SizedBox(height: 10.0),
+                    profileListAccount(context, "No KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserNoKtp
+                    ),  
+                  ],
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    profileListAccount(context, getTranslated("COMPANY_NAME", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserCompany
+                    ),
+                  ],
+                ),
+             
               SizedBox(height: 10.0),
               profileListAccount(context, getTranslated("EMAIL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
               ? "..."
@@ -354,13 +385,18 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ? "..."
               : Provider.of<ProfileProvider>(context, listen: false).getUserEmail
               ),
-              SizedBox(height: 10.0),
-              profileListAccount(context, getTranslated("MEMBER_NO", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-              ? "..."
-              : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber
-              ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+                Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    profileListAccount(context, getTranslated("MEMBER_NO", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber
+                    ),
+                  ],
+                ),
               SizedBox(height: 10.0),
               profileListAccount(context, getTranslated("ADDRESS", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
               ? "..." 
@@ -524,46 +560,89 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 margin: EdgeInsets.only(top: 20.0),
                 child: Stack(
                   children: [
+                    
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
+                      Image.asset(Images.card),
 
-                    Image.asset(Images.card),
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead") 
+                      Image.asset(Images.card_partnership), 
+                    
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives") 
+                      Positioned(
+                        top: 125.0,
+                        left: 30.0,
+                        child: CachedNetworkImage(
+                          imageUrl: "${AppConstants.BASE_URL_IMG}${Provider.of<ProfileProvider>(context, listen: false).getUserProfilePic}",
+                          imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                            return CircleAvatar(
+                              radius: 30.0,
+                              backgroundColor: ColorResources.WHITE,
+                              backgroundImage: imageProvider,
+                            );
+                          },
+                          placeholder: (BuildContext context, String url) {
+                            return Container(
+                              margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
+                              alignment: Alignment.center,
+                              child: SizedBox(
+                                width: 18.0,
+                                height: 18.0,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          },
+                          errorWidget: (BuildContext context, String url, dynamic error) {
+                            return CircleAvatar(
+                              radius: 30.0,
+                              backgroundColor: ColorResources.WHITE,
+                              backgroundImage: AssetImage('assets/images/profile-drawer.png'),
+                            );
+                          },
+                        )
+                      ),  
+                      
+
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                      Positioned(
+                        top: 20.0,
+                        left: 30.0,
+                        child: Text("PARTNERSHIP",
+                          style: poppinsRegular.copyWith(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: ColorResources.YELLOW_PRIMARY
+                          ),
+                        ),
+                      ),
+
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                      Positioned(
+                        top: 20.0,
+                        right: 20.0,
+                        child: Image.asset(
+                          Images.logo_app,
+                          width: 40.0,
+                          height: 40.0,  
+                        )
+                      ),
+
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                      Positioned(
+                        top: 50.0,
+                        left: 30.0,
+                        child: Text("MERCEDES BENZ W204 CLUB INDONESIA",
+                          style: poppinsRegular.copyWith(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: ColorResources.WHITE
+                          ),
+                        ),
+                      ),
 
                     Positioned(
-                      top: 125.0,
-                      left: 30.0,
-                      child: CachedNetworkImage(
-                        imageUrl: "${AppConstants.BASE_URL_IMG}${Provider.of<ProfileProvider>(context, listen: false).getUserProfilePic}",
-                        imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-                          return CircleAvatar(
-                            radius: 30.0,
-                            backgroundColor: ColorResources.WHITE,
-                            backgroundImage: imageProvider,
-                          );
-                        },
-                        placeholder: (BuildContext context, String url) {
-                          return Container(
-                            margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
-                            alignment: Alignment.center,
-                            child: SizedBox(
-                              width: 18.0,
-                              height: 18.0,
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        },
-                        errorWidget: (BuildContext context, String url, dynamic error) {
-                          return CircleAvatar(
-                            radius: 30.0,
-                            backgroundColor: ColorResources.WHITE,
-                            backgroundImage: AssetImage('assets/images/profile-drawer.png'),
-                          );
-                        },
-                      )
-                    ),
-
-                    Positioned(
-                      top: 130.0,
-                      left: 105.0,
-                      child: Consumer<ProfileProvider>(
+                      top: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 90.0 : 130.0,
+                      left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 32.0 : 105.0,
+                      child:  Consumer<ProfileProvider>(
                         builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
                           return Text(profileProvider.profileStatus == ProfileStatus.loading  
                           ? "..." 
@@ -571,7 +650,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           ? "..." 
                           : profileProvider.getUserFullname,
                             style: poppinsRegular.copyWith(
-                              color: ColorResources.WHITE,
+                              color: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? ColorResources.YELLOW_PRIMARY : ColorResources.WHITE,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0
                             ),
@@ -581,8 +660,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     ),
 
                     Positioned(
-                      top: 155.0,
-                      left: 105.0,
+                      top: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 110.0 : 150.0,
+                      left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 32.0 : 105.0,
                       child: Consumer<ProfileProvider>(
                         builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
                           return Text(profileProvider.profileStatus == ProfileStatus.loading  
@@ -591,7 +670,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           ? "..." 
                           : "${profileProvider.getUserIdNumber}",
                             style: poppinsRegular.copyWith(
-                              color: ColorResources.BTN_PRIMARY_SECOND,
+                              color: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? ColorResources.YELLOW_PRIMARY : ColorResources.BTN_PRIMARY_SECOND,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0
                             ),
@@ -600,11 +679,28 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       )
                     ),
 
+                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                      Positioned(
+                        top: 140.0,
+                        left: 30.0,
+                        child: Container(
+                          height: 20.0,
+                          child: Text("Gold",
+                            style: poppinsRegular.copyWith(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                              color: ColorResources.YELLOW_PRIMARY
+                            ),
+                          )
+                        )
+                      ),                      
+
                     Positioned(
                       bottom: 10.0,
-                      right: 10.0,
+                      left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 15.0 : 0.0,
+                      right: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? null : 10.0,
                       child: Container(
-                        height: 20.0,
+                        height: 18.0,
                         child: Image.asset(Images.logo_cx)
                       )
                     ),
@@ -619,7 +715,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         child: Consumer<ProfileProvider>(
                           builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
                             return profileProvider.profileStatus == ProfileStatus.loading 
-                            ? Text("...") 
+                            ? Container()
                             : profileProvider.profileStatus == ProfileStatus.error 
                             ? Text("...")
                             : QrImage(

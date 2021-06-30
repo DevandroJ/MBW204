@@ -276,11 +276,12 @@ class HomePage extends StatelessWidget {
                               ),
                               margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
 
                                   Container(
-                                    margin: EdgeInsets.only(top: 5.0, right: 5.0),
+                                    alignment: Alignment.centerRight,
+                                    margin: EdgeInsets.only(top: 10.0, right: 10.0),
                                     child: InkWell(
                                       onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MemberNearScreen(whereFrom: "home"))),
                                       child: Text(getTranslated("ALL_MEMBER", context),
@@ -315,17 +316,19 @@ class HomePage extends StatelessWidget {
                                           physics: AlwaysScrollableScrollPhysics(),
                                           scrollDirection: Axis.horizontal,
                                           shrinkWrap: true,
-                                          itemCount: 6,
+                                          itemCount: nearMemberProvider.nearMemberData.length,
                                           itemBuilder: (BuildContext context, int i) {
                                             return Container(
                                               margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
                                               child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
                                                   ClipRRect(
                                                     borderRadius: BorderRadius.circular(50.0),
                                                     child: Container(
                                                       child: CachedNetworkImage(
-                                                        imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                                                        imageUrl: "${AppConstants.BASE_URL_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
                                                         imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
                                                           width: 60.0,
                                                           height: 60.0,
@@ -345,14 +348,23 @@ class HomePage extends StatelessWidget {
                                                             )
                                                           ),
                                                         ),
-                                                        errorWidget: (context, url, error) => Container(),
+                                                        errorWidget: (BuildContext context, String url, dynamic error) => Container(
+                                                          width: 60.0,
+                                                          height: 60.0,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: AssetImage('assets/images/profile-drawer.png'),
+                                                              fit: BoxFit.cover
+                                                            )
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                   Container(
-                                                    width: 65.0,
-                                                    margin: EdgeInsets.only(top: 3.0),
-                                                    child: Text("Agam",
+                                                    width: 70.0,
+                                                    margin: EdgeInsets.only(top: 4.0),
+                                                    child: Text(nearMemberProvider.nearMemberData[i].fullname.toString(),
                                                     textAlign: TextAlign.center,
                                                       softWrap: true,
                                                       overflow: TextOverflow.ellipsis,
@@ -517,7 +529,8 @@ class HomePage extends StatelessWidget {
                                           width: 284.0,
                                           padding: EdgeInsets.only(left: 12.0, right: 12.0),
                                           decoration: BoxDecoration(
-                                            color: ColorResources.BLACK
+                                            color: ColorResources.BLACK,
+                                            borderRadius: BorderRadius.circular(10.0)
                                           ),
                                           child: Image.asset(Images.logo,
                                             width: 70.0,

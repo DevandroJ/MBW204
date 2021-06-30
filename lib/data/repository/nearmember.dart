@@ -3,11 +3,11 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/data/models/nearmember.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NearMemberRepo {
   final SharedPreferences sharedPreferences;
@@ -28,7 +28,6 @@ class NearMemberRepo {
     } catch(e) {
       print(e);
     }
-    return [NearMemberData()];
   }
 
 }

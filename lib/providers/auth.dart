@@ -221,44 +221,44 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         }
       );   
       UserModel user = UserModel.fromJson(json.decode(res.data));
-      InquiryRegisterModel inquiryRegisterModel = await verify(context, user.body.token, user);
-      if(inquiryRegisterModel?.code == 0) {
-        prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
-        Future.delayed(Duration(seconds: 1), () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
-            accountName: inquiryRegisterModel.body.data.accountName,
-            accountNumber: inquiryRegisterModel.body.accountNumber2,
-            transactionId: inquiryRegisterModel.body.transactionId,
-            productId: inquiryRegisterModel.body.productId,
-            productPrice: inquiryRegisterModel.body.productPrice,
-          )));
-        });
-      } else {
-        if(user.body.user.status == "enabled") {
-          showAnimatedDialog(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return Center(
-                child: Container(
-                  color: ColorResources.WHITE,
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.check,
-                    size: 18.0,
-                    color: ColorResources.GREEN,
-                  ),
-                ),
-              );
-            },
-            animationType: DialogTransitionType.scale,
-            curve: Curves.fastOutSlowIn,
-            duration: Duration(seconds: 2),
-          );
-        }
+      // InquiryRegisterModel inquiryRegisterModel = await verify(context, user.body.token, user);
+      // if(inquiryRegisterModel?.code == 0) {
+      //   prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
+      //   Future.delayed(Duration(seconds: 1), () {
+      //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
+      //       accountName: inquiryRegisterModel.body.data.accountName,
+      //       accountNumber: inquiryRegisterModel.body.accountNumber2,
+      //       transactionId: inquiryRegisterModel.body.transactionId,
+      //       productId: inquiryRegisterModel.body.productId,
+      //       productPrice: inquiryRegisterModel.body.productPrice,
+      //     )));
+      //   });
+      // } else {
+      //   if(user.body.user.status == "enabled") {
+      //     showAnimatedDialog(
+      //       context: context,
+      //       barrierDismissible: true,
+      //       builder: (BuildContext context) {
+      //         return Center(
+      //           child: Container(
+      //             color: ColorResources.WHITE,
+      //             padding: EdgeInsets.all(8.0),
+      //             child: Icon(
+      //               Icons.check,
+      //               size: 18.0,
+      //               color: ColorResources.GREEN,
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //       animationType: DialogTransitionType.scale,
+      //       curve: Curves.fastOutSlowIn,
+      //       duration: Duration(seconds: 2),
+      //     );
+      //   }
       writeData(user);
       Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
-    }
+    // }
       setStateLoginStatus(LoginStatus.loaded);
     } on DioError catch(e) {
       print(e?.response?.statusCode);
@@ -330,26 +330,27 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         "user_type": "generic"
       };
     } 
+    
     try {
       setStateRegisterStatus(RegisterStatus.loading);
       Response res = await dio.post("${AppConstants.BASE_URL}/user-service/$userType/register",
         data: data
       );
       UserModel user = UserModel.fromJson(json.decode(res.data));
-      InquiryRegisterModel inquiryRegisterModel = await verify(context, json.decode(res.data)['body']['token'], user);
-      if(inquiryRegisterModel?.code == 0) {
-        prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
-        Future.delayed(Duration(seconds: 1), () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
-            accountName: inquiryRegisterModel.body.data.accountName,
-            accountNumber: inquiryRegisterModel.body.accountNumber2,
-            transactionId: inquiryRegisterModel.body.transactionId,
-            productId: inquiryRegisterModel.body.productId,
-            productPrice: inquiryRegisterModel.body.productPrice,
-          )));
-        });
-      } else {
-        if(user.body.user.status == "enabled") {
+      // InquiryRegisterModel inquiryRegisterModel = await verify(context, json.decode(res.data)['body']['token'], user);
+      // if(inquiryRegisterModel?.code == 0) {
+      //   prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
+      //   Future.delayed(Duration(seconds: 1), () {
+      //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
+      //       accountName: inquiryRegisterModel.body.data.accountName,
+      //       accountNumber: inquiryRegisterModel.body.accountNumber2,
+      //       transactionId: inquiryRegisterModel.body.transactionId,
+      //       productId: inquiryRegisterModel.body.productId,
+      //       productPrice: inquiryRegisterModel.body.productPrice,
+      //     )));
+      //   });
+      // } else {
+      //   if(user.body.user.status == "enabled") {
           showAnimatedDialog(
             context: context,
             barrierDismissible: true,
@@ -372,9 +373,8 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
           );
           writeData(user);
           Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
-        }
-      }
-      writeData(user);
+        // }
+      // }
       setStateRegisterStatus(RegisterStatus.loaded);
     } on DioError catch(e) {
       if(e?.type == DioErrorType.CONNECT_TIMEOUT) {

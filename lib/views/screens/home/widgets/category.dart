@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:mbw204_club_ina/views/screens/news/list.dart';
-// import 'package:mbw204_club_ina/views/screens/info/info.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
 import 'package:mbw204_club_ina/views/screens/event/event.dart';
 import 'package:mbw204_club_ina/views/screens/feed/feed_index.dart';

@@ -4,11 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -201,7 +201,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                     childAspectRatio: 1 / 1,
                   ), 
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: 8,
+                  itemCount: nearMemberProvider.nearMemberData.length,
                   itemBuilder: (BuildContext context, int i) {
                     return Container(
                       margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
@@ -211,7 +211,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                             borderRadius: BorderRadius.circular(50.0),
                             child: Container(
                               child: CachedNetworkImage(
-                                imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
+                                imageUrl: "${nearMemberProvider.nearMemberData[i].avatarUrl}",
                                 imageBuilder: (context, imageProvider) => Container(
                                   width: 60.0,
                                   height: 60.0,
@@ -221,9 +221,8 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                       fit: BoxFit.cover
                                     )
                                   ),
-                              
                                 ),
-                                placeholder: (context, url) => Center(
+                                placeholder: (BuildContext context, String url) => Center(
                                   child: SizedBox(
                                     width: 18.0,
                                     height: 18.0,
@@ -232,14 +231,23 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                     )
                                   ),
                                 ),
-                                errorWidget: (context, url, error) => Container(),
+                                errorWidget: (BuildContext context, String url, dynamic error) => Container(
+                                  width: 60.0,
+                                  height: 60.0,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage('assets/images/profile-drawer.png'),
+                                      fit: BoxFit.cover
+                                    )
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                           Container(
                             width: 65.0,
                             margin: EdgeInsets.only(top: 3.0),
-                            child: Text("Agam",
+                            child: Text(nearMemberProvider.nearMemberData[i].fullname,
                             textAlign: TextAlign.center,
                               softWrap: true,
                               overflow: TextOverflow.ellipsis,

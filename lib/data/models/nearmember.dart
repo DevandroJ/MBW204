@@ -40,14 +40,14 @@ class NearMemberData {
   String userId;
 
   factory NearMemberData.fromJson(Map<String, dynamic> json) => NearMemberData(
-    distance: json["distance"] == null ? null : json["distance"],
-    address: json["address"] == null ? null : json["address"],
-    avatarUrl: json["avatar_url"] == null ? null : json["avatar_url"],
-    fullname: json["fullname"] == null ? null : json["fullname"],
-    lastseenDay: json["lastseen_day"] == null ? null : json["lastseen_day"],
-    lastseenHour: json["lastseen_hour"] == null ? null : json["lastseen_hour"],
-    lastseenMinute: json["lastseen_minute"] == null ? null : json["lastseen_minute"],
-    phoneNumber: json["phone_number"] == null ? null : json["phone_number"],
-    userId: json["user_id"] == null ? null : json["user_id"],
+    distance: json["distance"],
+    address: json["address"],
+    avatarUrl: json["avatar_url"],
+    fullname: json["fullname"],
+    lastseenDay: json["lastseen_day"],
+    lastseenHour: json["lastseen_hour"],
+    lastseenMinute: json["lastseen_minute"],
+    phoneNumber: json["phone_number"],
+    userId: json["user_id"],
   );
 }

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/data/models/nearmember.dart';
 import 'package:mbw204_club_ina/data/repository/nearmember.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 enum NearMemberStatus { loading, loaded, empty, error }
 
@@ -25,10 +25,10 @@ class NearMemberProvider with ChangeNotifier {
   LatLng latLng = LatLng(-6.1753871, 106.8249641);
 
   List<Marker> _markers = [];
-  List<Marker> get markers => _markers;
+  List<Marker> get markers => [..._markers];
 
   List<NearMemberData> _nearMemberData = [];
-  List<NearMemberData> get nearMemberData => _nearMemberData;
+  List<NearMemberData> get nearMemberData => [..._nearMemberData];
 
   NearMemberStatus _nearMemberStatus = NearMemberStatus.loading;
   NearMemberStatus get nearMemberStatus => _nearMemberStatus;
@@ -38,10 +38,10 @@ class NearMemberProvider with ChangeNotifier {
     Future.delayed(Duration.zero, () => notifyListeners());
   }
   
-
   void getNearMember(BuildContext context, double lat, double long) async {
     setStateNearMemberStatus(NearMemberStatus.loading);
-    try {
+    try { 
+      _nearMemberData = [];
       List<NearMemberData> nearMemberData = await nearMemberRepo.getNearMember(context, lat, long);
       if(nearMemberData != null) {
         _nearMemberData.addAll(nearMemberData);
@@ -81,6 +81,6 @@ class NearMemberProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String get nearMemberAddress => _nearMemberAddress ?? "Lokas belum dipilih";
+  String get nearMemberAddress => _nearMemberAddress ?? "Lokasi belum dipilih";
 
 }

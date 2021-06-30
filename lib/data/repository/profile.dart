@@ -73,6 +73,8 @@ class ProfileRepo {
 
   String get getUserId => sharedPreferences.getString("userId") ?? null;
 
+  String get getUserRole => sharedPreferences.getString("role") ?? null;
+
   String get getUserFullname => profileData?.fullname ?? "-";
 
   String get getUserChapter => profileData?.chapter ?? "-";

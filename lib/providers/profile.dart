@@ -103,38 +103,40 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
-  String get getUserProfilePic => profileRepo.getUserProfilePic ?? "-";
+  String get getUserProfilePic => profileRepo?.getUserProfilePic ?? "-";
 
-  String get getSingleUserProfilePic => profileRepo.getSingleUserProfilePic ?? "-";
+  String get getSingleUserProfilePic => profileRepo?.getSingleUserProfilePic ?? "-";
   
-  String get getUserId => profileRepo.getUserId ?? "-";
+  String get getUserId => profileRepo?.getUserId ?? "-";
+
+  String get getUserRole => profileRepo?.getUserRole ?? "-";
   
-  String get getUserName => profileRepo.getUserName ?? "-";
+  String get getUserName => profileRepo?.getUserName ?? "-";
 
-  String get getUserChapter => profileRepo.getUserChapter ?? "-";
+  String get getUserChapter => profileRepo?.getUserChapter ?? "-";
 
-  String get getUserFullname => profileRepo.getUserFullname ?? "-";
+  String get getUserFullname => profileRepo?.getUserFullname ?? "-";
 
-  String get getUserSubModel => profileRepo.getUserSubModel ?? "-";
+  String get getUserSubModel => profileRepo?.getUserSubModel ?? "-";
 
-  String get getUserBodyStyle => profileRepo.getUserBodyStyle ?? "-";
+  String get getUserBodyStyle => profileRepo?.getUserBodyStyle ?? "-";
 
-  String get getSingleUserFullname => profileRepo.getSingleUserFullname ?? "-";
+  String get getSingleUserFullname => profileRepo?.getSingleUserFullname ?? "-";
   
-  String get getUserIdNumber => profileRepo.getUserIdMember ?? "-";
+  String get getUserIdNumber => profileRepo?.getUserIdMember ?? "-";
 
-  String get getUserCodeReferral => profileRepo.getUserCodeReferral ?? "-";
+  String get getUserCodeReferral => profileRepo?.getUserCodeReferral ?? "-";
 
-  String get getUserNoKtp => profileRepo.getUserNoKtp ?? "-";
+  String get getUserNoKtp => profileRepo?.getUserNoKtp ?? "-";
 
-  String get getUserCompany => profileRepo.getUserCompany ?? "-";
+  String get getUserCompany => profileRepo?.getUserCompany ?? "-";
   
-  String get getUserEmail => profileRepo.getUserEmail ?? "-";
+  String get getUserEmail => profileRepo?.getUserEmail ?? "-";
  
-  String get getUserAddress => profileRepo.getUserAddress ?? "-";
+  String get getUserAddress => profileRepo?.getUserAddress ?? "-";
   
-  String get getUserPhoneNumber => profileRepo.getUserPhoneNumber ?? "-";
+  String get getUserPhoneNumber => profileRepo?.getUserPhoneNumber ?? "-";
   
-  String get getSingleUserPhoneNumber => profileRepo.getSingleUserPhoneNumber ?? "-"; 
+  String get getSingleUserPhoneNumber => profileRepo?.getSingleUserPhoneNumber ?? "-"; 
   
 }
