@@ -40,21 +40,11 @@ class LocationProvider extends ChangeNotifier {
   Future getCurrentPosition(BuildContext context) async {
     try {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
-      sharedPreferences.setDouble("latCreateCheckIn", position.latitude);
-      sharedPreferences.setDouble("longCreateCheckIn", position.longitude);
+      sharedPreferences.setDouble("lat", position.latitude);
+      sharedPreferences.setDouble("long", position.longitude);
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
       Placemark place = placemarks[0];
-      Map<String, dynamic> basket = Provider.of(context, listen: false);
-      basket.addAll({
-        "geo-position": {
-          'address': getCurrentNameAddress,
-          'addressView': getCurrentNameAddress,
-          'lat': position.latitude,
-          'long': position.longitude,
-        }
-      });
       sharedPreferences.setString("currentNameAddress", "${place.thoroughfare} ${place.subThoroughfare} \n${place.locality}, ${place.postalCode}");
-      sharedPreferences.setString("currentNameAddressCreateCheckIn", "${place.thoroughfare} ${place.subThoroughfare} \n${place.locality}, ${place.postalCode}");
       Future.delayed(Duration.zero, () => notifyListeners());
     } catch(e) {
       print(e);
@@ -72,15 +62,6 @@ class LocationProvider extends ChangeNotifier {
       sharedPreferences.setDouble("long", long);
       sharedPreferences.setString("currentNameAddress", currentNameAddress);
       await insertUpdateLatLng(context);
-      Map<String, dynamic> basket = Provider.of(context, listen: false);
-        basket.addAll({
-          "geo-position": {
-            'address': getCurrentNameAddress,
-            'addressView': getCurrentNameAddress,
-            'lat': lat,
-            'long': long,
-          }
-        });
       Future.delayed(Duration.zero, () => notifyListeners());
     } catch(e) {
       print(e);

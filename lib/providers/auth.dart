@@ -138,10 +138,10 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
 
   @override 
   Future<InquiryRegisterModel> verify(BuildContext context, String token, UserModel user) async {
-    var productId = "";
+    var productId;
     if(user.body.user.role == "lead") {
       productId = "48dc000f-07fb-4b7a-940d-1029ec604bf8"; // 200 K
-    } else if(user.body.user.role == "user" || user.body.user.role == "relatives") {
+    } else {
       productId = "8b02a294-5245-4abd-973e-990a6c2095c0"; // 100 K
     }
     try {
@@ -158,7 +158,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
-      if(e?.response?.data['code'] == 404 && user.body.user.status == "pending") {
+      if(e?.response?.data['code'] == 404 && user.body.user.status == "disabled") {
         showAnimatedDialog(
           context: context,
           barrierDismissible: true,
@@ -221,44 +221,44 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         }
       );   
       UserModel user = UserModel.fromJson(json.decode(res.data));
-      // InquiryRegisterModel inquiryRegisterModel = await verify(context, user.body.token, user);
-      // if(inquiryRegisterModel?.code == 0) {
-      //   prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
-      //   Future.delayed(Duration(seconds: 1), () {
-      //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
-      //       accountName: inquiryRegisterModel.body.data.accountName,
-      //       accountNumber: inquiryRegisterModel.body.accountNumber2,
-      //       transactionId: inquiryRegisterModel.body.transactionId,
-      //       productId: inquiryRegisterModel.body.productId,
-      //       productPrice: inquiryRegisterModel.body.productPrice,
-      //     )));
-      //   });
-      // } else {
-      //   if(user.body.user.status == "enabled") {
-      //     showAnimatedDialog(
-      //       context: context,
-      //       barrierDismissible: true,
-      //       builder: (BuildContext context) {
-      //         return Center(
-      //           child: Container(
-      //             color: ColorResources.WHITE,
-      //             padding: EdgeInsets.all(8.0),
-      //             child: Icon(
-      //               Icons.check,
-      //               size: 18.0,
-      //               color: ColorResources.GREEN,
-      //             ),
-      //           ),
-      //         );
-      //       },
-      //       animationType: DialogTransitionType.scale,
-      //       curve: Curves.fastOutSlowIn,
-      //       duration: Duration(seconds: 2),
-      //     );
-      //   }
+      InquiryRegisterModel inquiryRegisterModel = await verify(context, user.body.token, user);
+      if(inquiryRegisterModel?.code == 0) {
+        prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
+            accountName: inquiryRegisterModel.body.data.accountName,
+            accountNumber: inquiryRegisterModel.body.accountNumber2,
+            transactionId: inquiryRegisterModel.body.transactionId,
+            productId: inquiryRegisterModel.body.productId,
+            productPrice: inquiryRegisterModel.body.productPrice,
+          )));
+        });
+      } else {
+        if(user.body.user.status == "enabled") {
+          showAnimatedDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return Center(
+                child: Container(
+                  color: ColorResources.WHITE,
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.check,
+                    size: 18.0,
+                    color: ColorResources.GREEN,
+                  ),
+                ),
+              );
+            },
+            animationType: DialogTransitionType.scale,
+            curve: Curves.fastOutSlowIn,
+            duration: Duration(seconds: 2),
+          );
+        }
       writeData(user);
       Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
-    // }
+    }
       setStateLoginStatus(LoginStatus.loaded);
     } on DioError catch(e) {
       print(e?.response?.statusCode);
@@ -337,20 +337,20 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         data: data
       );
       UserModel user = UserModel.fromJson(json.decode(res.data));
-      // InquiryRegisterModel inquiryRegisterModel = await verify(context, json.decode(res.data)['body']['token'], user);
-      // if(inquiryRegisterModel?.code == 0) {
-      //   prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
-      //   Future.delayed(Duration(seconds: 1), () {
-      //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
-      //       accountName: inquiryRegisterModel.body.data.accountName,
-      //       accountNumber: inquiryRegisterModel.body.accountNumber2,
-      //       transactionId: inquiryRegisterModel.body.transactionId,
-      //       productId: inquiryRegisterModel.body.productId,
-      //       productPrice: inquiryRegisterModel.body.productPrice,
-      //     )));
-      //   });
-      // } else {
-      //   if(user.body.user.status == "enabled") {
+      InquiryRegisterModel inquiryRegisterModel = await verify(context, json.decode(res.data)['body']['token'], user);
+      if(inquiryRegisterModel?.code == 0) {
+        prefs.setString("pay_register_token", json.decode(res.data)['body']['token']);
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
+            accountName: inquiryRegisterModel.body.data.accountName,
+            accountNumber: inquiryRegisterModel.body.accountNumber2,
+            transactionId: inquiryRegisterModel.body.transactionId,
+            productId: inquiryRegisterModel.body.productId,
+            productPrice: inquiryRegisterModel.body.productPrice,
+          )));
+        });
+      } else {
+        if(user.body.user.status == "enabled") {
           showAnimatedDialog(
             context: context,
             barrierDismissible: true,
@@ -373,10 +373,12 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
           );
           writeData(user);
           Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
-        // }
-      // }
+        }
+      }
       setStateRegisterStatus(RegisterStatus.loaded);
     } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
       if(e?.type == DioErrorType.CONNECT_TIMEOUT) {
         setStateRegisterStatus(RegisterStatus.error);
         throw CustomException("CONNECTION_TIMEOUT");

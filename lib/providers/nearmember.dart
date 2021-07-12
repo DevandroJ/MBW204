@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/data/models/nearmember.dart';
 import 'package:mbw204_club_ina/data/repository/nearmember.dart';
 
@@ -38,21 +40,19 @@ class NearMemberProvider with ChangeNotifier {
     Future.delayed(Duration.zero, () => notifyListeners());
   }
   
-  void getNearMember(BuildContext context, double lat, double long) async {
-    setStateNearMemberStatus(NearMemberStatus.loading);
+  Future getNearMember(BuildContext context) async {
     try { 
-      _nearMemberData = [];
-      List<NearMemberData> nearMemberData = await nearMemberRepo.getNearMember(context, lat, long);
-      if(nearMemberData != null) {
+      List<NearMemberData> nearMemberData = await nearMemberRepo.getNearMember(context, Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong);
+      if(_nearMemberData.length != nearMemberData.length) {
+        _nearMemberData = [];
         _nearMemberData.addAll(nearMemberData);
         setStateNearMemberStatus(NearMemberStatus.loaded);
         if(_nearMemberData.isEmpty) {
           setStateNearMemberStatus(NearMemberStatus.empty);
         }
-      } else {
-        setStateNearMemberStatus(NearMemberStatus.empty);
       }
     } catch(e) {
+      setStateNearMemberStatus(NearMemberStatus.error);
       print(e);
     }
   }

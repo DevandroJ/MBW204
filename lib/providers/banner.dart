@@ -18,7 +18,7 @@ class BannerProvider extends ChangeNotifier {
   List<BannerData> get bannerList => [..._bannerList];
   List<Map<String, dynamic>> get bannerListMap => [..._bannerListMap];
   
-  int _currentIndex;
+  int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
   void setStateBannerStatus(BannerStatus bannerStatus) {
@@ -26,23 +26,21 @@ class BannerProvider extends ChangeNotifier {
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
-  void getBanner(BuildContext context) async {
+  Future getBanner(BuildContext context) async {
     try {
       List<BannerData> bannerList = await bannerRepo.getBannerList(context);
-      _bannerListMap.clear();
-      for (int i = 0; i < bannerList.length; i++) {
-        for (int z = 0; z < bannerList[i].media.length; z++) {
-          _bannerListMap.add({
-            "id": z,
-            "path": bannerList[i].media[z].path
-          });
-          setStateBannerStatus(BannerStatus.loaded);
-        }
-      } 
-      if(bannerListMap.isEmpty) {
-        setStateBannerStatus(BannerStatus.empty);
+      if(_bannerListMap.length != bannerList.length) {
+        _bannerListMap = [];
+        for (int i = 0; i < bannerList.length; i++) {
+          for (int z = 0; z < bannerList[i].media.length; z++) {
+            _bannerListMap.add({
+              "id": z,
+              "path": bannerList[i].media[z].path
+            });
+          }
+        } 
       }
-      _currentIndex = 0;
+      setStateBannerStatus(BannerStatus.loaded);
     } on ServerErrorException catch(_) {
       setStateBannerStatus(BannerStatus.error);
     } catch(e) {

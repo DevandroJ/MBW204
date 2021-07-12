@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/banner.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -78,6 +80,7 @@ class BannersView extends StatelessWidget {
                   enlargeCenterPage: true,
                   aspectRatio: 16 / 9,
                   viewportFraction: 1.0,
+                  initialPage: bannerProvider.currentIndex,
                   onPageChanged: (int index, CarouselPageChangedReason reason) {
                     bannerProvider.setCurrentIndex(index);
                   },
@@ -92,9 +95,15 @@ class BannersView extends StatelessWidget {
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
-                        child: Image.network("${AppConstants.BASE_URL_IMG}${bannerProvider.bannerListMap[i]["path"]}",
+                        child: CachedNetworkImage(
+                          imageUrl: "${AppConstants.BASE_URL_IMG}${bannerProvider.bannerListMap[i]["path"]}",
                           fit: BoxFit.cover,
-                        ),
+                          placeholder: (BuildContext context, String url) {
+                            return Loader(
+                              color: ColorResources.BTN_PRIMARY_SECOND,
+                            );
+                          },
+                        )
                       ),
                     )
                   );                  
@@ -125,7 +134,7 @@ class BannersView extends StatelessWidget {
     );
   }
 
-  _launchUrl(String url) async {
+  launchUrl(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {

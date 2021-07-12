@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -185,78 +187,167 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                 return Center(
                   child: Container(
                     margin: EdgeInsets.only(top: 60.0),
-                    child: Text("Belum ada anggota",
+                    child: Text(getTranslated("NO_MEMBER_AVAILABLE", context),
                       style: poppinsRegular,
                     )
                   ),
                 );
               }
               return Container(
-                margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+                margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                 width: double.infinity,
                 height: 300.0,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
-                    childAspectRatio: 1 / 1,
+                    childAspectRatio: 1 / 2,
                   ), 
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: nearMemberProvider.nearMemberData.length,
                   itemBuilder: (BuildContext context, int i) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(50.0),
-                            child: Container(
+                    return InkWell(
+                      onTap: () {
+                        Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, nearMemberProvider.nearMemberData[i].userId);
+
+                        showAnimatedDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 180.0,
+                                  child: Consumer<ProfileProvider>(
+                                    builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                                      return Column(
+                                        children: [
+                                          
+                                          SizedBox(height: 20.0),
+
+                                          Container(
+                                            child: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
+                                            ? SizedBox(
+                                                width: 18.0,
+                                                height: 18.0,
+                                                child: CircularProgressIndicator(
+                                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                                                ),
+                                              )
+                                            : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
+                                            ? CircleAvatar(
+                                                backgroundColor: Colors.transparent,
+                                                backgroundImage: NetworkImage("assets/images/profile-drawer.png"),
+                                                radius: 30.0,
+                                              )
+                                            : CachedNetworkImage(
+                                              imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getSingleUserProfilePic}",
+                                              imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) {
+                                                return CircleAvatar(
+                                                  backgroundImage: imageProvider,
+                                                  radius: 30.0,
+                                                );
+                                              },
+                                              errorWidget: (BuildContext context, String url, dynamic error) {
+                                                return CircleAvatar(
+                                                  backgroundColor: ColorResources.WHITE,
+                                                  backgroundImage: AssetImage("assets/images/profile-drawer.png"),
+                                                  radius: 30.0,
+                                                );
+                                              },
+                                              placeholder: (BuildContext context, String text) => Loader(
+                                                color: ColorResources.WHITE,
+                                              )
+                                            ),
+                                          ),
+
+                                          SizedBox(height: 16.0),    
+
+                                          Container(
+                                            width: double.infinity,
+                                            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                            child: Card(
+                                              elevation: 3.0,
+                                              child: Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text("Nama"),
+                                                        Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
+                                                        ? "..." 
+                                                        : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
+                                                        ? "..." 
+                                                        : profileProvider.singleUserData.fullname)
+                                                      ]
+                                                    ),
+                                                  ],
+                                                )
+                                              ),
+                                            ),
+                                          ),                                                 
+
+                                        ],
+                                      );    
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );           
+                          },
+                        );
+
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 5.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
+                        child: Column(
+                          children: [
+                            Container(
                               child: CachedNetworkImage(
-                                imageUrl: "${nearMemberProvider.nearMemberData[i].avatarUrl}",
-                                imageBuilder: (context, imageProvider) => Container(
-                                  width: 60.0,
-                                  height: 60.0,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover
-                                    )
-                                  ),
+                                imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
+                                imageBuilder: (context, imageProvider) => CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundImage: imageProvider, 
                                 ),
-                                placeholder: (BuildContext context, String url) => Center(
-                                  child: SizedBox(
-                                    width: 18.0,
-                                    height: 18.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(ColorResources.YELLOW_PRIMARY),
-                                    )
-                                  ),
+                                placeholder: (BuildContext context, String url) => Loader(
+                                  color: ColorResources.BTN_PRIMARY,
                                 ),
-                                errorWidget: (BuildContext context, String url, dynamic error)=> Container(
-                                  width: 60.0,
-                                  height: 60.0,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/images/profile-drawer.png'),
-                                      fit: BoxFit.cover
-                                    )
-                                  ),
+                                errorWidget: (BuildContext context, String url, dynamic error)=> 
+                                CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundColor: ColorResources.WHITE,
+                                  backgroundImage: AssetImage('assets/images/profile-drawer.png'), 
+                                )
+                              ),
+                            ),
+                            Container(
+                              width: 100.0,
+                              margin: EdgeInsets.only(top: 4.0),
+                              child: Text(nearMemberProvider.nearMemberData[i].fullname,
+                                textAlign: TextAlign.center,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                                style: poppinsRegular.copyWith(
+                                  fontSize: 12.0,
                                 ),
                               ),
                             ),
-                          ),
-                          Container(
-                            width: 65.0,
-                            margin: EdgeInsets.only(top: 3.0),
-                            child: Text(nearMemberProvider.nearMemberData[i].fullname,
-                            textAlign: TextAlign.center,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                              style: poppinsRegular.copyWith(
-                                fontSize: 11.0,
+                            Container(
+                              width: 40.0,
+                              child: Text('+ - ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}',
+                                softWrap: true,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                style: poppinsRegular.copyWith(
+                                  color:Theme.of(context).hintColor,
+                                  fontSize: 11.0
+                                )
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },

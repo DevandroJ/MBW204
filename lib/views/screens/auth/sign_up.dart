@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/data/models/user.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
@@ -425,19 +425,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               dataSource: [
                                                 {
                                                   "display": "Jakarta",
-                                                  "value": "001",
+                                                  "value": "01",
                                                 },
                                                 {
                                                   "display": "Bandung",
-                                                  "value": "002",
+                                                  "value": "02",
                                                 },
                                                 {
                                                   "display": "Tangerang",
-                                                  "value": "003",
+                                                  "value": "03",
                                                 },
                                                 {
                                                   "display": "Surabaya",
-                                                  "value": "004"
+                                                  "value": "04"
                                                 }
                                               ],
                                               textField: 'display',

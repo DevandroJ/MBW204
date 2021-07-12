@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -128,46 +129,22 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       return CachedNetworkImage(
                         imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getUserProfilePic}",
                         imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(50.0),
-                            child: Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover
-                                )
-                              ),
-                            ),
+                          return CircleAvatar(
+                            radius: 50.0,
+                            backgroundColor: ColorResources.WHITE,
+                            backgroundImage: imageProvider
                           );
                         },
                         errorWidget: (BuildContext context, String url, dynamic error) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(50.0),
-                            child: Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/profile-drawer.png'),
-                                  fit: BoxFit.cover
-                                )
-                              ),
-                            ),
+                          return CircleAvatar(
+                            radius: 50.0,
+                            backgroundColor: ColorResources.WHITE,
+                            backgroundImage: AssetImage('assets/images/profile-drawer.png'),
                           );
                         },  
                         placeholder: (BuildContext context, String url) {
-                          return Center(
-                            child: SizedBox(
-                              width: 18.0,
-                              height: 18.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation(ColorResources.BTN_PRIMARY_SECOND),
-                              ),
-                            ),
+                          return Loader(
+                            color: ColorResources.PRIMARY,
                           );
                         },
                       );
@@ -505,7 +482,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       ),
                       SizedBox(width: 10.0),
                       Consumer<PPOBProvider>(
-                        builder: (context, PPOBProvider ppobProvider, Widget child) {
+                        builder: (BuildContext context, PPOBProvider ppobProvider, Widget child) {
                           return Text(ppobProvider.balanceStatus == BalanceStatus.loading 
                             ? "..." 
                             : ppobProvider.balanceStatus == BalanceStatus.error 
