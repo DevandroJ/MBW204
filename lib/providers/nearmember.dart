@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:provider/provider.dart';
@@ -24,10 +25,11 @@ class NearMemberProvider with ChangeNotifier {
   GoogleMapController googleMapController;
 
   String _nearMemberAddress;
-  LatLng latLng = LatLng(-6.1753871, 106.8249641);
+  double lat;
+  double long;
 
-  List<Marker> _markers = [];
-  List<Marker> get markers => [..._markers];
+
+  List<Marker> markers = [];
 
   List<NearMemberData> _nearMemberData = [];
   List<NearMemberData> get nearMemberData => [..._nearMemberData];
@@ -41,10 +43,20 @@ class NearMemberProvider with ChangeNotifier {
   }
   
   Future getNearMember(BuildContext context) async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium);
+    markers.add(
+      Marker(
+        markerId: MarkerId("currentPosition"),
+        position: LatLng(position.latitude, position.latitude),
+        icon: BitmapDescriptor.defaultMarker,
+      )
+    );
+    sharedPreferences.setDouble("lat", position.latitude);
+    sharedPreferences.setDouble("long", position.longitude);
     try { 
       List<NearMemberData> nearMemberData = await nearMemberRepo.getNearMember(context, Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong);
       if(_nearMemberData.length != nearMemberData.length) {
-        _nearMemberData = [];
+        _nearMemberData.clear();
         _nearMemberData.addAll(nearMemberData);
         setStateNearMemberStatus(NearMemberStatus.loaded);
         if(_nearMemberData.isEmpty) {
@@ -69,7 +81,6 @@ class NearMemberProvider with ChangeNotifier {
     Placemark place = placemarks[0]; 
     _nearMemberAddress = "${place.thoroughfare} ${place.subThoroughfare} ${place.locality} ${place.postalCode}";
     sharedPreferences.setString("nearMemberAddress", _nearMemberAddress);
-    latLng = LatLng(position.geometry.location.lat, position.geometry.location.lng);
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -82,5 +93,9 @@ class NearMemberProvider with ChangeNotifier {
   }
 
   String get nearMemberAddress => _nearMemberAddress ?? "Lokasi belum dipilih";
+
+  double get getCurrentLat => lat ?? sharedPreferences.getDouble("lat") ?? 0.0;
+  
+  double get getCurrentLong => long ?? sharedPreferences.getDouble("long") ?? 0.0;
 
 }

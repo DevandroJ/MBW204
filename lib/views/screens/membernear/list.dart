@@ -8,6 +8,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -131,7 +132,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                         gestureRecognizers: Set()..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
                         myLocationEnabled: false,
                         initialCameraPosition: CameraPosition(
-                          target: nearMemberProvider.latLng,
+                          target: LatLng(nearMemberProvider.getCurrentLat, nearMemberProvider.getCurrentLong),
                           zoom: 15.0,
                         ),
                         markers: Set.from(nearMemberProvider.markers),
@@ -193,6 +194,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                   ),
                 );
               }
+            
               return Container(
                 margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                 width: double.infinity,
@@ -205,6 +207,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: nearMemberProvider.nearMemberData.length,
                   itemBuilder: (BuildContext context, int i) {
+                    DateTime minutes = DateTime.now().subtract(Duration(minutes: int.parse(nearMemberProvider.nearMemberData[i].lastseenMinute)));
                     return InkWell(
                       onTap: () {
                         Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, nearMemberProvider.nearMemberData[i].userId);
@@ -340,7 +343,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                             ),
                             Container(
                               width: 40.0,
-                              child: Text('+ - ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}',
+                              child: Text('+ - ${timeago.format(minutes, locale: 'id')}',
                                 softWrap: true,
                                 maxLines: 2,
                                 textAlign: TextAlign.center,

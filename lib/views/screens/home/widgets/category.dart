@@ -8,7 +8,6 @@ import 'package:mbw204_club_ina/views/screens/event/event.dart';
 import 'package:mbw204_club_ina/views/screens/feed/feed_index.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/ppob.dart';
 import 'package:mbw204_club_ina/views/screens/warung/warung_index.dart';
-import 'package:mbw204_club_ina/views/screens/checkin/checkin.dart';
 import 'package:mbw204_club_ina/providers/category.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -65,7 +64,7 @@ class CategoryView extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => MediaScreen())); 
                         break;
                         case 3:
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CheckInScreen())); 
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => CheckInScreen())); 
                         break;
                         case 4:
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => InfoScreen())); 

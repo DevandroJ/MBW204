@@ -56,7 +56,6 @@ class _HomePageState extends State<HomePage> {
       Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
       Provider.of<LocationProvider>(context, listen: false).insertUpdateLatLng(context);
       Provider.of<BannerProvider>(context, listen: false).getBanner(context);
-      // Provider.of<InboxProvider>(context, listen: false).getInboxes(context);
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
       Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
       Provider.of<NewsProvider>(context, listen: false).getNews(context);
