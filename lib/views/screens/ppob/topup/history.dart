@@ -98,9 +98,9 @@ class TopUpHistoryScreen extends StatelessWidget {
                           width: double.infinity,
                           margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 16.0, right: 16.0),
                           child: ElevatedButton(
-                            onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) =>  HistoryTopUpTransaksiListScreen(startDate: startDate, endDate: endDate))), 
+                            onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryTopUpTransaksiListScreen(startDate: startDate, endDate: endDate))), 
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(ColorResources.getPrimaryToWhite(context)),
+                              backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY_SECOND),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),

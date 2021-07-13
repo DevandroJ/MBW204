@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mbw204_club_ina/data/models/inbox.dart';
+
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
 
@@ -16,41 +16,50 @@ class InboxProvider with ChangeNotifier {
   InboxStatus get inboxStatus => _inboxStatus;
 
   List<InboxModelData> _inboxes = [];
-  List<InboxModelData> get inboxes => _inboxes;
+  List<InboxModelData> get inboxes => [..._inboxes];
 
   void setStateInboxStatus(InboxStatus inboxStatus) {
     _inboxStatus = inboxStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
-  Future getInboxes(BuildContext context) async {
+  Future getInboxes(BuildContext context, String type) async {
     try {
+      setStateInboxStatus(InboxStatus.loading);
       Dio dio = await DioManager.shared.getClient(context);
-      Response res = await dio.get("${AppConstants.BASE_URL}/data/inbox");
-      _inboxes.clear();
+      Response res = await dio.get("${AppConstants.BASE_URL}/data/inbox?type=$type");
       InboxModel inboxModel = InboxModel.fromJson(json.decode(res.data));
-      _inboxes.addAll(inboxModel.body);
+      if(_inboxes.length != inboxModel.body.length) {
+        _inboxes.clear();
+        _inboxes.addAll(inboxModel.body);
+        setStateInboxStatus(InboxStatus.loaded);
+      }
       readCount = inboxModel.body.where((el) => el.read == false).length;
       setStateInboxStatus(InboxStatus.loaded);
       if(_inboxes.length == 0) {
         setStateInboxStatus(InboxStatus.empty);
       }
     } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
       setStateInboxStatus(InboxStatus.error);
-      print(e);
     } catch(e) {
-      setStateInboxStatus(InboxStatus.error);
       print(e);
+      setStateInboxStatus(InboxStatus.error);
     }
   }
 
-  Future updateInbox(BuildContext context, String inboxId) async {
+  Future updateInbox(BuildContext context, String inboxId, String type) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       await dio.put("${AppConstants.BASE_URL}/data/inbox/$inboxId", data: {
         "read": true
       });
-      getInboxes(context);
+      getInboxes(context, type);
+      _inboxes.clear();
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
     } catch(e) {
       print(e);
     }

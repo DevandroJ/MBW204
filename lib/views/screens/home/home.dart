@@ -9,6 +9,8 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/ppob.dart';
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage> {
       Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
       Provider.of<LocationProvider>(context, listen: false).insertUpdateLatLng(context);
       Provider.of<BannerProvider>(context, listen: false).getBanner(context);
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context);
+      // Provider.of<InboxProvider>(context, listen: false).getInboxes(context);
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
       Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
       Provider.of<NewsProvider>(context, listen: false).getNews(context);
@@ -238,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                                       end: 14.0
                                     ),
                                     badgeContent: Text("2",
-                                      style: TextStyle(color: Colors.white),
+                                      style: poppinsRegular.copyWith(color: Colors.white),
                                     ),
                                     child: Icon(
                                       Icons.chat,
@@ -292,20 +294,6 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
 
-                                  Container(
-                                    alignment: Alignment.centerRight,
-                                    margin: EdgeInsets.only(top: 10.0, right: 10.0),
-                                    child: InkWell(
-                                      onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => MemberNearScreen(whereFrom: "home"))),
-                                      child: Text(getTranslated("ALL_MEMBER", context),
-                                      textAlign: TextAlign.end,
-                                        style: poppinsRegular.copyWith(
-                                          fontSize: 13.0
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
                                   Consumer<NearMemberProvider>(
                                     builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
                                       if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
@@ -333,161 +321,166 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                       }
+                                    
                                       return Expanded(
-                                        child: ListView.builder(
-                                          physics: AlwaysScrollableScrollPhysics(),
-                                          scrollDirection: Axis.horizontal,
-                                          shrinkWrap: true,
-                                          itemCount: nearMemberProvider.nearMemberData.length,
-                                          itemBuilder: (BuildContext context, int i) {
-                                            return InkWell(
-                                              onTap: () {                                             
-                                                Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, nearMemberProvider.nearMemberData[i].userId);
+                                        child: Container(
+                                          margin: EdgeInsets.only(top: 22.0),
+                                          child: ListView.builder(
+                                            physics: AlwaysScrollableScrollPhysics(),
+                                            scrollDirection: Axis.horizontal,
+                                            shrinkWrap: true,
+                                            itemCount: nearMemberProvider.nearMemberData.length,
+                                            itemBuilder: (BuildContext context, int i) {
+                                              DateTime minutes = DateTime.now().subtract(Duration(minutes: int.parse(nearMemberProvider.nearMemberData[i].lastseenMinute)));
+                                              return InkWell(
+                                                onTap: () {                                             
+                                                  Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, nearMemberProvider.nearMemberData[i].userId);
 
-                                                showAnimatedDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder: (BuildContext context) {
-                                                    return Dialog(
-                                                      child: Padding(
-                                                        padding: EdgeInsets.all(8.0),
-                                                        child: Container(
-                                                          height: 180.0,
-                                                          child: Consumer<ProfileProvider>(
-                                                            builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
-                                                              return Column(
-                                                                children: [
-                                                                  
-                                                                  SizedBox(height: 20.0),
+                                                  showAnimatedDialog(
+                                                    context: context,
+                                                    barrierDismissible: true,
+                                                    builder: (BuildContext context) {
+                                                      return Dialog(
+                                                        child: Padding(
+                                                          padding: EdgeInsets.all(8.0),
+                                                          child: Container(
+                                                            height: 180.0,
+                                                            child: Consumer<ProfileProvider>(
+                                                              builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                                                                return Column(
+                                                                  children: [
+                                                                    
+                                                                    SizedBox(height: 20.0),
 
-                                                                  Container(
-                                                                    child: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                    ? SizedBox(
-                                                                        width: 18.0,
-                                                                        height: 18.0,
-                                                                        child: CircularProgressIndicator(
-                                                                          valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
-                                                                        ),
-                                                                      )
-                                                                    : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                    ? CircleAvatar(
-                                                                        backgroundColor: Colors.transparent,
-                                                                        backgroundImage: NetworkImage("assets/images/profile-drawer.png"),
-                                                                        radius: 30.0,
-                                                                      )
-                                                                    : CachedNetworkImage(
-                                                                      imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getSingleUserProfilePic}",
-                                                                      imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) {
-                                                                        return CircleAvatar(
-                                                                          backgroundImage: imageProvider,
+                                                                    Container(
+                                                                      child: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
+                                                                      ? SizedBox(
+                                                                          width: 18.0,
+                                                                          height: 18.0,
+                                                                          child: CircularProgressIndicator(
+                                                                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                                                                          ),
+                                                                        )
+                                                                      : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
+                                                                      ? CircleAvatar(
+                                                                          backgroundColor: Colors.transparent,
+                                                                          backgroundImage: NetworkImage("assets/images/profile-drawer.png"),
                                                                           radius: 30.0,
-                                                                        );
-                                                                      },
-                                                                      errorWidget: (BuildContext context, String url, dynamic error) {
-                                                                        return CircleAvatar(
-                                                                          backgroundColor: ColorResources.WHITE,
-                                                                          backgroundImage: AssetImage("assets/images/profile-drawer.png"),
-                                                                          radius: 30.0,
-                                                                        );
-                                                                      },
-                                                                      placeholder: (BuildContext context, String text) => Loader(
-                                                                        color: ColorResources.WHITE,
-                                                                      )
-                                                                    ),
-                                                                  ),
-
-                                                                  SizedBox(height: 16.0),    
-
-                                                                  Container(
-                                                                    width: double.infinity,
-                                                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                                                    child: Card(
-                                                                      elevation: 3.0,
-                                                                      child: Padding(
-                                                                        padding: EdgeInsets.all(8.0),
-                                                                        child: Column(
-                                                                          children: [
-                                                                            Row(
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text("Nama"),
-                                                                                Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                                ? "..." 
-                                                                                : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                                ? "..." 
-                                                                                : profileProvider.singleUserData.fullname)
-                                                                              ]
-                                                                            ),
-                                                                          ],
+                                                                        )
+                                                                      : CachedNetworkImage(
+                                                                        imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getSingleUserProfilePic}",
+                                                                        imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) {
+                                                                          return CircleAvatar(
+                                                                            backgroundImage: imageProvider,
+                                                                            radius: 30.0,
+                                                                          );
+                                                                        },
+                                                                        errorWidget: (BuildContext context, String url, dynamic error) {
+                                                                          return CircleAvatar(
+                                                                            backgroundColor: ColorResources.WHITE,
+                                                                            backgroundImage: AssetImage("assets/images/profile-drawer.png"),
+                                                                            radius: 30.0,
+                                                                          );
+                                                                        },
+                                                                        placeholder: (BuildContext context, String text) => Loader(
+                                                                          color: ColorResources.WHITE,
                                                                         )
                                                                       ),
                                                                     ),
-                                                                  ),                                                 
 
-                                                                ],
-                                                              );    
-                                                            },
+                                                                    SizedBox(height: 16.0),    
+
+                                                                    Container(
+                                                                      width: double.infinity,
+                                                                      margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                                                      child: Card(
+                                                                        elevation: 3.0,
+                                                                        child: Padding(
+                                                                          padding: EdgeInsets.all(8.0),
+                                                                          child: Column(
+                                                                            children: [
+                                                                              Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text("Nama"),
+                                                                                  Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
+                                                                                  ? "..." 
+                                                                                  : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
+                                                                                  ? "..." 
+                                                                                  : profileProvider.singleUserData.fullname)
+                                                                                ]
+                                                                              ),
+                                                                            ],
+                                                                          )
+                                                                        ),
+                                                                      ),
+                                                                    ),                                                 
+
+                                                                  ],
+                                                                );    
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );           
+                                                    },
+                                                  );
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(top: 0.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        child: CachedNetworkImage(
+                                                          imageUrl: "${AppConstants.BASE_URL_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
+                                                          imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
+                                                            radius: 25.0,
+                                                            backgroundImage: imageProvider
+                                                          ),
+                                                          placeholder: (BuildContext context, String url) => CircleAvatar(
+                                                            backgroundColor: ColorResources.WHITE,
+                                                            radius: 25.0,
+                                                            child: Loader(
+                                                              color: ColorResources.BTN_PRIMARY,
+                                                            ),
+                                                          ),                                                
+                                                          errorWidget: (BuildContext context, String url, dynamic error) => CircleAvatar(
+                                                            radius: 25.0,
+                                                            backgroundColor: ColorResources.WHITE,
+                                                            backgroundImage: AssetImage('assets/images/profile-drawer.png')
                                                           ),
                                                         ),
                                                       ),
-                                                    );           
-                                                  },
-                                                );
-                                              },
-                                              child: Container(
-                                                margin: EdgeInsets.only(top: 0.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: "${AppConstants.BASE_URL_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
-                                                        imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
-                                                          radius: 25.0,
-                                                          backgroundImage: imageProvider
-                                                        ),
-                                                        placeholder: (BuildContext context, String url) => CircleAvatar(
-                                                          backgroundColor: ColorResources.WHITE,
-                                                          radius: 25.0,
-                                                          child: Loader(
-                                                            color: ColorResources.BTN_PRIMARY,
-                                                          ),
-                                                        ),                                                
-                                                        errorWidget: (BuildContext context, String url, dynamic error) => CircleAvatar(
-                                                          radius: 25.0,
-                                                          backgroundColor: ColorResources.WHITE,
-                                                          backgroundImage: AssetImage('assets/images/profile-drawer.png')
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      width: 100.0,
-                                                      margin: EdgeInsets.only(top: 4.0),
-                                                      child: Text(nearMemberProvider.nearMemberData[i].fullname.toString(),
-                                                      textAlign: TextAlign.center,
-                                                        softWrap: true,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: poppinsRegular.copyWith(
-                                                          fontSize: 11.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      width: 40.0,
-                                                      child: Text('+ - ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}',
-                                                        softWrap: true,
-                                                        maxLines: 2,
+                                                      Container(
+                                                        width: 100.0,
+                                                        margin: EdgeInsets.only(top: 4.0),
+                                                        child: Text(nearMemberProvider.nearMemberData[i].fullname.toString(),
                                                         textAlign: TextAlign.center,
-                                                        style: poppinsRegular.copyWith(
-                                                          color:Theme.of(context).hintColor,
-                                                          fontSize: 11.0
-                                                        )
+                                                          softWrap: true,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: poppinsRegular.copyWith(
+                                                            fontSize: 11.0,
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Container(
+                                                        width: 40.0,
+                                                        child: Text('+ - ${timeago.format(minutes, locale: 'id')}',
+                                                          softWrap: true,
+                                                          maxLines: 2,
+                                                          textAlign: TextAlign.center,
+                                                          style: poppinsRegular.copyWith(
+                                                            color:Theme.of(context).hintColor,
+                                                            fontSize: 11.0
+                                                          )
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          }
+                                              );
+                                            }
+                                          ),
                                         ),
                                       );
                                     },
@@ -508,12 +501,12 @@ class _HomePageState extends State<HomePage> {
                             //   child: RichText(
                             //     text: TextSpan(
                             //       text: "Anda harus ",
-                            //       style: TextStyle(
+                            //       style: poppinsRegular.copyWith(
                             //         color: ColorResources.BLACK
                             //       ),
                             //       children: <TextSpan>[
                             //         TextSpan(text: 'Login',
-                            //           style: TextStyle(
+                            //           style: poppinsRegular.copyWith(
                             //             color: ColorResources.BTN_PRIMARY_SECOND,
                             //             fontWeight: FontWeight.bold
                             //           ),
@@ -522,7 +515,7 @@ class _HomePageState extends State<HomePage> {
                             //           ) 
                             //         ),
                             //         TextSpan(text: ' untuk melihat ini',
-                            //           style: TextStyle(
+                            //           style: poppinsRegular.copyWith(
                             //           color: ColorResources.BLACK
                             //         ),
                             //         )
@@ -555,71 +548,71 @@ class _HomePageState extends State<HomePage> {
                                 
                                 InkWell(
                                   onTap: () {
-                                    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+                                    // if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
                                       return Navigator.push(context,
                                         MaterialPageRoute(builder: (context) => MediaScreen()),
                                       );
-                                    } else {
-                                      return showAnimatedDialog(
-                                        context: context, 
-                                        barrierDismissible: true,
-                                        builder: (BuildContext context) {
-                                          return Dialog(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10.0)
-                                            ),
-                                            backgroundColor: ColorResources.BLACK,
-                                            child: Container(
-                                              height: 250.0,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text("Silahkan Login atau Buat Akun\nUntuk Bergabung!",
-                                                    style: poppinsRegular.copyWith(
-                                                      color: ColorResources.WHITE,
-                                                      fontSize: 16.0
-                                                    ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  SizedBox(height: 10.0),
-                                                  Container(
-                                                    width: double.infinity,
-                                                    height: 40.0,
-                                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: ColorResources.GRAY_LIGHT_PRIMARY,
-                                                        width: 1.0
-                                                      ),
-                                                      borderRadius: BorderRadius.circular(30.0),
-                                                        image: DecorationImage(
-                                                          alignment: Alignment.centerLeft,
-                                                          image: AssetImage(Images.wheel_btn)
-                                                        )
-                                                    ),
-                                                    child: TextButton(
-                                                      style: TextButton.styleFrom(
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(30.0),
-                                                        ),
-                                                        backgroundColor: Colors.transparent
-                                                      ),
-                                                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
-                                                      child: Text("Login",
-                                                        style: poppinsRegular.copyWith(
-                                                          color: ColorResources.GRAY_LIGHT_PRIMARY
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      );
-                                    }
+                                    // } else {
+                                    //   return showAnimatedDialog(
+                                    //     context: context, 
+                                    //     barrierDismissible: true,
+                                    //     builder: (BuildContext context) {
+                                    //       return Dialog(
+                                    //         shape: RoundedRectangleBorder(
+                                    //           borderRadius: BorderRadius.circular(10.0)
+                                    //         ),
+                                    //         backgroundColor: ColorResources.BLACK,
+                                    //         child: Container(
+                                    //           height: 250.0,
+                                    //           child: Column(
+                                    //             crossAxisAlignment: CrossAxisAlignment.center,
+                                    //             mainAxisAlignment: MainAxisAlignment.center,
+                                    //             children: [
+                                    //               Text("Silahkan Login atau Buat Akun\nUntuk Bergabung!",
+                                    //                 style: poppinsRegular.copyWith(
+                                    //                   color: ColorResources.WHITE,
+                                    //                   fontSize: 16.0
+                                    //                 ),
+                                    //                 textAlign: TextAlign.center,
+                                    //               ),
+                                    //               SizedBox(height: 10.0),
+                                    //               Container(
+                                    //                 width: double.infinity,
+                                    //                 height: 40.0,
+                                    //                 margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                    //                 decoration: BoxDecoration(
+                                    //                   border: Border.all(
+                                    //                     color: ColorResources.GRAY_LIGHT_PRIMARY,
+                                    //                     width: 1.0
+                                    //                   ),
+                                    //                   borderRadius: BorderRadius.circular(30.0),
+                                    //                     image: DecorationImage(
+                                    //                       alignment: Alignment.centerLeft,
+                                    //                       image: AssetImage(Images.wheel_btn)
+                                    //                     )
+                                    //                 ),
+                                    //                 child: TextButton(
+                                    //                   style: TextButton.styleFrom(
+                                    //                     shape: RoundedRectangleBorder(
+                                    //                       borderRadius: BorderRadius.circular(30.0),
+                                    //                     ),
+                                    //                     backgroundColor: Colors.transparent
+                                    //                   ),
+                                    //                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
+                                    //                   child: Text("Login",
+                                    //                     style: poppinsRegular.copyWith(
+                                    //                       color: ColorResources.GRAY_LIGHT_PRIMARY
+                                    //                     ),
+                                    //                   ),
+                                    //                 ),
+                                    //               )
+                                    //             ],
+                                    //           ),
+                                    //         ),
+                                    //       );
+                                    //     }
+                                    //   );
+                                    // }
                                   },
                                   child: Row(
                                     children: [
@@ -986,73 +979,98 @@ class _HomePageState extends State<HomePage> {
                                     itemCount: newsProvider.newsBody.length,
                                     itemBuilder: (BuildContext context, int i) {
                                       return Container(
-                                        color: ColorResources.WHITE,
                                         width: double.infinity,
-                                        margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                        child: Card(
-                                          elevation: 2.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0)
+                                        margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                                        decoration: BoxDecoration(
+                                          color: ColorResources.WHITE,
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                            width: 0.5
                                           ),
-                                          child: InkWell(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            onTap: () => Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => DetailNewsScreen(
-                                                title: newsProvider.newsBody[i].title,
-                                                content: newsProvider.newsBody[i].content,
-                                                date: newsProvider.newsBody[i].created,
-                                                imageUrl: newsProvider.newsBody[i].media[0].path,
-                                              )),
-                                            ),     
-                                            child: Stack(
+                                          borderRadius: BorderRadius.circular(10.0)
+                                        ),
+                                        child: Stack(
+                                          children: [
+
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-
-                                                Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    CachedNetworkImage(
-                                                      imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
-                                                        imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                        width: 120.0,
-                                                        height: 80.0,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10.0),
-                                                          image: DecorationImage(
-                                                            image: imageProvider, 
-                                                            fit: BoxFit.cover
-                                                          ),
-                                                        ),
+                                                CachedNetworkImage(
+                                                  imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
+                                                    imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                    width: 120.0,
+                                                    height: 80.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.0),
+                                                      image: DecorationImage(
+                                                        image: imageProvider, 
+                                                        fit: BoxFit.cover
                                                       ),
                                                     ),
-                                                    SizedBox(width: 10.0),
-                                                    Container(
-                                                      width: 200.0,
-                                                      margin: EdgeInsets.only(top: 10.0),
-                                                      child: Text(newsProvider.newsBody[i].title,
-                                                        softWrap: true,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.bold
+                                                  ),
+                                                  placeholder: (BuildContext context, String url) {
+                                                    return Container(
+                                                      width: 120.0,
+                                                      height: 80.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10.0),
+                                                        image: DecorationImage(
+                                                          image: AssetImage('assets/images/default_image.png'), 
+                                                          fit: BoxFit.cover
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    );                          
+                                                  },
+                                                  errorWidget: (BuildContext context, String url, dynamic error) {
+                                                   return Container(
+                                                      width: 120.0,
+                                                      height: 80.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10.0),
+                                                        image: DecorationImage(
+                                                          image: AssetImage('assets/images/default_image.png'), 
+                                                          fit: BoxFit.cover
+                                                        ),
+                                                      ),
+                                                    );                                              
+                                                  },
                                                 ),
-
-                                                Positioned(
-                                                  top: 55.0,
-                                                  right: 10.0,
-                                                  child: Text(getTranslated("READ_MORE", context),
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 12.0
+                                                SizedBox(width: 10.0),
+                                                Container(
+                                                  width: 200.0,
+                                                  margin: EdgeInsets.only(top: 10.0),
+                                                  child: Text(newsProvider.newsBody[i].title,
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: poppinsRegular.copyWith(
+                                                      fontWeight: FontWeight.bold
                                                     ),
-                                                  )
-                                                )
-
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                          ),
+
+                                            Positioned(
+                                              top: 55.0,
+                                              right: 10.0,
+                                              child: InkWell(
+                                                onTap: () => Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => DetailNewsScreen(
+                                                  title: newsProvider.newsBody[i].title,
+                                                  content: newsProvider.newsBody[i].content,
+                                                  date: newsProvider.newsBody[i].created,
+                                                  imageUrl: newsProvider.newsBody[i].media[0].path,
+                                                ))),
+                                                child: Text(getTranslated("READ_MORE", context),
+                                                  style: poppinsRegular.copyWith(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 12.0
+                                                  ),
+                                                ),
+                                              )
+                                            )
+
+                                          ],
                                         ),
                                       );
                                     },
@@ -1090,73 +1108,72 @@ class _HomePageState extends State<HomePage> {
                                     itemCount: newsProvider.newsBody.length,
                                     itemBuilder: (BuildContext context, int i) {
                                       return Container(
-                                        color: ColorResources.WHITE,
                                         width: double.infinity,
-                                        margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                                        child: Card(
-                                          elevation: 2.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0)
+                                        decoration: BoxDecoration(
+                                          color: ColorResources.WHITE,
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                            width: 0.5
                                           ),
-                                          child: InkWell(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            onTap: () => Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => DetailNewsScreen(
-                                                title: newsProvider.newsBody[i].title,
-                                                content: newsProvider.newsBody[i].content,
-                                                date: newsProvider.newsBody[i].created,
-                                                imageUrl: newsProvider.newsBody[i].media[0].path,
-                                              )),
-                                            ),  
-                                            child: Stack(
+                                          borderRadius: BorderRadius.circular(10.0)
+                                        ),
+                                        margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                                        child: Stack(
+                                          children: [
+
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-
-                                                Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    CachedNetworkImage(
-                                                      imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
-                                                        imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                        width: 120.0,
-                                                        height: 80.0,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(10.0),
-                                                          image: DecorationImage(
-                                                            image: imageProvider, 
-                                                            fit: BoxFit.cover
-                                                          ),
-                                                        ),
+                                                CachedNetworkImage(
+                                                  imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
+                                                    imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                                                    width: 120.0,
+                                                    height: 80.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.0),
+                                                      image: DecorationImage(
+                                                        image: imageProvider, 
+                                                        fit: BoxFit.cover
                                                       ),
                                                     ),
-                                                    SizedBox(width: 10.0),
-                                                    Container(
-                                                      width: 200.0,
-                                                      margin: EdgeInsets.only(top: 10.0),
-                                                      child: Text(newsProvider.newsBody[i].title,
-                                                        softWrap: true,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontWeight: FontWeight.bold
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  ),
                                                 ),
-
-                                                Positioned(
-                                                  top: 55.0,
-                                                  right: 10.0,
-                                                  child: Text("Baca Selengkapnya",
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.normal,
-                                                      fontSize: 12.0
+                                                SizedBox(width: 10.0),
+                                                Container(
+                                                  width: 200.0,
+                                                  margin: EdgeInsets.only(top: 10.0),
+                                                  child: Text(newsProvider.newsBody[i].title,
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: poppinsRegular.copyWith(
+                                                      fontWeight: FontWeight.bold
                                                     ),
-                                                  )
-                                                )
-
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                          ),
+
+                                            Positioned(
+                                              top: 55.0,
+                                              right: 10.0,
+                                              child: InkWell(
+                                                onTap: () => Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => DetailNewsScreen(
+                                                  title: newsProvider.newsBody[i].title,
+                                                  content: newsProvider.newsBody[i].content,
+                                                  date: newsProvider.newsBody[i].created,
+                                                  imageUrl: newsProvider.newsBody[i].media[0].path,
+                                                ))),
+                                                child: Text(getTranslated("READ_MORE", context),
+                                                  style: poppinsRegular.copyWith(
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 12.0
+                                                  ),
+                                                ),
+                                              )
+                                            )
+
+                                          ],
                                         ),
                                       );
                                     },
@@ -1216,7 +1233,7 @@ class _HomePageState extends State<HomePage> {
                           //                         child: Text("Akhirnya Erick Thohir Bersuara Alasan Abdee Slank Jadi Komisaris Telkom",
                           //                           softWrap: true,
                           //                           overflow: TextOverflow.ellipsis,
-                          //                           style: TextStyle(
+                          //                           style: poppinsRegular.copyWith(
                           //                             fontWeight: FontWeight.bold
                           //                           ),
                           //                         ),
@@ -1228,7 +1245,7 @@ class _HomePageState extends State<HomePage> {
                           //                     top: 55.0,
                           //                     right: 10.0,
                           //                     child: Text("Baca Selengkapnya",
-                          //                       style: TextStyle(
+                          //                       style: poppinsRegular.copyWith(
                           //                         fontWeight: FontWeight.normal,
                           //                         fontSize: 12.0
                           //                       ),

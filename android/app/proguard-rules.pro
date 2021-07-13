@@ -6,4 +6,5 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 -keep class androidx.lifecycle.** { *; }
+-keep class com.shockwave.**
 -keep class vn.hunghd.flutterdownloader.**  { *; }

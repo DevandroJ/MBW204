@@ -21,7 +21,7 @@ class ProfileProvider extends ChangeNotifier {
   final ProfileRepo profileRepo;
   ProfileProvider({@required this.profileRepo});
 
-  ProfileStatus _profileStatus = ProfileStatus.idle;
+  ProfileStatus _profileStatus = ProfileStatus.loading;
   ProfileStatus get profileStatus => _profileStatus;
 
   UpdateProfileStatus _updateProfileStatus = UpdateProfileStatus.idle;
@@ -67,7 +67,6 @@ class ProfileProvider extends ChangeNotifier {
   
   void getUserProfile(BuildContext context) async {
     try {
-      setStateProfileStatus(ProfileStatus.loading);
       ProfileData profileData = await profileRepo.getUserProfile(context);
       _userProfile = profileData;
       setStateProfileStatus(ProfileStatus.loaded);

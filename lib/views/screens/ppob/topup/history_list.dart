@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -29,7 +30,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
         child: Column(
           children: [
 
-            CustomAppBar(title: "Histori Transaksi", isBackButtonExist: true),
+            CustomAppBar(title: getTranslated("HISTORY_BALANCE", context), isBackButtonExist: true),
 
             Consumer<PPOBProvider>(
               builder: (BuildContext context, PPOBProvider ppobProvider, Widget child) {

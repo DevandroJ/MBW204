@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
@@ -132,7 +132,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                         myLocationEnabled: false,
                         initialCameraPosition: CameraPosition(
                           target: nearMemberProvider.latLng,
-                          zoom: 15,
+                          zoom: 15.0,
                         ),
                         markers: Set.from(nearMemberProvider.markers),
                         onMapCreated: (GoogleMapController controller) {
@@ -307,14 +307,18 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                             Container(
                               child: CachedNetworkImage(
                                 imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
-                                imageBuilder: (context, imageProvider) => CircleAvatar(
+                                imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
                                   radius: 30.0,
                                   backgroundImage: imageProvider, 
                                 ),
-                                placeholder: (BuildContext context, String url) => Loader(
-                                  color: ColorResources.BTN_PRIMARY,
+                                placeholder: (BuildContext context, String url) => CircleAvatar(
+                                  backgroundColor: ColorResources.WHITE,
+                                  radius: 30.0,
+                                  child: Loader(
+                                    color: ColorResources.BTN_PRIMARY,
+                                  ),
                                 ),
-                                errorWidget: (BuildContext context, String url, dynamic error)=> 
+                                errorWidget: (BuildContext context, String url, dynamic error) => 
                                 CircleAvatar(
                                   radius: 30.0,
                                   backgroundColor: ColorResources.WHITE,

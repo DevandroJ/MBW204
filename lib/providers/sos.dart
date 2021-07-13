@@ -18,7 +18,7 @@ class SosProvider extends ChangeNotifier {
   SosConfirmStatus get sosConfirmStatus => _sosConfirmStatus;
 
   List<Sos> _sosList = [];
-  List<Sos> get sosList => _sosList;
+  List<Sos> get sosList => [..._sosList];
 
   void setStateSosConfirmStatus(SosConfirmStatus sosConfirmStatus) {
     _sosConfirmStatus = sosConfirmStatus;
@@ -63,8 +63,6 @@ class SosProvider extends ChangeNotifier {
           );                   
         },
         animationType: DialogTransitionType.scale,
-        curve: Curves.fastOutSlowIn,
-        duration: Duration(seconds: 1),
       );
       setStateSosConfirmStatus(SosConfirmStatus.loaded);
     } on DioError catch(e) {

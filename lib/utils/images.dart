@@ -38,6 +38,7 @@ class Images {
   static const String facebook = 'assets/icons/ic-facebook.png';
   static const String twitter = 'assets/icons/ic-twitter.png';
   static const String instagram = 'assets/icons/ic-instagram.png';
+  static const String youtube = 'assets/icons/ic-youtube.png';
   static const String card = 'assets/images/card.png';
   static const String card_partnership = 'assets/images/card-partnership.png';
   static const String chat_image = 'assets/images/chat.png';

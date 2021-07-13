@@ -1,21 +1,21 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
-import 'package:provider/provider.dart';
+import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import 'package:mbw204_club_ina/providers/auth.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_expansion_tile.dart' as custom;
-import 'package:mbw204_club_ina/views/screens/auth/sign_up.dart';
 
 class CheckoutRegistrasiScreen extends StatefulWidget {
   final double productPrice;
   final double adminFee;
   final String transactionId;
   final String nameBank;
+  final String paymentChannel;
   final String noVa;
   final String guide;
 
@@ -24,6 +24,7 @@ class CheckoutRegistrasiScreen extends StatefulWidget {
     this.adminFee,
     this.transactionId,
     this.nameBank,
+    this.paymentChannel,
     this.noVa,
     this.guide
   });
@@ -35,8 +36,8 @@ class CheckoutRegistrasiScreen extends StatefulWidget {
 class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> with SingleTickerProviderStateMixin {
   AnimationController controller;
 
-  final formKey = GlobalKey<FormState>();
-  final int beginCount = 30;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  int beginCount = 30;
   bool isAwaiting = false;
   bool isHidePassword = true;
   double nominal;
@@ -55,226 +56,209 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
     controller.forward();
   }
 
+  Future<bool> onWillPop() {
+    Navigator.pop(context);
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
     nominal = double.parse(widget.productPrice.toString());
     biayaAdmin = double.parse(widget.adminFee.toString());
     
     return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context);
-        return Future.value(true);
-      },
+      onWillPop: onWillPop,
       child: Scaffold(
         body: Form(
           key: formKey,
           child: Container(
             decoration: BoxDecoration(
-              color: ColorResources.PRIMARY
+              color: ColorResources.BLACK
             ),
             child: ListView(
               children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 208.0,
-                        height: 238.0,
-                        margin: EdgeInsets.only(top: 15.0, left: 16.0, right: 16.0),
-                        child: Image.asset(
-                          "assets/images/logo.png",
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      width: 180.0,
+                      height: 120.0,
+                      margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: Image.asset("assets/images/logo.png"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: SelectableText("Checkout Registrasi",
+                        style: titilliumRegular.copyWith(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                          color: ColorResources.WHITE,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 20.0),
-                        child: Text(
-                          "Checkout Registrasi",
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                            color: ColorResources.WHITE,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-                        child: Column(
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white70,
-                                  borderRadius: BorderRadius.circular(4.0)
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                        left: 16,
-                                        right: 45.0,
-                                        top: 16.0,
-                                        bottom: 16.0
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Text("Nomor Transaksi",
-                                            style: TextStyle(fontSize: 16.0),
-                                          ),
-                                          SizedBox(width: 15.0),
-                                          Expanded(
-                                            child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(widget.transactionId,
-                                                style: TextStyle(
-                                                  fontSize: 16.0
-                                                )
-                                              )
-                                            ],
-                                          )),
-                                        ],
-                                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(4.0)
+                            ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16.0,
+                                      top: 16.0,
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                        left: 16,
-                                        right: 45.0,
-                                        top: 16.0,
-                                        bottom: 16.0
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Text("Pembayaran Registrasi",
-                                            style: TextStyle(fontSize: 16),
+                                    child: Row(
+                                      children: [
+                                        SelectableText("Transaksi",
+                                          style: titilliumRegular.copyWith(
+                                            fontSize: 16.0
                                           ),
-                                          Expanded(
-                                            child: Column(
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SelectableText("# ${widget.transactionId}",
+                                              style: titilliumRegular.copyWith(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold
+                                              )
+                                            )
+                                          ],
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 16,
+                                      right: 16.0,
+                                      top: 10.0,
+                                      bottom: 10.0
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SelectableText("Pembayaran Registrasi",
+                                          style: titilliumRegular.copyWith(
+                                            fontSize: 16.0
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SelectableText(ConnexistHelper.formatCurrency(nominal),
+                                              style: titilliumRegular.copyWith(
+                                                fontSize: 16.0
+                                              )
+                                            )
+                                          ],
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 10.0),
+                                    child: Row(
+                                      children: [
+                                        SelectableText("Biaya Admin",
+                                          style: titilliumRegular.copyWith(
+                                            fontSize: 16.0
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SelectableText(ConnexistHelper.formatCurrency(biayaAdmin),
+                                              style: titilliumRegular.copyWith(
+                                                fontSize: 16.0
+                                              )
+                                            )
+                                          ],
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                                    child: Divider(
+                                      thickness: 2.0,
+                                    )
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16.0,
+                                      bottom: 16.0,
+                                      top: 16.0
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SelectableText("Total Pembayaran",
+                                          style: titilliumRegular.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.0
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.end,
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Text(ConnexistHelper.formatCurrency(nominal),
-                                                style: TextStyle(
+                                              SelectableText(ConnexistHelper.formatCurrency(nominal + biayaAdmin),
+                                                style: titilliumRegular.copyWith(
+                                                  fontWeight: FontWeight.bold,
                                                   fontSize: 16.0
                                                 )
                                               )
                                             ],
-                                          )),
-                                        ],
-                                      ),
+                                          )
+                                        ),
+                                      ],
                                     ),
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          left: 16.0,
-                                          right: 45.0,
-                                          bottom: 16.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Text(
-                                            "Biaya Admin",
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          Expanded(
-                                              child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text(
-                                                  ConnexistHelper
-                                                      .formatCurrency(
-                                                          biayaAdmin),
-                                                  style:
-                                                      TextStyle(fontSize: 16))
-                                            ],
-                                          )),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: 16.0, right: 16.0),
-                                        child: Divider(
-                                          thickness: 2.0,
-                                        )),
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          left: 16.0,
-                                          right: 16.0,
-                                          bottom: 16.0,
-                                          top: 16.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Text(
-                                            "Total Pembayaran",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                          Expanded(
-                                              child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text(
-                                                  ConnexistHelper
-                                                      .formatCurrency(nominal +
-                                                          biayaAdmin),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16))
-                                            ],
-                                          )),
-                                          InkWell(
-                                            onTap: () {
-                                              Clipboard.setData(
-                                                ClipboardData(text: (nominal + biayaAdmin).toString())).then((result) {
-                                                showFloatingFlushbar(context);
-                                              });
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.only(left: 8.0),
-                                              child: Image.asset(
-                                                "assets/icons/ic-copy.png",
-                                                width: 20,
-                                                height: 20,
-                                                color: ColorResources.GREY,
-                                              )
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    viewAutomate()
-                                  ],
-                                )),
+                                  ),
+                                  viewAutomate()
+                                ],
+                              )
+                            ),
                           ],
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(bottom: 25.0, left: 16, right: 16, top: 25.0),
+                        margin: EdgeInsets.only(bottom: 25.0, left: 16.0, right: 16.0, top: 25.0),
                         child: Row(
                           children: [
                             Expanded(
                               child: Container(
-                                margin: EdgeInsets.only(right: 5),
+                                margin: EdgeInsets.only(right: 5.0),
                                 height: 50.0,
-                                child: RaisedButton(
-                                  elevation: 3.0,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    elevation: 0.0,
+                                    backgroundColor: ColorResources.BTN_PRIMARY_SECOND
+                                  ),
                                   onPressed: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(builder: (context) => AuthScreen()),
-                                    // );
+                                    Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                                    );
                                   },
-                                  color: ColorResources.WHITE,
-                                  textColor: ColorResources.PRIMARY,
-                                  child: Text("Kembali"),
+                                  child: Text("Kembali",
+                                    style: titilliumRegular.copyWith(
+                                      color: ColorResources.WHITE,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -282,17 +266,21 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                               child: Container(
                                 margin: EdgeInsets.only(left: 5.0),
                                 height: 50.0,
-                                child: RaisedButton(
-                                elevation: 3.0,
+                                child: TextButton(
+                                style: TextButton.styleFrom(
+                                  elevation: 0.0,
+                                  backgroundColor: ColorResources.BTN_PRIMARY_SECOND,
+                                ),
                                 onPressed: () { 
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => AuthScreen()));
-                                  // Provider.of<AuthProvider>(context, listen: false).updateSelectedIndex(0);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
                                 },
-                                color: ColorResources.WHITE,
-                                textColor: ColorResources.PRIMARY,
-                                child: Text("OK"),
-                              ),
-                                
+                                child: Text("OK",
+                                  style: titilliumRegular.copyWith(
+                                    color: ColorResources.WHITE,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ), 
                               ),
                             ),
                           ],
@@ -314,12 +302,11 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
       children: [
         Container(
           margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-          child: Text(
+          child: SelectableText(
             "Transfer ke Nomor " + widget.nameBank + " berikut ini :",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: "Proppins",
-              fontSize: 16.0,
+            style: titilliumRegular.copyWith(
+              fontSize: 18.0,
               color: ColorResources.BLACK,
               fontWeight: FontWeight.bold,
             )
@@ -327,9 +314,8 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
         ),
         Container(
           margin: EdgeInsets.only(bottom: 5.0),
-          child: Text("${widget.noVa}",
-            style: TextStyle(
-              fontFamily: "Proppins",
+          child: SelectableText("${widget.noVa}",
+            style: titilliumRegular.copyWith(
               fontSize: 30.0,
               fontWeight: FontWeight.bold,
               color: Colors.black
@@ -337,80 +323,71 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
             textAlign: TextAlign.center,
           ),
         ),
+        Row(
+          children: [
+            Flexible(
+              child: Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                height: 50.0,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    elevation: 0.0,
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 1.0
+                    ),
+                    backgroundColor: Colors.transparent
+                  ),
+                  onPressed: () async { 
+                    try {
+                      await launch("${AppConstants.BASE_URL_HELP_PAYMENT}/${widget.paymentChannel}");
+                    } catch(e) {
+                      print(e);
+                    }
+                  },
+                  child: Text("Cara Pembayaran",
+                    style: titilliumRegular.copyWith(
+                      color: ColorResources.BLACK
+                    )
+                  ),
+                ), 
+              ),
+            ),            
+            Flexible(
+              child: Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                height: 50.0,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    elevation: 0.0,
+                    backgroundColor: Colors.transparent,
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 1.0
+                    )
+                  ),
+                  onPressed: () async { 
+                    try {
+                      await launch("${AppConstants.BASE_URL_PAYMENT_BILLING}/${widget.transactionId}");
+                    } catch(e) {
+                      print(e);
+                    }
+                  },
+                  child: Text("Lihat Tagihan",
+                    style: titilliumRegular.copyWith(
+                      color: ColorResources.BLACK
+                    )
+                  ),
+                ), 
+              ),
+            ),
+          ],
+        ),
         Container(
           margin: EdgeInsets.only(bottom: 10.0),
-          width: 90,
-          height: 40,
-          child: Card(
-            color: ColorResources.PRIMARY,
-            elevation: 2.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2.0),
-              side: BorderSide(
-                width: 1.0, 
-                color: ColorResources.PRIMARY
-              )
-            ),
-            child: InkWell(
-              child: Center(
-                child: Text(
-                  'SALIN',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: ColorResources.WHITE,
-                  ),
-                ),
-              ),
-              onTap: () {
-                Clipboard.setData(ClipboardData(text: "${widget.noVa}")).then((result) {
-                  showFloatingFlushbar(context);
-                });
-              },
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(bottom: 5.0, left: 16, right: 16),
-          child: Text(
-            "Silahkan lakukan pembayaran untuk menyelesaikan proses registrasi anda,password akan dikirim setelah pembayaran diselesaikan.",
-            style: TextStyle(
-              fontFamily: "Proppins",
-              fontSize: 15.0,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-          Container(
-            margin: EdgeInsets.only(bottom: 5.0, top: 5.0),
-            child: Text("Batas Pembayaran",
-            style: TextStyle(
-              fontFamily: "Proppins",
-              fontSize: 16.0,
-              color: ColorResources.BLACK,
-              fontWeight: FontWeight.bold,
-            )
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 10, right: 10, bottom: 10.0),
-          child: Countdown(
-            animation: StepTween(
-              begin: 7200,
-              end: 0,
-            ).animate(controller),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(bottom: 16, left: 10.0, right: 10.0),
-          child: custom.ExpansionTile(
-            headerBackgroundColor: ColorResources.PRIMARY,
-            iconColor: ColorResources.WHITE,
-            initiallyExpanded: true,
-            title: Text("Petunjuk Pembayaran",
-              style: TextStyle(
-                color: ColorResources.WHITE
-              ),
-            ),
+          child: Column(
             children: [
               ListTile(
                 dense: true,
@@ -423,7 +400,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                 ),
               ),
             ],
-          ),
+          ) 
         )
       ],
     );
@@ -439,23 +416,5 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
       message: 'Copied to Clipboard',
       duration: Duration(seconds: 2),
     )..show(context);
-  }
-}
-
-class Countdown extends AnimatedWidget {
-  Countdown({Key key, this.animation}) : super(key: key, listenable: animation);
-  Animation<int> animation;
-
-  @override
-  build(BuildContext context) {
-    Duration clockTimer = Duration(seconds: animation.value);
-    String timerText = '${clockTimer.inHours.remainder(24).toString()} jam ${clockTimer.inMinutes.remainder(60).toString()} menit ${(clockTimer.inSeconds.remainder(60) % 60).toString().padLeft(2, '0')} detik';
-    return Text(
-      "$timerText",
-      style: TextStyle(
-        fontSize: 25.0,
-        color: ColorResources.PRIMARY,
-      ),
-    );
   }
 }

@@ -46,7 +46,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
       feedState.fetchGroupsSelf();
     });
   }
-
+  
   Future<bool> onWillPop() async {
     return (showDialog(context: context,
       builder: (context) => AlertDialog(

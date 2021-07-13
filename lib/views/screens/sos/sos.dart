@@ -6,7 +6,6 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
-import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
 
 class SosScreen extends StatefulWidget {
@@ -19,6 +18,10 @@ class SosScreen extends StatefulWidget {
 
 class _SosScreenState extends State<SosScreen> {
 
+  Future<bool> onWillPop() {
+    Navigator.of(context).pop();
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +29,8 @@ class _SosScreenState extends State<SosScreen> {
     Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
     Provider.of<SosProvider>(context, listen: false).initSosList();
 
-    Future submit(String type, String body) async {
-      try {
-        String userId = Provider.of<ProfileProvider>(context, listen: false).getUserId;
-        String sender = Provider.of<ProfileProvider>(context, listen: false).getUserFullname;
-        String phoneNumber = Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber;
-        String address = Provider.of<LocationProvider>(context, listen: false).getCurrentNameAddress; 
-        double lat = Provider.of<LocationProvider>(context, listen: false).getCurrentLat;
-        double long = Provider.of<LocationProvider>(context, listen: false).getCurrentLong;
-        String geoPosition = "${lat.toString()} , ${long.toString()}"; 
-        await Provider.of<SosProvider>(context, listen: false).insertSos(context, userId, geoPosition, type, body, address, sender, phoneNumber);
-      } catch(e) {
-        print(e);
-      } 
-    }
-
     return WillPopScope(
-      onWillPop: () {
-        Navigator.of(context).pop();
-        return Future.value(true);
-      },
+      onWillPop: onWillPop,
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
@@ -90,7 +75,7 @@ class _SosScreenState extends State<SosScreen> {
                         SizedBox(height: 10.0),
                         getSosList(context, "INFO BENGKEL", Images.workshop_info, "Sebar permintaan Info Bengkel"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "BENCANA", Images.disaster, "Sebar permintaan tolong Bencana"),
+                        getSosList(context, "BENCANA ALAM", Images.disaster, "Sebar permintaan tolong Bencana"),
                       ],
                     ),
                   ),
@@ -109,6 +94,7 @@ class _SosScreenState extends State<SosScreen> {
 Widget getSosList(BuildContext context, String label, String images, String content) {
   return GestureDetector(
     onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
+      label: label,
       content: content,
     ))),
     child: Container(

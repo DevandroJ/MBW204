@@ -6,7 +6,7 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
-import 'package:mbw204_club_ina/views/screens/feed/notification_demo.dart';
+import 'package:mbw204_club_ina/views/screens/inboxv2/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -23,12 +23,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
  
   TabController tabController;
 
-  final List<Widget> screens = [
+  List<Widget> screens = [
     HomePage(),
     MemberNearScreen(whereFrom: "dashboard"),
     SosScreen(),
     EventScreen(),
-    NotificatioDemoScreen(),
+    InboxScreen(),
   ];
 
   @override
@@ -39,9 +39,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-
-    Provider.of<InboxProvider>(context, listen: false).getInboxes(context);
-    
+        
     return Scaffold(
       body: TabBarView(
         controller: tabController,
@@ -153,7 +151,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
               width: 50.0,
               height: 60.0,
               child: Icon(
-                Icons.people,
+                Icons.forum,
                 size: 24.0,
               ),
             )
@@ -185,7 +183,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
               width: 50.0,
               height: 60.0,
               child: Icon(
-                Icons.notifications,
+                Icons.message,
                 size: 24.0,
               ),
             )

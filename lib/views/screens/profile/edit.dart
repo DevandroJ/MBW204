@@ -36,7 +36,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       AlertDialog(
         title: Text(getTranslated("SOURCE_IMAGE", context),
         style: TextStyle(
-          color: ColorResources.PRIMARY,
+          color: ColorResources.BTN_PRIMARY_SECOND,
           fontWeight: FontWeight.bold, 
         ),
       ),
@@ -90,15 +90,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         );
         return;
       }
-      if(addressController.text.trim().isEmpty) {
-        Fluttertoast.showToast(
-          msg: "Alamat tidak boleh kosong",
-          backgroundColor: ColorResources.ERROR
-        );
-      }
-
       profileData.fullname = fullnameController.text;
-      // profileData.noHp = noHpController.text;
       profileData.address = addressController.text;
 
       await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, file);  
@@ -113,7 +105,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     super.initState();
     Future.delayed(Duration.zero, () async {
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
-      fullnameController.text = Provider.of<ProfileProvider>(context, listen: false).userProfile.fullname;
+      fullnameController.text = Provider.of<ProfileProvider>(context, listen: false).getUserFullname;
       noAnggotaController.text = Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber;
       emailController.text = Provider.of<ProfileProvider>(context, listen: false).getUserEmail;
       noHpController.text = Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber;
@@ -217,8 +209,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 );
                               },
                               placeholder: (BuildContext context, String url) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                    decoration: BoxDecoration(
+                                      color: ColorResources.BLACK,
+                                      borderRadius: BorderRadius.circular(50.0)
+                                    ),
+                                    width: 100.0,
+                                    height: 100.0,
+                                    child: Image.asset('assets/images/logo.png'),
+                                  ),
                                 );
                               },
                               errorWidget: (BuildContext context, String url, dynamic error) {
@@ -292,7 +294,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           ),
 
           Container(
-            margin: EdgeInsets.only(top: 0.0, left: 16.0, right: 16.0),
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
             child: Card(
               elevation: 3.0,
               child: Container(
@@ -322,50 +324,54 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 180.0,
-                  height: 30.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      primary: ColorResources.BLACK,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)
+                FittedBox(
+                  child: Container(
+                    width: 150.0,
+                    height: 30.0,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0.0,
+                        primary: ColorResources.BLACK,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)
+                        )
+                      ),
+                      onPressed: () => Navigator.of(context).pop(), 
+                      child: Text(getTranslated("BACK", context),
+                        style: poppinsRegular.copyWith(
+                          fontSize: 14.0,
+                          color: ColorResources.YELLOW_PRIMARY
+                        ),
                       )
                     ),
-                    onPressed: () => Navigator.of(context).pop(), 
-                    child: Text(getTranslated("BACK", context),
-                      style: poppinsRegular.copyWith(
-                        fontSize: 14.0,
-                        color: ColorResources.YELLOW_PRIMARY
-                      ),
-                    )
                   ),
                 ),
                 Consumer<ProfileProvider>(
                   builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
-                    return Container(
-                      width: 180.0,
-                      height: 30.0,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0.0,
-                          primary: ColorResources.BLACK,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)
+                    return FittedBox(
+                      child: Container(
+                        width: 150.0,
+                        height: 30.0,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0.0,
+                            primary: ColorResources.BLACK,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)
+                            )
+                          ),
+                          onPressed: () => save(context), 
+                          child: profileProvider.updateProfileStatus == UpdateProfileStatus.loading 
+                          ? Loader(
+                            color: ColorResources.WHITE,
+                          ) 
+                          : Text(getTranslated("SAVE", context),
+                            style: poppinsRegular.copyWith(
+                              fontSize: 14.0,
+                              color: ColorResources.YELLOW_PRIMARY
+                            ),
                           )
                         ),
-                        onPressed: () => save(context), 
-                        child: profileProvider.updateProfileStatus == UpdateProfileStatus.loading 
-                        ? Loader(
-                          color: ColorResources.WHITE,
-                        ) 
-                        : Text(getTranslated("SAVE", context),
-                          style: poppinsRegular.copyWith(
-                            fontSize: 14.0,
-                            color: ColorResources.YELLOW_PRIMARY
-                          ),
-                        )
                       ),
                     );
                   },

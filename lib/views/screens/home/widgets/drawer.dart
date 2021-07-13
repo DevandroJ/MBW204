@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/providers/warung.dart';
-import 'package:mbw204_club_ina/views/screens/ppob/topup/history.dart';
 import 'package:mbw204_club_ina/views/screens/setting/settings.dart';
 import 'package:mbw204_club_ina/views/screens/warung/beranda_toko.dart';
 import 'package:mbw204_club_ina/views/screens/warung/form_toko.dart';
@@ -56,13 +55,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               builder: (BuildContext context, AuthProvider authProvider, Widget child) {
                 if(authProvider.isLoggedIn()) {
                   return Container(
-                    padding: EdgeInsets.only(top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
+                    margin: EdgeInsets.only(top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
                     child: Column(
                       children: [
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
                         drawerItems(context, null, "store", Images.shopping_image, getTranslated("MY_STORE", context)),
-                        drawerItems(context, TopUpHistoryScreen(), "history-balance", Images.history_balance, getTranslated("HISTORY_BALANCE", context)),
                         drawerItems(context, SettingsScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
                         drawerItems(context, null, "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
                         drawerItems(context, null, "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
@@ -113,7 +111,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             if(profileProvider.profileStatus == ProfileStatus.loading) {
               return CircularProgressIndicator();
             }
-            
             return CachedNetworkImage(
               errorWidget: (BuildContext context, String url, dynamic error) {
                 return Container(

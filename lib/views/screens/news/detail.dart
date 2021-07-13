@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
 
 class DetailNewsScreen extends StatefulWidget {
   final String title;
@@ -122,10 +123,11 @@ class _DetailInfoPageState extends State<DetailNewsScreen> {
                       child: CachedNetworkImage(
                         imageUrl: "${AppConstants.BASE_URL_IMG}$imageUrl",
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => Center(
-                        child: Image.asset(
-                          "assets/images/profile.png",
+                        placeholder: (BuildContext context, String url) => Loader(
+                          color: ColorResources.BTN_PRIMARY_SECOND,
+                        ),
+                        errorWidget: (BuildContext context, String url, dynamic error) => Center(
+                        child: Image.asset("assets/images/profile.png",
                           height: double.infinity,
                           width: double.infinity,
                           fit: BoxFit.cover,
