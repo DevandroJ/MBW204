@@ -10,6 +10,7 @@ class VerifyScreen extends StatelessWidget {
 
   final String accountName;
   final String accountNumber;
+  final int bankFee;
   final double productPrice;
   final String productId;
   final String transactionId;
@@ -17,6 +18,7 @@ class VerifyScreen extends StatelessWidget {
   VerifyScreen({
     this.accountName,
     this.accountNumber,
+    this.bankFee,
     this.productPrice,
     this.productId,
     this.transactionId
@@ -141,7 +143,7 @@ class VerifyScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Container(
-                                  child: Text(ConnexistHelper.formatCurrency(double.parse(productPrice.toString())),
+                                  child: Text(ConnexistHelper.formatCurrency(double.parse(productPrice.toString()) + double.parse(bankFee.toString())),
                                     style: TextStyle(
                                       fontSize: 14.0
                                     ),
@@ -263,6 +265,7 @@ class VerifyScreen extends StatelessWidget {
                                   type: "register",
                                   description: "REGISTER",
                                   nominal: productPrice,
+                                  bankFee: bankFee,
                                   transactionId: transactionId,
                                   provider: "register",
                                   accountNumber: accountNumber,

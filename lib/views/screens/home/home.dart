@@ -22,7 +22,7 @@ import 'package:mbw204_club_ina/views/screens/news/detail.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
-import 'package:mbw204_club_ina/views/screens/membernear/list.dart';
+import 'package:mbw204_club_ina/views/screens/nearmember/list.dart';
 import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/views/screens/home/widgets/drawer.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';

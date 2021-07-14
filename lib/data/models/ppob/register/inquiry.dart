@@ -65,26 +65,26 @@ class InquiryRegisterData {
 class InquiryRegisterUserData {
   InquiryRegisterUserData({
     this.billAmount,
+    this.bankFee,
     this.phoneNumber,
     this.accountName,
     this.admin,
   });
 
   double billAmount;
+  int bankFee;
   String phoneNumber;
   String accountName;
   double admin;
 
   factory InquiryRegisterUserData.fromJson(Map<String, dynamic> json) => InquiryRegisterUserData(
     billAmount: json["billAmount"] == null ? null : json["billAmount"],
+    bankFee: json["bankFee"] == null ? null : json["bankFee"],
     phoneNumber: json["phoneNumber"] == null ? null : json["phoneNumber"],
     accountName: json["accountName"] == null ? null : json["accountName"],
     admin: json["admin"] == null ? null : json["admin"],
   );
 }
-
-
-
 
 class PayInquiryRegisterModel {
   PayInquiryRegisterModel({

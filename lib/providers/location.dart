@@ -44,6 +44,7 @@ class LocationProvider extends ChangeNotifier {
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
       Placemark place = placemarks[0];
       sharedPreferences.setString("currentNameAddress", "${place.thoroughfare} ${place.subThoroughfare} \n${place.locality}, ${place.postalCode}");
+      sharedPreferences.setString("nearMemberAddress", "${place.thoroughfare} ${place.subThoroughfare} \n${place.locality}, ${place.postalCode}");
       Future.delayed(Duration.zero, () => notifyListeners());
     } catch(e) {
       print(e);

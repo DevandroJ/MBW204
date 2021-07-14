@@ -20,6 +20,7 @@ class ConfirmPaymentScreen extends StatefulWidget {
   final String transactionId;
   final String description;
   final double nominal;
+  final int bankFee;
   final String provider;
   final String accountNumber;
   final String type;
@@ -29,6 +30,7 @@ class ConfirmPaymentScreen extends StatefulWidget {
     this.transactionId,
     this.description,
     this.nominal,
+    this.bankFee,
     this.provider,
     this.accountNumber,
     this.type
@@ -86,7 +88,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                         ),
                         SizedBox(width: 15.0),
                         Text(widget.description.toUpperCase(),
-                          style: titilliumBold.copyWith(
+                          style: poppinsRegular.copyWith(
                             fontSize: 13.0,
                             color: ColorResources.BLACK
                           ),
@@ -116,15 +118,26 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                               SizedBox(height: 5.0),   
                               Stack(
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 18.0),
-                                    child: Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString())),
-                                      style: titilliumBold.copyWith(
-                                        fontSize: 20.0,
-                                        color: ColorResources.BLACK
-                                      )
+                                  if(widget.bankFee != null)                                   
+                                    Container(
+                                      margin: EdgeInsets.only(left: 18.0),
+                                      child: Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString()) + double.parse(widget.bankFee.toString())),
+                                        style: poppinsRegular.copyWith(
+                                          fontSize: 20.0,
+                                          color: ColorResources.BLACK
+                                        )
+                                      ),
                                     ),
-                                  )
+                                  if(widget.bankFee == null)      
+                                    Container(
+                                      margin: EdgeInsets.only(left: 18.0),
+                                      child: Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString())),
+                                        style: poppinsRegular.copyWith(
+                                          fontSize: 20.0,
+                                          color: ColorResources.BLACK
+                                        )
+                                      ),
+                                    )
                                 ],
                               )
                             ],
@@ -139,7 +152,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                 context: context,
                                 builder: (ctx) => SingleChildScrollView(
                                   child: Container(
-                                    height: 260.0,
+                                    height:  widget.bankFee != null ? 290.0 : 260.0,
                                     child: Column(
                                       children: [
                                         Container(
@@ -217,6 +230,20 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                                 ],
                                               ),
                                               SizedBox(height: 10.0),
+                                              if(widget.bankFee != null)
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text("Bank Fee",
+                                                      style: titilliumRegular,
+                                                    ),
+                                                    Text(ConnexistHelper.formatCurrency(double.parse(widget.bankFee.toString())),
+                                                      style: titilliumRegular,
+                                                    )
+                                                  ],
+                                                ),
+                                              if(widget.bankFee != null)
+                                                SizedBox(height: 10.0),
                                               MySeparatorDash(
                                                 color: Colors.blueGrey[50],
                                                 height: 3.0,
@@ -226,15 +253,22 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(getTranslated("TOTAL_PAYMENT", context),
-                                                    style: TextStyle(
+                                                    style: poppinsRegular.copyWith(
                                                       fontWeight: FontWeight.bold
                                                     ),
                                                   ),
-                                                  Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString())),
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.bold
+                                                  if(widget.bankFee != null)
+                                                    Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString()) +  double.parse(widget.bankFee.toString())),
+                                                      style: poppinsRegular.copyWith(
+                                                        fontWeight: FontWeight.bold
+                                                      ),
                                                     ),
-                                                  )
+                                                  if(widget.bankFee == null)  
+                                                    Text(ConnexistHelper.formatCurrency(double.parse(widget.nominal.toString())),
+                                                      style: poppinsRegular.copyWith(
+                                                        fontWeight: FontWeight.bold
+                                                      ),
+                                                    )
                                                 ],
                                               ),
                                             ],
@@ -266,7 +300,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
           Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
             child: Text(getTranslated("METHOD_PAYMENT", context),
-              style: titilliumBold.copyWith(
+              style: poppinsRegular.copyWith(
                 color: ColorResources.BLACK
               )
             ),

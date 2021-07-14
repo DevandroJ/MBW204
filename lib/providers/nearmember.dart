@@ -5,6 +5,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/data/models/nearmember.dart';
@@ -13,14 +14,14 @@ import 'package:mbw204_club_ina/data/repository/nearmember.dart';
 enum NearMemberStatus { loading, loaded, empty, error }
 
 class NearMemberProvider with ChangeNotifier {
+  final SharedPreferences sharedPreferences;
   final NearMemberRepo nearMemberRepo;
   NearMemberProvider({ 
+    @required this.sharedPreferences,
     @required this.nearMemberRepo, 
   });
 
   GoogleMapController googleMapController;
-
-  String _nearMemberAddress;
 
   List<Marker> markers = [];
 
@@ -56,14 +57,14 @@ class NearMemberProvider with ChangeNotifier {
   Future updateNearMember(BuildContext context, PickResult position) async {
     markers.add(
       Marker(
-        markerId: MarkerId("currentPosition"),
+        markerId: MarkerId("nearMemberPosition"),
         position: LatLng(position.geometry.location.lat, position.geometry.location.lng),
         icon: BitmapDescriptor.defaultMarker,
       )
     );
     List<Placemark> placemarks = await placemarkFromCoordinates(position.geometry.location.lat, position.geometry.location.lng);
     Placemark place = placemarks[0]; 
-    _nearMemberAddress = "${place.thoroughfare} ${place.subThoroughfare} ${place.locality} ${place.postalCode}";
+    sharedPreferences.setString("nearMemberAddress", "${place.thoroughfare} ${place.subThoroughfare} ${place.locality} ${place.postalCode}");
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -75,5 +76,10 @@ class NearMemberProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String get nearMemberAddress => _nearMemberAddress ?? "Lokasi belum dipilih";
+  String get nearMemberAddress => sharedPreferences.getString("nearMemberAddress") ?? "Lokasi belum dipilih";
+
+  double get getCurrentNearMemberLat => sharedPreferences.getDouble("lat") ?? 0.0;
+  
+  double get getCurrentNearMemberLong => sharedPreferences.getDouble("long") ?? 0.0;
+  
 }

@@ -133,7 +133,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                         gestureRecognizers: Set()..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
                         myLocationEnabled: false,
                         initialCameraPosition: CameraPosition(
-                          target: LatLng(Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong),
+                          target: LatLng(nearMemberProvider.getCurrentNearMemberLat, nearMemberProvider.getCurrentNearMemberLong),
                           zoom: 15.0,
                         ),
                         markers: Set.from(nearMemberProvider.markers),

@@ -228,6 +228,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => VerifyScreen(
             accountName: inquiryRegisterModel.body.data.accountName,
             accountNumber: inquiryRegisterModel.body.accountNumber2,
+            bankFee: inquiryRegisterModel.body.data.bankFee,
             transactionId: inquiryRegisterModel.body.transactionId,
             productId: inquiryRegisterModel.body.productId,
             productPrice: inquiryRegisterModel.body.productPrice,
