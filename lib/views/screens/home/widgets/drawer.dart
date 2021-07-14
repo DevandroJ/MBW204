@@ -373,7 +373,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Text("Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
                             softWrap: true,
                             textAlign: TextAlign.justify,
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               height: 1.8
                             ),
                           ),

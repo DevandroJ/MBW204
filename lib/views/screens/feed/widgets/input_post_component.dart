@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/loader.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/feed/widgets/create_post_link.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-// import 'package:mbw204_club_ina/views/screens/feed/widgets/alert_component.dart';
 import 'package:mbw204_club_ina/views/screens/feed/widgets/create_post_doc.dart';
 import 'package:mbw204_club_ina/views/screens/feed/widgets/create_post_image.dart';
 import 'package:mbw204_club_ina/views/screens/feed/widgets/create_post_image_camera.dart';
@@ -32,8 +32,8 @@ class InputPostComponent extends StatefulWidget {
 
 class _InputPostComponentState extends State<InputPostComponent> {
   ImageSource imageSource;
-  List<Asset> images = List<Asset>();
-  List<Asset> resultList = List<Asset>();
+  List<Asset> images = [];
+  List<Asset> resultList = [];
   List<File> files = [];
 
   void uploadPic() async {
@@ -68,7 +68,7 @@ class _InputPostComponentState extends State<InputPostComponent> {
         source: ImageSource.camera,
         maxHeight: 480.0, 
         maxWidth: 640.0,
-        imageQuality: 70
+        imageQuality: 60
       );
       if(pickedFile != null) {
         Navigator.push(context, MaterialPageRoute(builder: (context) =>
@@ -79,6 +79,7 @@ class _InputPostComponentState extends State<InputPostComponent> {
       }
     }
     if(imageSource == ImageSource.gallery) {
+      files = [];
       resultList = await MultiImagePicker.pickImages(
         maxImages: 8,
         enableCamera: false, 
@@ -91,13 +92,10 @@ class _InputPostComponentState extends State<InputPostComponent> {
       resultList.forEach((imageAsset) async {
         String filePath = await FlutterAbsolutePath.getAbsolutePath(imageAsset.identifier);
         File compressedFile = await FlutterNativeImage.compressImage(filePath,
-          quality: 70, 
-          percentage: 70
+          quality: 60, 
+          percentage: 60
         );
-        File tempFile = File(compressedFile.path);
-        Future.delayed(Duration.zero, () {
-          setState(() => files.add(tempFile)); 
-        });
+        setState(() => files?.add(File(compressedFile?.path))); 
       });
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => CreatePostImageScreen(
         groupId: widget.groupId,
@@ -166,11 +164,18 @@ class _InputPostComponentState extends State<InputPostComponent> {
                     return CachedNetworkImage(
                     imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getUserProfilePic}",
                       imageBuilder: (BuildContext context, imageProvider) => CircleAvatar(
-                        backgroundColor: ColorResources.PRIMARY,
+                        backgroundColor: Colors.transparent,
                         backgroundImage: imageProvider,
                         radius: 20.0,
                       ),
-                      errorWidget: (context, url, error) => CircleAvatar(
+                      placeholder: (BuildContext context, String url) => CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: Loader(
+                          color: ColorResources.PRIMARY
+                        ),
+                        radius: 20.0,
+                      ),
+                      errorWidget: (BuildContext context, String url, dynamic error) => CircleAvatar(
                         backgroundColor: Colors.transparent,
                         backgroundImage: AssetImage('assets/images/profile.png'),
                         radius: 20.0,

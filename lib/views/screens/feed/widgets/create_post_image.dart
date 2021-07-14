@@ -33,7 +33,7 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
   bool validateC = false;
 
   Widget displaySinglePictures() {
-    File file = File(widget.files.first.path);
+    File file = File(widget?.files?.first?.path);
     return Container(
       height: 180.0,
       child: Image.file(file,

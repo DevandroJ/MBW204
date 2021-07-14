@@ -144,13 +144,13 @@ class _PostDocComponentState extends State<PostDocComponent> {
                                       if(status.isGranted) {
                                         String downloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
                                         String url = '${AppConstants.BASE_URL_IMG}${widget.medias[0].path}'; 
-                                        await FlutterDownloader.enqueue(
-                                          url: url, 
-                                          savedDir: downloadDir,
-                                          fileName: basename(widget.medias[0].path),
-                                          openFileFromNotification: true,
-                                          showNotification: true,
-                                        );   
+                                        // await FlutterDownloader.enqueue(
+                                        //   url: url, 
+                                        //   savedDir: downloadDir,
+                                        //   fileName: basename(widget.medias[0].path),
+                                        //   openFileFromNotification: true,
+                                        //   showNotification: true,
+                                        // );   
                                         showAnimatedDialog(
                                           context: context,
                                           barrierDismissible: true,

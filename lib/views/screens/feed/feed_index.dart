@@ -46,7 +46,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
       feedState.fetchGroupsSelf();
     });
   }
-  
+
   Future<bool> onWillPop() async {
     return (showDialog(context: context,
       builder: (context) => AlertDialog(
@@ -277,6 +277,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
                 if (feedState.g1.nextCursor != null) {
                   feedState.fetchGroupsMostRecentLoad(feedState.g1.nextCursor);
+                  feedState.g1.nextCursor = null;
                 }
               }
               return false;
@@ -306,6 +307,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           return NotificationListener<ScrollNotification>(
             child: RefreshIndicator(
               key: refreshIndicatorKey2,
+              backgroundColor: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.getWhiteToBlack(context),
               onRefresh: refresh,
               child: ListView.separated(
                 separatorBuilder: (BuildContext context, int i) {
@@ -334,6 +337,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
                 if (feedState.g2.nextCursor != null) {
                   feedState.fetchGroupsMostPopularLoad(feedState.g2.nextCursor);
+                  feedState.g2.nextCursor = null;
                 }
               }
               return false;
@@ -348,7 +352,10 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           }
           if (feedState.groupsSelfStatus == GroupsSelfStatus.empty) {
             return Center(
-              child: Text('Belum ada post')
+              child: Text(
+                getTranslated("THERE_IS_NO_POST", context),
+                style: poppinsRegular,
+              )
             );
           }
           if (feedState.groupsSelfStatus == GroupsSelfStatus.error) {
@@ -359,6 +366,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           return NotificationListener<ScrollNotification>(
             child: RefreshIndicator(
               key: refreshIndicatorKey3,
+              backgroundColor: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.getWhiteToBlack(context),
               onRefresh: refresh,
               child: ListView.separated(
                 separatorBuilder: (BuildContext context, int i) {
@@ -387,6 +396,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
                 if (feedState.g3.nextCursor != null) {
                   feedState.fetchGroupsSelfLoad(feedState.g3.nextCursor);
+                  feedState.g3.nextCursor = null;
                 }
               }
               return false;

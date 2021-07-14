@@ -5,10 +5,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/views/screens/inbox/detail.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:mbw204_club_ina/views/screens/inbox/detail.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
@@ -311,7 +311,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
 
                                                         Text(inboxProvider.inboxes[i].body,
                                                           textAlign: TextAlign.justify,
-                                                          style: titilliumRegular.copyWith(
+                                                          style: poppinsRegular.copyWith(
                                                             height: 1.4
                                                           ),
                                                         ),
@@ -343,7 +343,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                                     : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                                     ? "..."
                                                                     : "Whatsapp",
-                                                                    style: titilliumRegular.copyWith(
+                                                                    style: poppinsRegular.copyWith(
                                                                       color: ColorResources.WHITE
                                                                     ),
                                                                   ),
@@ -367,7 +367,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                                     : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                                     ? "..."
                                                                     : "Phone",
-                                                                    style: titilliumRegular.copyWith(
+                                                                    style: poppinsRegular.copyWith(
                                                                       color: ColorResources.WHITE
                                                                     ),
                                                                   )
@@ -450,7 +450,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                             : inboxProvider.inboxStatus == InboxStatus.error 
                             ? "..." 
                             : inboxProvider.inboxes[i].subject,
-                            style: titilliumRegular.copyWith(
+                            style: poppinsRegular.copyWith(
                               fontWeight: inboxProvider.inboxes[i].read 
                               ? FontWeight.normal 
                               : FontWeight.bold
@@ -470,7 +470,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                 overflow: inboxProvider.inboxes[i].subject == "Emergency" 
                               ? TextOverflow.fade
                               : TextOverflow.ellipsis,
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   height: 1.6
                                 ),
                                 textAlign: TextAlign.justify,
@@ -483,7 +483,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                               : inboxProvider.inboxStatus == InboxStatus.error 
                               ? "..."
                               : DateFormat('dd MMM yyyy kk:mm').format(inboxProvider.inboxes[i].created.add(Duration(hours: 7))),
-                                style: titilliumRegular.copyWith(
+                                style: poppinsRegular.copyWith(
                                   fontSize: 11.0
                                 ),
                               ),

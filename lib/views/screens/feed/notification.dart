@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:timeago/timeago.dart' as timeago;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/container.dart';
 import 'package:mbw204_club_ina/data/models/feed/notification.dart';

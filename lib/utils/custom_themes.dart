@@ -6,10 +6,10 @@ const poppinsRegular = TextStyle(
   fontSize: Dimensions.FONT_SIZE_DEFAULT,
 );
 
-const titilliumRegular = TextStyle(
-  fontFamily: 'TitilliumWeb',
-  fontSize: Dimensions.FONT_SIZE_DEFAULT,
-);
+// const poppinsRegular = TextStyle(
+//   fontFamily: 'TitilliumWeb',
+//   fontSize: Dimensions.FONT_SIZE_DEFAULT,
+// );
 
 const titilliumSemiBold = TextStyle(
   fontFamily: 'TitilliumWeb',

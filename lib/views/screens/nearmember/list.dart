@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -20,11 +19,6 @@ import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 
 class MemberNearScreen extends StatefulWidget {
-
-  final String whereFrom;
-  MemberNearScreen({
-    this.whereFrom
-  });
 
   @override
   _MemberNearScreenState createState() => _MemberNearScreenState();
@@ -47,9 +41,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
           ),
         ),
         backgroundColor: ColorResources.GRAY_LIGHT_PRIMARY,
-        leading: widget.whereFrom == "dashboard" 
-        ? SizedBox() 
-        : InkWell(
+        leading: InkWell(
           onTap: () => Navigator.of(context).pop(),
           child: Icon(
             Icons.arrow_back,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
@@ -48,10 +49,32 @@ class _NewsComponentState extends State<NewsComponent> {
             
             ListTile(
               dense: true,
-              leading: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage("${AppConstants.BASE_URL_FEED_IMG}/${widget.groupsBody[widget.i].user.profilePic.path}"),
-                radius: 20.0,
+              leading: CachedNetworkImage(
+                imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${widget.groupsBody[widget.i].user.profilePic.path}",
+                imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                  return CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: imageProvider,
+                    radius: 20.0,
+                  );                 
+                },
+                placeholder: (BuildContext context, String url) {
+                  return CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Loader(
+                      color: ColorResources.PRIMARY
+                    ),
+                    radius: 20.0,
+                  );   
+                
+                },
+                errorWidget: (BuildContext context, url, error) {
+                  return CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: AssetImage('assets/images/profile.png'),
+                    radius: 20.0 ,
+                  );      
+                },
               ),
               title: Text(widget.groupsBody[widget.i].user.nickname,
                 style: poppinsRegular.copyWith(

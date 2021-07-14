@@ -89,7 +89,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                     Container(
                       margin: EdgeInsets.only(bottom: 5.0),
                       child: SelectableText("Checkout Registrasi",
-                        style: titilliumRegular.copyWith(
+                        style: poppinsRegular.copyWith(
                           fontSize: 22.0,
                           fontWeight: FontWeight.bold,
                           color: ColorResources.WHITE,
@@ -117,7 +117,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                     child: Row(
                                       children: [
                                         SelectableText("Transaksi",
-                                          style: titilliumRegular.copyWith(
+                                          style: poppinsRegular.copyWith(
                                             fontSize: 16.0
                                           ),
                                         ),
@@ -127,7 +127,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             SelectableText("# ${widget.transactionId}",
-                                              style: titilliumRegular.copyWith(
+                                              style: poppinsRegular.copyWith(
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.bold
                                               )
@@ -147,7 +147,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                     child: Row(
                                       children: [
                                         SelectableText("Pembayaran Registrasi",
-                                          style: titilliumRegular.copyWith(
+                                          style: poppinsRegular.copyWith(
                                             fontSize: 16.0
                                           ),
                                         ),
@@ -157,7 +157,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             SelectableText(ConnexistHelper.formatCurrency(nominal),
-                                              style: titilliumRegular.copyWith(
+                                              style: poppinsRegular.copyWith(
                                                 fontSize: 16.0
                                               )
                                             )
@@ -171,7 +171,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                     child: Row(
                                       children: [
                                         SelectableText("Biaya Admin",
-                                          style: titilliumRegular.copyWith(
+                                          style: poppinsRegular.copyWith(
                                             fontSize: 16.0
                                           ),
                                         ),
@@ -181,7 +181,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             SelectableText(ConnexistHelper.formatCurrency(biayaAdmin),
-                                              style: titilliumRegular.copyWith(
+                                              style: poppinsRegular.copyWith(
                                                 fontSize: 16.0
                                               )
                                             )
@@ -206,7 +206,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                     child: Row(
                                       children: [
                                         SelectableText("Total Pembayaran",
-                                          style: titilliumRegular.copyWith(
+                                          style: poppinsRegular.copyWith(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16.0
                                           ),
@@ -217,7 +217,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               SelectableText(ConnexistHelper.formatCurrency(nominal + biayaAdmin),
-                                                style: titilliumRegular.copyWith(
+                                                style: poppinsRegular.copyWith(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16.0
                                                 )
@@ -254,7 +254,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                     );
                                   },
                                   child: Text("Kembali",
-                                    style: titilliumRegular.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.WHITE,
                                       fontWeight: FontWeight.bold
                                     ),
@@ -275,7 +275,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
                                 },
                                 child: Text("OK",
-                                  style: titilliumRegular.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     color: ColorResources.WHITE,
                                     fontWeight: FontWeight.bold
                                   ),
@@ -305,7 +305,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
           child: SelectableText(
             "Transfer ke Nomor " + widget.nameBank + " berikut ini :",
             textAlign: TextAlign.center,
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               fontSize: 18.0,
               color: ColorResources.BLACK,
               fontWeight: FontWeight.bold,
@@ -315,7 +315,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
         Container(
           margin: EdgeInsets.only(bottom: 5.0),
           child: SelectableText("${widget.noVa}",
-            style: titilliumRegular.copyWith(
+            style: poppinsRegular.copyWith(
               fontSize: 30.0,
               fontWeight: FontWeight.bold,
               color: Colors.black
@@ -347,7 +347,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                     }
                   },
                   child: Text("Cara Pembayaran",
-                    style: titilliumRegular.copyWith(
+                    style: poppinsRegular.copyWith(
                       color: ColorResources.BLACK
                     )
                   ),
@@ -376,7 +376,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                     }
                   },
                   child: Text("Lihat Tagihan",
-                    style: titilliumRegular.copyWith(
+                    style: poppinsRegular.copyWith(
                       color: ColorResources.BLACK
                     )
                   ),

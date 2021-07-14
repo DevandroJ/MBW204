@@ -244,7 +244,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     child: Consumer<LocalizationProvider>(
                                       builder: (BuildContext context, LocalizationProvider localizationProvider, Widget child) {
                                         return Text("${getTranslated("CHOOSE_LANGUAGE", context)} - ${localizationProvider.locale}",
-                                          style: titilliumRegular.copyWith(
+                                          style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ), 
                                         );

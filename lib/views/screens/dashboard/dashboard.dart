@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/feed/feed_index.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
 import 'package:mbw204_club_ina/views/screens/inboxv2/inbox.dart';
-import 'package:mbw204_club_ina/views/screens/nearMember/list.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/views/screens/event/event.dart';
@@ -24,7 +24,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
 
   List<Widget> screens = [
     HomePage(),
-    MemberNearScreen(whereFrom: "dashboard"),
+    FeedIndex(),
     SosScreen(),
     EventScreen(),
     InboxScreen(),

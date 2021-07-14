@@ -235,10 +235,10 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text("Bank Fee",
-                                                      style: titilliumRegular,
+                                                      style: poppinsRegular,
                                                     ),
                                                     Text(ConnexistHelper.formatCurrency(double.parse(widget.bankFee.toString())),
-                                                      style: titilliumRegular,
+                                                      style: poppinsRegular,
                                                     )
                                                   ],
                                                 ),
