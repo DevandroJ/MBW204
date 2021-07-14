@@ -1,7 +1,10 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/views/screens/ppob/cashout/confirmation.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -1054,7 +1057,7 @@ class PPOBProvider with ChangeNotifier {
     }
   }
 
-  Future inquiryDisbursement(BuildContext context, int amount) async {
+  Future inquiryDisbursement(BuildContext context, int amount, int price) async {
     setStateDisbursementStatus(InquiryDisbursementStatus.loading);
     try {
       Dio dio = await DioManager.shared.getClient(context);
@@ -1063,6 +1066,11 @@ class PPOBProvider with ChangeNotifier {
       });
       InquiryDisbursementModel inquiryDisbursementModel = InquiryDisbursementModel.fromJson(res.data);
       InquiryDisbursementBody inquiryDisbursementBody = inquiryDisbursementModel.body;
+      Navigator.push(context, MaterialPageRoute(builder: (context) => CashOutInformationScreen(
+        adminFee: inquiryDisbursementBody.totalAdminFee, 
+        totalDeduction: price,
+        token: inquiryDisbursementBody.token,
+      )));
       setStateDisbursementStatus(InquiryDisbursementStatus.loaded);
       return inquiryDisbursementBody;
     } on DioError catch(e) {
@@ -1070,11 +1078,26 @@ class PPOBProvider with ChangeNotifier {
       print(e?.response?.data);
       setStateDisbursementStatus(InquiryDisbursementStatus.error);
       if(e?.response?.statusCode == 400)
-        setStateDisbursementStatus(InquiryDisbursementStatus.error);
+        Fluttertoast.showToast(
+          msg: "Insufficient wallet funds. Your Balance : ${ConnexistHelper.formatCurrency(double.parse(balance.toString()))}",
+          backgroundColor: ColorResources.ERROR,
+          toastLength: Toast.LENGTH_LONG,
+          textColor: ColorResources.WHITE
+        );
         if(e?.response?.data["code"] == 411) 
-          throw ServerErrorException("Insufficient wallet funds. Your Balance : ${ConnexistHelper.formatCurrency(double.parse(balance.toString()))}");
+          Fluttertoast.showToast(
+            msg: "Insufficient wallet funds. Your Balance : ${ConnexistHelper.formatCurrency(double.parse(balance.toString()))}",
+            backgroundColor: ColorResources.ERROR,
+            toastLength: Toast.LENGTH_LONG,
+            textColor: ColorResources.WHITE
+          );
         else 
-          throw ServerErrorException(e?.response?.data["message"]);
+          Fluttertoast.showToast(
+            msg: getTranslated("THERE_WAS_PROBLEM", context),
+            backgroundColor: ColorResources.ERROR,
+            toastLength: Toast.LENGTH_LONG,
+            textColor: ColorResources.WHITE
+          );
     } catch(e) {
       setStateDisbursementStatus(InquiryDisbursementStatus.error);
       print(e);

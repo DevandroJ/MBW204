@@ -29,26 +29,14 @@ class _CashoutScreenState extends State<CashoutScreen> {
       int amount = price;
       if(amount == 0) {
         Fluttertoast.showToast(
-          msg: "PLEASE_SELECT_AMOUNT",
+          msg: getTranslated("PLEASE_SELECT_AMOUNT", context),
           backgroundColor: ColorResources.ERROR,
           toastLength: Toast.LENGTH_LONG,
           textColor: ColorResources.WHITE
         );
         return;
       }
-      InquiryDisbursementBody inquiryDisbursementBody = await Provider.of<PPOBProvider>(context, listen: false).inquiryDisbursement(context, amount);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => CashOutInformationScreen(
-        adminFee: inquiryDisbursementBody.totalAdminFee, 
-        totalDeduction: price,
-        token: inquiryDisbursementBody.token,
-      )));
-    } on ServerErrorException catch(e) {
-      Fluttertoast.showToast(
-        msg: getTranslated(e.toString(), context),
-        backgroundColor: ColorResources.ERROR,
-        toastLength: Toast.LENGTH_LONG,
-        textColor: ColorResources.WHITE
-      );
+      await Provider.of<PPOBProvider>(context, listen: false).inquiryDisbursement(context, amount, price);
     } catch(e) {
       print(e);
     }

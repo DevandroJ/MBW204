@@ -116,9 +116,9 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                     ),
                                     child: Row(
                                       children: [
-                                        SelectableText("Transaksi",
+                                        SelectableText("ID Transaksi",
                                           style: poppinsRegular.copyWith(
-                                            fontSize: 16.0
+                                            fontSize: 14.0
                                           ),
                                         ),
                                         Expanded(
@@ -128,7 +128,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
                                           children: [
                                             SelectableText("# ${widget.transactionId}",
                                               style: poppinsRegular.copyWith(
-                                                fontSize: 16.0,
+                                                fontSize: 14.0,
                                                 fontWeight: FontWeight.bold
                                               )
                                             )
@@ -328,7 +328,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
             Flexible(
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                 height: 50.0,
                 child: TextButton(
                   style: TextButton.styleFrom(
@@ -357,7 +357,7 @@ class _CheckoutRegistrasiScreenState extends State<CheckoutRegistrasiScreen> wit
             Flexible(
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+                margin: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                 height: 50.0,
                 child: TextButton(
                   style: TextButton.styleFrom(

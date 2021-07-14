@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/ppob/cashout/list.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/providers/warung.dart';
@@ -61,6 +62,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
                         drawerItems(context, null, "store", Images.shopping_image, getTranslated("MY_STORE", context)),
+                        drawerItems(context, null, "cashout", Images.cash_out, getTranslated("CASH_OUT", context)),
                         drawerItems(context, SettingsScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
                         drawerItems(context, null, "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
                         drawerItems(context, null, "logout", Images.logout_drawer, getTranslated("LOGOUT", context))
@@ -396,6 +398,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 }
               );
             }
+          } else if(menu == "cashout") {
+            Navigator.push(context,  MaterialPageRoute(builder: (context) => CashoutScreen()));
           } else if(menu == "tos") {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
               title: 'Term of Service',

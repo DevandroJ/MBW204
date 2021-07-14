@@ -80,7 +80,7 @@ class ColorResources {
   static const Color BTN_PRIMARY_SECOND = Color(0xFFDD0000);
   static const Color BLUE_GREY = Color(0xffECEFF1);
   static const Color WHITE = Color(0xffFFFFFF);
-  static const Color PRIMARY = Color(0xFFaf162b);
+  static const Color PRIMARY = Color(0xFFDD0000);
   static const Color PINK_PRIMARY = Color(0xFFf66a6a);
   static const Color BG_GREY = Color(0xffF5F5F5);
   static const Color DIM_GRAY = Color(0xff6D6D6D);
