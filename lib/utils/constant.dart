@@ -6,6 +6,7 @@ import 'package:mbw204_club_ina/data/models/language.dart';
 class AppConstants {
   static const String BASE_URL = 'https://api-w204.connexist.id';
   static const String BASE_URL_DISBURSEMENT_DENOM = 'https://pg-sandbox.connexist.id/disbursement/pub/v1/disbursement/denom';
+  static const String BASE_URL_ECOMMERCE_DELIVERY_TIMESLOTS = 'https://smsapi.connexist.com:8443/commerce-indomini/pub/v1/ninja/deliveryTimeSlots';
   static const String BASE_URL_DISBURSEMENT_BANK = 'https://pg-sandbox.connexist.id/disbursement/pub/v1/disbursement/bank';
   static const String BASE_URL_DISBURSEMENT_EMONEY = 'https://pg-sandbox.connexist.id/disbursement/pub/v1/disbursement/emoney';
   static const String BASE_URL_DISBURSEMENT = 'https://pg-sandbox.connexist.id/disbursement/api/v1';
@@ -20,6 +21,9 @@ class AppConstants {
   static const String BASE_URL_PAYMENT_BILLING = 'https://pg-sandbox.connexist.id/payment/page/guidance';
   static const String BASE_URL_HELP_PAYMENT = 'https://pg-sandbox.connexist.id/payment/help/howto';
   static const String BASE_URL_HELP_INBOX_PAYMENT = 'https://pg-sandbox.connexist.id/payment/help/howto/trx';
+  static const String BASE_URL_ECOMMERCE_PICKUP_TIMESLOTS = 'https://smsapi.connexist.com:8443/commerce-indomini/pub/v1/ninja/pickupTimeSlots';
+  static const String BASE_URL_ECOMMERCE_DIMENSTION_SIZE = 'https://smsapi.connexist.com:8443/commerce-indomini/pub/v1/ninja/dimensionSizes';
+  static const String BASE_URL_ECOMMERCE_APPROXIMATELY_VOLUMES = 'https://smsapi.connexist.com:8443/commerce-indomini/pub/v1/ninja/pickupApproxVolumes';
 
   static const String X_CONTEXT_ID = '342790713173';
   static const String MOBILE_UA = 'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36';

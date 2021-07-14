@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-AddressModel addressModelFromJson(String str) => AddressModel.fromJson(json.decode(str));
-
-String addressModelToJson(AddressModel data) => json.encode(data.toJson());
-
 class AddressModel {
   AddressModel({
     this.code,
@@ -29,15 +23,6 @@ class AddressModel {
     body: json["body"] == null ? null : List<AddressList>.from(json["body"].map((x) => AddressList.fromJson(x))),
     error: json["error"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
-    "message": message == null ? null : message,
-    "count": count == null ? null : count,
-    "first": first == null ? null : first,
-    "body": body == null ? null : List<dynamic>.from(body.map((x) => x.toJson())),
-    "error": error,
-  };
 }
 
 class AddressList {
@@ -48,6 +33,7 @@ class AddressList {
     this.postalCode,
     this.province,
     this.city,
+    this.village,
     this.subdistrict,
     this.defaultLocation,
     this.location,
@@ -61,6 +47,7 @@ class AddressList {
   String postalCode;
   String province;
   String city;
+  String village;
   String subdistrict;
   bool defaultLocation;
   List<double> location;
@@ -74,24 +61,11 @@ class AddressList {
     postalCode: json["postalCode"] == null ? null : json["postalCode"],
     province: json["province"] == null ? null : json["province"],
     city: json["city"] == null ? null : json["city"],
+    village: json["village"] == null ? null : json["village"],
     subdistrict: json["subdistrict"] == null ? null : json["subdistrict"],
     defaultLocation: json["defaultLocation"] == null ? null : json["defaultLocation"],
     location: json["location"] == null ? null : List<double>.from(json["location"].map((x) => x.toDouble())),
     name: json["name"] == null ? null : json["name"],
     classId: json["classId"] == null ? null : json["classId"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "phoneNumber": phoneNumber == null ? null : phoneNumber,
-    "address": address == null ? null : address,
-    "postalCode": postalCode == null ? null : postalCode,
-    "province": province == null ? null : province,
-    "city": city == null ? null : city,
-    "subdistrict": subdistrict == null ? null : subdistrict,
-    "defaultLocation": defaultLocation == null ? null : defaultLocation,
-    "location": location == null ? null : List<dynamic>.from(location.map((x) => x)),
-    "name": name == null ? null : name,
-    "classId": classId == null ? null : classId,
-  };
 }

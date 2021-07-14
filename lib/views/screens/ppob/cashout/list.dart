@@ -4,14 +4,11 @@ import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/data/models/ppob/cashout/inquiry.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
-import 'package:mbw204_club_ina/views/screens/ppob/cashout/confirmation.dart';
 
 class CashoutScreen extends StatefulWidget {
   @override

@@ -142,6 +142,7 @@ class TransactionWarungUnpaidList {
 class PaymentChannel {
   PaymentChannel({
     this.channel,
+    this.category,
     this.name,
     this.guide,
     this.paymentFee,
@@ -149,26 +150,29 @@ class PaymentChannel {
   });
 
   String channel;
+  String category;
   String name;
   String guide;
   double paymentFee;
   String logo;
 
   factory PaymentChannel.fromJson(Map<String, dynamic> json) => PaymentChannel(
-        channel: json["channel"] == null ? null : json["channel"],
-        name: json["name"] == null ? null : json["name"],
-        guide: json["guide"] == null ? null : json["guide"],
-        paymentFee: json["paymentFee"] == null ? null : json["paymentFee"],
-        logo: json["logo"] == null ? null : json["logo"],
-      );
+    channel: json["channel"] == null ? null : json["channel"],
+    category: json["category"] == null ? null : json["category"],
+    name: json["name"] == null ? null : json["name"],
+    guide: json["guide"] == null ? null : json["guide"],
+    paymentFee: json["paymentFee"] == null ? null : json["paymentFee"],
+    logo: json["logo"] == null ? null : json["logo"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "channel": channel == null ? null : channel,
-        "name": name == null ? null : name,
-        "guide": guide == null ? null : guide,
-        "paymentFee": paymentFee == null ? null : paymentFee,
-        "logo": logo == null ? null : logo,
-      };
+    "channel": channel == null ? null : channel,
+    "category": channel == null ? null : channel,
+    "name": name == null ? null : name,
+    "guide": guide == null ? null : guide,
+    "paymentFee": paymentFee == null ? null : paymentFee,
+    "logo": logo == null ? null : logo,
+  };
 }
 
 class PaymentRef {

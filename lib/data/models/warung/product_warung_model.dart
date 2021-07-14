@@ -3,10 +3,6 @@ import 'dart:convert';
 import './category_model.dart';
 import './seller_store_model.dart';
 
-ProductWarungModel productWarungModelFromJson(String str) => ProductWarungModel.fromJson(json.decode(str));
-
-String productWarungModelToJson(ProductWarungModel data) => json.encode(data.toJson());
-
 class ProductWarungModel {
   ProductWarungModel({
     this.code,
@@ -31,13 +27,6 @@ class ProductWarungModel {
       body: json["body"] == null ? null : List<ProductWarungList>.from(json["body"].map((x) => ProductWarungList.fromJson(x))),
     );
 
-  Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
-    "message": message == null ? null : message,
-    "count": count == null ? null : count,
-    "first": first == null ? null : first,
-    "body": body == null ? null : List<dynamic>.from(body.map((x) => x.toJson())),
-  };
 }
 
 class ProductWarungList {
@@ -109,27 +98,6 @@ class ProductWarungList {
         classId: json["classId"] == null ? null : json["classId"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "category": category == null ? null : category.toJson(),
-        "price": price == null ? null : price,
-        "adminCharge": adminCharge == null ? null : adminCharge,
-        "pictures": pictures == null
-            ? null
-            : List<dynamic>.from(pictures.map((x) => x.toJson())),
-        "owner": owner == null ? null : owner,
-        "store": store == null ? null : store.toJson(),
-        "weight": weight == null ? null : weight,
-        "description": description == null ? null : description,
-        "stock": stock == null ? null : stock,
-        "condition": condition == null ? null : condition,
-        "minOrder": minOrder == null ? null : minOrder,
-        "status": status == null ? null : status,
-        "stats": stats == null ? null : stats.toJson(),
-        "discount": discount == null ? null : discount.toJson(),
-        "classId": classId == null ? null : classId,
-      };
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
@@ -177,15 +145,6 @@ class CategoryProductWarung {
     numOfProducts: json["numOfProducts"] == null ? null : json["numOfProducts"],
     classId: json["classId"] == null ? null : json["classId"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-    "picture": picture == null ? null : picture.toJson(),
-    "childs": childs == null ? null : List<dynamic>.from(childs.map((x) => x)),
-    "numOfProducts": numOfProducts == null ? null : numOfProducts,
-    "classId": classId == null ? null : classId,
-  };
 }
 
 class PictureProductWarung {
@@ -352,27 +311,6 @@ class Store {
     supportedCouriers: json["supportedCouriers"] == null ? null : List<SupportedCourier>.from(json["supportedCouriers"].map((x) => SupportedCourier.fromJson(x))),
     classId: json["classId"] == null ? null : json["classId"],
   );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "owner": owner == null ? null : owner,
-        "name": name == null ? null : name,
-        "description": description == null ? null : description,
-        "open": open == null ? null : open,
-        "picture": picture == null ? null : picture.toJson(),
-        "status": status == null ? null : status,
-        "province": province == null ? null : province,
-        "city": city == null ? null : city,
-        "postalCode": postalCode == null ? null : postalCode,
-        "address": address == null ? null : address,
-        "location": location == null
-            ? null
-            : List<dynamic>.from(location.map((x) => x)),
-        "supportedCouriers": supportedCouriers == null
-            ? null
-            : List<dynamic>.from(supportedCouriers.map((x) => x.toJson())),
-        "classId": classId == null ? null : classId,
-      };
 }
 
 class SupportedCourierProduct {

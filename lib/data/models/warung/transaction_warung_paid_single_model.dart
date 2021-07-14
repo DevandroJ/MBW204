@@ -1,10 +1,4 @@
-import 'dart:convert';
-
 import 'product_warung_model.dart';
-
-TransactionWarungPaidSingleModel transactionWarungPaidSingleModelFromJson(String str) => TransactionWarungPaidSingleModel.fromJson(json.decode(str));
-
-String transactionWarungPaidSingleModelToJson(TransactionWarungPaidSingleModel data) => json.encode(data.toJson());
 
 class TransactionWarungPaidSingleModel {
   TransactionWarungPaidSingleModel({
@@ -19,23 +13,14 @@ class TransactionWarungPaidSingleModel {
   TransactionWarungPaidSingle body;
   dynamic error;
 
-  factory TransactionWarungPaidSingleModel.fromJson(
-          Map<String, dynamic> json) =>
-      TransactionWarungPaidSingleModel(
-        code: json["code"] == null ? null : json["code"],
-        message: json["message"] == null ? null : json["message"],
-        body: json["body"] == null
-            ? null
-            : TransactionWarungPaidSingle.fromJson(json["body"]),
-        error: json["error"],
-      );
+  factory TransactionWarungPaidSingleModel.fromJson(Map<String, dynamic> json) =>
+  TransactionWarungPaidSingleModel(
+    code: json["code"] == null ? null : json["code"],
+    message: json["message"] == null ? null : json["message"],
+    body: json["body"] == null ? null : TransactionWarungPaidSingle.fromJson(json["body"]),
+    error: json["error"],
+  );
 
-  Map<String, dynamic> toJson() => {
-        "code": code == null ? null : code,
-        "message": message == null ? null : message,
-        "body": body == null ? null : body.toJson(),
-        "error": error,
-      };
 }
 
 class TransactionWarungPaidSingle {
@@ -54,8 +39,8 @@ class TransactionWarungPaidSingle {
     this.created,
     this.doneDate,
     this.wayBill,
-    this.totalPrice,
     this.classId,
+    this.sellerProductPrice,
     this.totalProductPrice,
   });
 
@@ -73,68 +58,31 @@ class TransactionWarungPaidSingle {
   String created;
   String doneDate;
   String wayBill;
-  double totalPrice;
   String classId;
+  double sellerProductPrice;
   double totalProductPrice;
 
   factory TransactionWarungPaidSingle.fromJson(Map<String, dynamic> json) =>
-      TransactionWarungPaidSingle(
-        id: json["id"] == null ? null : json["id"],
-        refId: json["refId"] == null ? null : json["refId"],
-        trxId: json["trxId"] == null ? null : json["trxId"],
-        storeId: json["storeId"] == null ? null : json["storeId"],
-        store: json["store"] == null ? null : Store.fromJson(json["store"]),
-        orderStatus: json["orderStatus"] == null ? null : json["orderStatus"],
-        deliveryCost: json["deliveryCost"] == null
-            ? null
-            : TransactionWarungPaidSingleDeliveryCost.fromJson(
-                json["deliveryCost"]),
-        invoiceNo: json["invoiceNo"] == null ? null : json["invoiceNo"],
-        products: json["products"] == null
-            ? null
-            : List<TransactionWarungPaidSingleProductElement>.from(
-                json["products"].map((x) =>
-                    TransactionWarungPaidSingleProductElement.fromJson(x))),
-        destShippingAddress: json["destShippingAddress"] == null
-            ? null
-            : TransactionWarungPaidSingleDestShippingAddress.fromJson(
-                json["destShippingAddress"]),
-        user: json["user"] == null
-            ? null
-            : TransactionWarungPaidSingleUser.fromJson(json["user"]),
-        created: json["created"] == null ? null : json["created"],
-        doneDate: json["doneDate"] == null ? null : json["doneDate"],
-        wayBill: json["wayBill"] == null ? null : json["wayBill"],
-        totalPrice: json["totalPrice"] == null ? null : json["totalPrice"],
-        classId: json["classId"] == null ? null : json["classId"],
-        totalProductPrice: json["totalProductPrice"] == null
-            ? null
-            : json["totalProductPrice"],
-      );
+    TransactionWarungPaidSingle(
+      id: json["id"] == null ? null : json["id"],
+      refId: json["refId"] == null ? null : json["refId"],
+      trxId: json["trxId"] == null ? null : json["trxId"],
+      storeId: json["storeId"] == null ? null : json["storeId"],
+      store: json["store"] == null ? null : Store.fromJson(json["store"]),
+      orderStatus: json["orderStatus"] == null ? null : json["orderStatus"],
+      deliveryCost: json["deliveryCost"] == null ? null : TransactionWarungPaidSingleDeliveryCost.fromJson(json["deliveryCost"]),
+      invoiceNo: json["invoiceNo"] == null ? null : json["invoiceNo"],
+      products: json["products"] == null ? null : List<TransactionWarungPaidSingleProductElement>.from(json["products"].map((x) => TransactionWarungPaidSingleProductElement.fromJson(x))),
+      destShippingAddress: json["destShippingAddress"] == null ? null : TransactionWarungPaidSingleDestShippingAddress.fromJson(json["destShippingAddress"]),
+      user: json["user"] == null ? null : TransactionWarungPaidSingleUser.fromJson(json["user"]),
+      created: json["created"] == null ? null : json["created"],
+      doneDate: json["doneDate"] == null ? null : json["doneDate"],
+      wayBill: json["wayBill"] == null ? null : json["wayBill"],
+      classId: json["classId"] == null ? null : json["classId"],
+      sellerProductPrice: json["sellerProductPrice"] == null ? null : json["sellerProductPrice"],
+      totalProductPrice: json["totalProductPrice"] == null ? null : json["totalProductPrice"],
+    );
 
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "refId": refId == null ? null : refId,
-        "trxId": trxId == null ? null : trxId,
-        "storeId": storeId == null ? null : storeId,
-        "store": store == null ? null : store.toJson(),
-        "orderStatus": orderStatus == null ? null : orderStatus,
-        "deliveryCost": deliveryCost == null ? null : deliveryCost.toJson(),
-        "invoiceNo": invoiceNo == null ? null : invoiceNo,
-        "products": products == null
-            ? null
-            : List<dynamic>.from(products.map((x) => x.toJson())),
-        "destShippingAddress":
-            destShippingAddress == null ? null : destShippingAddress.toJson(),
-        "user": user == null ? null : user.toJson(),
-        "created": created == null ? null : created,
-        "doneDate": doneDate == null ? null : doneDate,
-        "wayBill": wayBill == null ? null : wayBill,
-        "totalPrice": totalPrice == null ? null : totalPrice,
-        "classId": classId == null ? null : classId,
-        "totalProductPrice":
-            totalProductPrice == null ? null : totalProductPrice,
-      };
 }
 
 class TransactionWarungPaidSingleDeliveryCost {
@@ -144,6 +92,7 @@ class TransactionWarungPaidSingleDeliveryCost {
     this.serviceName,
     this.serviceDesc,
     this.price,
+    this.sellerPrice,
     this.estimateDays,
     this.classId,
   });
@@ -153,31 +102,21 @@ class TransactionWarungPaidSingleDeliveryCost {
   String serviceName;
   String serviceDesc;
   double price;
+  double sellerPrice;
   String estimateDays;
   String classId;
 
-  factory TransactionWarungPaidSingleDeliveryCost.fromJson(
-          Map<String, dynamic> json) =>
-      TransactionWarungPaidSingleDeliveryCost(
-        courierId: json["courierId"] == null ? null : json["courierId"],
-        courierName: json["courierName"] == null ? null : json["courierName"],
-        serviceName: json["serviceName"] == null ? null : json["serviceName"],
-        serviceDesc: json["serviceDesc"] == null ? null : json["serviceDesc"],
-        price: json["price"] == null ? null : json["price"],
-        estimateDays:
-            json["estimateDays"] == null ? null : json["estimateDays"],
-        classId: json["classId"] == null ? null : json["classId"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "courierId": courierId == null ? null : courierId,
-        "courierName": courierName == null ? null : courierName,
-        "serviceName": serviceName == null ? null : serviceName,
-        "serviceDesc": serviceDesc == null ? null : serviceDesc,
-        "price": price == null ? null : price,
-        "estimateDays": estimateDays == null ? null : estimateDays,
-        "classId": classId == null ? null : classId,
-      };
+  factory TransactionWarungPaidSingleDeliveryCost.fromJson( Map<String, dynamic> json) =>
+    TransactionWarungPaidSingleDeliveryCost(
+      courierId: json["courierId"] == null ? null : json["courierId"],
+      courierName: json["courierName"] == null ? null : json["courierName"],
+      serviceName: json["serviceName"] == null ? null : json["serviceName"],
+      serviceDesc: json["serviceDesc"] == null ? null : json["serviceDesc"],
+      price: json["price"] == null ? null : json["price"],
+      sellerPrice: json["sellerPrice"] == null ? null : json["sellerPrice"],
+      estimateDays: json["estimateDays"] == null ? null : json["estimateDays"],
+      classId: json["classId"] == null ? null : json["classId"],
+    );
 }
 
 class TransactionWarungPaidSingleDestShippingAddress {
@@ -232,6 +171,7 @@ class TransactionWarungPaidSingleProductElement {
     this.product,
     this.storeId,
     this.quantity,
+    this.sellerPrice,
     this.price,
     this.note,
     this.classId,
@@ -241,40 +181,29 @@ class TransactionWarungPaidSingleProductElement {
   TransactionWarungPaidSingleProductProduct product;
   String storeId;
   int quantity;
+  double sellerPrice;
   double price;
   String note;
   String classId;
 
-  factory TransactionWarungPaidSingleProductElement.fromJson(
-          Map<String, dynamic> json) =>
-      TransactionWarungPaidSingleProductElement(
-        productId: json["productId"] == null ? null : json["productId"],
-        product: json["product"] == null
-            ? null
-            : TransactionWarungPaidSingleProductProduct.fromJson(
-                json["product"]),
-        storeId: json["storeId"] == null ? null : json["storeId"],
-        quantity: json["quantity"] == null ? null : json["quantity"],
-        price: json["price"] == null ? null : json["price"],
-        note: json["note"] == null ? null : json["note"],
-        classId: json["classId"] == null ? null : json["classId"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "productId": productId == null ? null : productId,
-        "product": product == null ? null : product.toJson(),
-        "storeId": storeId == null ? null : storeId,
-        "quantity": quantity == null ? null : quantity,
-        "price": price == null ? null : price,
-        "note": note == null ? null : note,
-        "classId": classId == null ? null : classId,
-      };
+  factory TransactionWarungPaidSingleProductElement.fromJson(Map<String, dynamic> json) =>
+    TransactionWarungPaidSingleProductElement(
+      productId: json["productId"] == null ? null : json["productId"],
+      product: json["product"] == null ? null : TransactionWarungPaidSingleProductProduct.fromJson(json["product"]),
+      storeId: json["storeId"] == null ? null : json["storeId"],
+      quantity: json["quantity"] == null ? null : json["quantity"],
+      sellerPrice: json["sellerPrice"] == null ? null : json["sellerPrice"],
+      price: json["price"] == null ? null : json["price"],
+      note: json["note"] == null ? null : json["note"],
+      classId: json["classId"] == null ? null : json["classId"],
+    );
 }
 
 class TransactionWarungPaidSingleProductProduct {
   TransactionWarungPaidSingleProductProduct({
     this.id,
     this.name,
+    this.sellerPrice,
     this.price,
     this.pictures,
     this.weight,
@@ -287,6 +216,7 @@ class TransactionWarungPaidSingleProductProduct {
 
   String id;
   String name;
+  double sellerPrice;
   double price;
   List<TransactionWarungPaidSinglePicture> pictures;
   int weight;
@@ -296,42 +226,20 @@ class TransactionWarungPaidSingleProductProduct {
   TransactionWarungPaidSingleStats stats;
   String classId;
 
-  factory TransactionWarungPaidSingleProductProduct.fromJson(
-          Map<String, dynamic> json) =>
-      TransactionWarungPaidSingleProductProduct(
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
-        price: json["price"] == null ? null : json["price"],
-        pictures: json["pictures"] == null
-            ? null
-            : List<TransactionWarungPaidSinglePicture>.from(json["pictures"]
-                .map((x) => TransactionWarungPaidSinglePicture.fromJson(x))),
-        weight: json["weight"] == null ? null : json["weight"],
-        discount: json["discount"] == null
-            ? null
-            : TransactionWarungPaidSingleDiscount.fromJson(json["discount"]),
-        stock: json["stock"] == null ? null : json["stock"],
-        minOrder: json["minOrder"] == null ? null : json["minOrder"],
-        stats: json["stats"] == null
-            ? null
-            : TransactionWarungPaidSingleStats.fromJson(json["stats"]),
-        classId: json["classId"] == null ? null : json["classId"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "price": price == null ? null : price,
-        "pictures": pictures == null
-            ? null
-            : List<dynamic>.from(pictures.map((x) => x.toJson())),
-        "weight": weight == null ? null : weight,
-        "discount": discount == null ? null : discount.toJson(),
-        "stock": stock == null ? null : stock,
-        "minOrder": minOrder == null ? null : minOrder,
-        "stats": stats == null ? null : stats.toJson(),
-        "classId": classId == null ? null : classId,
-      };
+  factory TransactionWarungPaidSingleProductProduct.fromJson(Map<String, dynamic> json) =>
+    TransactionWarungPaidSingleProductProduct(
+      id: json["id"] == null ? null : json["id"],
+      name: json["name"] == null ? null : json["name"],
+      sellerPrice: json["sellerPrice"] == null ? null : json["sellerPrice"],
+      price: json["price"] == null ? null : json["price"],
+      pictures: json["pictures"] == null ? null : List<TransactionWarungPaidSinglePicture>.from(json["pictures"].map((x) => TransactionWarungPaidSinglePicture.fromJson(x))),
+      weight: json["weight"] == null ? null : json["weight"],
+      discount: json["discount"] == null ? null : TransactionWarungPaidSingleDiscount.fromJson(json["discount"]),
+      stock: json["stock"] == null ? null : json["stock"],
+      minOrder: json["minOrder"] == null ? null : json["minOrder"],
+      stats: json["stats"] == null ? null : TransactionWarungPaidSingleStats.fromJson(json["stats"]),
+      classId: json["classId"] == null ? null : json["classId"],
+    );
 }
 
 class TransactionWarungPaidSingleDiscount {

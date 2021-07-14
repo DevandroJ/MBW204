@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'product_warung_model.dart';
 import 'seller_store_model.dart';
 
-ProductSingleWarungModel productSingleWarungModelFromJson(String str) => ProductSingleWarungModel.fromJson(json.decode(str));
-
-String productSingleWarungModelToJson(ProductSingleWarungModel data) => json.encode(data.toJson());
 
 class ProductSingleWarungModel {
   ProductSingleWarungModel({
@@ -24,11 +21,6 @@ class ProductSingleWarungModel {
       body: json["body"] == null ? null : ProductWarungSingle.fromJson(json["body"]),
     );
 
-  Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
-    "message": message == null ? null : message,
-    "body": body == null ? null : body.toJson(),
-  };
 }
 
 class ProductWarungSingle {
@@ -49,6 +41,10 @@ class ProductWarungSingle {
     this.status,
     this.stats,
     this.discount,
+    this.harmful,
+    this.liquid, 
+    this.flammable,
+    this.fragile,
     this.classId,
   });
 
@@ -68,6 +64,10 @@ class ProductWarungSingle {
   int status;
   Stats stats;
   DiscountSingleProduct discount;
+  bool harmful;
+  bool liquid;
+  bool flammable;
+  bool fragile;
   String classId;
 
   factory ProductWarungSingle.fromJson(Map<String, dynamic> json) =>
@@ -88,28 +88,13 @@ class ProductWarungSingle {
     status: json["status"] == null ? null : json["status"],
     stats: json["stats"] == null ? null : Stats.fromJson(json["stats"]),
     discount: json["discount"] == null ? null : DiscountSingleProduct.fromJson(json["discount"]),
+    harmful:  json["harmful"] == null ? null : json["harmful"],
+    flammable: json["flammable"] == null ? null : json["flammable"],
+    fragile: json["fragile"] == null ? null : json["fragile"],
+    liquid: json["liquid"] == null ? null : json["liquid"],
     classId: json["classId"] == null ? null : json["classId"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-    "category": category == null ? null : category.toJson(),
-    "price": price == null ? null : price,
-    "adminCharge": adminCharge == null ? null : adminCharge,
-    "pictures": pictures == null ? null : List<dynamic>.from(pictures.map((x) => x.toJson())),
-    "owner": owner == null ? null : owner,
-    "store": store == null ? null : store.toJson(),
-    "weight": weight == null ? null : weight,
-    "description": description == null ? null : description,
-    "stock": stock == null ? null : stock,
-    "condition": condition == null ? null : condition,
-    "minOrder": minOrder == null ? null : minOrder,
-    "status": status == null ? null : status,
-    "stats": stats == null ? null : stats.toJson(),
-    "discount": discount == null ? null : discount.toJson(),
-    "classId": classId == null ? null : classId,
-  };
 }
 
 class CategoryProductWarungSingle {
@@ -139,14 +124,7 @@ class CategoryProductWarungSingle {
     classId: json["classId"] == null ? null : json["classId"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "name": name == null ? null : name,
-    "picture": picture == null ? null : picture.toJson(),
-    "childs": childs == null ? null : List<dynamic>.from(childs.map((x) => x)),
-    "numOfProducts": numOfProducts == null ? null : numOfProducts,
-    "classId": classId == null ? null : classId,
-  };
+
 }
 
 class PictureProductWarungSingle {
@@ -311,23 +289,6 @@ class StoreProductWarungSingle {
     supportedCouriers: json["supportedCouriers"] == null ? null : List<SupportedCourierProductWarungSingle>.from(json["supportedCouriers"].map((x) => SupportedCourierProductWarungSingle.fromJson(x))),
     classId: json["classId"] == null ? null : json["classId"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "owner": owner == null ? null : owner,
-    "name": name == null ? null : name,
-    "description": description == null ? null : description,
-    "open": open == null ? null : open,
-    "picture": picture == null ? null : picture.toJson(),
-    "status": status == null ? null : status,
-    "province": province == null ? null : province,
-    "city": city == null ? null : city,
-    "postalCode": postalCode == null ? null : postalCode,
-    "address": address == null ? null : address,
-    "location": location == null ? null : List<dynamic>.from(location.map((x) => x)),
-    "supportedCouriers": supportedCouriers == null ? null : List<dynamic>.from(supportedCouriers.map((x) => x.toJson())),
-    "classId": classId == null ? null : classId,
-  };
 }
 
 class SupportedCourierProductWarungSingle {

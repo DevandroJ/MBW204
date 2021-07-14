@@ -97,6 +97,7 @@ class ColorResources {
   static const Color LAVENDER = Color(0xff0F5F8FD);
   static const Color SUCCESS = Color(0xff99CC33);
   static const Color ERROR = Color(0xffcc3300);
+  static const Color YELLOW = Color(0xffEDA63A);
   static const Color HINT_TEXT_COLOR = Color(0xff9E9E9E);
   static const Color GAINS_BORO = Color(0xffE6E6E6);
   static const Color TEXT_BG = Color(0xffF3F9FF);

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/store/form_store.dart';
+import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
+import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/cashout/list.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
-import 'package:mbw204_club_ina/providers/warung.dart';
 import 'package:mbw204_club_ina/views/screens/setting/settings.dart';
-import 'package:mbw204_club_ina/views/screens/warung/beranda_toko.dart';
-import 'package:mbw204_club_ina/views/screens/warung/form_toko.dart';
 import 'package:mbw204_club_ina/views/screens/more/webview.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -353,9 +353,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             int balance = int.parse(Provider.of<PPOBProvider>(context, listen: false).balance.toStringAsFixed(0));
             if(balance >= 50000) {
               if(Provider.of<WarungProvider>(context, listen: false).sellerStoreModel.code == 0) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => BerandaTokoPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => StoreScreen()));
               } else {
-                Navigator.push(context,  MaterialPageRoute(builder: (context) => FormTokoPage()));
+                Navigator.push(context,  MaterialPageRoute(builder: (context) => FormStoreScreen()));
               }
             } else {
               showAnimatedDialog(
@@ -364,12 +364,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 builder: (context) {
                   return Dialog( 
                     child: Container(
-                      height: 210.0,
+                      height: 230.0,
                       padding: EdgeInsets.all(10.0),
                       child: Column(
                         children: [
                           Text("${getTranslated("ATTENTION", context)} !",
-                            style: titilliumBold,
+                            style: poppinsRegular,
                           ),
                           SizedBox(height: 8.0),
                           Text("Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
@@ -388,7 +388,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                 primary: ColorResources.DIM_GRAY
                               ),
                               onPressed: () => Navigator.of(context).pop(), 
-                              child: Text("OK")
+                              child: Text("OK",
+                                style: poppinsRegular,
+                              )
                             ),
                           )
                         ],

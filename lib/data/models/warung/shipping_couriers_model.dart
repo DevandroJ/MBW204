@@ -1,131 +1,104 @@
-import 'dart:convert';
-
-ShippingCouriersModel shippingCouriersModelFromJson(String str) => ShippingCouriersModel.fromJson(json.decode(str));
-
-String shippingCouriersModelToJson(ShippingCouriersModel data) => json.encode(data.toJson());
-
 class ShippingCouriersModel {
   ShippingCouriersModel({
     this.code,
     this.message,
-    this.count,
-    this.first,
     this.body,
     this.error,
   });
 
   int code;
   String message;
-  int count;
-  bool first;
-  List<ShippingCouriersList> body;
+  ShippingCouriersList body;
   dynamic error;
 
-  factory ShippingCouriersModel.fromJson(Map<String, dynamic> json) =>
-    ShippingCouriersModel(
-      code: json["code"] == null ? null : json["code"],
-      message: json["message"] == null ? null : json["message"],
-      count: json["count"] == null ? null : json["count"],
-      first: json["first"] == null ? null : json["first"],
-      body: json["body"] == null ? null: List<ShippingCouriersList>.from(json["body"].map((x) => ShippingCouriersList.fromJson(x))),
-      error: json["error"],
-    );
-
-  Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
-    "message": message == null ? null : message,
-    "count": count == null ? null : count,
-    "first": first == null ? null : first,
-    "body": body == null ? null : List<dynamic>.from(body.map((x) => x.toJson())),
-    "error": error,
-  };
+  factory ShippingCouriersModel.fromJson(Map<String, dynamic> json) => ShippingCouriersModel(
+    code: json["code"] == null ? null : json["code"],
+    message: json["message"] == null ? null : json["message"],
+    body: json["body"] == null ? null : ShippingCouriersList.fromJson(json["body"]),
+    error: json["error"],
+  );
 }
 
 class ShippingCouriersList {
   ShippingCouriersList({
     this.id,
-    this.timeToLive,
-    this.code,
-    this.name,
-    this.services,
     this.cartId,
+    this.origin,
+    this.destination,
+    this.weight,
+    this.categories,
   });
 
   String id;
-  int timeToLive;
-  String code;
-  String name;
-  List<Service> services;
   String cartId;
+  String origin;
+  String destination;
+  int weight;
+  List<Category> categories;
 
-  factory ShippingCouriersList.fromJson(Map<String, dynamic> json) =>
-  ShippingCouriersList(
+  factory ShippingCouriersList.fromJson(Map<String, dynamic> json) => ShippingCouriersList(
     id: json["id"] == null ? null : json["id"],
-    timeToLive: json["timeToLive"] == null ? null : json["timeToLive"],
-    code: json["code"] == null ? null : json["code"],
-    name: json["name"] == null ? null : json["name"],
-    services: json["services"] == null ? null: List<Service>.from(json["services"].map((x) => Service.fromJson(x))),
     cartId: json["cartId"] == null ? null : json["cartId"],
+    origin: json["origin"] == null ? null : json["origin"],
+    destination: json["destination"] == null ? null : json["destination"],
+    weight: json["weight"] == null ? null : json["weight"],
+    categories: json["categories"] == null ? null : List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "timeToLive": timeToLive == null ? null : timeToLive,
-    "code": code == null ? null : code,
-    "name": name == null ? null : name,
-    "services": services == null ? null : List<dynamic>.from(services.map((x) => x.toJson())),
-    "cartId": cartId == null ? null : cartId,
-  };
 }
 
-class Service {
-  Service({
-    this.service,
-    this.description,
-    this.costs,
+class Category {
+  Category({
+    this.type,
+    this.label,
+    this.rates,
   });
 
-  String service;
-  String description;
-  List<Cost> costs;
+  String type;
+  String label;
+  List<Rate> rates;
 
-  factory Service.fromJson(Map<String, dynamic> json) => Service(
-    service: json["service"] == null ? null : json["service"],
-    description: json["description"] == null ? null : json["description"],
-    costs: json["costs"] == null ? null : List<Cost>.from(json["costs"].map((x) => Cost.fromJson(x))),
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+    type: json["type"] == null ? null : json["type"],
+    label: json["label"] == null ? null : json["label"],
+    rates: json["rates"] == null ? null : List<Rate>.from(json["rates"].map((x) => Rate.fromJson(x))),
   );
-
-  Map<String, dynamic> toJson() => {
-    "service": service == null ? null : service,
-    "description": description == null ? null : description,
-    "costs": costs == null ? null : List<dynamic>.from(costs.map((x) => x.toJson())),
-  };
 }
 
-class Cost {
-  Cost({
-    this.id,
+class Rate {
+  Rate({
+    this.rateId,
+    this.courierId,
+    this.courierName,
+    this.courierLogo,
+    this.serviceName,
+    this.serviceDesc,
+    this.serviceType,
+    this.serviceLevel,
     this.price,
-    this.etd,
-    this.note,
+    this.estimateDays,
   });
 
-  String id;
+  String rateId;
+  String courierId;
+  String courierName;
+  String courierLogo;
+  String serviceName;
+  String serviceDesc;
+  String serviceType;
+  String serviceLevel;
   double price;
-  String etd;
-  String note;
+  String estimateDays;
 
-  factory Cost.fromJson(Map<String, dynamic> json) => Cost(
-    id: json["id"] == null ? null : json["id"],
+  factory Rate.fromJson(Map<String, dynamic> json) => Rate(
+    rateId: json["rateId"] == null ? null : json["rateId"],
+    courierId: json["courierId"] == null ? null : json["courierId"],
+    courierName: json["courierName"] == null ? null : json["courierName"],
+    courierLogo: json["courierLogo"] == null ? null : json["courierLogo"],
+    serviceName: json["serviceName"] == null ? null : json["serviceName"],
+    serviceDesc: json["serviceDesc"] == null ? null : json["serviceDesc"],
+    serviceType: json["serviceType"] == null ? null : json["serviceType"],
+    serviceLevel: json["serviceLevel"] == null ? null : json["serviceLevel"],
     price: json["price"] == null ? null : json["price"],
-    etd: json["etd"] == null ? null : json["etd"],
-    note: json["note"] == null ? null : json["note"],
+    estimateDays: json["estimateDays"] == null ? null : json["estimateDays"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id == null ? null : id,
-    "price": price == null ? null : price,
-    "etd": etd == null ? null : etd,
-    "note": note == null ? null : note,
-  };
 }

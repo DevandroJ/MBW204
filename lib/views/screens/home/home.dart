@@ -6,6 +6,7 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -14,7 +15,6 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/ppob.dart';
-import 'package:mbw204_club_ina/views/screens/warung/warung_index.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -27,7 +27,6 @@ import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/views/screens/home/widgets/drawer.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
-import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/banner.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
@@ -657,7 +656,7 @@ class _HomePageState extends State<HomePage> {
                                     onTap: () {
                                       if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
                                         return Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => JualBeliPage()),
+                                          MaterialPageRoute(builder: (context) => StoreScreen()),
                                         );
                                       } else {
                                         return showAnimatedDialog(

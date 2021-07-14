@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/historyactivity/history_activity.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/historyactivity/history_activity.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/topup/history.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -237,6 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 margin: EdgeInsets.only(bottom: 10.0, left: 10.0),
                 child: Row(
                   children: [
+                    
 
                     Container(
                       margin: EdgeInsets.only(left: 6.0),

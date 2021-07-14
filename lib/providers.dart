@@ -10,7 +10,7 @@ import 'package:mbw204_club_ina/providers/event.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
 import 'package:mbw204_club_ina/providers/news.dart';
-import 'package:mbw204_club_ina/providers/warung.dart';
+import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';

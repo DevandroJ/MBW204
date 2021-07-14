@@ -1,10 +1,5 @@
-import 'dart:convert';
 
 import 'seller_store_model.dart';
-
-CategoryProductModel categoryProductModelFromJson(String str) => CategoryProductModel.fromJson(json.decode(str));
-
-String categoryProductModelToJson(CategoryProductModel data) => json.encode(data.toJson());
 
 class CategoryProductModel {
   CategoryProductModel({
@@ -32,16 +27,6 @@ class CategoryProductModel {
             : List<CategoryProductList>.from(
                 json["body"].map((x) => CategoryProductList.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "code": code == null ? null : code,
-        "message": message == null ? null : message,
-        "count": count == null ? null : count,
-        "first": first == null ? null : first,
-        "body": body == null
-            ? null
-            : List<dynamic>.from(body.map((x) => x.toJson())),
-      };
 }
 
 class CategoryProductList {
@@ -61,8 +46,7 @@ class CategoryProductList {
   int numOfProducts;
   String classId;
 
-  factory CategoryProductList.fromJson(Map<String, dynamic> json) =>
-  CategoryProductList(
+  factory CategoryProductList.fromJson(Map<String, dynamic> json) => CategoryProductList(
     id: json["id"] == null ? null : json["id"],
     name: json["name"] == null ? null : json["name"],
     picture: json["picture"] == null ? null : Picture.fromJson(json["picture"]),
@@ -70,17 +54,6 @@ class CategoryProductList {
     numOfProducts: json["numOfProducts"] == null ? null : json["numOfProducts"],
     classId: json["classId"] == null ? null : json["classId"],
   );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "picture": picture == null ? null : picture.toJson(),
-        "childs": childs == null
-            ? null
-            : List<dynamic>.from(childs.map((x) => x.toJson())),
-        "numOfProducts": numOfProducts == null ? null : numOfProducts,
-        "classId": classId == null ? null : classId,
-      };
 }
 
 class PictureCategory {
