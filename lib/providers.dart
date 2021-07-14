@@ -1,3 +1,4 @@
+import 'package:mbw204_club_ina/providers/history_activity.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'container.dart' as c;
@@ -42,6 +43,7 @@ List<SingleChildWidget> independentServices = [
   ChangeNotifierProvider(create: (_) => c.getIt<InboxProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<BannerProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<FcmProvider>()),
+  ChangeNotifierProvider(create: (_) => c.getIt<HistoryActivityProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<OnBoardingProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<ProfileProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<SplashProvider>()),

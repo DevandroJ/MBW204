@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mbw204_club_ina/data/repository/history_activity.dart';
+import 'package:mbw204_club_ina/providers/history_activity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/mobx/feed.dart';
@@ -58,6 +60,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => OnBoardingRepo());
   getIt.registerLazySingleton(() => MediaRepo());
   getIt.registerLazySingleton(() => NotificationRepo());
+  getIt.registerLazySingleton(() => HistoryActivityRepo(sharedPreferences: getIt()));
   getIt.registerLazySingleton(() => ProfileRepo(sharedPreferences: getIt()));
   getIt.registerLazySingleton(() => SplashRepo(sharedPreferences: getIt()));
 
@@ -73,12 +76,13 @@ Future<void> init() async {
   getIt.registerFactory(() => MediaProvider(mediaRepo: getIt()));
   getIt.registerFactory(() => PPOBProvider(sharedPreferences: getIt()));
   getIt.registerFactory(() => NewsProvider());
-  getIt.registerFactory(() => NearMemberProvider(nearMemberRepo: getIt(), sharedPreferences: getIt()));
+  getIt.registerFactory(() => NearMemberProvider(nearMemberRepo: getIt()));
   getIt.registerFactory(() => WarungProvider());
   getIt.registerFactory(() => InboxProvider());
   getIt.registerFactory(() => FcmProvider());
   getIt.registerFactory(() => RegionProvider());
   getIt.registerFactory(() => EventProvider(eventRepo: getIt()));
+  getIt.registerFactory(() => HistoryActivityProvider(historyActivityRepo: getIt()));
   getIt.registerFactory(() => ProfileProvider(profileRepo: getIt()));
   getIt.registerFactory(() => SplashProvider(splashRepo: getIt()));
   getIt.registerFactory(() => ThemeProvider(sharedPreferences: getIt()));

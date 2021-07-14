@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/historyactivity/history_activity.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -355,8 +356,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                                 borderRadius: BorderRadius.circular(20.0)
                               )
                             ),
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpHistoryScreen())), 
-                            child: Text(getTranslated("HISTORY_ACTIVITIES", context),
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryActivityScreen())), 
+                            child: Text(getTranslated("HISTORY_ACTIVITY", context),
                               style: poppinsRegular.copyWith(
                                 fontSize: 14.0,
                                 color: ColorResources.YELLOW_PRIMARY

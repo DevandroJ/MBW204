@@ -133,7 +133,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      separatorBuilder: (context, index) {
+                      separatorBuilder: (BuildContext context, int i) {
                         return Divider(
                           thickness: 1.0,
                         );

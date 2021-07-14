@@ -5,7 +5,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -67,33 +66,6 @@ class LocationProvider extends ChangeNotifier {
       print(e);
     }
   }
-
-  Future updateNewCameraPositionCreateCheckIn(PickResult position) async {
-    sharedPreferences.setDouble("latCreateCheckIn", position.geometry.location.lat);
-    sharedPreferences.setDouble("longCreateCheckIn", position.geometry.location.lng);
-    try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(getCurrentLatCreateCheckIn, getCurrentLongCreateCheckIn);
-      Placemark place = placemarks[0];   
-      sharedPreferences.setString("currentNameAddressCreateCheckIn", "${place.thoroughfare} ${place.subThoroughfare} ${place.locality} ${place.postalCode}");
-      controller.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(getCurrentLatCreateCheckIn, getCurrentLongCreateCheckIn),
-            zoom: 15.0
-          )
-        )
-      );
-      Future.delayed(Duration.zero, () => notifyListeners());
-    } catch(e) {
-      print(e);
-    }
-  }
-
-  String get getCurrentNameAddressCreateCheckIn => sharedPreferences.getString("currentNameAddressCreateCheckIn") ?? "";     
-
-  double get getCurrentLatCreateCheckIn => sharedPreferences.getDouble("latCreateCheckIn") ?? 0.0;
-
-  double get getCurrentLongCreateCheckIn => sharedPreferences.getDouble("longCreateCheckIn") ?? 0.0;
 
   String get getCurrentNameAddress => currentNameAddress ?? sharedPreferences.getString("currentNameAddress") ?? "Location no Selected"; 
 

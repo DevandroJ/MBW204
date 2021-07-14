@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -132,7 +133,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                         gestureRecognizers: Set()..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
                         myLocationEnabled: false,
                         initialCameraPosition: CameraPosition(
-                          target: LatLng(nearMemberProvider.getCurrentLat, nearMemberProvider.getCurrentLong),
+                          target: LatLng(Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong),
                           zoom: 15.0,
                         ),
                         markers: Set.from(nearMemberProvider.markers),
