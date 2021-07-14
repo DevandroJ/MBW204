@@ -94,7 +94,7 @@ class OnBoardingScreen extends StatelessWidget {
                                 Container(
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: Text("Selamat Datang", 
-                                  style: titilliumBold.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 30.0, 
                                     color: ColorResources.BLACK
                                   ))
@@ -103,7 +103,7 @@ class OnBoardingScreen extends StatelessWidget {
                                 Container(
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: Text("News & Event", 
-                                    style: titilliumBold.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       fontSize: 30.0, 
                                       color: ColorResources.PRIMARY
                                     )
@@ -114,7 +114,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: Text("Panic Button",
                                     textAlign: TextAlign.center, 
-                                    style: titilliumBold.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,
                                       fontSize: 25.0
                                     )
@@ -125,7 +125,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: Text("Benz Mart",
                                     textAlign: TextAlign.center, 
-                                    style: titilliumBold.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,
                                       fontSize: 25.0
                                     )
@@ -135,7 +135,7 @@ class OnBoardingScreen extends StatelessWidget {
                                 // margin: EdgeInsets.only(top: 10.0),
                                 child: Text(onBoardingProvider.onBoardingList[i].title, 
                                   textAlign: TextAlign.center, 
-                                  style: titilliumBold.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     fontSize: 25.0
                                   )
                                 ),
@@ -144,7 +144,7 @@ class OnBoardingScreen extends StatelessWidget {
                                 Container(
                                   child: Text("MBW204 Club Indonesia",
                                     textAlign: TextAlign.center, 
-                                    style: titilliumBold.copyWith(
+                                    style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,
                                       fontSize: 25.0
                                     )
@@ -207,7 +207,7 @@ class OnBoardingScreen extends StatelessWidget {
                                 child: Text(onBoardingProvider.selectedIndex == onBoardingProvider.onBoardingList.length - 1
                                   ? getTranslated('GET_STARTED', context) 
                                   : getTranslated('NEXT', context),
-                                  style: titilliumSemiBold.copyWith(
+                                  style: poppinsRegular.copyWith(
                                     color: onBoardingProvider.selectedIndex == onBoardingProvider.onBoardingList.length - 1 ? ColorResources.YELLOW_PRIMARY : ColorResources.WHITE, 
                                     fontSize: Dimensions.FONT_SIZE_LARGE
                                   )

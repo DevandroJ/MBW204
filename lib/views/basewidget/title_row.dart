@@ -23,7 +23,7 @@ class TitleRow extends StatelessWidget {
     }
 
     return Row(children: [
-      Text(title, style: robotoBold),
+      Text(title, style: poppinsRegular),
       eventDuration == null
           ? Expanded(child: SizedBox.shrink())
           : Expanded(
@@ -81,7 +81,7 @@ class TimerBox extends StatelessWidget {
       ),
       child: Center(
         child: Text(time < 10 ? '0$time' : time.toString(),
-          style: robotoBold.copyWith(
+          style: poppinsRegular.copyWith(
             color: isBorder ? ColorResources.getPrimary(context) : Theme.of(context).accentColor,
             fontSize: Dimensions.FONT_SIZE_SMALL,
           ),

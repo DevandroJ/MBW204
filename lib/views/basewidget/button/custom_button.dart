@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
             ]),
             borderRadius: BorderRadius.circular(10)),
         child: Text(buttonText,
-            style: titilliumSemiBold.copyWith(
+            style: poppinsRegular.copyWith(
               fontSize: 16,
               color: Theme.of(context).accentColor,
             )),

@@ -19,7 +19,7 @@ class NotLoggedInWidget extends StatelessWidget {
           children: [
             Image.asset(Images.login, height: MediaQuery.of(context).size.width*0.4, width: MediaQuery.of(context).size.width),
             SizedBox(height: 50),
-            Text(getTranslated('PLEASE_LOGIN_FIRST', context), textAlign: TextAlign.center, style: titilliumSemiBold),
+            Text(getTranslated('PLEASE_LOGIN_FIRST', context), textAlign: TextAlign.center, style: poppinsRegular),
             SizedBox(height: 50),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE),

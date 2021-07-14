@@ -120,7 +120,7 @@ class _AuthDisbursementScreenState extends State<AuthDisbursementScreen> {
                               color: ColorResources.getWhiteToBlack(context),
                             )
                           :Text(getTranslated('SIGN_IN', context),
-                            style: titilliumSemiBold.copyWith(
+                            style: poppinsRegular.copyWith(
                               fontSize: 16.0,
                               color: ColorResources.getWhiteToBlack(context),
                             )
@@ -158,7 +158,7 @@ class _AuthDisbursementScreenState extends State<AuthDisbursementScreen> {
                       ],
                       borderRadius: BorderRadius.circular(10.0)),
                       child: Text(getTranslated('BACK', context),
-                        style: titilliumSemiBold.copyWith(
+                        style: poppinsRegular.copyWith(
                           fontSize: 16.0,
                           color: ColorResources.getWhiteToBlack(context),
                         )

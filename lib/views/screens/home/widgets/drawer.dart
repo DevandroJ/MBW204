@@ -410,7 +410,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           } else if(menu == "bantuan") {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
               title: 'Bantuan',
-              url: 'https://connexist.com/mobile-bantuan'
+              url: 'https://commboard.connexist.id/contactus'
             )));
           } else {
             Navigator.push(context, MaterialPageRoute(builder: (context) => widget));

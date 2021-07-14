@@ -1023,7 +1023,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
             Container(
               margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 10.0),
               child: SearchWidget(
-                hintText: "Cari Produk di Toko Indomini Mart",
+                hintText: "Cari Produk di Toko Benz Mart",
               ),
             ),
             delivered.length == 0 || delivered == null

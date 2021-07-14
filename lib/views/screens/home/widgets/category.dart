@@ -112,7 +112,7 @@ class CategoryView extends StatelessWidget {
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: titilliumSemiBold.copyWith(
+                            style: poppinsRegular.copyWith(
                               color: ColorResources.WHITE,
                               fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL
                             ),

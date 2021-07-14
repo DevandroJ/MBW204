@@ -121,10 +121,10 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                   )),
                                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                                   Expanded(
-                                    child: Text("Indomini Mart",
+                                    child: Text("Benz Mart",
                                       style: poppinsRegular.copyWith(
                                         fontSize: 20.0, 
-                                        color: ColorResources.WHITE
+                                        color: ColorResources.PRIMARY
                                       ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -152,11 +152,11 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                             children: [
                               Expanded(
                                 child: SearchWidget(
-                                  hintText: "Cari Produk di Toko Indomini Mart",
+                                  hintText: "Cari Produk di Toko Benz Mart",
                                 )
                               ),
                               InkWell(
-                                onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionOrderScreen(
+                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TransactionOrderScreen(
                                   index: 0,
                                 ))),
                                 child: Container(

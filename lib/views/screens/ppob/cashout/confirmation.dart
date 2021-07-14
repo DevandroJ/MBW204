@@ -161,7 +161,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                               color: ColorResources.getWhiteToBlack(context),
                             )
                           : Text(getTranslated('SIGN_IN', context),
-                            style: titilliumSemiBold.copyWith(
+                            style: poppinsRegular.copyWith(
                               fontSize: 16.0,
                               color: ColorResources.getWhiteToBlack(context),
                             )

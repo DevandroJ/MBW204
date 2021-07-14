@@ -196,7 +196,6 @@ class _EventScreenState extends State<EventScreen> {
                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                         children: [
                                                           Flexible(
-                                                            flex: 3,
                                                             child: ListTile(
                                                             dense: true,
                                                               leading: Text("Mulai :",
@@ -212,11 +211,6 @@ class _EventScreenState extends State<EventScreen> {
                                                             ),
                                                           ),
                                                           Flexible(
-                                                            flex: 1,
-                                                            child: Text("-"),
-                                                          ),
-                                                          Flexible(
-                                                            flex: 3,
                                                             child: ListTile(
                                                               dense: true,
                                                               leading: Text("Selesai :",

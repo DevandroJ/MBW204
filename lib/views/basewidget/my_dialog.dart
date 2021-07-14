@@ -20,7 +20,8 @@ class MyDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-        child: Stack(overflow: Overflow.visible, children: [
+        child: Stack(
+          overflow: Overflow.visible, children: [
 
           Positioned(
             left: 0, right: 0, top: -55,
@@ -36,7 +37,7 @@ class MyDialog extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 40),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Text(title, style: robotoBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+              Text(title, style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
               Text(description, textAlign: TextAlign.center, style: poppinsRegular),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),

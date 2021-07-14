@@ -2,9 +2,9 @@
 // import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/data/models/event_search.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -45,7 +45,6 @@ class SearchWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 125.0,
               child: Row(
                 children: [
                   Icon(

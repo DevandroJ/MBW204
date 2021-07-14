@@ -24,7 +24,7 @@ class LanguageDialog extends StatelessWidget {
 
         Padding(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-          child: Text(getTranslated('CHOOSE_LANGUAGE', context), style: titilliumSemiBold.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+          child: Text(getTranslated('CHOOSE_LANGUAGE', context), style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
         ),
 
         SizedBox(

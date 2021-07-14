@@ -372,13 +372,28 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 ),
               ),
 
-              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
                 Container(
                   margin: EdgeInsets.only(left: 16.0, right: 16.0),
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
                       profileListAccount(context, getTranslated("REFERRAL_CODE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                      ? "..."
+                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                      ? "..."
+                      : Provider.of<ProfileProvider>(context, listen: false).getUserCodeReferral
+                      ),
+                    ],
+                  ),
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
+                Container(
+                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.0),
+                      profileListAccount(context, getTranslated("REFERRAL_BY", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
                       ? "..."
                       : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
                       ? "..."
@@ -685,23 +700,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     },
                   )
                 ),
-
-                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
-                  Positioned(
-                    top: 140.0,
-                    left: 30.0,
-                    child: Container(
-                      height: 20.0,
-                      child: Text("Gold",
-                        style: poppinsRegular.copyWith(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: ColorResources.YELLOW_PRIMARY
-                        ),
-                      )
-                    )
-                  ),                      
-
+                      
                 Positioned(
                   bottom: 10.0,
                   left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 15.0 : 0.0,
