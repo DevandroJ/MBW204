@@ -440,15 +440,6 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                fontSize: 16.0
               )
             ),
-            leading: IconButton(
-              icon: Icon(
-                Platform.isIOS 
-                ? Icons.arrow_back_ios 
-                : Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
             actions: [
               IconButton(
                 onPressed: () {

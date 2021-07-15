@@ -21,7 +21,6 @@ dependencies:
   # A
   android_intent: ^2.0.0
   auto_size_text: ^2.1.0
-  advance_pdf_viewer: ^1.2.2
 
   # B
   better_player: ^0.0.61
@@ -42,7 +41,6 @@ dependencies:
 
   # E
   ext_storage: ^1.0.3
-  emoji_picker: ^0.1.0
 
   # F
   flutter_switch: ^0.3.1

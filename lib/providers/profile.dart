@@ -126,6 +126,8 @@ class ProfileProvider extends ChangeNotifier {
 
   String get getUserCodeReferral => profileRepo?.getUserCodeReferral ?? "-";
 
+  String get getUserReferralBy => profileRepo?.getUserReferralBy ?? "-";
+
   String get getUserNoKtp => profileRepo?.getUserNoKtp ?? "-";
 
   String get getUserCompany => profileRepo?.getUserCompany ?? "-";

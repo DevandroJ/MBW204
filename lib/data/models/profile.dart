@@ -33,6 +33,7 @@ class ProfileData {
     this.noKtp,
     this.companyName,
     this.referralCode,
+    this.referralBy,
     this.created,
     this.updated,
   });
@@ -52,6 +53,7 @@ class ProfileData {
   String noKtp;
   String companyName;
   String referralCode;
+  String referralBy;
   DateTime created;
   DateTime updated;
 
@@ -71,6 +73,7 @@ class ProfileData {
     noKtp: json["no_ktp"],
     companyName: json["company_name"],
     referralCode: json["referral_code"],
+    referralBy: json["referral_by"],
     created: DateTime.parse(json["created"]),
     updated: DateTime.parse(json["updated"]),
   );

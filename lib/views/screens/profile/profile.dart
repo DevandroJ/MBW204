@@ -397,7 +397,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       ? "..."
                       : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
                       ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserCodeReferral
+                      : Provider.of<ProfileProvider>(context, listen: false).getUserReferralBy
                       ),
                     ],
                   ),
@@ -583,13 +583,13 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             child: Stack(
               children: [
                 
-                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
+                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
                   Image.asset(Images.card),
 
-                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead") 
+                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives") 
                   Image.asset(Images.card_partnership), 
                 
-                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives") 
+                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user") 
                   Positioned(
                     top: 125.0,
                     left: 30.0,
@@ -637,7 +637,20 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     ),
                   ),
 
-                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
+                  Positioned(
+                    top: 20.0,
+                    left: 30.0,
+                    child: Text("RELATIONSHIP",
+                      style: poppinsRegular.copyWith(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                        color: ColorResources.YELLOW_PRIMARY
+                      ),
+                    ),
+                  ),
+
+                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
                   Positioned(
                     top: 20.0,
                     right: 20.0,
@@ -648,7 +661,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     )
                   ),
 
-                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives")
                   Positioned(
                     top: 50.0,
                     left: 30.0,
@@ -662,8 +675,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   ),
 
                 Positioned(
-                  top: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 90.0 : 130.0,
-                  left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 32.0 : 105.0,
+                  top: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives" ? 90.0 : 130.0,
+                  left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives" ? 32.0 : 105.0,
                   child:  Consumer<ProfileProvider>(
                     builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
                       return Text(profileProvider.profileStatus == ProfileStatus.loading  
@@ -682,8 +695,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 ),
 
                 Positioned(
-                  top: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 110.0 : 150.0,
-                  left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 32.0 : 105.0,
+                  top: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives" ? 110.0 : 150.0,
+                  left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" || Provider.of<ProfileProvider>(context, listen: false).getUserRole == "relatives" ? 32.0 : 105.0,
                   child: Consumer<ProfileProvider>(
                     builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
                       return Text(profileProvider.profileStatus == ProfileStatus.loading  

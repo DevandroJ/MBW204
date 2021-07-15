@@ -88,6 +88,8 @@ class ProfileRepo {
   String get getUserBodyStyle => profileData?.bodyStyle ?? "-";
 
   String get getUserCodeReferral => profileData?.referralCode ?? "-";
+
+  String get getUserReferralBy => profileData?.referralBy ?? "-";
   
   String get getSingleUserFullname => singleUserData?.fullname ?? "-";
 

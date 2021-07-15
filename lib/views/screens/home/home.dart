@@ -6,12 +6,11 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/ppob.dart';
@@ -612,34 +611,38 @@ class _HomePageState extends State<HomePage> {
                                     //   );
                                     // }
                                   },
-                                  child: Row(
-                                    children: [
-                                      Row(
-                                        children: [
+                                  child: Container(
+                                    margin: Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ? EdgeInsets.zero : EdgeInsets.only(left: 16.0, right: 16.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 20.0,
+                                              child: Image.asset(Images.media)
+                                            ),
+                                            SizedBox(width: 10.0),
+                                            Text("Media")
+                                          ],
+                                        ),
+                                        if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
+                                          SizedBox(width: 8.0),
+                                        if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
                                           Container(
-                                            height: 20.0,
-                                            child: Image.asset(Images.media)
-                                          ),
-                                          SizedBox(width: 10.0),
-                                          Text("Media")
-                                        ],
-                                      ),
-                                      if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
-                                        SizedBox(width: 10.0),
-                                      if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
-                                        Container(
-                                          width: 284.0,
-                                          padding: EdgeInsets.only(left: 12.0, right: 12.0),
-                                          decoration: BoxDecoration(
-                                            color: ColorResources.BLACK,
-                                            borderRadius: BorderRadius.circular(10.0)
-                                          ),
-                                          child: Image.asset(Images.logo,
-                                            width: 70.0,
-                                            height: 70.0,
-                                          ),
-                                        )
-                                    ],
+                                            width: 250.0,
+                                            padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                                            decoration: BoxDecoration(
+                                              color: ColorResources.BLACK,
+                                              borderRadius: BorderRadius.circular(10.0)
+                                            ),
+                                            child: Image.asset(Images.logo,
+                                              width: 70.0,
+                                              height: 70.0,
+                                            ),
+                                          )
+                                      ],
+                                    ),
                                   ),
                                 ),
 
