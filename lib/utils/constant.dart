@@ -24,6 +24,8 @@ class AppConstants {
   static const String BASE_URL_ECOMMERCE_DIMENSTION_SIZE = 'https://smsapi.connexist.com:8443/commerce-mercyw204/pub/v1/ninja/dimensionSizes';
   static const String BASE_URL_ECOMMERCE_APPROXIMATELY_VOLUMES = 'https://smsapi.connexist.com:8443/commerce-mercyw204/pub/v1/ninja/pickupApproxVolumes';
 
+
+
   static const String X_CONTEXT_ID = '342790713173';
   static const String MOBILE_UA = 'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36';
   static const String PRODUCT_ID = 'dfadf7e6-6a8d-4704-a082-9025289cb37e';

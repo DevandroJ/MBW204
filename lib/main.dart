@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       locals.add(Locale(language.languageCode, language.countryCode));
     });
     return MaterialApp(
-      title: 'MBW204 Club INA',
+      title: 'MB W204 Club INA',
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,
       locale: Provider.of<LocalizationProvider>(context).locale,

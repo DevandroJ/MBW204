@@ -156,55 +156,73 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       InquiryRegisterModel inquiryRegisterModel = InquiryRegisterModel.fromJson(res.data); 
       return inquiryRegisterModel;  
     } on DioError catch(e) {
-      print(e?.response?.statusCode);
-      print(e?.response?.data);
-      if(e?.response?.data['code'] == 404 && user.body.user.status == "disabled") {
-        showAnimatedDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return Dialog(
-              child: Container(
-                alignment: Alignment.center,
-                height: 60.0,
-                child: Text(getTranslated("THERE_WAS_PROBLEM", context),
-                  textAlign: TextAlign.center,
-                  style: poppinsRegular
+      if(e?.response?.data != null) {
+        if(e?.response?.data['code'] == 404 && user.body.user.status == "pending") {
+          showAnimatedDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return Dialog(
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 60.0,
+                  child: Text(getTranslated("THERE_WAS_PROBLEM", context),
+                    textAlign: TextAlign.center,
+                    style: poppinsRegular
+                  ),
                 ),
-              ),
-            );
-          },
-          animationType: DialogTransitionType.scale,
-          curve: Curves.fastOutSlowIn,
-          duration: Duration(seconds: 2),
-        );
+              );
+            },
+            animationType: DialogTransitionType.scale,
+            curve: Curves.fastOutSlowIn,
+            duration: Duration(seconds: 2),
+          );
+        }
+        if(e?.response?.data['code'] == 404 && user.body.user.status == "enabled") {
+          showAnimatedDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return Center(
+                child: Container(
+                  color: ColorResources.WHITE,
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.check,
+                    size: 18.0,
+                    color: ColorResources.GREEN,
+                  ),
+                ),
+              );
+            },
+            animationType: DialogTransitionType.scale,
+            curve: Curves.fastOutSlowIn,
+            duration: Duration(seconds: 2),
+          );
+          writeData(user);
+          Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
+        } 
       }
-      if(e?.response?.data['code'] == 404 && user.body.user.status == "enabled") {
-        showAnimatedDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) {
-            return Center(
-              child: Container(
-                color: ColorResources.WHITE,
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.check,
-                  size: 18.0,
-                  color: ColorResources.GREEN,
-                ),
-              ),
-            );
-          },
-          animationType: DialogTransitionType.scale,
-          curve: Curves.fastOutSlowIn,
-          duration: Duration(seconds: 2),
-        );
-        writeData(user);
-        Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen())));
-      } 
     } catch(e) {
-      print(e);
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              alignment: Alignment.center,
+              height: 60.0,
+              child: Text(getTranslated("THERE_WAS_PROBLEM", context),
+                textAlign: TextAlign.center,
+                style: poppinsRegular
+              ),
+            ),
+          );
+        },
+        animationType: DialogTransitionType.scale,
+        curve: Curves.fastOutSlowIn,
+        duration: Duration(seconds: 2),
+      );
     }
     return inquiryRegisterModel;
   }

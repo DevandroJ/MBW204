@@ -42,8 +42,6 @@ PODS:
   - DKPhotoGallery/Resource (0.0.17):
     - SDWebImage
     - SwiftyGif
-  - emoji_picker (0.0.3):
-    - Flutter
   - ext_storage (0.0.1):
     - Flutter
   - file_picker (0.0.1):
@@ -97,6 +95,8 @@ PODS:
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_native_image (0.0.1):
+    - Flutter
+  - flutter_pdfview (1.0.2):
     - Flutter
   - flutter_webview_plugin (0.0.1):
     - Flutter
@@ -186,7 +186,6 @@ PODS:
 DEPENDENCIES:
   - better_player (from `.symlinks/plugins/better_player/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
-  - emoji_picker (from `.symlinks/plugins/emoji_picker/ios`)
   - ext_storage (from `.symlinks/plugins/ext_storage/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -196,6 +195,7 @@ DEPENDENCIES:
   - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
+  - flutter_pdfview (from `.symlinks/plugins/flutter_pdfview/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - geocoding (from `.symlinks/plugins/geocoding/ios`)
@@ -248,8 +248,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/better_player/ios"
   connectivity:
     :path: ".symlinks/plugins/connectivity/ios"
-  emoji_picker:
-    :path: ".symlinks/plugins/emoji_picker/ios"
   ext_storage:
     :path: ".symlinks/plugins/ext_storage/ios"
   file_picker:
@@ -268,6 +266,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_image:
     :path: ".symlinks/plugins/flutter_native_image/ios"
+  flutter_pdfview:
+    :path: ".symlinks/plugins/flutter_pdfview/ios"
   flutter_webview_plugin:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   fluttertoast:
@@ -314,7 +314,6 @@ SPEC CHECKSUMS:
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
-  emoji_picker: 0e868059aa18f9473d234f3d0701fbd4d5fd310c
   ext_storage: 4eaf3a84d5594106e2ebcc2502248cfde53c8fa1
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 8db6f2d1b2c5e2984efba4949a145875a8f65fe5
@@ -330,6 +329,7 @@ SPEC CHECKSUMS:
   flutter_downloader: 058b9c41564a90500f67f3e432e3524613a7fd83
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
+  flutter_pdfview: 25f53dd6097661e6395b17de506e6060585946bd
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a

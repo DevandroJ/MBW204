@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>MB W204 Club INA</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,17 +24,45 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Enter camera access will be used in Edit Profile</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open and in the background. Location data will be used in sending distress signal</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when open and in the background. Location data will be used in sending distress signal</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open. Location data will be used in Form Warung feature.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Enter photo access will be used in Edit Profile</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<key>io.flutter.embedded_views_preview</key>
-	<true/>
 	<string>Main</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -43,5 +73,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>
