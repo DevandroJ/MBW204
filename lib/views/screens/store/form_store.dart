@@ -515,7 +515,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
               );
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: provinceController,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -696,7 +696,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
               } 
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: cityController,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -879,7 +879,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
               }
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -943,7 +943,7 @@ Widget inputFieldPhoneNumber(BuildContext context, String title, TextEditingCont
           ),
           child: TextFormField(
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             style: poppinsRegular,
@@ -1005,7 +1005,7 @@ Widget inputFieldPostCode(BuildContext context, String title, TextEditingControl
             ],
           ),
           child: TextFormField(
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1065,7 +1065,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -1125,7 +1125,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1269,7 +1269,7 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1515,7 +1515,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           style: poppinsRegular,
           keyboardType: TextInputType.text,
@@ -1575,7 +1575,7 @@ Widget inputFieldEmailAddress(BuildContext context, String title, TextEditingCon
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,

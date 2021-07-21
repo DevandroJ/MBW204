@@ -425,7 +425,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
               );
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -486,7 +486,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
           ),
           child: TextFormField(
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             style: poppinsRegular,
@@ -666,7 +666,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
               } 
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -847,7 +847,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
               }
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -908,7 +908,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
             ],
           ),
           child: TextFormField(
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -976,7 +976,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
                   isCheck = false;
                 });
               },
-              cursorColor: ColorResources.getBlackToWhite(context),
+              cursorColor: ColorResources.BLACK,
               controller: typeAddressController,
               keyboardType: TextInputType.text,
               style: poppinsRegular,
@@ -1039,7 +1039,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           style: poppinsRegular,
           keyboardType: TextInputType.text,
@@ -1183,7 +1183,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1243,7 +1243,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],

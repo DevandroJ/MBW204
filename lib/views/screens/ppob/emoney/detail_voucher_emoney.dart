@@ -117,7 +117,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                         width: 18.0,
                         height: 18.0,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context),
+                          valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY,
                         )
                       )
                     )

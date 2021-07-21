@@ -52,7 +52,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
               style: poppinsRegular.copyWith(color: Colors.black)),
               elevation: 0.0,
               pinned: false,
-              centerTitle: false,
+              centerTitle: true,
               floating: true,
             ),
             SliverToBoxAdapter(
@@ -83,11 +83,11 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                 controller: tabController,
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: ColorResources.getWhiteToBlack(context),
+                labelColor: ColorResources.WHITE,
                 indicator: BubbleTabIndicator(
                   indicatorHeight: 32.0,
                   indicatorRadius: 6.0,
-                  indicatorColor: ColorResources.getPrimaryToWhite(context),
+                  indicatorColor: ColorResources.BTN_PRIMARY,
                   tabBarIndicatorSize: TabBarIndicatorSize.tab,
                 ),
                 labelStyle: poppinsRegular,
@@ -121,11 +121,11 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
         physics: NeverScrollableScrollPhysics(),
         unselectedLabelColor: Colors.grey,
         indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: ColorResources.getWhiteToBlack(context),
+        labelColor: ColorResources.WHITE,
         indicator: BubbleTabIndicator(
           indicatorHeight: 32.0,
           indicatorRadius: 6.0,
-          indicatorColor: ColorResources.getPrimaryToWhite(context),
+          indicatorColor: ColorResources.BTN_PRIMARY,
           tabBarIndicatorSize: TabBarIndicatorSize.tab,
         ),
         labelStyle: poppinsRegular,
@@ -223,7 +223,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                     width: 18.0,
                                                     height: 18.0,
                                                     child: CircularProgressIndicator(
-                                                      valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                                                      valueColor: AlwaysStoppedAnimation<Color>(ColorResources.PRIMARY),
                                                     ),
                                                   )
                                                 : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
@@ -252,7 +252,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                     width: 18.0,
                                                     height: 18.0,
                                                     child: CircularProgressIndicator(
-                                                      valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                                                      valueColor: AlwaysStoppedAnimation<Color>(ColorResources.PRIMARY),
                                                     ),
                                                   ),
                                                 )  
@@ -418,7 +418,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                             Images.sos,
                             width: 25.0,
                             height: 25.0,
-                            color: ColorResources.getPrimaryToWhite(context),
+                            color: ColorResources.BTN_PRIMARY,
                           ) 
                         : inboxProvider.inboxes[i].type == "payment.waiting" ||
                           inboxProvider.inboxes[i].type == "payment.paid" || 

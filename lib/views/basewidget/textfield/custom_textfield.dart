@@ -62,7 +62,7 @@ class CustomTextField extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        cursorColor: ColorResources.getBlackToWhite(context),
+        cursorColor: ColorResources.BLACK,
         controller: controller,
         maxLines: maxLine ?? isAddress || isShortBio ? 3 : 1,
         maxLength: isPhoneNumber ? 15 : null,

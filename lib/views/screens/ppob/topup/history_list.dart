@@ -42,7 +42,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Loader(
-                            color: ColorResources.getPrimaryToWhite(context)
+                            color: ColorResources.BTN_PRIMARY
                           )
                         ],
                       ),
@@ -101,7 +101,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                                 children: [
                                   Text(ppobProvider.historyBalanceData[i].type,
                                     style: poppinsRegular.copyWith(
-                                      color: ColorResources.getBlackToWhite(context), 
+                                      color: ColorResources.BLACK, 
                                       fontSize: 16.0
                                     )
                                   ),
@@ -116,7 +116,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                               ),
                               Text(ppobProvider.historyBalanceData[i].description,
                                 style: poppinsRegular.copyWith(
-                                  color: ColorResources.getBlackToWhite(context), 
+                                  color: ColorResources.BLACK, 
                                   fontSize: ppobProvider.historyBalanceData[i].type != "CREDIT" ? 14.0 : 16.0 
                                 )
                               ),
@@ -125,7 +125,7 @@ class HistoryTopUpTransaksiListScreen extends StatelessWidget {
                               ),
                               Text(ConnexistHelper.formatDate(DateTime.parse(ppobProvider.historyBalanceData[i].created)),
                                 style: poppinsRegular.copyWith(
-                                  color: ColorResources.getBlackToWhite(context), 
+                                  color: ColorResources.BLACK, 
                                   fontSize: 14.0
                                 )
                               ),

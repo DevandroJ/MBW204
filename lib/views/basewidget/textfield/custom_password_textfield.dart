@@ -41,7 +41,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
         ],
       ),
       child: TextFormField(
-        cursorColor: ColorResources.getBlackToWhite(context),
+        cursorColor: ColorResources.BLACK,
         controller: widget.controller,
         obscureText: _obscureText,
         focusNode: widget.focusNode,
@@ -59,7 +59,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           icon: Icon(
             _obscureText ? Icons.visibility : Icons.visibility_off), 
             onPressed: _toggle,
-            color: ColorResources.getBlackToWhite(context),
+            color: ColorResources.BLACK,
           ),
           hintText: widget.hintTxt ?? "",
           contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),

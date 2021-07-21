@@ -78,7 +78,7 @@ class _NewsComponentState extends State<NewsComponent> {
               ),
               title: Text(widget.groupsBody[widget.i].user.nickname,
                 style: poppinsRegular.copyWith(
-                  color: ColorResources.getBlackToWhite(context)
+                  color: ColorResources.BLACK
                 ),
               ),
               subtitle: Text(timeago.format((DateTime.parse(widget.groupsBody[widget.i].created).toLocal()), locale: 'id'),
@@ -118,7 +118,7 @@ class _NewsComponentState extends State<NewsComponent> {
                         Container(
                           child: Text(widget.groupsBody[widget.i].numOfLikes.toString(), 
                             style: poppinsRegular.copyWith(
-                              color: ColorResources.getBlackToWhite(context),
+                              color: ColorResources.BLACK,
                               fontSize: 15.0
                             )
                           ),
@@ -130,7 +130,7 @@ class _NewsComponentState extends State<NewsComponent> {
                             child: Icon(
                               Icons.thumb_up,
                               size: 16.0,
-                              color: widget.groupsBody[widget.i].liked.isNotEmpty ? ColorResources.BLUE : ColorResources.getBlackToWhite(context)
+                              color: widget.groupsBody[widget.i].liked.isNotEmpty ? ColorResources.BLUE : ColorResources.BLACK
                             ),
                           ),
                         )
@@ -158,7 +158,7 @@ class _NewsComponentState extends State<NewsComponent> {
           PopupMenuItem(
             child: Text(getTranslated("DELETE_POST", context),
               style: poppinsRegular.copyWith(
-                color: ColorResources.getPrimaryToWhite(context)
+                color: ColorResources.BTN_PRIMARY
               )
             ), 
             value: "/delete-post"
@@ -180,7 +180,7 @@ class _NewsComponentState extends State<NewsComponent> {
                   children: [
                     SizedBox(height: 10.0),
                     Icon(Icons.delete,
-                      color: ColorResources.getBlackToWhite(context),
+                      color: ColorResources.BLACK,
                     ),
                     SizedBox(height: 10.0),
                     Text(getTranslated("DELETE_POST", context),

@@ -1317,7 +1317,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                                   warungProvider.changeDimensionsHeight(int.parse(val));
                                                                 }
                                                               },
-                                                              cursorColor: ColorResources.getBlackToWhite(context),
+                                                              cursorColor: ColorResources.BLACK,
                                                               maxLines: 1,
                                                               keyboardType: TextInputType.number,
                                                               initialValue: null,
@@ -1386,7 +1386,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                                   warungProvider.changeDimensionsLength(int.parse(val));
                                                                 }
                                                               },
-                                                              cursorColor: ColorResources.getBlackToWhite(context),
+                                                              cursorColor: ColorResources.BLACK,
                                                               maxLines: 1,
                                                               keyboardType: TextInputType.number,
                                                               initialValue: null,
@@ -1441,7 +1441,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                                 warungProvider.changeDimensionsWidth(int.parse(val));
                                                               }
                                                             },
-                                                            cursorColor: ColorResources.getBlackToWhite(context),
+                                                            cursorColor: ColorResources.BLACK,
                                                             maxLines: 1,
                                                             keyboardType: TextInputType.number,
                                                             initialValue: null,

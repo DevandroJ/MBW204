@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +11,7 @@ import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:provider/provider.dart';
 
 class AboutUsScreen extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class AboutUsScreen extends StatefulWidget {
 class _AboutUsScreenState extends State<AboutUsScreen> {
   String pathAboutUsPDF = "";
   String structureOrganization = "";
+  String aDaRt = "";
 
   @override
   void initState() {
@@ -31,6 +34,11 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     fromAsset('assets/pdf/structure-organization.pdf', 'structure-organization.pdf').then((f) {
       setState(() {
         structureOrganization = f.path;
+      });
+    });
+    fromAsset('assets/pdf/ad-art.pdf', 'ad-rt.pdf').then((f) {
+      setState(() {
+        aDaRt = f.path;
       });
     });
   }
@@ -136,8 +144,37 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             ),
           ),
 
+
+        if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
           Container(
-            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0, bottom: 10.0),
+            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: ColorResources.BTN_PRIMARY
+              ),
+              onPressed: () { 
+                if (aDaRt != null || aDaRt.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PDFScreen(
+                        path: aDaRt,
+                        title: "AD - ART",
+                      ),
+                    ),
+                  );
+                }
+              }, 
+              child: Text("AD - ART",
+                style: poppinsRegular.copyWith(
+                  color: ColorResources.WHITE
+                ),
+              ),
+            )
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 0.0, left: 16.0, right: 16.0),
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ColorResources.BTN_PRIMARY

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -79,7 +78,6 @@ class CashOutSuccessScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
-                  Provider.of<ThemeProvider>(context, listen: false).pageIndex = 0;
                 },
                 child: Text("OK",
                   style: TextStyle(

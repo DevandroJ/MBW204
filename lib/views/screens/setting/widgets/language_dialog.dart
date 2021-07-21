@@ -63,7 +63,7 @@ class LanguageDialog extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               child: Text(getTranslated('CANCEL', context), 
                 style: poppinsRegular.copyWith(
-                color: ColorResources.getBlackToWhite(context)
+                color: ColorResources.BLACK
                 )
               ),
             )
@@ -84,7 +84,7 @@ class LanguageDialog extends StatelessWidget {
             },
             child: Text(getTranslated('OK', context), 
               style: poppinsRegular.copyWith(
-                color: ColorResources.getBlackToWhite(context)
+                color: ColorResources.BLACK
               )
             ),
           )),

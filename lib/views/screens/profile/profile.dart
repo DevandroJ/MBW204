@@ -112,6 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         children: [
 
           Stack(
+            clipBehavior: Clip.none,
             children: [
               
               ClipPath(
@@ -205,18 +206,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               // return 
             },
           )
-
-          // Container(
-          //   height: 800.0,
-          //   child: TabBarView(
-          //     controller: tabController,
-          //     children: [
-          //       profileAccount(context),
-          //       digitalCard(context),
-          //     ],
-          //   ),
-          // ),
-          
         ],  
       ) 
     );
@@ -343,7 +332,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
                     if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
                       SizedBox(width: 10.0),
-
 
                     if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
                       FittedBox(
@@ -494,7 +482,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("MEMBER_NO", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                      profileListAccount(context, getTranslated("NO_MEMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
                       ? "..."
                       : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
                       ? "..."

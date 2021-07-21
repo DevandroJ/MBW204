@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/views/screens/store/buyer_transaction_order.dart';
 import 'package:mbw204_club_ina/data/models/warung/product_warung_model.dart';
@@ -52,7 +51,6 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
   }
   
   Future<bool> onWillPop() {
-    Provider.of<ThemeProvider>(context, listen: false).pageIndex = 0; 
     return Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DashBoardScreen();
     }));
@@ -105,7 +103,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                 fit: BoxFit.fill,
                                 height: 30 + MediaQuery.of(context).padding.top, 
                                 width: MediaQuery.of(context).size.width,
-                                color: Provider.of<ThemeProvider>(context).darkTheme ? Colors.black : null,
+                                color: Colors.black,
                               ),
                             ),
                             Container(
@@ -230,7 +228,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
           return SizedBox(
             height: MediaQuery.of(context).size.height / 2,
             child: Loader(
-              color: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.BTN_PRIMARY,
             ),
           );
         }

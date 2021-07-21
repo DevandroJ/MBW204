@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:mbw204_club_ina/views/screens/feed/feed_index.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
+import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/views/screens/sos/sos.dart';
 import 'package:mbw204_club_ina/views/screens/inboxv2/inbox.dart';
@@ -34,6 +36,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this);
+    Future.delayed(Duration.zero, () {
+      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "purchase");
+      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
+      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
+      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
+      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "disbursement");
+      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "order");
+    });
   }
 
   @override
@@ -178,13 +188,33 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
             ),
           ),
           Tab(
-            icon: Container(
-              width: 50.0,
-              height: 60.0,
-              child: Icon(
-                Icons.message,
-                size: 24.0,
-              ),
+            icon: Consumer<InboxProvider>(
+              builder: (BuildContext context, InboxProvider inboxProvider, Widget child) {
+                return Badge(
+                  badgeColor: ColorResources.BTN_PRIMARY_SECOND,
+                  position: BadgePosition.topEnd(top: -4.0, end: 26.0),
+                  animationDuration: Duration(milliseconds: 300),
+                  animationType: BadgeAnimationType.slide,
+                  badgeContent: Text(
+                    inboxProvider.inboxStatus == InboxStatus.loading 
+                    ? "..." 
+                    : inboxProvider.inboxStatus == InboxStatus.error 
+                    ? "..."
+                    : inboxProvider.readCount.toString(),
+                    style: poppinsRegular.copyWith(
+                      color: ColorResources.WHITE
+                    ),
+                  ),
+                  child: Container(
+                    width: 50.0,
+                    height: 60.0,
+                    child: Icon(
+                      Icons.message,
+                      size: 24.0,
+                    ),
+                  ),
+                );
+              },
             )
           ),
         ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 
@@ -78,7 +77,6 @@ class TopUpSuccessScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
-                  Provider.of<ThemeProvider>(context, listen: false).pageIndex = 0;
                 },
                 child: Text("OK",
                   style: TextStyle(

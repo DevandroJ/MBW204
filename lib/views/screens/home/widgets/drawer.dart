@@ -124,14 +124,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 );
               },
               placeholder: (BuildContext context, String url) {
-                return Center(
-                  child: SizedBox(
-                    width: 18.0,
-                    height: 18.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(ColorResources.BTN_PRIMARY_SECOND),
-                    ),
+                return Container(
+                  padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                  decoration: BoxDecoration(
+                    color: ColorResources.BLACK,
                   ),
+                  child: Image.asset('assets/images/logo.png'),
                 );
               },
               imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider?.userProfile?.profilePic}",
@@ -419,20 +417,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         title: Text(title,
           style: poppinsRegular,
         ),
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(30.0),
+        leading: Container(
+          width: 25.0,
+          height: 25.0,
           child: Container(
-            decoration: BoxDecoration(
-              color: ColorResources.GRAY_PRIMARY
-            ),
-            height: 40.0,
-            child: Container(
-              margin: EdgeInsets.all(11.0),
-              child: Image.asset(icon,
-                color: menu == "store" ? ColorResources.BLACK : null,
-              )
+            child: Image.asset(icon,
+              color: menu == "store" ? ColorResources.BLACK : null,
             )
-          ),
+          )
         ),
       )
     );

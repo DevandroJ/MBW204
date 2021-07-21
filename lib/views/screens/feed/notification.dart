@@ -66,7 +66,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   width: 15.0,
                   height: 15.0,
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context))
+                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY)
                   )    
                 )
               );
@@ -94,7 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         height: 15.0,
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            ColorResources.getPrimaryToWhite(context)
+                            ColorResources.BTN_PRIMARY
                           )
                         )
                       )

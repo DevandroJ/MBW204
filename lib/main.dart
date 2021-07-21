@@ -8,10 +8,7 @@ import 'container.dart' as core;
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:mbw204_club_ina/providers/localization.dart';
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/providers.dart';
-import 'package:mbw204_club_ina/theme/dark_theme.dart';
-import 'package:mbw204_club_ina/theme/light_theme.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/views/screens/splash/splash.dart';
 
@@ -37,7 +34,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MB W204 Club INA',
       debugShowCheckedModeBanner: false,
-      theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,
       locale: Provider.of<LocalizationProvider>(context).locale,
       localizationsDelegates: [
         AppLocalization.delegate,

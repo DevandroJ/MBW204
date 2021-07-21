@@ -57,14 +57,14 @@ class CashoutSetAccountScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: ColorResources.getPrimaryToWhite(context)
+                      primary: ColorResources.BTN_PRIMARY
                     ),
                     onPressed: () { 
                       saveAccountPayment(context); 
                     }, 
                     child: Text(getTranslated("SAVE_ACCOUNT", context),
                       style: poppinsRegular.copyWith(
-                        color: ColorResources.getWhiteToBlack(context)
+                        color: ColorResources.WHITE
                       ),
                     )
                   ),

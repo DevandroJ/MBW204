@@ -3,7 +3,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -48,7 +47,6 @@ class _CheckoutProductScreenState extends State<CheckoutProductScreen> with Sing
   }
 
   Future<bool> onWillPop(BuildContext context) async {
-    Provider.of<ThemeProvider>(context, listen: false).pageIndex = 0; 
     return Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DashBoardScreen();
     }));

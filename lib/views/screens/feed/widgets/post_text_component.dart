@@ -28,7 +28,7 @@ class _PostTextComponentState extends State<PostTextComponent> {
           ReadMoreText(widget.item.text,
             style: poppinsRegular.copyWith(
               fontSize: 14.0,
-              color: ColorResources.getBlackToWhite(context)
+              color: ColorResources.BLACK
             ),
             trimLines: 2,
             colorClickableText: Colors.black,

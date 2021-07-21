@@ -112,7 +112,7 @@ class _TagihanListrikScreenState extends State<TagihanListrikScreen> {
                       width: 18.0, 
                       height: 18.0,
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToBlack(context)),
+                        valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
                       )
                     ),
                   ),

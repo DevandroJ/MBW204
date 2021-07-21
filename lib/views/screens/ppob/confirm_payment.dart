@@ -460,12 +460,12 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               ),     
             ),
             Container(
-              color: ColorResources.getBlackSoft(context),
+              color: ColorResources.BTN_PRIMARY,
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 15.0, bottom: 15.0),
               width: double.infinity,
               height: 80.0,
               child: RaisedButton(
-              color: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.BTN_PRIMARY,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)
               ),
@@ -526,14 +526,14 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       width: 18.0,
                       height: 18.0,
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getWhiteToBlack(context)),
+                        valueColor: AlwaysStoppedAnimation<Color>(ColorResources.WHITE),
                       ),
                     ),
                   ) : Text(getTranslated("PAY", context),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
-                      color: ColorResources.getWhiteToBlack(context),
+                      color: ColorResources.WHITE,
                     ),
                   );
                 },

@@ -55,7 +55,7 @@ class _HistoryActivityScreenState extends State<HistoryActivityScreen> {
                     children: [
                       Text(historyActivityProvider.historyActivityData[i].description,
                         style: poppinsRegular.copyWith(
-                          color: ColorResources.getBlackToWhite(context), 
+                          color: ColorResources.BLACK, 
                           fontSize: 13.0
                         )
                       ),

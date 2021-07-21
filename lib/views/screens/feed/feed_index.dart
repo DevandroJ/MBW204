@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -52,7 +50,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
       builder: (context) => AlertDialog(
         title: Text(getTranslated("EXIT_PAGE", context),
           style: TextStyle(
-            color: ColorResources.getPrimaryToWhite(context), 
+            color: ColorResources.PRIMARY, 
             fontWeight: FontWeight.bold
           ),
         ),
@@ -81,7 +79,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
             return Container(
               height: 80.0,
               child: Loader(
-                color: ColorResources.getPrimaryToWhite(context),
+                color: ColorResources.BTN_PRIMARY,
               )
             );
           }
@@ -108,7 +106,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                           width: 15.0,
                           height: 15.0,
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
                           )
                         )
                       );
@@ -171,7 +169,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               );
             },
             elevation: 0.0,
-            fillColor: ColorResources.getPrimaryToWhite(context),
+            fillColor: ColorResources.BTN_PRIMARY,
             child: Text('+',
               style: TextStyle(
                 fontSize: 20.0, 
@@ -192,7 +190,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              color: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.BTN_PRIMARY,
               child: Text('All Member', style: TextStyle(color: Colors.white)),
             ),
           )
@@ -207,11 +205,11 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
         controller: tabController,
         unselectedLabelColor: Colors.grey,
         indicatorSize: TabBarIndicatorSize.tab,
-        labelColor: ColorResources.getWhiteToBlack(context),
+        labelColor: ColorResources.WHITE,
         indicator: BubbleTabIndicator(
           indicatorHeight: 30.0,
           indicatorRadius: 10.0,
-          indicatorColor: ColorResources.getPrimaryToWhite(context),
+          indicatorColor: ColorResources.BTN_PRIMARY,
           tabBarIndicatorSize: TabBarIndicatorSize.tab,
         ),
         labelStyle: poppinsRegular,
@@ -231,7 +229,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
         Observer(builder: (_) {
           if (feedState.groupsMostRecentStatus == GroupsMostRecentStatus.loading) {
             return Loader(
-              color: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.BTN_PRIMARY,
             );
           }
           if (feedState.groupsMostRecentStatus == GroupsMostRecentStatus.empty) {
@@ -246,8 +244,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           }
           return NotificationListener<ScrollNotification>(
             child: RefreshIndicator(
-              backgroundColor: ColorResources.getPrimaryToWhite(context),
-              color: ColorResources.getWhiteToBlack(context),
+              backgroundColor: ColorResources.BTN_PRIMARY,
+              color: ColorResources.WHITE,
               key: refreshIndicatorKey1,
                 onRefresh: refresh,
                 child: ListView.separated(
@@ -263,7 +261,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                   itemBuilder: (BuildContext content, int i) {
                   if (feedState.g1List.length == i) {
                     return Loader(
-                      color: ColorResources.getPrimaryToWhite(context)
+                      color: ColorResources.BTN_PRIMARY
                     );
                   }
                   return NewsComponent(
@@ -287,7 +285,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
         Observer(builder: (_) {
           if (feedState.groupsMostPopularStatus == GroupsMostPopularStatus.loading) {
             return Loader(
-              color: ColorResources.getPrimaryToWhite(context)
+              color: ColorResources.BTN_PRIMARY
             );
           }
           if (feedState.groupsMostPopularStatus == GroupsMostPopularStatus.empty) {
@@ -307,8 +305,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           return NotificationListener<ScrollNotification>(
             child: RefreshIndicator(
               key: refreshIndicatorKey2,
-              backgroundColor: ColorResources.getPrimaryToWhite(context),
-              color: ColorResources.getWhiteToBlack(context),
+              backgroundColor: ColorResources.BTN_PRIMARY,
+              color: ColorResources.WHITE,
               onRefresh: refresh,
               child: ListView.separated(
                 separatorBuilder: (BuildContext context, int i) {
@@ -323,7 +321,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                 itemBuilder: (BuildContext content, int i) {
                   if (feedState.g2List.length == i) {
                     return Loader(
-                      color: ColorResources.getPrimaryToWhite(context),
+                      color: ColorResources.BTN_PRIMARY,
                     );
                   }
                   return NewsComponent(
@@ -347,7 +345,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
         Observer(builder: (_) {
           if (feedState.groupsSelfStatus == GroupsSelfStatus.loading) {
             return Loader(
-              color: ColorResources.getPrimaryToWhite(context),
+              color: ColorResources.BTN_PRIMARY,
             );
           }
           if (feedState.groupsSelfStatus == GroupsSelfStatus.empty) {
@@ -366,8 +364,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           return NotificationListener<ScrollNotification>(
             child: RefreshIndicator(
               key: refreshIndicatorKey3,
-              backgroundColor: ColorResources.getPrimaryToWhite(context),
-              color: ColorResources.getWhiteToBlack(context),
+              backgroundColor: ColorResources.BTN_PRIMARY,
+              color: ColorResources.WHITE,
               onRefresh: refresh,
               child: ListView.separated(
                 separatorBuilder: (BuildContext context, int i) {
@@ -382,7 +380,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                 itemBuilder: (BuildContext content, int i) {
                   if (feedState.g3List.length == i) {
                     return Loader(
-                      color: ColorResources.getPrimaryToWhite(context),
+                      color: ColorResources.BTN_PRIMARY,
                     );
                   }
                   return NewsComponent(
@@ -451,7 +449,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                 },
                 icon: Icon(
                   Icons.notifications,
-                  color: ColorResources.getPrimaryToBlack(context)
+                  color: ColorResources.PRIMARY
                 ),
               ),
             ],

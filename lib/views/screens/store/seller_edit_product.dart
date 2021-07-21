@@ -1481,7 +1481,7 @@ Widget inputFieldCategoryStuff(BuildContext context, String title, String hintTe
                   }
                 );
               },
-              cursorColor: ColorResources.getBlackToWhite(context),
+              cursorColor: ColorResources.BLACK,
               keyboardType: TextInputType.text,
               style: poppinsRegular,
               inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -1548,7 +1548,7 @@ Widget inputFieldNameStuff(BuildContext context, TextEditingController controlle
         ),
         child: TextFormField(
           controller: controller,
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -1608,7 +1608,7 @@ Widget inputFieldPriceStuff(BuildContext context, TextEditingController controll
         ),
         child: TextFormField(
           controller: controller,
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           keyboardType: TextInputType.number,
           style: poppinsRegular,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1678,7 +1678,7 @@ Widget inputFieldMinOrder(BuildContext context, TextEditingController controller
         ),
         child: TextFormField(
           controller: controller,
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           keyboardType: TextInputType.number,
           style: poppinsRegular,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1737,7 +1737,7 @@ Widget inputFieldStock(BuildContext context, TextEditingController controller) {
         ),
         child: TextFormField(
           controller: controller,
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           keyboardType: TextInputType.number,
           style: poppinsRegular,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1947,7 +1947,7 @@ Widget inputFieldWeight(BuildContext context, TextEditingController controller) 
         ),
         child: TextFormField(
           controller: controller,
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           keyboardType: TextInputType.number,
           style: poppinsRegular,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],

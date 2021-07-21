@@ -82,7 +82,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     ),
                     isLoading ? Center(
                       child: SquareLoader(
-                        color: ColorResources.getPrimaryToBlack(context)
+                        color: ColorResources.BTN_PRIMARY
                       ),
                     ) : SizedBox.shrink(),
                   ],

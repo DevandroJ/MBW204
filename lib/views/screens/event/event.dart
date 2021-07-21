@@ -280,7 +280,7 @@ class _EventScreenState extends State<EventScreen> {
                                         children: [
                                           Text(eventProvider.events[i][0]["description"].toString(),
                                            style: poppinsRegular.copyWith(
-                                              color: ColorResources.getWhiteToBlack(context)
+                                              color: ColorResources.WHITE
                                             ),
                                           ),
                                         ],

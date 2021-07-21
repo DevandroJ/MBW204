@@ -98,7 +98,7 @@ class _AuthDisbursementScreenState extends State<AuthDisbursementScreen> {
                   onPressed: () => signIn(context),
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
-                    backgroundColor: ColorResources.getPrimaryToWhite(context)
+                    backgroundColor: ColorResources.PRIMARY
                   ),
                   child: Container(
                     height: 45.0,
@@ -117,12 +117,12 @@ class _AuthDisbursementScreenState extends State<AuthDisbursementScreen> {
                         builder: (BuildContext context, AuthProvider authProvider, Widget child) {
                           return authProvider.authDisbursementStatus == AuthDisbursementStatus.loading 
                           ? Loader(
-                              color: ColorResources.getWhiteToBlack(context),
+                              color: ColorResources.BTN_PRIMARY_SECOND,
                             )
-                          :Text(getTranslated('SIGN_IN', context),
+                          : Text(getTranslated('SIGN_IN', context),
                             style: poppinsRegular.copyWith(
                               fontSize: 16.0,
-                              color: ColorResources.getWhiteToBlack(context),
+                              color: ColorResources.WHITE,
                             )
                           );
                         } 
@@ -142,7 +142,7 @@ class _AuthDisbursementScreenState extends State<AuthDisbursementScreen> {
                   onPressed: () => Navigator.of(context).pop(),
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
-                    backgroundColor: ColorResources.getPrimaryToWhite(context)
+                    backgroundColor: ColorResources.BTN_PRIMARY
                   ),
                   child: Container(
                     height: 45.0,
@@ -160,7 +160,7 @@ class _AuthDisbursementScreenState extends State<AuthDisbursementScreen> {
                       child: Text(getTranslated('BACK', context),
                         style: poppinsRegular.copyWith(
                           fontSize: 16.0,
-                          color: ColorResources.getWhiteToBlack(context),
+                          color: ColorResources.WHITE,
                         )
                       )
                     ),

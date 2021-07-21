@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
-import 'package:mbw204_club_ina/utils/images.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;

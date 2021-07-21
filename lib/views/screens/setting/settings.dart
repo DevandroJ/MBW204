@@ -10,23 +10,35 @@ import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_expanded_app_bar.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      Provider.of<PPOBProvider>(context, listen: false).getBankDisbursement(context);
+      Provider.of<PPOBProvider>(context, listen: false).getEmoneyDisbursement(context);
+    });
+  }
+
+  Future<bool> willPopScope() {
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<PPOBProvider>(context, listen: false).getBankDisbursement(context);
-    Provider.of<PPOBProvider>(context, listen: false).getEmoneyDisbursement(context);
-
     return WillPopScope(
-      onWillPop: () {
-        return Future.value(true);
-      },
-      child: CustomExpandedAppBar(
-        title: getTranslated('SETTINGS', context), 
-        child: Column(
+      onWillPop: willPopScope,
+      child: Scaffold(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: [
 
@@ -66,7 +78,7 @@ class SettingsScreen extends StatelessWidget {
                                     },
                                     child: Icon(
                                       Icons.remove_circle,
-                                      color: ColorResources.getPrimaryToWhite(context),
+                                      color: ColorResources.BTN_PRIMARY,
                                     ),
                                   )
                                 ],
@@ -89,7 +101,7 @@ class SettingsScreen extends StatelessWidget {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary: ColorResources.getBlueToWhite(context)
+                                        primary: ColorResources.BLUE
                                       ),
                                       onPressed: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
@@ -100,7 +112,7 @@ class SettingsScreen extends StatelessWidget {
                                       child: Text("Bank Transfer",
                                         style: poppinsRegular.copyWith(
                                           fontSize: 12.5,
-                                          color: ColorResources.getWhiteToBlack(context)
+                                          color: ColorResources.WHITE
                                         ),
                                       )
                                     ),
@@ -109,7 +121,7 @@ class SettingsScreen extends StatelessWidget {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        primary: ColorResources.getBlueToWhite(context)
+                                        primary: ColorResources.BLUE
                                       ),
                                       onPressed: () {
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
@@ -120,7 +132,7 @@ class SettingsScreen extends StatelessWidget {
                                       child: Text(getTranslated("E_MONEY", context),
                                         style: poppinsRegular.copyWith(
                                           fontSize: 12.5,
-                                          color: ColorResources.getWhiteToBlack(context)
+                                          color: ColorResources.WHITE
                                         ),
                                       )
                                     ),
@@ -162,22 +174,16 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   )
 
-                  // TitleButton(
-                  //   image: Images.language,
-                  //   title: getTranslated('LANGUAGE', context),
-                  //   onTap: () => ,
-                  // ),
-
                 ],
               )
             ),
 
           ]
-        )
-      ),
+        ),
+      )
+      
     );
   }
-
 }
 
 class TitleButton extends StatelessWidget {
@@ -194,7 +200,7 @@ class TitleButton extends StatelessWidget {
         width: 25.0, 
         height: 25.0, 
         fit: BoxFit.fill, 
-        color: ColorResources.getPrimary(context)
+        color: ColorResources.BTN_PRIMARY
       ),
       title: Text(title, 
         style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)

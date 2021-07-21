@@ -390,7 +390,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
               );
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -569,7 +569,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
               }
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -630,7 +630,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
           ),
           child: TextFormField(
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             style: poppinsRegular,
@@ -810,7 +810,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
               } 
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -873,7 +873,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
             ],
           ),
           child: TextFormField(
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -941,7 +941,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
                   isCheck = false;
                 });
               },
-              cursorColor: ColorResources.getBlackToWhite(context),
+              cursorColor: ColorResources.BLACK,
               controller: typeAddressController,
               keyboardType: TextInputType.text,
               style: poppinsRegular,
@@ -1004,7 +1004,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           style: poppinsRegular,
           keyboardType: TextInputType.text,
@@ -1148,7 +1148,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1209,7 +1209,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],

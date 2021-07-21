@@ -139,7 +139,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
-                    backgroundColor: ColorResources.getPrimaryToWhite(context)
+                    backgroundColor: ColorResources.BTN_PRIMARY
                   ),
                   child: Container(
                     height: 45.0,
@@ -158,12 +158,12 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                         builder: (BuildContext context, AuthProvider authProvider, Widget child) {
                           return authProvider.authDisbursementStatus == AuthDisbursementStatus.loading 
                           ? Loader(
-                              color: ColorResources.getWhiteToBlack(context),
+                              color: ColorResources.WHITE,
                             )
                           : Text(getTranslated('SIGN_IN', context),
                             style: poppinsRegular.copyWith(
                               fontSize: 16.0,
-                              color: ColorResources.getWhiteToBlack(context),
+                              color: ColorResources.WHITE,
                             )
                           );
                         } 
@@ -211,7 +211,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           style: poppinsRegular.copyWith(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
-                            color: ColorResources.getBlackToWhite(context)
+                            color: ColorResources.BLACK
                           ),
                         )
                       ],
@@ -256,7 +256,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                               },
                                               child: Icon(
                                                 Icons.remove_circle,
-                                                color: ColorResources.getPrimaryToWhite(context),  
+                                                color: ColorResources.BTN_PRIMARY,  
                                               ),
                                             )
                                           ],
@@ -280,7 +280,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                                   return 0;
                                                 },
                                               ),
-                                              backgroundColor: MaterialStateProperty.all(ColorResources.getBlueToWhite(context)),
+                                              backgroundColor: MaterialStateProperty.all(ColorResources.BLUE),
                                               
                                             ),
                                             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
@@ -289,7 +289,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                             ))),
                                             child: Text("Bank Transfer",
                                               style: poppinsRegular.copyWith(
-                                                color: ColorResources.getWhiteToBlack(context)
+                                                color: ColorResources.WHITE
                                               ),
                                             )
                                           ),
@@ -304,7 +304,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                                   return 0;
                                                 },
                                               ),
-                                              backgroundColor: MaterialStateProperty.all(ColorResources.getBlueToWhite(context)),
+                                              backgroundColor: MaterialStateProperty.all(ColorResources.BLUE),
                                             ),
                                             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
                                               title: "E Money",
@@ -312,7 +312,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                                             ))), 
                                             child: Text("E-Money",
                                               style: poppinsRegular.copyWith(
-                                                color: ColorResources.getWhiteToBlack(context)
+                                                color: ColorResources.WHITE
                                               ),
                                             )
                                           )
@@ -357,7 +357,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                             Text(ConnexistHelper.formatCurrency(double.parse(widget.totalDeduction.toString())),
                               style: TextStyle(
                                 fontSize: 12.0,
-                                color: ColorResources.getBlackToWhite(context)
+                                color: ColorResources.BLACK
                               ),
                             )
                           ],
@@ -376,7 +376,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                             Text(ConnexistHelper.formatCurrency(double.parse(widget.adminFee.toString())),
                               style: poppinsRegular.copyWith(
                                 fontSize: 12.0,
-                                color: ColorResources.getBlackToWhite(context)
+                                color: ColorResources.BLACK
                               ),
                             )
                           ],
@@ -395,7 +395,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                             Text(ConnexistHelper.formatCurrency(double.parse(grandTotal.toString())),
                               style: poppinsRegular.copyWith(
                                 fontSize: 12.0,
-                                color: ColorResources.getBlackToWhite(context)
+                                color: ColorResources.BLACK
                               ),
                             )
                           ],
@@ -413,7 +413,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                color: ColorResources.getBlackSoft(context),
+                color: ColorResources.BLACK,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
                 child: ElevatedButton(
                   onPressed: submit,
@@ -426,7 +426,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                       return 0;
                     },
                   ),
-                    backgroundColor: MaterialStateProperty.all(ColorResources.getPrimaryToWhite(context)),
+                    backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -440,12 +440,12 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           width: 18.0,
                           height: 18.0,
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getWhiteToBlack(context)),
+                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.WHITE),
                           )
                         )
                       : Text(getTranslated("CONTINUE", context),
                         style: poppinsRegular.copyWith(
-                          color: ColorResources.getWhiteToBlack(context)
+                          color: ColorResources.WHITE
                         ),
                       );
                     },

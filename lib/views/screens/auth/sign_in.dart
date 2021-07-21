@@ -100,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.email,
+                                          Icon(Icons.phone,
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
@@ -119,7 +119,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
                                             hintText: "ex. 0896xxxxxxxx",
-                                            hintStyle: poppinsRegular,
+                                            hintStyle: poppinsRegular.copyWith(
+                                              color: ColorResources.WHITE
+                                            ),
                                             isDense: true,
                                             enabledBorder: UnderlineInputBorder(      
                                               borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -161,7 +163,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                               color: ColorResources.WHITE
                                             ),
                                             decoration: InputDecoration(
-                                              hintText: "Enter your password",
+                                              hintText: getTranslated("ENTER_YOUR_PASSWORD", context),
                                               suffixIcon: InkWell(
                                                 onTap: () => setState(() => passwordObscure = !passwordObscure), 
                                                 child: Icon(
@@ -172,7 +174,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                                 ),
                                               ),
                                               contentPadding: EdgeInsets.only(top: 13),
-                                              hintStyle: poppinsRegular,
+                                              hintStyle: poppinsRegular.copyWith(
+                                                color: ColorResources.WHITE
+                                              ),
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      
                                                 borderSide: BorderSide(color: ColorResources.WHITE),   
@@ -217,7 +221,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                                 Container(
                                   width: double.infinity,
-                                  margin: EdgeInsets.only(top: 10.0),
+                                  margin: EdgeInsets.only(top: 5.0),
                                   child: ElevatedButton(
                                     onPressed: () =>  Navigator.push(context,
                                       MaterialPageRoute(builder: (context) => DashBoardScreen()),

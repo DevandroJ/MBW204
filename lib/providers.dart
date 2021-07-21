@@ -20,7 +20,6 @@ import 'package:mbw204_club_ina/providers/localization.dart';
 import 'package:mbw204_club_ina/providers/onboarding.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/splash.dart';
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/providers/media.dart';
 import 'package:mbw204_club_ina/providers/checkin.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
@@ -30,6 +29,7 @@ List<SingleChildWidget> providers = [
 ];
 
 List<SingleChildWidget> independentServices = [
+  
   ChangeNotifierProvider(create: (_) => c.getIt<AuthProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<ChatProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<CategoryProvider>()),
@@ -51,7 +51,6 @@ List<SingleChildWidget> independentServices = [
   ChangeNotifierProvider(create: (_) => c.getIt<NearMemberProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<RegionProvider>()),
   ChangeNotifierProvider(create: (_) => c.getIt<LocalizationProvider>()),
-  ChangeNotifierProvider(create: (_) => c.getIt<ThemeProvider>()),
   
   Provider.value(value: Map<String, dynamic>())
 ];

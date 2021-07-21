@@ -40,7 +40,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                 if(ppobProvider.listTopUpEmoneyStatus == ListTopUpEmoneyStatus.loading) {
                   return Expanded(
                       child: Loader(
-                      color: ColorResources.getPrimaryToWhite(context),
+                      color: ColorResources.BTN_PRIMARY,
                     ),
                   );
                 }

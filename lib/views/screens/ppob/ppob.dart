@@ -89,7 +89,7 @@ class _PPOBScreenState extends State<PPOBScreen> {
                             ),                              
                             AutoSizeText(getTranslated(ppobMenus[0]["menu-0"][i]["text"], context),
                               style: poppinsRegular.copyWith(
-                                color: ColorResources.getPrimaryToWhite(context),
+                                color: ColorResources.BTN_PRIMARY,
                                 fontWeight: FontWeight.bold
                               ),
                             ) , 

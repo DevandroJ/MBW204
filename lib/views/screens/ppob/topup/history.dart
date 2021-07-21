@@ -109,7 +109,7 @@ class TopUpHistoryScreen extends StatelessWidget {
                             ),
                             child: Text("Submit",
                               style: poppinsRegular.copyWith(
-                                color: ColorResources.getWhiteToBlack(context)
+                                color: ColorResources.WHITE
                               ),
                             )
                           ),

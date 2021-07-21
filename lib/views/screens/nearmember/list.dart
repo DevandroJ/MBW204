@@ -227,7 +227,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                                 width: 18.0,
                                                 height: 18.0,
                                                 child: CircularProgressIndicator(
-                                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
                                                 ),
                                               )
                                             : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 

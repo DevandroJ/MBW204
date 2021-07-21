@@ -221,32 +221,32 @@ class _HomePageState extends State<HomePage> {
                                   hintText: "${getTranslated("SEARCH", context)} Event",
                                 )
                               ),
-                              SizedBox(width: 10.0),
-                              InkWell(
-                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                                child: Container(
-                                  width: 28.0,
-                                  height: 28.0,
-                                  decoration: BoxDecoration(
-                                    color: ColorResources.GREY,
-                                    borderRadius: BorderRadius.circular(20.0)
-                                  ),
-                                  child: Badge(
-                                    position: BadgePosition(
-                                      top: -9.0,
-                                      end: 14.0
-                                    ),
-                                    badgeContent: Text("2",
-                                      style: poppinsRegular.copyWith(color: Colors.white),
-                                    ),
-                                    child: Icon(
-                                      Icons.chat,
-                                      color: ColorResources.BLACK,
-                                      size: 17.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // SizedBox(width: 10.0),
+                              // InkWell(
+                              //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                              //   child: Container(
+                              //     width: 28.0,
+                              //     height: 28.0,
+                              //     decoration: BoxDecoration(
+                              //       color: ColorResources.GREY,
+                              //       borderRadius: BorderRadius.circular(20.0)
+                              //     ),
+                              //     child: Badge(
+                              //       position: BadgePosition(
+                              //         top: -9.0,
+                              //         end: 14.0
+                              //       ),
+                              //       badgeContent: Text("2",
+                              //         style: poppinsRegular.copyWith(color: Colors.white),
+                              //       ),
+                              //       child: Icon(
+                              //         Icons.chat,
+                              //         color: ColorResources.BLACK,
+                              //         size: 17.0,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                               SizedBox(width: 10.0),
                               InkWell(
                                 onTap: () => scaffoldKey.currentState.openEndDrawer(),
@@ -355,7 +355,7 @@ class _HomePageState extends State<HomePage> {
                                                                           width: 18.0,
                                                                           height: 18.0,
                                                                           child: CircularProgressIndicator(
-                                                                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                                                                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
                                                                           ),
                                                                         )
                                                                       : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 

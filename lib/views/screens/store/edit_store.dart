@@ -652,7 +652,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
             },
             style: poppinsRegular,
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: provinceController,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -836,7 +836,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
               } 
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: cityController,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -1019,7 +1019,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
               }
             },
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             decoration: InputDecoration(
@@ -1232,7 +1232,7 @@ Widget inputFieldEmailAddress(BuildContext context, String title, TextEditingCon
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1293,7 +1293,7 @@ Widget inputFieldPhoneNumber(BuildContext context, String title, TextEditingCont
           ),
           child: TextFormField(
             readOnly: true,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             style: poppinsRegular,
@@ -1539,7 +1539,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
@@ -1600,7 +1600,7 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1660,7 +1660,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
@@ -1720,7 +1720,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
-          cursorColor: ColorResources.getBlackToWhite(context),
+          cursorColor: ColorResources.BLACK,
           controller: controller,
           style: poppinsRegular,
           keyboardType: TextInputType.text,
@@ -1866,7 +1866,7 @@ Widget inputFieldPostCode(BuildContext context, String title, TextEditingControl
           ),
           child: TextFormField(
             style: poppinsRegular,
-            cursorColor: ColorResources.getBlackToWhite(context),
+            cursorColor: ColorResources.BLACK,
             controller: controller,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],

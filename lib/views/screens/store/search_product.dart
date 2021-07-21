@@ -104,7 +104,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
               centerTitle: false,
               toolbarHeight: 10,
               automaticallyImplyLeading: false,
-              backgroundColor: ColorResources.getPrimaryToBlack(context),
+              backgroundColor: ColorResources.BTN_PRIMARY,
             ),
 
             SliverPersistentHeader(

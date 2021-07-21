@@ -218,21 +218,21 @@ class _InputPostComponentState extends State<InputPostComponent> {
                     onPressed: uploadPic,
                     icon: Icon(
                       Icons.image,
-                      color: ColorResources.getPrimaryToWhite(context)
+                      color: ColorResources.BTN_PRIMARY
                     ),
                   ),
                   IconButton(
                     onPressed: uploadVid,
                     icon: Icon(
                       Icons.video_call,
-                      color: ColorResources.getPrimaryToWhite(context),
+                      color: ColorResources.BTN_PRIMARY,
                     ),
                   ),
                   IconButton(
                     onPressed: postLink, 
                     icon: Icon(
                       Icons.attach_file,
-                      color: ColorResources.getPrimaryToWhite(context),
+                      color: ColorResources.BTN_PRIMARY,
                     ),
                     
                   ),
@@ -240,7 +240,7 @@ class _InputPostComponentState extends State<InputPostComponent> {
                     onPressed: uploadDoc,
                     icon: Icon(
                       Icons.picture_as_pdf,
-                      color: ColorResources.getPrimaryToWhite(context),
+                      color: ColorResources.BTN_PRIMARY,
                     ),
                   )
                 ],

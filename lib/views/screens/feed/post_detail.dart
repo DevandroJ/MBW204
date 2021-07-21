@@ -74,7 +74,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       ReadMoreText(
         comment.text,
         style: poppinsRegular.copyWith(
-          color: ColorResources.getBlackToWhite(context),
+          color: ColorResources.BLACK,
           fontSize: 14.0
         ),
         trimLines: 2,
@@ -100,7 +100,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   height: 15.0,
                   width: 15.0,
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context)),
+                    valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
                   )
                 )
               ),
@@ -124,7 +124,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                 ),
                 title: Text(feedState.post.body.user.nickname,
                   style: poppinsRegular.copyWith(
-                    color: ColorResources.getBlackToWhite(context)
+                    color: ColorResources.BLACK
                   ),
                 ),
                 subtitle: Text(timeago.format((DateTime.parse(feedState.post.body.created).toLocal()), locale: 'id'),
@@ -174,7 +174,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                               padding: EdgeInsets.all(5.0),
                               child: Icon(Icons.thumb_up,
                                 size: 16.0,
-                                color: feedState.post.body.liked.isNotEmpty ? Colors.blue : ColorResources.getBlackToWhite(context)
+                                color: feedState.post.body.liked.isNotEmpty ? Colors.blue : ColorResources.BLACK
                               ),
                             ),
                           )
@@ -225,7 +225,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             builder: (_) {
               if (feedState.commentMostRecentStatus == CommentMostRecentStatus.loading) {
                 return Loader(
-                  color: ColorResources.getPrimaryToWhite(context),
+                  color: ColorResources.BTN_PRIMARY,
                 );
               }
               if (feedState.commentMostRecentStatus == CommentMostRecentStatus.empty) {
@@ -247,7 +247,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   itemBuilder: (BuildContext context, int i) {
                     if (feedState.c1List.length == i) {
                       return Loader(
-                        color: ColorResources.getPrimaryToWhite(context),
+                        color: ColorResources.BTN_PRIMARY,
                       );
                     }
                     return Container(
@@ -262,7 +262,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           title: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              color: ColorResources.getBlueGreyToBlack(context),
+                              color: ColorResources.BLUE_GREY,
                               borderRadius: BorderRadius.all(Radius.circular(8.0))
                             ),
                             child: Column(
@@ -318,7 +318,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                         padding: EdgeInsets.all(5.0),
                                         child: Icon(Icons.thumb_up,
                                           size: 16.0,
-                                          color: feedState.c1List[i].liked.isNotEmpty ? Colors.blue : ColorResources.getBlackToWhite(context)),
+                                          color: feedState.c1List[i].liked.isNotEmpty ? Colors.blue : ColorResources.BLACK),
                                       ),
                                     ),
                                   ]
@@ -352,10 +352,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   },
                 ),
                 onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels ==
-                      scrollInfo.metrics.maxScrollExtent) {
+                  if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
                     if (feedState.c1.nextCursor != null) {
                       feedState.fetchListCommentMostRecentLoad(widget.postId, feedState.c1.nextCursor);
+                      feedState.c1.nextCursor = null;
                     }
                   }
                   return false;
@@ -390,7 +390,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                               width: 15.0,
                               height: 15.0,
                               child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToWhite(context))
+                                valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY)
                               )
                             )
                           );
@@ -501,7 +501,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
           PopupMenuItem(
             child: Text(getTranslated("DELETE_POST", context),
               style: poppinsRegular.copyWith(
-                color: ColorResources.getPrimaryToWhite(context)
+                color: ColorResources.BTN_PRIMARY
               )
             ), 
             value: "/delete-post"
@@ -524,7 +524,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     SizedBox(height: 10.0),
                     Icon(
                       Icons.delete,
-                      color: ColorResources.getBlackToWhite(context),
+                      color: ColorResources.BLACK,
                     ),
                     SizedBox(height: 10.0),
                     Text(getTranslated("DELETE_POST", context),

@@ -306,7 +306,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     children: [
                       inputComponent(context, getTranslated("EMAIL", context), emailController, true),
                       SizedBox(height: 10.0),
-                      inputComponent(context, getTranslated("MEMBER_NO", context), noAnggotaController, true),
+                      inputComponent(context, getTranslated("NO_MEMBER", context), noAnggotaController, true),
                       SizedBox(height: 10.0),
                       inputComponent(context, getTranslated("PHONE_NUMBER", context), noHpController, false),
                       SizedBox(height: 10.0),

@@ -20,7 +20,6 @@ import 'package:mbw204_club_ina/providers/news.dart';
 import 'package:mbw204_club_ina/providers/onboarding.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/splash.dart';
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/media.dart';
@@ -85,7 +84,6 @@ Future<void> init() async {
   getIt.registerFactory(() => HistoryActivityProvider(historyActivityRepo: getIt()));
   getIt.registerFactory(() => ProfileProvider(profileRepo: getIt()));
   getIt.registerFactory(() => SplashProvider(splashRepo: getIt()));
-  getIt.registerFactory(() => ThemeProvider(sharedPreferences: getIt()));
   getIt.registerFactory(() => LocalizationProvider(sharedPreferences: getIt()));
 
   // External

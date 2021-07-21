@@ -122,8 +122,8 @@ class _DetailBuyerTransactionScreenState extends State<DetailBuyerTransactionScr
         : Stack(
         children: [
           RefreshIndicator(
-            backgroundColor: ColorResources.getPrimaryToWhite(context),
-            color: ColorResources.getWhiteToBlack(context),
+            backgroundColor: ColorResources.BTN_PRIMARY,
+            color: ColorResources.WHITE,
             onRefresh: () {
               Map<String, dynamic> basket = Provider.of(context, listen: false);
               return Provider.of<WarungProvider>(context, listen: false).getTransactionPaidSingle(context, basket['idTrx'], widget.typeUser);

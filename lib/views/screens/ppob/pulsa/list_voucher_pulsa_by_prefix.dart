@@ -149,7 +149,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                               width: 18.0,
                               height: 18.0,
                               child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryToBlack(context)),
+                                valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
                               )
                             )
                           ),
@@ -397,7 +397,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                 Center(
                                                   child: Text(ppobProvider.listVoucherPulsaByPrefixData[i].name,
                                                     style: poppinsRegular.copyWith(
-                                                      color: selected == i ? ColorResources.PURPLE_DARK : ColorResources.getDimGrayToWhite(context),
+                                                      color: selected == i ? ColorResources.PURPLE_DARK : ColorResources.DIM_GRAY,
                                                       fontSize: 12.0
                                                     ),
                                                   ),

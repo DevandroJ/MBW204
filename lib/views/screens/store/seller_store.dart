@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/providers/theme.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/store/seller_transaction_order.dart';
@@ -23,7 +22,6 @@ class SellerStoreScreen extends StatefulWidget {
 class _SellerStoreScreenState extends State<SellerStoreScreen> with TickerProviderStateMixin {
 
   Future<bool> onWillPop() {
-    Provider.of<ThemeProvider>(context, listen: false).pageIndex = 0; 
     return Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DashBoardScreen();
     }));

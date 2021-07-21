@@ -48,6 +48,7 @@ dependencies:
   flutter_html: ^1.0.0
   flappy_search_bar: ^1.7.2
   flutter_picker: ^2.0.1
+  flutter_pdfview: ^1.1.0
   flutter_cache_manager: ^2.1.2
   firebase_messaging: ^7.0.3
   flutter_native_image: ^0.0.5
@@ -111,9 +112,6 @@ dependencies:
   # N
   native_contact_picker: ^0.0.6
 
-  # P
-  flutter_pdfview: ^1.1.0
-
   # H
   hex: ^0.2.0
 
@@ -130,7 +128,6 @@ dependencies:
   shared_preferences: ^0.5.12
   shimmer: ^2.0.0
   share: ^2.0.2
-  slide_to_act: ^2.0.1
   slide_to_confirm: ^0.0.7
   socket_io_client: ^1.0.1
   select_form_field: ^2.0.0

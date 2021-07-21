@@ -126,12 +126,12 @@ class _CashoutScreenState extends State<CashoutScreen> {
                               
                               if(ppobProvider.denomDisbursementStatus == DenomDisbursementStatus.loading)
                                 return Loader(
-                                  color: ColorResources.getPrimaryToWhite(context)
+                                  color: ColorResources.BTN_PRIMARY
                                 );  
                               
                               if(ppobProvider.denomDisbursementStatus == DenomDisbursementStatus.loading)
                                 return Loader(
-                                  color: ColorResources.getPrimaryToWhite(context)
+                                  color: ColorResources.BTN_PRIMARY
                                 );  
 
                                 return GridView.builder(
@@ -214,7 +214,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                color: ColorResources.getBlackSoft(context),
+                color: ColorResources.BTN_PRIMARY,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
                 child: ElevatedButton(
                   onPressed: inquiryDisbursement,
@@ -227,7 +227,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                       return 0;
                     },
                   ),
-                   backgroundColor: MaterialStateProperty.all(ColorResources.getPrimaryToWhite(context)),
+                   backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -241,12 +241,12 @@ class _CashoutScreenState extends State<CashoutScreen> {
                         width: 18.0,
                         height: 18.0,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(ColorResources.getWhiteToBlack(context)),
+                          valueColor: AlwaysStoppedAnimation<Color>(ColorResources.WHITE),
                         ),
                       )
                       : Text(getTranslated("CONTINUE", context),
                         style: poppinsRegular.copyWith(
-                          color: ColorResources.getWhiteToBlack(context)
+                          color: ColorResources.WHITE
                         ),
                       );
                     },
