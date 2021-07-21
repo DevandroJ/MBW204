@@ -421,7 +421,8 @@ class WarungProvider with ChangeNotifier {
     
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/$typeProduct/product/categories");
-      
+      CategoryProductModel categoryProductModel = CategoryProductModel.fromJson(res.data);
+    
       if(res.data['code'] == 404) {
         throw DioError(error: 404);
       } 
@@ -430,21 +431,22 @@ class WarungProvider with ChangeNotifier {
         throw DioError(error: 500);
       } 
       
-      CategoryProductModel categoryProductModel = CategoryProductModel.fromJson(res.data);
-      
       if(categoryHasManyProduct.length != categoryProductModel.body.length) {
-        categoryHasManyProduct.clear();  
-        for (int i = 0; i < categoryProductModel.body.length; i++) {
-          ProductWarungModel productWarungModel = await getDataProductByCategoryConsumen(context, "", categoryProductModel.body[i].id, 0);
+        var categoryHasManyProductAssign = [];
+        categoryProductList = [];
+        categoryProductList.addAll(categoryProductModel.body);
+        for (var item in categoryProductModel.body) {
+          ProductWarungModel productWarungModel = await getDataProductByCategoryConsumen(context, "", item.id, 0);
           List<ProductWarungList> productWarungList = productWarungModel.body;
-          categoryHasManyProduct.add({
-            "id": categoryProductModel.body[i].id,
-            "category": categoryProductModel.body[i].name,
+          categoryHasManyProductAssign.add({
+            "id": item.id,
+            "category": item.name,
             "items": productWarungList,
           });
         }
+        categoryHasManyProduct = categoryHasManyProductAssign;
+        setStateCategoryProductStatus(CategoryProductStatus.loaded);
       }
-      setStateCategoryProductStatus(CategoryProductStatus.loaded);
       return categoryProductModel;
     } on DioError catch(e) {
       print(e?.response?.statusCode);

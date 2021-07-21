@@ -7,6 +7,7 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SosScreen extends StatefulWidget {
   final bool isBacButtonExist;
@@ -36,7 +37,7 @@ class _SosScreenState extends State<SosScreen> {
           elevation: 0.0,
           centerTitle: true,
           backgroundColor: ColorResources.GRAY_DARK_PRIMARY,
-          title: Text("Panic Button",
+          title: Text("SOS",
             style: poppinsRegular,
           ),
           automaticallyImplyLeading: false,
@@ -73,7 +74,7 @@ class _SosScreenState extends State<SosScreen> {
                         SizedBox(height: 10.0),
                         getSosList(context, "KEBAKARAN", Images.fire, "Sebar permintaan tolong Kebakaran"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "INFO BENGKEL", Images.workshop_info, "Sebar permintaan Info Bengkel"),
+                        getSosList(context, "INFO BENGKEL", Images.workshop_info, "O81316982889 StarPro Service"),
                         SizedBox(height: 10.0),
                         getSosList(context, "BENCANA ALAM", Images.disaster, "Sebar permintaan tolong Bencana"),
                       ],
@@ -92,8 +93,8 @@ class _SosScreenState extends State<SosScreen> {
 }
 
 Widget getSosList(BuildContext context, String label, String images, String content) {
-  return GestureDetector(
-    onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
+  return InkWell(
+    onTap: () async => label == "INFO BENGKEL" ? await launch("tel://O81316982889") : Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
       label: label,
       content: content,
     ))),

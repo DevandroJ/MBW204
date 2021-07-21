@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/basewidget/custom_expanded_app_bar.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
 import 'package:mbw204_club_ina/views/screens/auth/change_password.dart';
 import 'package:mbw204_club_ina/views/basewidget/list_component.dart';
@@ -37,8 +38,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return WillPopScope(
       onWillPop: willPopScope,
-      child: Scaffold(
-        body: Column(
+      child: CustomExpandedAppBar(
+        title: getTranslated("SETTINGS", context),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           children: [
 

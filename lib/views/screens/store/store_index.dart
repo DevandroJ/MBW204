@@ -115,7 +115,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                     margin: EdgeInsets.only(left: 15.0),
                                     child: CupertinoNavigationBarBackButton(
                                     onPressed: onWillPop,
-                                    color: Colors.white,
+                                    color: ColorResources.BTN_PRIMARY_SECOND,
                                   )),
                                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                                   Expanded(

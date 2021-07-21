@@ -18,9 +18,12 @@ class LanguageDialog extends StatelessWidget {
     int index = Provider.of<LocalizationProvider>(context, listen: false).languageIndex;
     
     return Dialog(
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: ColorResources.WHITE,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+      child: Column(
+        mainAxisSize: MainAxisSize.min, 
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
         Padding(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
@@ -36,7 +39,7 @@ class LanguageDialog extends StatelessWidget {
             AppConstants.languages.forEach((language) => valueList.add(language.languageName));
 
               return CupertinoPicker(
-                itemExtent: 40,
+                itemExtent: 40.0,
                 useMagnifier: true,
                 magnification: 1.2,
                 scrollController: FixedExtentScrollController(initialItem: index),
@@ -71,7 +74,10 @@ class LanguageDialog extends StatelessWidget {
           Container(
             height: 50.0,
             padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-            child: VerticalDivider(width: Dimensions.PADDING_SIZE_EXTRA_SMALL, color: Theme.of(context).hintColor),
+            child: VerticalDivider(
+              width: Dimensions.PADDING_SIZE_EXTRA_SMALL, 
+              color: Theme.of(context).hintColor
+            ),
           ),
           Expanded(
             child: TextButton(

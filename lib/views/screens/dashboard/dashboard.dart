@@ -79,7 +79,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
             borderSide: BorderSide.none,
           ),
           onTap: (int i) {
-            if(i == 1 || i == 2 || i == 4) {
+            if(i == 2 || i == 4) {
               if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
                  tabController.animateTo(0);
                  return showAnimatedDialog(
@@ -142,6 +142,38 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
                   }
                 );
               } 
+            } else {
+              if(i == 1) {
+                tabController.animateTo(0);
+                return showAnimatedDialog(
+                  context: context, 
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)
+                      ),
+                      backgroundColor: ColorResources.BLACK,
+                      child: Container(
+                        height: 250.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Under Maintenance",
+                              style: poppinsRegular.copyWith(
+                                color: ColorResources.WHITE,
+                                fontSize: 16.0
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                );
+              }
             }
           },
         tabs: [
