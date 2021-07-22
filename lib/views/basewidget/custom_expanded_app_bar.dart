@@ -5,7 +5,6 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 
-
 class CustomExpandedAppBar extends StatelessWidget {
   final String title;
   final Widget child;

@@ -531,11 +531,11 @@ class _HomePageState extends State<HomePage> {
                     SliverToBoxAdapter(
                       child: Container(
                         width: double.infinity,
-                        margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                        margin: EdgeInsets.only(left: 12.0, right: 12.0),
                         decoration: BoxDecoration(
                           color: ColorResources.WHITE
                         ),
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                         child: Column(
                           children: [
 
@@ -622,8 +622,12 @@ class _HomePageState extends State<HomePage> {
                                               height: 20.0,
                                               child: Image.asset(Images.media)
                                             ),
-                                            SizedBox(width: 10.0),
-                                            Text("Media")
+                                            SizedBox(width: 6.0),
+                                            Text("Media",
+                                              style: poppinsRegular.copyWith(
+                                                fontSize: 11.0
+                                              )
+                                            )
                                           ],
                                         ),
                                         if(!Provider.of<AuthProvider>(context, listen: false).isLoggedIn())
@@ -730,7 +734,11 @@ class _HomePageState extends State<HomePage> {
                                           child: Image.asset(Images.mart)
                                         ),
                                         SizedBox(width: 10.0),
-                                        Text("MBW Mart")
+                                        Text("MBW Mart", 
+                                          style: poppinsRegular.copyWith(
+                                            fontSize: 11.0
+                                          )
+                                        )
                                       ],
                                     ),
                                   ),
@@ -819,7 +827,11 @@ class _HomePageState extends State<HomePage> {
                                           child: Image.asset(Images.ppob)
                                         ),
                                         SizedBox(width: 10.0),
-                                        Text("PPOB")
+                                        Text("PPOB",
+                                          style: poppinsRegular.copyWith(
+                                            fontSize: 11.0
+                                          )
+                                        )
                                       ],
                                     ),
                                   ),
@@ -908,16 +920,16 @@ class _HomePageState extends State<HomePage> {
                                           child: Image.asset(Images.search_member)
                                         ),
                                         SizedBox(width: 10.0),
-                                        Text("Search\nMember")
+                                        Text("Search\nMember",
+                                          style: poppinsRegular.copyWith(
+                                            fontSize: 11.0
+                                          )
+                                        )
                                       ],
                                     ),
                                   ),
                                 
                               ],
-                            ),
-
-                            SizedBox(
-                              height: 10.0,
                             ),
 
                             Divider(

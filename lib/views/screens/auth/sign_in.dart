@@ -100,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.phone,
+                                          Icon(Icons.phone_android,
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),

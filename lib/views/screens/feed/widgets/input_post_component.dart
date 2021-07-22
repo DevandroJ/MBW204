@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,7 @@ class _InputPostComponentState extends State<InputPostComponent> {
       });
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => CreatePostImageScreen(
         groupId: widget.groupId,
-        files: files,
+        files: files.length != 0 ? files : [],
       )));
     }
   }
@@ -114,7 +115,13 @@ class _InputPostComponentState extends State<InputPostComponent> {
     );
     for (int i = 0; i < result.files.length; i++) {
       if(result.files[i].size > 51200) {
-        // alertComponent(context, 'Video terlalu besar, maksimal : 50 MB', 'Ups! Ada Masalah', 'error');
+        Fluttertoast.showToast(
+          backgroundColor: ColorResources.ERROR,
+          textColor: ColorResources.WHITE,
+          fontSize: 14.0,
+          msg: "Video terlalu besar, maksimal : 50 MB"
+        );
+        return;
       } 
     }
     File file = File(result.files.single.path);
@@ -135,7 +142,13 @@ class _InputPostComponentState extends State<InputPostComponent> {
     if(result != null) {
       for (int i = 0; i < result.files.length; i++) {
         if(result.files[i].size > 51200) {
-          // alertComponent(context, 'Dokumen terlalu besar, maksimal : 50 MB', 'Ups! Ada Masalah', 'error');  
+          Fluttertoast.showToast(
+            backgroundColor: ColorResources.ERROR,
+            textColor: ColorResources.WHITE,
+            fontSize: 14.0,
+            msg: "Dokumen terlalu besar, maksimal : 50 MB"
+          );
+          return;
         } 
       }
       Navigator.push(context, MaterialPageRoute(builder: (context) =>
