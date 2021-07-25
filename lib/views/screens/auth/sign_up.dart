@@ -242,7 +242,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       
                                                       title: Text(getTranslated("MEMBER", context),
                                                         style: poppinsRegular.copyWith(
-                                                          color: ColorResources.WHITE
+                                                          color: ColorResources.WHITE,
+                                                          fontSize: 13.0 *  MediaQuery.of(context).textScaleFactor
                                                         ),
                                                       ),
                                                     ),
@@ -260,7 +261,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               
                                                       title: Text(getTranslated("PARTNERSHIP", context),
                                                         style: poppinsRegular.copyWith(
-                                                          color: ColorResources.WHITE
+                                                          color: ColorResources.WHITE,
+                                                          fontSize: 13.0 *  MediaQuery.of(context).textScaleFactor 
                                                         ),
                                                       ),
                                                     ),
@@ -293,7 +295,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     },
                                                     title: Text(getTranslated("RELATIONSHIP_MEMBER", context),
                                                       style: poppinsRegular.copyWith(
-                                                        color: ColorResources.WHITE
+                                                        color: ColorResources.WHITE,
+                                                        fontSize: 13.0 *  MediaQuery.of(context).textScaleFactor 
                                                       ),
                                                     ),
                                                   ),
@@ -309,7 +312,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     },
                                                     title: Text(getTranslated("PARTNERSHIP_MEMBER", context),
                                                       style: poppinsRegular.copyWith(
-                                                        color: ColorResources.WHITE
+                                                        color: ColorResources.WHITE,
+                                                        fontSize: 13.0 *  MediaQuery.of(context).textScaleFactor 
                                                       ),
                                                     ),
                                                   ),

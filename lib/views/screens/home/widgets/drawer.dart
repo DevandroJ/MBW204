@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/store/form_store.dart';
@@ -30,6 +31,24 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
+  
+  PackageInfo packageInfo;
+
+  @override 
+  void initState() {
+    super.initState();
+    (() async {
+      PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+      setState(() {      
+        packageInfo = PackageInfo(
+          appName: _packageInfo.appName,
+          buildNumber: _packageInfo.buildNumber,
+          packageName: _packageInfo.packageName,
+          version: _packageInfo.version
+        );
+      });
+    })();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +61,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           padding: EdgeInsets.zero,
           children: [
             drawerHeader(context),
+
+              Container(
+                alignment: Alignment.centerRight,
+                margin: EdgeInsets.only(top: 8.0, right: 10.0),
+                child: Text("Version ${packageInfo.version}+${packageInfo.buildNumber}",
+                  style: poppinsRegular.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11.0
+                  )
+                ),
+              ),
 
             Consumer<AuthProvider>(
               builder: (BuildContext context, AuthProvider authProvider, Widget child) {
@@ -56,7 +86,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               builder: (BuildContext context, AuthProvider authProvider, Widget child) {
                 if(authProvider.isLoggedIn()) {
                   return Container(
-                    margin: EdgeInsets.only(top: 0.0, bottom: 20.0, left: 10.0, right: 10.0),
+                    margin: EdgeInsets.all(10.0),
                     child: Column(
                       children: [
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
@@ -255,6 +285,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   Widget drawerUserDisplayName(BuildContext context) {
     return Container(
+      width: double.infinity,
       margin: EdgeInsets.only(top: 10.0),
       child: Consumer<ProfileProvider>(
         builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
@@ -266,6 +297,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ? "..." 
                 : profileProvider.getUserFullname,
                 style: poppinsRegular.copyWith(
+                  fontSize: 12.0,
                   fontWeight: FontWeight.bold
                 )
               ),
@@ -276,9 +308,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 : profileProvider.getUserIdNumber}",
                 style: poppinsRegular.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 12.0
+                  fontSize: 11.0
                 )
-              )
+              ),
             ],
           );
         },
@@ -288,9 +320,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   Widget drawerItems(BuildContext context, Widget widget, String menu, String icon, String title) {
     return Container(
-      margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
       child: ListTile(
         dense: true,
+        isThreeLine: false,
+        visualDensity: VisualDensity(horizontal: 0.0, vertical: -1.0),
+        minVerticalPadding: 0.0,
+        minLeadingWidth: 0.0,
+        contentPadding: EdgeInsets.symmetric(vertical: 0.0),
         onTap: () { 
           if(menu == "logout") {
             custom_widget.showAnimatedDialog(
@@ -415,11 +452,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           }
         },  
         title: Text(title,
-          style: poppinsRegular,
+          style: poppinsRegular.copyWith(
+            fontSize: 13.0
+          ),
         ),
         leading: Container(
-          width: 25.0,
-          height: 25.0,
+          width: 20.0,
+          height: 20.0,
           child: Container(
             child: Image.asset(icon,
               color: menu == "store" ? ColorResources.BLACK : null,

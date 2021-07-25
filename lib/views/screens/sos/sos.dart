@@ -116,12 +116,13 @@ Widget getSosList(BuildContext context, String label, String images, String cont
           ),
           title: Text(label,
             style: poppinsRegular.copyWith(
-              color: ColorResources.BTN_PRIMARY_SECOND
+              color: ColorResources.BTN_PRIMARY_SECOND,
+              fontSize: 12.0 * MediaQuery.of(context).textScaleFactor
             ),
           ),
           subtitle: Text(content,
             style: poppinsRegular.copyWith(
-              fontSize: 13.0
+              fontSize: 11.0 * MediaQuery.of(context).textScaleFactor
             ),
           ),
         ),

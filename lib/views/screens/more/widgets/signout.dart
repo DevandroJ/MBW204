@@ -34,7 +34,7 @@ class SignOutConfirmationDialog extends StatelessWidget {
               child: InkWell(
               onTap: () {
                 Provider.of<ProfileProvider>(context, listen: false).userProfile?.profilePic = null;
-                Provider.of<AuthProvider>(context, listen: false).logout().then((condition) {
+                Provider.of<AuthProvider>(context, listen: false).logout().then((_) {
                   Navigator.pop(context);
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => SignInScreen()), (route) => false);
                 });
@@ -43,7 +43,7 @@ class SignOutConfirmationDialog extends StatelessWidget {
                 padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: ColorResources.BTN_PRIMARY_SECOND,
+                  color: ColorResources.BTN_PRIMARY,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10.0)
                   )
@@ -59,12 +59,14 @@ class SignOutConfirmationDialog extends StatelessWidget {
                 padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: ColorResources.BTN_PRIMARY, 
+                  color: ColorResources.WHITE, 
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(10.0)
                   )
                 ),
-                child: Text(getTranslated('NO', context), style: poppinsRegular.copyWith(color: ColorResources.WHITE)),
+                child: Text(getTranslated('NO', context), style: poppinsRegular.copyWith(
+                  color: ColorResources.BLACK)
+                ),
               ),
             )
           ),

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -20,7 +19,6 @@ import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/views/screens/news/detail.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/nearmember/list.dart';
 import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/views/screens/home/widgets/drawer.dart';
@@ -460,17 +458,14 @@ class _HomePageState extends State<HomePage> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Container(
-                                                        width: 40.0,
-                                                        child: Text('+ - ${timeago.format(minutes, locale: 'id')}',
-                                                          softWrap: true,
-                                                          maxLines: 2,
-                                                          textAlign: TextAlign.center,
-                                                          style: poppinsRegular.copyWith(
-                                                            color:Theme.of(context).hintColor,
-                                                            fontSize: 11.0
-                                                          )
-                                                        ),
+                                                      Text('+ - ${timeago.format(minutes, locale: 'id')}',
+                                                        softWrap: true,
+                                                        maxLines: 1,
+                                                        textAlign: TextAlign.center,
+                                                        style: poppinsRegular.copyWith(
+                                                          color:Theme.of(context).hintColor,
+                                                          fontSize: 11.0
+                                                        )
                                                       ),
                                                     ],
                                                   ),
@@ -1108,7 +1103,7 @@ class _HomePageState extends State<HomePage> {
 
                                 if(newsProvider.getNewsStatus == GetNewsStatus.empty) {
                                   return Center(
-                                    child: Text("No News Available", 
+                                    child: Text(getTranslated("THERE_IS_NO_NEWS", context), 
                                       style: poppinsRegular,
                                     ),
                                   );
