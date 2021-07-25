@@ -18,7 +18,6 @@ class Images {
   static const String splash = 'assets/images/splash.jpg';
   static const String wheel_btn = 'assets/images/wheel-btn.png';
   static const String logo = 'assets/images/logo.png';
-  static const String home_sos = 'assets/images/home-sos.png';
   static const String onboarding_sos = 'assets/images/onboarding-sos.png';
   static const String onboarding_mart = 'assets/images/onboarding-mart.png';
   static const String bank_transfer = 'assets/images/bank_transfer.png';

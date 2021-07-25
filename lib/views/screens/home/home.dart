@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -214,11 +215,11 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) 
-                              Expanded(
-                                child: SearchWidget(
-                                  hintText: "${getTranslated("SEARCH", context)} Event",
-                                )
-                              ),
+                                Expanded(
+                                  child: SearchWidget(
+                                    hintText: "${getTranslated("SEARCH", context)} Event",
+                                  )
+                                ),
                               // SizedBox(width: 10.0),
                               // InkWell(
                               //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
@@ -371,10 +372,20 @@ class _HomePageState extends State<HomePage> {
                                                                           );
                                                                         },
                                                                         errorWidget: (BuildContext context, String url, dynamic error) {
-                                                                          return CircleAvatar(
-                                                                            backgroundColor: ColorResources.WHITE,
-                                                                            backgroundImage: AssetImage("assets/images/profile-drawer.png"),
-                                                                            radius: 30.0,
+                                                                          return Container(
+                                                                            padding: EdgeInsets.all(8.0),
+                                                                            decoration: BoxDecoration(
+                                                                              border: Border.all(
+                                                                                color: ColorResources.BLACK,
+                                                                                width: 0.5
+                                                                              ),
+                                                                              borderRadius: BorderRadius.circular(30.0)
+                                                                            ),
+                                                                            child: SvgPicture.asset(
+                                                                              'assets/images/svg/user.svg',
+                                                                              width: 32.0,
+                                                                              height: 32.0,
+                                                                            ),
                                                                           );
                                                                         },
                                                                         placeholder: (BuildContext context, String text) => Loader(
@@ -397,12 +408,16 @@ class _HomePageState extends State<HomePage> {
                                                                               Row(
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
-                                                                                  Text("Nama"),
+                                                                                  Text("Nama",
+                                                                                    style: poppinsRegular,
+                                                                                  ),
                                                                                   Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                                                   ? "..." 
                                                                                   : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                                                   ? "..." 
-                                                                                  : profileProvider.singleUserData.fullname)
+                                                                                  : profileProvider.singleUserData.fullname,
+                                                                                    style: poppinsRegular,
+                                                                                  )
                                                                                 ]
                                                                               ),
                                                                             ],
@@ -439,11 +454,21 @@ class _HomePageState extends State<HomePage> {
                                                               color: ColorResources.BTN_PRIMARY,
                                                             ),
                                                           ),                                                
-                                                          errorWidget: (BuildContext context, String url, dynamic error) => CircleAvatar(
-                                                            radius: 25.0,
-                                                            backgroundColor: ColorResources.WHITE,
-                                                            backgroundImage: AssetImage('assets/images/profile-drawer.png')
-                                                          ),
+                                                          errorWidget: (BuildContext context, String url, dynamic error) => Container(
+                                                            padding: EdgeInsets.all(8.0),
+                                                            decoration: BoxDecoration(
+                                                              border: Border.all(
+                                                                color: ColorResources.BLACK,
+                                                                width: 0.5
+                                                              ),
+                                                              borderRadius: BorderRadius.circular(30.0)
+                                                            ),
+                                                            child: SvgPicture.asset(
+                                                              'assets/images/svg/user.svg',
+                                                              width: 32.0,
+                                                              height: 32.0,
+                                                            ),
+                                                          )
                                                         ),
                                                       ),
                                                       Container(

@@ -204,7 +204,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
               height: 60.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(Images.home_sos)
+                  image: AssetImage('assets/images/onboarding-sos.png')
                 )
               ),
             )

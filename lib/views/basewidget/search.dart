@@ -14,7 +14,6 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/screens/event/detail.dart';
 
-
 class SearchWidget extends StatelessWidget {
   final String hintText;
   SearchWidget({this.hintText});
@@ -31,7 +30,7 @@ class SearchWidget extends StatelessWidget {
         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: ColorResources.LAVENDER,
+          color: ColorResources.BLACK.withOpacity(0.4),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.1),
@@ -49,12 +48,12 @@ class SearchWidget extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.search,
-                    color: ColorResources.BLACK,
+                    color: ColorResources.WHITE,
                   ),
                   SizedBox(width: 10.0),
                   Text(hintText, 
                     style: poppinsRegular.copyWith(
-                      color: ColorResources.BLACK 
+                      color: ColorResources.WHITE 
                     ),
                     overflow: TextOverflow.ellipsis
                   )
