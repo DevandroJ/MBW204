@@ -35,11 +35,11 @@ class _PostTextComponentState extends State<PostTextComponent> {
             trimMode: TrimMode.Line,
             trimCollapsedText: 'Tampilkan Lebih',
             trimExpandedText: 'Tutup',
-            moreStyle: TextStyle(
+            moreStyle: poppinsRegular.copyWith(
               fontSize: 14.0, 
               fontWeight: FontWeight.bold
             ),
-            lessStyle: TextStyle(
+            lessStyle: poppinsRegular.copyWith(
               fontSize: 14.0, 
               fontWeight: FontWeight.bold
             ),

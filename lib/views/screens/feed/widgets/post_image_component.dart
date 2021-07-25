@@ -142,11 +142,11 @@ class _PostImageComponentState extends State<PostImageComponent> {
             trimMode: TrimMode.Line,
             trimCollapsedText: 'Tampilkan Lebih',
             trimExpandedText: 'Tutup',
-            moreStyle: TextStyle(
+            moreStyle: poppinsRegular.copyWith(
               fontSize: 14.0, 
               fontWeight: FontWeight.bold
             ),
-            lessStyle: TextStyle(
+            lessStyle: poppinsRegular.copyWith(
               fontSize: 14.0, 
               fontWeight: FontWeight.bold
             ),
@@ -177,8 +177,8 @@ class _PostImageComponentState extends State<PostImageComponent> {
               highlightColor: Colors.white,
               baseColor: Colors.grey[200],
               child: Container(
-                margin: EdgeInsets.all(0),
-                padding: EdgeInsets.all(0),
+                margin: EdgeInsets.all(0.0),
+                padding: EdgeInsets.all(0.0),
                 width: double.infinity,
                 height: 200.0,
                 color: Colors.grey

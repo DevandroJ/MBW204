@@ -43,17 +43,9 @@ class _PreviewImageScreenState extends State<PreviewImageScreen> {
           tag: 'Image',
           child: CachedNetworkImage(
             imageUrl: widget.img,
-            imageBuilder: (context, imageProvider) => Container(
-              height: 200.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: PhotoView(
-                imageProvider: imageProvider,
-              )
+            imageBuilder: (context, imageProvider) => PhotoView(
+              initialScale: PhotoViewComputedScale.contained * 1.1,
+              imageProvider: imageProvider,
             ),
             placeholder: (context, url) => Shimmer.fromColors(
               highlightColor: Colors.white,

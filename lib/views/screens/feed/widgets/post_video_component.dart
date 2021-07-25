@@ -5,8 +5,6 @@ import 'dart:ui';
 import 'dart:io' as io;
 
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/utils/loader.dart';
-import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,6 +14,7 @@ import 'package:filesize/filesize.dart';
 import 'package:readmore/readmore.dart';
 import 'package:better_player/better_player.dart';
 
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/feed/feedmedia.dart';
