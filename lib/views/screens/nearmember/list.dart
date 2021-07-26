@@ -189,15 +189,15 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
               }
             
               return Container(
-                margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                margin: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 16.0, right: 16.0),
                 width: double.infinity,
                 height: 300.0,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
-                    childAspectRatio: 1 / 2,
+                    childAspectRatio: 1 / 1.5,
                   ), 
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: AlwaysScrollableScrollPhysics(),
                   itemCount: nearMemberProvider.nearMemberData.length,
                   itemBuilder: (BuildContext context, int i) {
                     DateTime minutes = DateTime.now().subtract(Duration(minutes: int.parse(nearMemberProvider.nearMemberData[i].lastseenMinute)));
@@ -271,12 +271,26 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                                     Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Text("Nama"),
+                                                        Text("Name", 
+                                                          style: poppinsRegular,
+                                                        ),
                                                         Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                         ? "..." 
                                                         : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                         ? "..." 
                                                         : profileProvider.singleUserData.fullname)
+                                                      ]
+                                                    ),
+                                                    SizedBox(height: 8.0),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text("Distance", 
+                                                          style: poppinsRegular,
+                                                        ),
+                                                        Text("+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}",
+                                                          style: poppinsRegular,
+                                                        )
                                                       ]
                                                     ),
                                                   ],
@@ -335,8 +349,8 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                               ),
                             ),
                             Container(
-                              width: 40.0,
-                              child: Text('+ - ${timeago.format(minutes, locale: 'id')}',
+                              width: 90.0,
+                              child: Text('+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0} ${timeago.format(minutes, locale: 'id')}',
                                 softWrap: true,
                                 maxLines: 2,
                                 textAlign: TextAlign.center,

@@ -82,12 +82,12 @@ class SosDetailScreen extends StatelessWidget {
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(top: 20.0),
+                  margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
                   child: Text(content,
                     softWrap: false,
                     textAlign: TextAlign.center,
                     style: poppinsRegular.copyWith(
-                      fontSize: 20.0,
+                      fontSize: 16.0 * MediaQuery.of(context).textScaleFactor,
                       fontWeight: FontWeight.bold
                     ),
                   ),

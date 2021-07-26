@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
 
                     SliverToBoxAdapter(
                       child: SizedBox(
-                        height: 150.0,
+                        height: MediaQuery.of(context).size.height / 4
                       ),
                     ),
 
@@ -331,7 +331,6 @@ class _HomePageState extends State<HomePage> {
                                               return InkWell(
                                                 onTap: () {                                             
                                                   Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, nearMemberProvider.nearMemberData[i].userId);
-
                                                   showAnimatedDialog(
                                                     context: context,
                                                     barrierDismissible: true,
@@ -408,7 +407,7 @@ class _HomePageState extends State<HomePage> {
                                                                               Row(
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
-                                                                                  Text("Nama",
+                                                                                  Text("Name",
                                                                                     style: poppinsRegular,
                                                                                   ),
                                                                                   Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
@@ -416,6 +415,21 @@ class _HomePageState extends State<HomePage> {
                                                                                   : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                                                   ? "..." 
                                                                                   : profileProvider.singleUserData.fullname,
+                                                                                    style: poppinsRegular,
+                                                                                  )
+                                                                                ]
+                                                                              ),
+                                                                              Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text("Distance",
+                                                                                    style: poppinsRegular,
+                                                                                  ),
+                                                                                  Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
+                                                                                  ? "..." 
+                                                                                  : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
+                                                                                  ? "..." 
+                                                                                  : "+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}",
                                                                                     style: poppinsRegular,
                                                                                   )
                                                                                 ]
@@ -483,7 +497,7 @@ class _HomePageState extends State<HomePage> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Text('+ - ${timeago.format(minutes, locale: 'id')}',
+                                                      Text('+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0} ${timeago.format(minutes, locale: 'id')}',
                                                         softWrap: true,
                                                         maxLines: 1,
                                                         textAlign: TextAlign.center,

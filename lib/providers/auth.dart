@@ -312,13 +312,13 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         "email_address": userData.emailAddress,
         "password": userData.password,
         "id_member": userData.noMember,
-        "chapter": userData.chapter == "001" 
+        "chapter": userData.chapter == "01" 
         ? "Jakarta" 
-        : userData.chapter == "002" 
+        : userData.chapter == "02" 
         ? "Bandung" 
-        : userData.chapter == "003" 
+        : userData.chapter == "03" 
         ? "Tangerang" 
-        : userData.chapter == "004" 
+        : userData.chapter == "04" 
         ? "Surabaya" 
         : "-",
         "code_chapter": userData.chapter,

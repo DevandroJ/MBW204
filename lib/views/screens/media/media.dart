@@ -46,7 +46,7 @@ class MediaScreen extends StatelessWidget {
                         child: ListTile(
                           onTap: () async {
                             try {
-                              await launch('https://twitter.com/mbw202ci');
+                              await launch('https://twitter.com/mbw204ci');
                             } catch(e) {
                               print(e);
                             }

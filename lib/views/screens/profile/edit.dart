@@ -70,6 +70,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           file = File(pickedFile.path); 
         });
       }
+    } else {
+      PickedFile pickedFile = await ImagePicker().getImage(
+        source: ImageSource.gallery,
+        maxHeight: 480.0, 
+        maxWidth: 640.0,
+        imageQuality: 70
+      );
+      if(pickedFile != null) {
+        setState(() {
+          file = File(pickedFile.path); 
+        });
+      }
     }
   }
 
@@ -304,12 +316,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      inputComponent(context, getTranslated("EMAIL", context), emailController, true),
-                      SizedBox(height: 10.0),
-                      inputComponent(context, getTranslated("NO_MEMBER", context), noAnggotaController, true),
-                      SizedBox(height: 10.0),
-                      inputComponent(context, getTranslated("PHONE_NUMBER", context), noHpController, false),
-                      SizedBox(height: 10.0),
                       inputComponent(context, getTranslated("ADDRESS", context), addressController, false),
                       SizedBox(height: 10.0),
                     ],
@@ -333,7 +339,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         elevation: 0.0,
                         primary: ColorResources.BLACK,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)
+                          borderRadius: BorderRadius.circular(10.0)
                         )
                       ),
                       onPressed: () => Navigator.of(context).pop(), 
@@ -357,7 +363,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             elevation: 0.0,
                             primary: ColorResources.BLACK,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)
+                              borderRadius: BorderRadius.circular(10.0)
                             )
                           ),
                           onPressed: () => save(context), 

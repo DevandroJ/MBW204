@@ -123,7 +123,7 @@ class OnBoardingScreen extends StatelessWidget {
                               if(i == 3) 
                                 Container( 
                                   margin: EdgeInsets.only(top: 10.0),
-                                  child: Text("Benz Mart",
+                                  child: Text("W204 Mart",
                                     textAlign: TextAlign.center, 
                                     style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,

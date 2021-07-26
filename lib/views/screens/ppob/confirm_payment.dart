@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_check_box/circular_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
@@ -460,14 +460,16 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               ),     
             ),
             Container(
-              color: ColorResources.BTN_PRIMARY,
+              color: ColorResources.BG_GREY,
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 15.0, bottom: 15.0),
               width: double.infinity,
               height: 80.0,
-              child: RaisedButton(
-              color: ColorResources.BTN_PRIMARY,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)
+              child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: ColorResources.BTN_PRIMARY_SECOND,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)
+                ),
               ),
               onPressed: () async {
                 try {
