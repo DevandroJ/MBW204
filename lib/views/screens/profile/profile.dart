@@ -292,7 +292,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             elevation: 0.0,
                             primary: ColorResources.BLACK,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)
+                              borderRadius: BorderRadius.circular(10.0)
                             )
                           ),
                           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpScreen())), 
@@ -316,7 +316,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             elevation: 0.0,
                             primary: ColorResources.BLACK,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)
+                              borderRadius: BorderRadius.circular(10.0)
                             )
                           ),
                           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpHistoryScreen())), 
@@ -342,7 +342,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               elevation: 0.0,
                               primary: ColorResources.BLACK,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)
+                                borderRadius: BorderRadius.circular(10.0)
                               )
                             ),
                             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryActivityScreen())), 
@@ -520,15 +520,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         elevation: 0.0,
                         primary: ColorResources.BLACK,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)
+                          borderRadius: BorderRadius.circular(10.0)
                         )
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProfileEditScreen()),
-                        );
-                      }, 
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileEditScreen())),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,

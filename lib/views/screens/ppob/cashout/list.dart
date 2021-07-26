@@ -214,7 +214,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                color: ColorResources.BTN_PRIMARY,
+                color: ColorResources.BG_GREY,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
                 child: ElevatedButton(
                   onPressed: inquiryDisbursement,
@@ -227,7 +227,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                       return 0;
                     },
                   ),
-                   backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
+                   backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY_SECOND),
                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),

@@ -65,7 +65,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               Container(
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.only(top: 8.0, right: 10.0),
-                child: Text("Version ${packageInfo.version}+${packageInfo.buildNumber}",
+                child: Text("Version ${packageInfo?.version}+${packageInfo?.buildNumber}",
                   style: poppinsRegular.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 11.0

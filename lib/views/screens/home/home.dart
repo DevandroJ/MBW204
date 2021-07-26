@@ -754,7 +754,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Image.asset(Images.mart)
                                         ),
                                         SizedBox(width: 10.0),
-                                        Text("MBW Mart", 
+                                        Text("W204 Mart", 
                                           style: poppinsRegular.copyWith(
                                             fontSize: 11.0
                                           )
