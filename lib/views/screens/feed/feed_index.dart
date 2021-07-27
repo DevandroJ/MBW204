@@ -453,6 +453,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                 ),
               ),
             ],
+            automaticallyImplyLeading: false,
             elevation: 0.0,
             forceElevated: true,
             pinned: true,

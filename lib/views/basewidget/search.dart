@@ -2,6 +2,7 @@
 // import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/store/search_product.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -16,14 +17,22 @@ import 'package:mbw204_club_ina/views/screens/event/detail.dart';
 
 class SearchWidget extends StatelessWidget {
   final String hintText;
-  SearchWidget({this.hintText});
+  final String type;
+  SearchWidget({
+    this.hintText,
+    this.type
+  });
 
   @override
   Widget build(BuildContext context) {
 
     return InkWell(
       onTap: () {
-        showSearch(context: context, delegate: EventSearch());
+        if(type == "commerce") {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SearchProductPage(typeProduct: "commerce")));
+        } else {
+          showSearch(context: context, delegate: EventSearch());
+        }
       },
       child: Container(
         height: 50.0,

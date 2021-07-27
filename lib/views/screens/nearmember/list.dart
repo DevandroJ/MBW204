@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -65,27 +66,13 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
               ),
 
               Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  margin: EdgeInsets.only(top: 40.0, left: 15.0),
-                  child: Text(getTranslated("FIND_THE_CLOSEST_MEMBER", context),
-                    style: poppinsRegular.copyWith(
-                      color: ColorResources.BTN_PRIMARY_SECOND
-                    ),
-                  ),
-                ),
-              ),
-
-              Align(
                 alignment: Alignment.center,
                 child: Container(
-                  margin: EdgeInsets.only(top: 80.0, left: 16.0, right: 16.0),
+                  margin: EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Pilih dengan peta",
-                        style: poppinsRegular,
-                      ),
+                      SizedBox.shrink(),
                       InkWell(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -119,7 +106,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                     child: Container(
                       width: double.infinity,
                       height: 200.0,
-                      margin: EdgeInsets.only(top: 110.0, left: 16.0, right: 16.0),
+                      margin: EdgeInsets.only(top: 60.0, left: 16.0, right: 16.0),
                       child: GoogleMap(
                         mapType: MapType.normal,
                         gestureRecognizers: Set()..add(Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer())),
@@ -146,7 +133,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                     child: Container(
                       width: double.infinity,
                       height: 90.0,
-                      margin: EdgeInsets.only(top: 312.0, left: 16.0, right: 16.0),
+                      margin: EdgeInsets.only(top: 260.0, left: 16.0, right: 16.0),
                       child: Container(
                         padding: EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
@@ -196,6 +183,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     childAspectRatio: 1 / 1.5,
+                    mainAxisSpacing: 10.0
                   ), 
                   physics: AlwaysScrollableScrollPhysics(),
                   itemCount: nearMemberProvider.nearMemberData.length,
@@ -267,31 +255,16 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                               child: Padding(
                                                 padding: EdgeInsets.all(8.0),
                                                 child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text("Name", 
-                                                          style: poppinsRegular,
-                                                        ),
-                                                        Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                        ? "..." 
-                                                        : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                        ? "..." 
-                                                        : profileProvider.singleUserData.fullname)
-                                                      ]
-                                                    ),
+                                                    Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
+                                                    ? "..." 
+                                                    : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
+                                                    ? "..." 
+                                                    : profileProvider.singleUserData.fullname),
                                                     SizedBox(height: 8.0),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text("Distance", 
-                                                          style: poppinsRegular,
-                                                        ),
-                                                        Text("+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}",
-                                                          style: poppinsRegular,
-                                                        )
-                                                      ]
+                                                    Text("+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}",
+                                                      style: poppinsRegular,
                                                     ),
                                                   ],
                                                 )
@@ -329,10 +302,20 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                   ),
                                 ),
                                 errorWidget: (BuildContext context, String url, dynamic error) => 
-                                CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundColor: ColorResources.WHITE,
-                                  backgroundImage: AssetImage('assets/images/profile-drawer.png'), 
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: ColorResources.BLACK,
+                                      width: 0.5
+                                    ),
+                                    borderRadius: BorderRadius.circular(50.0)
+                                  ),
+                                  child: SvgPicture.asset(
+                                    'assets/images/svg/user.svg',
+                                    width: 48.0,
+                                    height: 48.0,
+                                  ),
                                 )
                               ),
                             ),
@@ -350,9 +333,8 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                             ),
                             Container(
                               width: 90.0,
-                              child: Text('+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0} ${timeago.format(minutes, locale: 'id')}',
-                                softWrap: true,
-                                maxLines: 2,
+                              child: Text('+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}',
+                                maxLines: 1,
                                 textAlign: TextAlign.center,
                                 style: poppinsRegular.copyWith(
                                   color:Theme.of(context).hintColor,
@@ -360,6 +342,11 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                 )
                               ),
                             ),
+                            Text("(${timeago.format(minutes, locale: 'id')})",
+                              style: poppinsRegular.copyWith(
+                                fontSize: 11.0
+                              ),
+                            )
                           ],
                         ),
                       ),

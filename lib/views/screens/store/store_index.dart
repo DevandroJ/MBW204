@@ -119,7 +119,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                   )),
                                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                                   Expanded(
-                                    child: Text("Benz Mart",
+                                    child: Text("W204 Mart",
                                       style: poppinsRegular.copyWith(
                                         fontSize: 20.0, 
                                         color: ColorResources.PRIMARY
@@ -144,13 +144,14 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                             horizontal: Dimensions.PADDING_SIZE_SMALL, 
                             vertical: isShrink ? 2.0 : 0.0 
                           ),
-                          color: isShrink ? Colors.transparent : Colors.white,
+                          color: ColorResources.BG_GREY,
                           alignment: Alignment.center,
                           child: Row(
                             children: [
                               Expanded(
                                 child: SearchWidget(
-                                  hintText: "Cari Produk di Toko Benz Mart",
+                                  hintText: "Cari Produk",
+                                  type: "commerce"
                                 )
                               ),
                               InkWell(

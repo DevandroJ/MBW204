@@ -92,17 +92,17 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
         : Center(
             child: Text(errorMessage),
           ),
-          Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Text("$page / $total",
-                style: poppinsRegular.copyWith(
-                  fontSize: 16.0
-                ),
-              ),
-            ),
-          )
+          // Container(
+          //   margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
+          //   child: Align(
+          //     alignment: Alignment.topCenter,
+          //     child: Text("$page / $total",
+          //       style: poppinsRegular.copyWith(
+          //         fontSize: 16.0
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
       // floatingActionButton: FutureBuilder<PDFViewController>(
