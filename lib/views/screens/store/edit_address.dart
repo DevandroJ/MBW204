@@ -302,7 +302,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -473,7 +473,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -533,7 +533,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -716,7 +716,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -896,7 +896,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -959,7 +959,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
           child:   Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Theme.of(context).accentColor,
+              color: ColorResources.WHITE,
               borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
                 BoxShadow(
@@ -1027,7 +1027,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
         Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -1171,7 +1171,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             BoxShadow(
@@ -1231,7 +1231,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(

@@ -272,24 +272,32 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            Text("Nama"),
+                                                            Text("Name",
+                                                              style: poppinsRegular,
+                                                            ),
                                                             Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                             ? "..." 
                                                             : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                             ? "..." 
-                                                            : profileProvider.singleUserData.fullname)
+                                                            : profileProvider.singleUserData.fullname,
+                                                              style: poppinsRegular,
+                                                            )
                                                           ]
                                                         ),
                                                         SizedBox(height: 12.0),
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            Text("No HP"),
+                                                            Text("No HP",
+                                                              style: poppinsRegular,
+                                                            ),
                                                             Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                             ? "..." 
                                                             : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                             ? "..." 
-                                                            : profileProvider.singleUserData.phoneNumber)
+                                                            : profileProvider.singleUserData.phoneNumber,
+                                                              style: poppinsRegular,
+                                                            )
                                                           ]
                                                         ),
                                                       ],
@@ -324,9 +332,10 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                             child: Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                RaisedButton(
-                                                                  elevation: 3.0,
-                                                                  color: ColorResources.GREEN,
+                                                                TextButton(
+                                                                  style: TextButton.styleFrom(                                                                                                                             elevation: 3.0,
+                                                                    backgroundColor: ColorResources.GREEN,
+                                                                  ),
                                                                   onPressed: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                                   ? () {} 
                                                                   : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
@@ -348,9 +357,10 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                RaisedButton(
-                                                                  elevation: 3.0,
-                                                                  color: ColorResources.BLUE,
+                                                                TextButton(
+                                                                  style: TextButton.styleFrom(
+                                                                    backgroundColor: ColorResources.BLUE,
+                                                                  ),
                                                                   onPressed: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                                   ? () {} 
                                                                   : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
@@ -391,7 +401,6 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                     ),
                                   ),
                                 );
-                                  
                               },
                               animationType: DialogTransitionType.scale,
                               curve: Curves.fastOutSlowIn,
@@ -431,7 +440,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                           ) 
                         :
                           Icon(
-                          inboxProvider.inboxStatus == InboxStatus.loading  
+                            inboxProvider.inboxStatus == InboxStatus.loading  
                           ? Icons.label
                           : inboxProvider.inboxStatus == InboxStatus.error 
                           ? Icons.label

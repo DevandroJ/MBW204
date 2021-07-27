@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/views/screens/historyactivity/history_activity.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/topup/history.dart';
@@ -279,7 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 10.0, bottom: 5.0, left: 13.0),
+                margin: EdgeInsets.only(top: 2.h, bottom: 2.h, left: 3.w, right: 3.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

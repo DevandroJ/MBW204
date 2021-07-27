@@ -45,7 +45,7 @@ class CustomTextField extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        color: ColorResources.WHITE,
         borderRadius: isPhoneNumber 
         ? BorderRadius.only(
             topRight: Radius.circular(6), 

@@ -201,5 +201,7 @@
   "ME": "Me",
   "TOS": "Terms of Service",
   "MY_ACCOUNT": "My Account",
-  "CARD_DIGITAL": "Card Digital"
+  "CARD_DIGITAL": "Card Digital",
+  "VEHICLE_REG_NUMBER": "Vehicle Reg Number",
+  "ENTER_YOUR_VEHICLE_REG_NUMBER": "Enter Your Vehicle Reg Number"
 }

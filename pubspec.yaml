@@ -3,7 +3,7 @@ description: Community App.
 
 publish_to: 'none'
 
-version: 1.0.0+6
+version: 1.0.0+7
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -60,7 +60,6 @@ dependencies:
   fancy_bottom_navigation: ^0.3.2
   flutter_local_notifications: ^4.0.1+2
   flutter_mobx: ^1.1.0+2
-  flutter_slidable: ^0.6.0
   filesize: ^2.0.1
   flutter_webview_plugin: ^0.4.0
   # flutter_staggered_grid_view: ^0.3.2
@@ -107,7 +106,6 @@ dependencies:
   # M
   multi_image_picker: ^4.7.15
   modal_bottom_sheet: ^2.0.0
-  menu_button: ^1.4.2
 
   # N
   native_contact_picker: ^0.0.6
@@ -130,14 +128,14 @@ dependencies:
   share: ^2.0.2
   slide_to_confirm: ^0.0.7
   socket_io_client: ^1.0.1
-  select_form_field: ^2.0.0
-  sliding_up_panel: ^2.0.0+1
+  sizer: ^2.0.13
 
   # V
   video_player: ^1.0.1
 
   # W
   webview_flutter: ^1.0.7
+ 
 
 dev_dependencies:
   flutter_test:

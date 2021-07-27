@@ -590,7 +590,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -752,7 +752,7 @@ Widget inputFieldNameStuff(BuildContext context, TextEditingController controlle
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -812,7 +812,7 @@ Widget inputFieldPriceStuff(BuildContext context, TextEditingController controll
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -882,7 +882,7 @@ Widget inputFieldMinOrder(BuildContext context, TextEditingController controller
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -941,7 +941,7 @@ Widget inputFieldStock(BuildContext context, TextEditingController controller) {
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -1151,7 +1151,7 @@ Widget inputFieldWeight(BuildContext context, TextEditingController controller) 
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(

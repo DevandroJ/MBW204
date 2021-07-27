@@ -387,7 +387,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           } else if(menu == "store") {
             int balance = int.parse(Provider.of<PPOBProvider>(context, listen: false).balance.toStringAsFixed(0));
             if(balance >= 50000) {
-              if(Provider.of<WarungProvider>(context, listen: false).sellerStoreModel.code == 0) {
+              if(Provider.of<WarungProvider>(context, listen: false).sellerStoreModel?.code == 0) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => StoreScreen()));
               } else {
                 Navigator.push(context,  MaterialPageRoute(builder: (context) => FormStoreScreen()));

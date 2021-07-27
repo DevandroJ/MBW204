@@ -392,7 +392,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -563,7 +563,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -747,7 +747,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -930,7 +930,7 @@ Widget inputFieldPhoneNumber(BuildContext context, String title, TextEditingCont
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -993,7 +993,7 @@ Widget inputFieldPostCode(BuildContext context, String title, TextEditingControl
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -1053,7 +1053,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
         Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -1113,7 +1113,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             BoxShadow(
@@ -1257,7 +1257,7 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -1406,7 +1406,7 @@ Widget inputFieldCourier(BuildContext context) {
         ? Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
+            color: ColorResources.WHITE,
             borderRadius: BorderRadius.circular(6.0),
             boxShadow: [
               BoxShadow(
@@ -1445,7 +1445,7 @@ Widget inputFieldCourier(BuildContext context) {
       : Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             BoxShadow(
@@ -1503,7 +1503,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
         Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -1563,7 +1563,7 @@ Widget inputFieldEmailAddress(BuildContext context, String title, TextEditingCon
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
+          color: ColorResources.WHITE,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(

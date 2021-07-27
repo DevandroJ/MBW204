@@ -60,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           return;
         }
         if(usernameController.text.trim().isEmpty) {
-          ShowSnackbar.snackbar(context, "Username is Required", "", ColorResources.ERROR);
+          ShowSnackbar.snackbar(context, "Vehicle Reg Number is Required", "", ColorResources.ERROR);
           return;
         }
         // if(!usernameController.text.startsWith('@')) {
@@ -351,7 +351,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               decoration: InputDecoration(
                                                 hintText: getTranslated("REFERRAL_CODE", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -394,7 +394,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               decoration: InputDecoration(
                                                 hintText: getTranslated("NO_MEMBER", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -606,7 +606,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               decoration: InputDecoration(
                                                 hintText: getTranslated("ENTER_YOUR_KTP", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -649,7 +649,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               decoration: InputDecoration(
                                                 hintText: getTranslated("ENTER_YOUR_COMPANY", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -692,7 +692,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               decoration: InputDecoration(
                                                 hintText: getTranslated("ENTER_YOUR_FULLNAME", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -717,11 +717,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           children: [
                                             Row(
                                               children: [
-                                                Icon(Icons.person,
+                                                Icon(Icons.car_rental,
                                                   color: ColorResources.WHITE,
                                                 ),
                                                 SizedBox(width: 15.0),
-                                                Text(getTranslated("USER_NAME", context), style: poppinsRegular.copyWith(
+                                                Text(getTranslated("VEHICLE_REG_NUMBER", context), style: poppinsRegular.copyWith(
                                                   color: ColorResources.WHITE
                                                 ))
                                               ],
@@ -733,9 +733,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               ),
                                               textInputAction: TextInputAction.next,
                                               decoration: InputDecoration(
-                                                hintText: getTranslated("ENTER_YOUR_USERNAME", context),
+                                                hintText: getTranslated("ENTER_YOUR_VEHICLE_REG_NUMBER", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -779,7 +779,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               decoration: InputDecoration(
                                                 hintText: getTranslated("PHONE_NUMBER", context),
                                                 hintStyle: poppinsRegular.copyWith(
-                                                  color: ColorResources.WHITE
+                                                  color: ColorResources.GRAY_DARK_PRIMARY
                                                 ),
                                                 isDense: true,
                                                 enabledBorder: UnderlineInputBorder(      
@@ -824,7 +824,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 decoration: InputDecoration(
                                                   hintText: "ex. johndoe@gmail.com",
                                                   hintStyle: poppinsRegular.copyWith(
-                                                    color: ColorResources.WHITE
+                                                    color: ColorResources.GRAY_DARK_PRIMARY
                                                   ),
                                                   isDense: true,
                                                   enabledBorder: UnderlineInputBorder(      
@@ -880,7 +880,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     ),
                                                     contentPadding: EdgeInsets.only(top: 13.0),
                                                     hintStyle: poppinsRegular.copyWith(
-                                                      color: ColorResources.WHITE
+                                                      color: ColorResources.GRAY_DARK_PRIMARY
                                                     ),
                                                     isDense: true,
                                                     enabledBorder: UnderlineInputBorder(      
@@ -938,7 +938,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     ),
                                                     contentPadding: EdgeInsets.only(top: 13),
                                                     hintStyle: poppinsRegular.copyWith(
-                                                      color: ColorResources.WHITE
+                                                      color: ColorResources.GRAY_DARK_PRIMARY
                                                     ),
                                                     isDense: true,
                                                     enabledBorder: UnderlineInputBorder(      

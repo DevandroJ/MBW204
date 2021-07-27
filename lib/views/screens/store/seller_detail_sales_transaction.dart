@@ -1298,7 +1298,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                       child: Container(
                                                         width: double.infinity,
                                                         decoration: BoxDecoration(
-                                                          color: Theme.of(context).accentColor,
+                                                          color: ColorResources.WHITE,
                                                           borderRadius: BorderRadius.circular(6.0),
                                                           boxShadow: [
                                                             BoxShadow(
@@ -1367,7 +1367,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                       child: Container(
                                                         width: double.infinity,
                                                         decoration: BoxDecoration(
-                                                          color: Theme.of(context).accentColor,
+                                                          color: ColorResources.WHITE,
                                                           borderRadius: BorderRadius.circular(6.0),
                                                           boxShadow: [
                                                             BoxShadow(

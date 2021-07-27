@@ -198,5 +198,7 @@
   "ME": "Saya",
   "TOS": "Syarat dan Layanan",
   "MY_ACCOUNT": "Akun Saya",
-  "CARD_DIGITAL": "Kartu Digital"
+  "CARD_DIGITAL": "Kartu Digital",
+  "VEHICLE_REG_NUMBER": "Nomor Plat Mobil Anda",
+  "ENTER_YOUR_VEHICLE_REG_NUMBER": "Masukan No Plat Mobil Anda"
 }

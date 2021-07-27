@@ -32,13 +32,13 @@ class _SignInScreenState extends State<SignInScreen> {
   Future login(BuildContext context) async {
     try {
       if(phoneNumberController.text.trim().isEmpty) {
-        ShowSnackbar.snackbar(context, "Phone Number is Required", "", ColorResources.ERROR); 
+        ShowSnackbar.snackbar(context, "Phone Number / No Member is Required", "", ColorResources.ERROR); 
         return;
       } 
-      if(phoneNumberController.text.trim().length < 12) {
-        ShowSnackbar.snackbar(context, "Phone number Must be 12 Character", "", ColorResources.ERROR);
-        return;
-      }
+      // if(phoneNumberController.text.trim().length < 10) {
+      //   ShowSnackbar.snackbar(context, "Phone number Must be 12 Character", "", ColorResources.ERROR);
+      //   return;
+      // }
       if(passwordController.text.trim().isEmpty) {
         ShowSnackbar.snackbar(context, "Password is Required", "", ColorResources.ERROR); 
         return;
@@ -100,11 +100,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(Icons.phone_android,
+                                          Icon(Icons.login,
                                             color: ColorResources.WHITE,
                                           ),
                                           SizedBox(width: 15.0),
-                                          Text(getTranslated("PHONE_NUMBER", context), style: poppinsRegular.copyWith(
+                                          Text("${getTranslated("PHONE_NUMBER", context)} / ${getTranslated("NO_MEMBER", context)}", style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ))
                                         ],
@@ -115,12 +115,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                           style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ),
-                                          keyboardType: TextInputType.phone,
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
-                                            hintText: "ex. 0896xxxxxxxx",
+                                            hintText: "ex. 0896xxxxxxxx / W204xxxxxxx",
                                             hintStyle: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
+                                              color: ColorResources.GRAY_PRIMARY
                                             ),
                                             isDense: true,
                                             enabledBorder: UnderlineInputBorder(      
@@ -175,7 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                               ),
                                               contentPadding: EdgeInsets.only(top: 13),
                                               hintStyle: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
+                                                color: ColorResources.GRAY_PRIMARY
                                               ),
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      

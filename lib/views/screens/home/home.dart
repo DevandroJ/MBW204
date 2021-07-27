@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -10,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/views/screens/inboxv2/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
@@ -83,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                 if(bannerProvider.bannerStatus == BannerStatus.loading) {
                   return Container(
                     width: double.infinity,
-                    height: 230.0,
+                    height: 30.h,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
@@ -105,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                 if(bannerProvider.bannerStatus == BannerStatus.empty)      
                   return Container(
                     width: double.infinity,
-                    height: 230.0,
+                    height: 30.h,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
@@ -122,7 +125,7 @@ class _HomePageState extends State<HomePage> {
             
                 return Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 2.5,
+                  height: 40.h,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -208,32 +211,32 @@ class _HomePageState extends State<HomePage> {
                                     hintText: "${getTranslated("SEARCH", context)} Event",
                                   )
                                 ),
-                              // SizedBox(width: 10.0),
-                              // InkWell(
-                              //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                              //   child: Container(
-                              //     width: 28.0,
-                              //     height: 28.0,
-                              //     decoration: BoxDecoration(
-                              //       color: ColorResources.GREY,
-                              //       borderRadius: BorderRadius.circular(20.0)
-                              //     ),
-                              //     child: Badge(
-                              //       position: BadgePosition(
-                              //         top: -9.0,
-                              //         end: 14.0
-                              //       ),
-                              //       badgeContent: Text("2",
-                              //         style: poppinsRegular.copyWith(color: Colors.white),
-                              //       ),
-                              //       child: Icon(
-                              //         Icons.chat,
-                              //         color: ColorResources.BLACK,
-                              //         size: 17.0,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
+                              SizedBox(width: 10.0),
+                              InkWell(
+                                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                                child: Container(
+                                  width: 28.0,
+                                  height: 28.0,
+                                  decoration: BoxDecoration(
+                                    color: ColorResources.GREY,
+                                    borderRadius: BorderRadius.circular(20.0)
+                                  ),
+                                  child: Badge(
+                                    position: BadgePosition(
+                                      top: -9.0,
+                                      end: 14.0
+                                    ),
+                                    badgeContent: Text("2",
+                                      style: poppinsRegular.copyWith(color: Colors.white),
+                                    ),
+                                    child: Icon(
+                                      Icons.chat,
+                                      color: ColorResources.BLACK,
+                                      size: 17.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               SizedBox(width: 10.0),
                               InkWell(
                                 onTap: () => scaffoldKey.currentState.openEndDrawer(),
@@ -482,7 +485,7 @@ class _HomePageState extends State<HomePage> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Text('+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0}',
+                                                        Text('+- ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? (double.parse(nearMemberProvider.nearMemberData[i].distance) / 1000).toStringAsFixed(1) : double.parse(nearMemberProvider.nearMemberData[i].distance).toStringAsFixed(1) : 0} ${double.parse(nearMemberProvider.nearMemberData[i].distance) != null ? double.parse(nearMemberProvider.nearMemberData[i].distance) > 1000 ? 'KM' : 'Meters' : 0} ${timeago.format(minutes, locale: 'id')}',
                                                           softWrap: true,
                                                           textAlign: TextAlign.center,
                                                           style: poppinsRegular.copyWith(
@@ -492,7 +495,7 @@ class _HomePageState extends State<HomePage> {
                                                         ),
                                                         Text("(${timeago.format(minutes, locale: 'id')})",
                                                           style: poppinsRegular.copyWith(
-                                                             fontSize: 11.0
+                                                            fontSize: 8.0
                                                           ),
                                                         )
                                                       ],
