@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
@@ -133,7 +134,7 @@ class InboxDetailScreen extends StatelessWidget {
                                 style: poppinsRegular,
                               ),
                               SizedBox(height: 10.0),
-                              type == "payment.paid" || type == "purchase.success" || type == "disbursement.success"
+                              type == "payment.waiting"
                               ? SizedBox() 
                               : Container(
                                 width: double.infinity,
@@ -156,23 +157,32 @@ class InboxDetailScreen extends StatelessWidget {
                                     softWrap: true,
                                   ),
                                 ),
-                              )
-                              // InkWell(
-                              //   onTap: () {
-                              //     try {
-                              //       launch(field5.toString());
-                              //     } catch(e) {
-                              //       print(e);
-                              //     }
-                              //   },
-                              //   child: Text(field5.toString() == null ? "-" : field5,
-                              //     style: poppinsRegular.copyWith(
-                              //       color: ColorResources.BLUE
-                              //     ),
-                              //     textAlign: TextAlign.justify,
-                              //     softWrap: true,
-                              //   ),
-                              // )
+                              ),
+                              type != "payment.waiting" 
+                              ? SizedBox()
+                              : Container(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      await launch("${AppConstants.BASE_URL_HELP_INBOX_PAYMENT}/${field1.toString()}");
+                                    } catch(e) {
+                                      print(e);
+                                    }
+                                  }, 
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(ColorResources.GREEN)
+                                  ),
+                                  child: Text("Cara Pembayaran",
+                                    style: poppinsRegular.copyWith(
+                                      color: ColorResources.WHITE
+                                    ),
+                                    textAlign: TextAlign.justify,
+                                    softWrap: true,
+                                  ),
+                                ),
+                              ),
+                      
 
                             ],
                           ),

@@ -224,13 +224,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             children: [
 
               Container(
-                margin: EdgeInsets.only(bottom: 10.0, left: 10.0),
+                margin: EdgeInsets.only(left: 10.0),
                 child: Row(
                   children: [
                     
-
                     Container(
-                      margin: EdgeInsets.only(left: 6.0),
+                      margin: EdgeInsets.only(left: 5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -330,36 +329,34 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         ),
                       ),
                     ),
-
-                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
-                      SizedBox(width: 10.0),
-
-                    if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
-                      FittedBox(
-                        child: Container(
-                          height: 30.0,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              primary: ColorResources.BLACK,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)
-                              )
-                            ),
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryActivityScreen())), 
-                            child: Text(getTranslated("HISTORY_ACTIVITY", context),
-                              style: poppinsRegular.copyWith(
-                                fontSize: 14.0,
-                                color: ColorResources.YELLOW_PRIMARY
-                              ),
-                            )
-                          ),
-                        ),
-                      ),
                       
                   ],
                 ),
               ),
+
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+                FittedBox(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 3.w),
+                    height: 30.0,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0.0,
+                        primary: ColorResources.BLACK,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)
+                        )
+                      ),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryActivityScreen())), 
+                      child: Text(getTranslated("HISTORY_ACTIVITY", context),
+                        style: poppinsRegular.copyWith(
+                          fontSize: 14.0,
+                          color: ColorResources.YELLOW_PRIMARY
+                        ),
+                      )
+                    ),
+                  ),
+                ),
 
               if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
                 Container(

@@ -321,6 +321,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         : userData.chapter == "04" 
         ? "Surabaya" 
         : "-",
+        "vehicle_reg_number": userData.vehilceRegNumber,
         "code_chapter": userData.chapter,
         "sub_modal": userData.subModel,
         "body_style": userData.bodyStyle,

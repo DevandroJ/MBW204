@@ -65,6 +65,7 @@ class UserData {
   DateTime created;
   bool emailActivated;
   bool phoneActivated;
+  String vehilceRegNumber;
   String codeReferfall;
   String emailAddress;
   String password;

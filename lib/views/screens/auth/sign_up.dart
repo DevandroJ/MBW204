@@ -29,7 +29,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     /* Member & Partnership */ 
     TextEditingController codeReferralController = TextEditingController();
     TextEditingController fullnameController = TextEditingController();
-    TextEditingController usernameController = TextEditingController();
     TextEditingController emailController = TextEditingController();  
     TextEditingController phoneNumberController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
@@ -39,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     /* Member */ 
     TextEditingController noMemberController = TextEditingController();
+    TextEditingController vehicleRegController = TextEditingController();
     String chapter = "";
     String subModel = "";
     String bodyStyle = "";
@@ -59,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ShowSnackbar.snackbar(context, "Fullname is Required", "", ColorResources.ERROR);
           return;
         }
-        if(usernameController.text.trim().isEmpty) {
+        if(vehicleRegController.text.trim().isEmpty) {
           ShowSnackbar.snackbar(context, "Vehicle Reg Number is Required", "", ColorResources.ERROR);
           return;
         }
@@ -68,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         //   return;
         // }
         if(phoneNumberController.text.trim().isEmpty) {
-          ShowSnackbar.snackbar(context, "Phone number is Required", "", ColorResources.ERROR);
+          ShowSnackbar.snackbar(context, "Phone Number is Required", "", ColorResources.ERROR);
           return;
         } 
         // if(phoneNumberController.text.trim().length < 12) {
@@ -119,6 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           userData.emailAddress = emailController.text;
           userData.password = passwordController.text;
           userData.noMember = noMemberController.text;
+          userData.vehilceRegNumber = vehicleRegController.text;
           userData.chapter = chapter;
           userData.codeChapter = chapter;
           userData.subModel = subModel;
@@ -727,7 +728,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               ],
                                             ),
                                             TextField(
-                                              controller: usernameController,
+                                              controller: vehicleRegController,
                                               style: poppinsRegular.copyWith(
                                                 color: ColorResources.WHITE
                                               ),

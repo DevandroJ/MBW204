@@ -36,7 +36,6 @@ class SearchWidget extends StatelessWidget {
       },
       child: Container(
         height: 50.0,
-        padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
           color: ColorResources.BLACK.withOpacity(0.4),
@@ -53,6 +52,7 @@ class SearchWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
+              margin: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Row(
                 children: [
                   Icon(

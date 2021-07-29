@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/providers/splash.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/providers/splash.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -54,16 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Stack(
         children: [
           
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              child: Image.asset(Images.logo,
-                width: 200.0,
-                height: 170.0,
-              ),
-            ) 
-          ),
-
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(

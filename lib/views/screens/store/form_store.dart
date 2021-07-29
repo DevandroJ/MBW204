@@ -583,7 +583,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.red,
-                  textColor: Colors.black
+                  textColor: Colors.white
                 );
               } else {
                 showModalBottomSheet(
@@ -652,7 +652,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
                                       flex: 40,
                                       child: FutureBuilder<RegionModel>(
                                         future: Provider.of<RegionProvider>(context, listen: false).getCity(context, idProvince),
-                                        builder: (context, snapshot) {
+                                        builder: (BuildContext context, AsyncSnapshot snapshot) {
                                           if (snapshot.hasData) {
                                             final RegionModel regionModel = snapshot.data;
                                             return ListView.separated(
@@ -1579,6 +1579,7 @@ Widget inputFieldEmailAddress(BuildContext context, String title, TextEditingCon
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
+          readOnly: true,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
           decoration: InputDecoration(
             hintText: hintText,
