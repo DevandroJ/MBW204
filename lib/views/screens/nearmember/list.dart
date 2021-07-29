@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -88,7 +89,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                             );
                           }));
                         },
-                        child: Text("Ubah Lokasi",
+                        child: Text(getTranslated("SET_LOCATION", context),
                           style: poppinsRegular.copyWith(
                             color: ColorResources.BTN_PRIMARY_SECOND
                           ),
@@ -327,7 +328,7 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
                                 style: poppinsRegular.copyWith(
-                                  fontSize: 12.0,
+                                  fontSize: 9.sp,
                                 ),
                               ),
                             ),
@@ -338,13 +339,13 @@ class _MemberNearScreenState extends State<MemberNearScreen> {
                                 textAlign: TextAlign.center,
                                 style: poppinsRegular.copyWith(
                                   color:Theme.of(context).hintColor,
-                                  fontSize: 11.0
+                                  fontSize: 8.sp
                                 )
                               ),
                             ),
                             Text("(${timeago.format(minutes, locale: 'id')})",
                               style: poppinsRegular.copyWith(
-                                fontSize: 11.0
+                                fontSize: 6.sp
                               ),
                             )
                           ],

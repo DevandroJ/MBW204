@@ -99,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 10.0,
+                                      width: 12.0,
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -113,13 +113,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       }, 
                                       child: Text("Bank Transfer",
                                         style: poppinsRegular.copyWith(
-                                          fontSize: 12.5,
+                                          fontSize: 11,
                                           color: ColorResources.WHITE
                                         ),
                                       )
                                     ),
                                     SizedBox(
-                                      width: 10.0,
+                                      width: 8.0,
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -133,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       }, 
                                       child: Text(getTranslated("E_MONEY", context),
                                         style: poppinsRegular.copyWith(
-                                          fontSize: 12.5,
+                                          fontSize: 11.0,
                                           color: ColorResources.WHITE
                                         ),
                                       )
@@ -150,7 +150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+                    margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                     child: InkWell(
                       onTap: () {
                         showAnimatedDialog(context, LanguageDialog());
@@ -162,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
 
                   Container(
-                    margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+                    margin: EdgeInsets.only(top: 25.0, left: 16.0, right: 16.0),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(

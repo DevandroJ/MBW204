@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/utils/socket.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/utils/socket.dart';
 import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
@@ -193,7 +193,17 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: ColorResources.WHITE,
                     color: ColorResources.BTN_PRIMARY,
                     onRefresh: () {
-                      return Future.value(true);                      
+                      return Future.delayed(Duration(seconds: 1), () {
+                        Provider.of<FcmProvider>(context, listen: false).initializing(context);
+                        Provider.of<FcmProvider>(context, listen: false).initFcm(context);
+                        Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
+                        Provider.of<LocationProvider>(context, listen: false).insertUpdateLatLng(context);
+                        Provider.of<BannerProvider>(context, listen: false).getBanner(context);
+                        Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
+                        Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
+                        Provider.of<NewsProvider>(context, listen: false).getNews(context);
+                        Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);
+                      });               
                     },
                     child: CustomScrollView(
                       controller: scrollController,
@@ -277,7 +287,7 @@ class _HomePageState extends State<HomePage> {
 
                         SliverToBoxAdapter(
                           child: SizedBox(
-                            height: 25.h
+                            height: 20.h
                           ),
                         ),
 
@@ -1092,12 +1102,14 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                     SizedBox(width: 10.0),
                                                     Container(
-                                                      width: 200.0,
+                                                      width: 180.0,
                                                       margin: EdgeInsets.only(top: 10.0),
                                                       child: Text(newsProvider.newsBody[i].title,
+                                                        maxLines: 3,
                                                         softWrap: true,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: poppinsRegular.copyWith(
+                                                          fontSize: 11.0,
                                                           fontWeight: FontWeight.bold
                                                         ),
                                                       ),
@@ -1195,12 +1207,14 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                     SizedBox(width: 10.0),
                                                     Container(
-                                                      width: 200.0,
+                                                      width: 180.0,
                                                       margin: EdgeInsets.only(top: 10.0),
                                                       child: Text(newsProvider.newsBody[i].title,
+                                                        maxLines: 3,
                                                         softWrap: true,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: poppinsRegular.copyWith(
+                                                          fontSize: 11.0,
                                                           fontWeight: FontWeight.bold
                                                         ),
                                                       ),

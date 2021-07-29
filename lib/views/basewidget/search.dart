@@ -1,16 +1,13 @@
-// import 'package:flappy_search_bar/flappy_search_bar.dart';
-// import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/store/search_product.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/store/search_product.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/data/models/event_search.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/screens/event/detail.dart';
@@ -31,7 +28,9 @@ class SearchWidget extends StatelessWidget {
         if(type == "commerce") {
           Navigator.push(context, MaterialPageRoute(builder: (context) => SearchProductPage(typeProduct: "commerce")));
         } else {
-          showSearch(context: context, delegate: EventSearch());
+          showSearch(context: context, delegate: EventSearch(
+            context: context
+          ));
         }
       },
       child: Container(
@@ -79,9 +78,13 @@ class SearchWidget extends StatelessWidget {
 
 
 class EventSearch extends SearchDelegate {
+  final BuildContext context;
+  EventSearch({
+    this.context
+  });
 
   @override
-  String get searchFieldLabel => "Cari Event";
+  String get searchFieldLabel => getTranslated("SEARCH_EVENT", context);
 
   @override
   ThemeData appBarTheme(BuildContext context) {

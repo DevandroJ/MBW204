@@ -28,6 +28,7 @@ class SocketHelper {
     socket.on("connect", (data) async {
       print('=== SOCKET CONNECT ===');
       socket.on("messages", (data) async {
+        print(data);
         if(data["payload"]["activity"] == "COMMENT") {
           getIt<FeedState>().addComment(data);
         }
