@@ -53,6 +53,16 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       child: Stack(
         children: [
+
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              child: Image.asset(Images.logo,
+                width: 200.0,
+                height: 170.0,
+              ),
+            ) 
+          ),
           
           Align(
             alignment: Alignment.bottomCenter,

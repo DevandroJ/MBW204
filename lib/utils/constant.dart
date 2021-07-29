@@ -10,10 +10,11 @@ class AppConstants {
   static const String BASE_URL_DISBURSEMENT_EMONEY = 'https://pg-$SWITCH_TO.connexist.id/disbursement/pub/v1/disbursement/emoney';
   static const String BASE_URL_DISBURSEMENT = 'https://pg-$SWITCH_TO.connexist.id/disbursement/api/v1';
   static const String BASE_URL_IMG = 'http://feedapi.connexist.id/d/f';
+  static const String BASE_URL_CHAT = 'https://apidev.cxid.xyz:7443/api/v1/chat';
   static const String BASE_URL_FEED = 'https://feedapi.connexist.id/api/v1';
   static const String BASE_URL_FEED_MEDIA = 'http://167.99.76.66:9000/p/f';
   static const String BASE_URL_FEED_IMG = 'http://167.99.76.66:9000/d/f';
-  static const String BASE_URL_SOCKET_FEED = 'https://feedapi.connexist.id:5091'; 
+  static const String BASE_URL_SOCKET_FEED = 'https://apidev.cxid.xyz:5091'; 
   static const String BASE_URL_ECOMMERCE = '$SWITCH_TO_BASE_URL/commerce-mercyw204/api/v1';
   static const String BASE_URL_PPOB = '$SWITCH_TO_BASE_URL/ppob/api/v1';
   static const String BASE_URL_VA = 'https://pg-$SWITCH_TO.connexist.id/payment/pub/v1/payment/channels';
@@ -26,6 +27,7 @@ class AppConstants {
 
   static const String SWITCH_TO = "prod";
   static const String SWITCH_TO_BASE_URL = "https://smsapi.connexist.com:8443";
+  static const String SWITCH_TO_CHAT_BASE_URL = "https://apidev.cxid.xyz:5091";
 
   static const String X_CONTEXT_ID = '342790713173';
   static const String MOBILE_UA = 'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36';

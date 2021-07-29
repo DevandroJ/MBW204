@@ -1,13 +1,14 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/sos/detail.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SosScreen extends StatefulWidget {
   final bool isBacButtonExist;
@@ -64,19 +65,19 @@ class _SosScreenState extends State<SosScreen> {
                     margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     child: Column(
                       children: [
-                        getSosList(context, "AMBULANCE", Images.ambulance, "Sebar permintaan tolong Ambulan"),
+                        getSosList(context, getTranslated("AMBULANCE", context), Images.ambulance, "${getTranslated("I_NEED_HELP_AMBULANCE", context)} ${getTranslated("AMBULANCE", context)}"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "KECELAKAAN", Images.strike, "Sebar permintaan tolong Kecelakaan"),
+                        getSosList(context, getTranslated("ACCIDENT", context), Images.strike, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("ACCIDENT", context)}"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "TROUBLE", Images.trouble, "Sebar permintaan tolong Mogok"),
+                        getSosList(context, getTranslated("TROUBLE", context), Images.trouble, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("TROUBLE", context)}"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "PENCURIAN / PERAMPOKAN", Images.thief, "Sebar permintaan tolong Pencurian"),
+                        getSosList(context, getTranslated("THEFT", context), Images.thief, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("THEFT", context)}"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "KEBAKARAN", Images.fire, "Sebar permintaan tolong Kebakaran"),
+                        getSosList(context, getTranslated("WILDFIRE", context), Images.fire, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("WILDFIRE", context)}"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "INFO BENGKEL", Images.workshop_info, "O81316982889 StarPro Service"),
+                        getSosList(context, getTranslated("WORKSHOP_INFO", context), Images.workshop_info, "O81316982889 StarPro Service"),
                         SizedBox(height: 10.0),
-                        getSosList(context, "BENCANA ALAM", Images.disaster, "Sebar permintaan tolong Bencana"),
+                        getSosList(context, getTranslated("DISASTER", context), Images.disaster, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("DISASTER", context)}"),
                       ],
                     ),
                   ),
@@ -94,7 +95,7 @@ class _SosScreenState extends State<SosScreen> {
 
 Widget getSosList(BuildContext context, String label, String images, String content) {
   return InkWell(
-    onTap: () async => label == "INFO BENGKEL" ? await launch("tel://O81316982889") : Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
+    onTap: () async => label == getTranslated("WORKSHOP_INFO", context) ? await launch("tel://O81316982889") : Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
       label: label,
       content: content,
     ))),

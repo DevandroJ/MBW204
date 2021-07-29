@@ -1,8 +1,8 @@
-import 'package:mbw204_club_ina/providers/history_activity.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'container.dart' as c;
 
+import 'package:mbw204_club_ina/providers/history_activity.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/providers/nearmember.dart';
 import 'package:mbw204_club_ina/providers/region.dart';

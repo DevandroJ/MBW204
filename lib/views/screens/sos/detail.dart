@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/sos.dart';
@@ -87,7 +89,7 @@ class SosDetailScreen extends StatelessWidget {
                     softWrap: false,
                     textAlign: TextAlign.center,
                     style: poppinsRegular.copyWith(
-                      fontSize: 16.0 * MediaQuery.of(context).textScaleFactor,
+                      fontSize: 11.0.sp,
                       fontWeight: FontWeight.bold
                     ),
                   ),
@@ -97,7 +99,7 @@ class SosDetailScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 30.0),
                   child: ConfirmationSlider(
                     foregroundColor: ColorResources.BTN_PRIMARY_SECOND,
-                    text: 'Slide to confirm',
+                    text: getTranslated("SLIDE_TO_CONFIRM", context),
                     onConfirmation: () => {
                       showAnimatedDialog(
                         barrierDismissible: true,
@@ -107,10 +109,10 @@ class SosDetailScreen extends StatelessWidget {
                           Navigator.of(context).pop();
                         });
                         return ClassicGeneralDialogWidget(
-                          titleText: 'Sebar Berita ?',
-                          contentText: 'Anda akan dihubungi pihak berwenang apabila menyalahgunakan SOS tanpa tujuan dan informasi yang benar',
-                          positiveText: 'Ya, Lakukan',
-                          negativeText: 'Tidak',
+                          titleText: getTranslated("AGREEMENT_SOS", context),
+                          contentText: getTranslated("INFO_SOS", context),
+                          positiveText: getTranslated("YES", context),
+                          negativeText: getTranslated("NO", context),
                           onPositiveClick: () => submit(context),
                           onNegativeClick: () => Navigator.of(context).pop(),
                         );

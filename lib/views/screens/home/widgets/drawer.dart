@@ -169,11 +169,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     color: Colors.transparent,
                     image: DecorationImage(
                       image: imageProvider,
-                      fit: BoxFit.fill
+                      fit: BoxFit.fitWidth
                     ),
                   ),
                   child: Stack(
-                    clipBehavior: Clip.none,
                     children: [
 
                       // Positioned(

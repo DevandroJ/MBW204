@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/utils/socket.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:mbw204_club_ina/views/screens/inboxv2/inbox.dart';
 import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
@@ -32,7 +31,6 @@ import 'package:mbw204_club_ina/providers/banner.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/news.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
@@ -72,6 +70,7 @@ class _HomePageState extends State<HomePage> {
         setState(() => lastStatus = isShrink);
       }
     });
+    SocketHelper.shared.connect(context);
   }
 
   Future<bool> onWillPop() {

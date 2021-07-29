@@ -4,6 +4,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 
 import 'package:mbw204_club_ina/data/models/sos.dart';
 import 'package:mbw204_club_ina/data/repository/sos.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
 
@@ -54,9 +55,9 @@ class SosProvider extends ChangeNotifier {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return ClassicGeneralDialogWidget(
-            titleText: 'Permintaan tolong telah disebarkan !',
-            contentText: 'Tunggu segera bantuan yang akan datang',
-            positiveText: 'Baik',
+            titleText: "${getTranslated("SENT_SOS", context)} !",
+            contentText: '',
+            positiveText: 'Ok',
             onPositiveClick: () {
               Navigator.of(context).pop();
             },
@@ -73,9 +74,9 @@ class SosProvider extends ChangeNotifier {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return ClassicGeneralDialogWidget(
-            titleText: 'Ups!',
-            contentText: 'Terjadi kesalahan mohon ulangi',
-            positiveText: 'OK',
+            titleText: getTranslated("THERE_WAS_PROBLEM", context),
+            contentText: '',
+            positiveText: 'Ok',
             onPositiveClick: () {
               Navigator.of(context).pop();
             },

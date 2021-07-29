@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sizer/sizer.dart';
@@ -9,6 +8,7 @@ import 'localization/app_localization.dart';
 import 'container.dart' as core;
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/providers/localization.dart';
 import 'package:mbw204_club_ina/providers.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -25,7 +25,42 @@ Future main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override 
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    /* Lifecycle */
+    // - Resumed (App in Foreground)
+    // - Inactive (App Partially Visible - App not focused)
+    // - Paused (App in Background)
+    // - Detached (View Destroyed - App Closed)
+    if(state == AppLifecycleState.resumed) {
+      print("==== RETURN BACK TO APP ====");
+    }
+    if(state == AppLifecycleState.paused) {
+      print("==== LEAVE APP ====");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Locale> locals = [];

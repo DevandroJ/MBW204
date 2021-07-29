@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mbw204_club_ina/data/repository/chat.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/data/repository/history_activity.dart';
@@ -55,6 +56,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => SosRepo());
   getIt.registerLazySingleton(() => BannerRepo());
   getIt.registerLazySingleton(() => NearMemberRepo(sharedPreferences: getIt()));
+  getIt.registerLazySingleton(() => ChatRepo(sharedPreferences: getIt()));
   getIt.registerLazySingleton(() => EventRepo(sharedPreferences: getIt()));
   getIt.registerLazySingleton(() => OnBoardingRepo());
   getIt.registerLazySingleton(() => MediaRepo());
@@ -65,7 +67,7 @@ Future<void> init() async {
 
   // Provider
   getIt.registerFactory(() => AuthProvider(authRepo: getIt()));
-  getIt.registerFactory(() => ChatProvider());
+  getIt.registerFactory(() => ChatProvider(chatRepo: getIt()));
   getIt.registerFactory(() => CategoryProvider(categoryRepo: getIt()));
   getIt.registerFactory(() => SosProvider(sosRepo: getIt()));
   getIt.registerFactory(() => CheckInProvider(checkInRepo: getIt()));

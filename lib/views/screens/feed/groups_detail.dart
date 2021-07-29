@@ -303,7 +303,7 @@ class _GroupsDetailScreenState extends State<GroupsDetailScreen> with TickerProv
 
   void initState() {
     super.initState();
-    SocketHelper.shared.connect();
+    SocketHelper.shared.connect(context);
     (() async {
       await groupsState.fetchGroup(widget.groupsMetaDataListBody.id);
       await groupsState.fetchGroupsMostRecentChild(widget.groupsMetaDataListBody.id);
