@@ -134,7 +134,7 @@ class InboxDetailScreen extends StatelessWidget {
                                 style: poppinsRegular,
                               ),
                               SizedBox(height: 10.0),
-                              type == "payment.waiting"
+                              type != "payment.waiting"
                               ? SizedBox() 
                               : Container(
                                 width: double.infinity,
@@ -182,8 +182,6 @@ class InboxDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                      
-
                             ],
                           ),
                         ))
@@ -253,7 +251,6 @@ class InboxDetailScreen extends StatelessWidget {
                     //     )
                     //   ),
                     // )
-
 
                   )
                 ],
