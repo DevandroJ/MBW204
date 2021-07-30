@@ -186,7 +186,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                           context: context,
                                             builder: (ctx) => SingleChildScrollView(
                                               child: Container(
-                                                height: 300.0,
+                                                height: 340.0,
                                                 child: Column(
                                                   children: [
                                                     Container(
