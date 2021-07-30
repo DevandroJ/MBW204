@@ -85,7 +85,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                             context: context,
                                               builder: (ctx) => SingleChildScrollView(
                                                 child: Container(
-                                                  height: 300.0,
+                                                  height: 340.0,
                                                   child: Column(
                                                     children: [
                                                       Container(
@@ -148,7 +148,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                             Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                Text(getTranslated("VOUHCER_PRICE", context),
+                                                                Text(getTranslated("VOUCHER_PRICE", context),
                                                                   style: poppinsRegular,
                                                                 ),
                                                                 Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())),
@@ -210,7 +210,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                             child: TextButton(
                                                               style: TextButton.styleFrom(
                                                                 elevation: 0.0,
-                                                                shadowColor: ColorResources.BTN_PRIMARY,
+                                                                backgroundColor: ColorResources.BTN_PRIMARY,
                                                                 shape: RoundedRectangleBorder(
                                                                   borderRadius: BorderRadius.circular(20.0),
                                                                   side: BorderSide.none

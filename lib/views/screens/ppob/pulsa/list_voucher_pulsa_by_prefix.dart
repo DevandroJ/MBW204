@@ -88,7 +88,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                       ),
                       child: TextField(
                         controller: getController,
-                        style: TextStyle(
+                        style: poppinsRegular.copyWith(
                           color: ColorResources.BLACK
                         ),
                         decoration: InputDecoration(
@@ -203,7 +203,6 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                         color: selected == i ? ColorResources.PURPLE_DARK : Colors.transparent
                                       )
                                     ),
-                                    // color: selected == i ? ColorResources.PRIMARY : ColorResources.WHITE,
                                     child: GestureDetector(
                                       onTap: () async {
                                         try {
@@ -220,7 +219,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                             context: context,
                                             builder: (ctx) => SingleChildScrollView(
                                               child: Container(
-                                                height: 320.0,
+                                                height: 340.0,
                                                 child: Column(
                                                   children: [
                                                     Container(
@@ -231,7 +230,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                           Container(
                                                             child: Text(getTranslated("CUSTOMER_INFORMATION", context),
                                                               softWrap: true,
-                                                              style: TextStyle(
+                                                              style: poppinsRegular.copyWith(
                                                                 fontSize: 17.0,
                                                                 fontWeight: FontWeight.bold
                                                               ),
@@ -241,16 +240,24 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text(getTranslated("PHONE_NUMBER", context)),
-                                                              Text(getController.text)
+                                                              Text(getTranslated("PHONE_NUMBER", context),
+                                                                style: poppinsRegular,
+                                                              ),
+                                                              Text(getController.text,
+                                                                style: poppinsRegular,
+                                                              )
                                                             ],
                                                           ),
                                                           SizedBox(height: 8.0),
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text(ppobProvider.listVoucherPulsaByPrefixData[i].description),
-                                                              Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listVoucherPulsaByPrefixData[i].price.toString())))
+                                                              Text(ppobProvider.listVoucherPulsaByPrefixData[i].description,
+                                                                style: poppinsRegular,
+                                                              ),
+                                                              Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listVoucherPulsaByPrefixData[i].price.toString())),
+                                                                style: poppinsRegular,
+                                                              )
                                                             ],
                                                           ),
                                                         ],
@@ -304,7 +311,7 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                                 ),
                                                               ),
                                                               Text(ConnexistHelper.formatCurrency(ppobProvider.listVoucherPulsaByPrefixData[i].price),
-                                                                style: TextStyle(
+                                                                style: poppinsRegular.copyWith(
                                                                   fontWeight: FontWeight.bold
                                                                 ),
                                                               )

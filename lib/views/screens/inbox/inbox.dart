@@ -1,10 +1,17 @@
+import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
+import 'package:mbw204_club_ina/providers/chat.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/screens/chat/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
+
 
 class InboxScreen extends StatefulWidget {
   @override
@@ -28,7 +35,7 @@ class _InboxScreenState extends State<InboxScreen> {
             color: ColorResources.BLACK,  
           )
         ),
-        title: Text("Message",
+        title: Text("Chats",
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
             fontWeight: FontWeight.bold
@@ -58,63 +65,73 @@ class _InboxScreenState extends State<InboxScreen> {
             ),
           ),
 
-          Column(
-            children: [
-
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                  child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int i) {
-                      return Container(
-                        margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
-                        child: ListTile(
-                          onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen())),
-                          dense: true,
-                          title: Text("FSHN Boutique",
-                            softWrap: true,
-                            style: poppinsRegular,
-                          ),
-                          trailing: Text("8:12 AM",
-                            softWrap: true,
-                            style: poppinsRegular.copyWith(
-                              fontSize: 11.0
-                            ),
-                          ),
-                          subtitle: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit…...",
-                            softWrap: true,
-                            style: poppinsRegular.copyWith(
-                              fontSize: 13.0
-                            ),
-                          ),
-                          leading: Container(
-                            child: CachedNetworkImage(
-                              imageUrl: "https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif",
-                              imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
-                                backgroundImage: imageProvider,
-                                radius: 30.0,
-                              ),
-                              placeholder: (context, string) => SizedBox(
-                                width: 18.0,
-                                height: 18.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
-                                ),
-                              ),
-                              filterQuality: FilterQuality.medium,
-                            ),
+          Consumer<ChatProvider>(
+            builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
+              if(chatProvider.getChatStatus == GetChatStatus.loading) {
+                return Loader(
+                  color: ColorResources.BTN_PRIMARY_SECOND,
+                );
+              } 
+              if(chatProvider.getChatStatus == GetChatStatus.error) {
+                return Center(
+                  child: Text(getTranslated("THERE_WAS_PROBLEM", context),
+                    style: poppinsRegular,
+                  )
+                );
+              }
+              return Container(
+                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                child: ListView.builder(
+                  itemCount: chatProvider.listChatData.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    return Container(
+                      margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
+                      child: ListTile(
+                        onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen())),
+                        dense: true,
+                        title: Text(chatProvider.listChatData[i].displayName,
+                          softWrap: true,
+                          style: poppinsRegular,
+                        ),
+                        trailing: chatProvider.listChatData[i].group
+                        ? Text("") 
+                        : Text(DateFormat('dd MMM yyyy kk:mm').format(DateTime.parse(chatProvider.listChatData[i].updated)),
+                          softWrap: true,
+                          style: poppinsRegular.copyWith(
+                            fontSize: 11.0
                           ),
                         ),
-                      );
-                    }, 
-                  ),
+                        subtitle: Text("",
+                          softWrap: true,
+                          style: poppinsRegular.copyWith(
+                            fontSize: 13.0
+                          ),
+                        ),
+                        leading: Container(
+                          child: CachedNetworkImage(
+                            imageUrl: "${AppConstants.BASE_URL_IMG}${chatProvider.listChatData[i].profilePic.path}",
+                            imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
+                              backgroundImage: imageProvider,
+                              radius: 30.0,
+                            ),
+                            placeholder: (context, string) => SizedBox(
+                              width: 18.0,
+                              height: 18.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
+                              ),
+                            ),
+                            filterQuality: FilterQuality.medium,
+                          ),
+                        ),
+                      ),
+                    );
+                  }, 
                 ),
-              )
+              );
+            },
+          )
 
-            ],
-          )  
-              
         ],
       ),
      

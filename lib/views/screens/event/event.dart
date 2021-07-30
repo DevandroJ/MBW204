@@ -76,6 +76,7 @@ class _EventScreenState extends State<EventScreen> {
                         );
                       return TableCalendar(
                         events: eventProvider.createEvent,
+                        
                         onDaySelected: (DateTime date, List events, List holidays) {
                           eventProvider.changeEvent(context, events);
                         },  
@@ -108,190 +109,176 @@ class _EventScreenState extends State<EventScreen> {
                             itemCount: eventProvider.events.length,
                             itemBuilder: (BuildContext context, int  i) {
 
-                              
-                              
-                              // return ListView.builder(
-                              //   physics: NeverScrollableScrollPhysics(),
-                              //   shrinkWrap: true,
-                              //   itemCount: eventProvider.events[i].length,
-                              //   itemBuilder: (BuildContext context, int z) { 
-
-
-                                return Card(
-                                  elevation: 0.3,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: ColorResources.BTN_PRIMARY_SECOND,
-                                      borderRadius: BorderRadius.circular(5.0)
-                                    ),
-                                    padding: EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        showAnimatedDialog(
-                                          context: context,
-                                          barrierDismissible: true,
-                                          builder: (BuildContext context) {
-                                          return Dialog(
-                                            child: Container(
-                                              height: 330.0,
-                                              padding: EdgeInsets.all(8.0),
-                                              child: SingleChildScrollView(
-                                                child: Container(
-                                                  margin: EdgeInsets.all(12.0),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      CachedNetworkImage(
-                                                        imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${eventProvider.events[i][0]["path"].toString()}",
-                                                        imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-                                                          return Container(
-                                                            width: double.infinity,
-                                                            height: 200.0,
-                                                            decoration: BoxDecoration(
-                                                              image: DecorationImage(
-                                                                image: imageProvider
+                              return Card(
+                                elevation: 0.3,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: ColorResources.BTN_PRIMARY_SECOND,
+                                    borderRadius: BorderRadius.circular(5.0)
+                                  ),
+                                  padding: EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showAnimatedDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        builder: (BuildContext context) {
+                                        return Dialog(
+                                          child: Container(
+                                            height: 330.0,
+                                            padding: EdgeInsets.all(8.0),
+                                            child: SingleChildScrollView(
+                                              child: Container(
+                                                margin: EdgeInsets.all(12.0),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    CachedNetworkImage(
+                                                      imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${eventProvider.events[i][0]["path"].toString()}",
+                                                      imageBuilder: (BuildContext context, ImageProvider imageProvider) {
+                                                        return Container(
+                                                          width: double.infinity,
+                                                          height: 200.0,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: imageProvider
+                                                            )
+                                                          ),
+                                                        );
+                                                      },
+                                                      placeholder: (BuildContext context, dynamic url) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 18.0,
+                                                            height: 18.0,
+                                                            child: CircularProgressIndicator(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                    ListTile(
+                                                      dense: true,
+                                                      leading: Text("Deskripsi :",
+                                                        style: poppinsRegular.copyWith(
+                                                          fontSize: 12.0
+                                                        )
+                                                      ),
+                                                      title: Text(eventProvider.events[i][0]["description"].toString(),
+                                                        style: poppinsRegular.copyWith(
+                                                          fontSize: 12.0
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 5.0),
+                                                    ListTile(
+                                                      dense: true,
+                                                      leading: Text("Lokasi :",
+                                                        style: poppinsRegular.copyWith(  
+                                                          fontSize: 12.0                                                       
+                                                        )
+                                                      ),
+                                                      title: Text(eventProvider.events[i][0]["location"].toString(),
+                                                        style: poppinsRegular.copyWith(
+                                                          fontSize: 12.0
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Flexible(
+                                                          child: ListTile(
+                                                          dense: true,
+                                                            leading: Text("Mulai :",
+                                                              style: poppinsRegular.copyWith(
+                                                                fontSize: 12.0
                                                               )
                                                             ),
-                                                          );
-                                                        },
-                                                        placeholder: (BuildContext context, dynamic url) {
-                                                          return Center(
-                                                            child: SizedBox(
-                                                              width: 18.0,
-                                                              height: 18.0,
-                                                              child: CircularProgressIndicator(),
+                                                            title: Text(eventProvider.events[i][0]["start"].toString(),
+                                                              style: poppinsRegular.copyWith(
+                                                                fontSize: 12.0
+                                                              ),
                                                             ),
-                                                          );
-                                                        },
-                                                      ),
-                                                      ListTile(
-                                                        dense: true,
-                                                        leading: Text("Deskripsi :",
-                                                          style: poppinsRegular.copyWith(
-                                                            fontSize: 12.0
-                                                          )
-                                                        ),
-                                                        title: Text(eventProvider.events[i][0]["description"].toString(),
-                                                          style: poppinsRegular.copyWith(
-                                                            fontSize: 12.0
                                                           ),
                                                         ),
-                                                      ),
-                                                      SizedBox(height: 5.0),
-                                                      ListTile(
-                                                        dense: true,
-                                                        leading: Text("Lokasi :",
-                                                          style: poppinsRegular.copyWith(  
-                                                            fontSize: 12.0                                                       
-                                                          )
-                                                        ),
-                                                        title: Text(eventProvider.events[i][0]["location"].toString(),
-                                                          style: poppinsRegular.copyWith(
-                                                            fontSize: 12.0
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          Flexible(
-                                                            child: ListTile(
+                                                        Flexible(
+                                                          child: ListTile(
                                                             dense: true,
-                                                              leading: Text("Mulai :",
-                                                                style: poppinsRegular.copyWith(
-                                                                  fontSize: 12.0
-                                                                )
-                                                              ),
-                                                              title: Text(eventProvider.events[i][0]["start"].toString(),
-                                                                style: poppinsRegular.copyWith(
-                                                                  fontSize: 12.0
-                                                                ),
+                                                            leading: Text("Selesai :",
+                                                              style: poppinsRegular.copyWith(
+                                                                fontSize: 12.0
+                                                              )
+                                                            ),
+                                                            title: Text(eventProvider.events[i][0]["end"].toString(),
+                                                              style: poppinsRegular.copyWith(
+                                                                fontSize: 12.0
                                                               ),
                                                             ),
                                                           ),
-                                                          Flexible(
-                                                            child: ListTile(
-                                                              dense: true,
-                                                              leading: Text("Selesai :",
-                                                                style: poppinsRegular.copyWith(
-                                                                  fontSize: 12.0
-                                                                )
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Consumer<EventProvider>(
+                                                      builder: (BuildContext context, EventProvider eventProvider, Widget child) {
+                                                        return Container(
+                                                          width: double.infinity,
+                                                          child: eventProvider.events[i][0]["user_joined"] 
+                                                          ? TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              backgroundColor: ColorResources.DIM_GRAY
+                                                            ),
+                                                            onPressed: null,
+                                                            child: Text("Anda telah bergabung",
+                                                              style: poppinsRegular.copyWith(
+                                                                color: ColorResources.WHITE
                                                               ),
-                                                              title: Text(eventProvider.events[i][0]["end"].toString(),
-                                                                style: poppinsRegular.copyWith(
-                                                                  fontSize: 12.0
-                                                                ),
+                                                            ),                            
+                                                          )
+                                                          : TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              backgroundColor: ColorResources.BTN_PRIMARY_SECOND
+                                                            ),
+                                                            onPressed: () async => await eventProvider.eventJoin(context, eventProvider.events[i][0]["event_id"]),
+                                                            child: eventProvider.eventJoinStatus == EventJoinStatus.loading 
+                                                            ? Loader(
+                                                                color: ColorResources.YELLOW_PRIMARY,
+                                                              ) 
+                                                            : Text("Gabung",
+                                                              style: poppinsRegular.copyWith(
+                                                                color: ColorResources.WHITE
                                                               ),
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      Consumer<EventProvider>(
-                                                        builder: (BuildContext context, EventProvider eventProvider, Widget child) {
-                                                          return Container(
-                                                            width: double.infinity,
-                                                            child: eventProvider.events[i][0]["user_joined"] 
-                                                            ? TextButton(
-                                                              style: TextButton.styleFrom(
-                                                                backgroundColor: ColorResources.DIM_GRAY
-                                                              ),
-                                                              onPressed: null,
-                                                              child: Text("Anda telah bergabung",
-                                                                style: poppinsRegular.copyWith(
-                                                                  color: ColorResources.WHITE
-                                                                ),
-                                                              ),                            
-                                                            )
-                                                            : TextButton(
-                                                              style: TextButton.styleFrom(
-                                                                backgroundColor: ColorResources.BTN_PRIMARY_SECOND
-                                                              ),
-                                                              onPressed: () async => await eventProvider.eventJoin(context, eventProvider.events[i][0]["event_id"]),
-                                                              child: eventProvider.eventJoinStatus == EventJoinStatus.loading 
-                                                              ? Loader(
-                                                                  color: ColorResources.YELLOW_PRIMARY,
-                                                                ) 
-                                                              : Text("Gabung",
-                                                                style: poppinsRegular.copyWith(
-                                                                  color: ColorResources.WHITE
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
+                                                        );
+                                                      },
+                                                    )
+                                                  ],
                                                 ),
-                                              )
-                  
+                                              ),
+                                            )
+                
 
-                                            ),
-                                          );
-                                        },
-                                        animationType: DialogTransitionType.scale,
-                                        curve: Curves.fastOutSlowIn,
-                                        duration: Duration(seconds: 1),
-                                      );
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(eventProvider.events[i][0]["description"].toString(),
-                                           style: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
-                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        );
+                                      },
+                                      animationType: DialogTransitionType.scale,
+                                      curve: Curves.fastOutSlowIn,
+                                      duration: Duration(seconds: 1),
+                                    );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(eventProvider.events[i][0]["description"].toString(),
+                                          style: poppinsRegular.copyWith(
+                                            color: ColorResources.WHITE
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ));
-
-
-                              //   },
-                              // );
-
+                                  ),
+                                ));
                               
                             },
                           ),

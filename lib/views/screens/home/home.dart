@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -236,32 +238,32 @@ class _HomePageState extends State<HomePage> {
                                         hintText: "${getTranslated("SEARCH_EVENT", context)}",
                                       ),
                                     ),
-                                  // SizedBox(width: 10.0),
-                                  // InkWell(
-                                  //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                                  //   child: Container(
-                                  //     width: 28.0,
-                                  //     height: 28.0,
-                                  //     decoration: BoxDecoration(
-                                  //       color: ColorResources.GREY,
-                                  //       borderRadius: BorderRadius.circular(20.0)
-                                  //     ),
-                                  //     child: Badge(
-                                  //       position: BadgePosition(
-                                  //         top: -9.0,
-                                  //         end: 14.0
-                                  //       ),
-                                  //       badgeContent: Text("2",
-                                  //         style: poppinsRegular.copyWith(color: Colors.white),
-                                  //       ),
-                                  //       child: Icon(
-                                  //         Icons.chat,
-                                  //         color: ColorResources.BLACK,
-                                  //         size: 17.0,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  SizedBox(width: 10.0),
+                                  InkWell(
+                                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                                    child: Container(
+                                      width: 28.0,
+                                      height: 28.0,
+                                      decoration: BoxDecoration(
+                                        color: ColorResources.GREY,
+                                        borderRadius: BorderRadius.circular(20.0)
+                                      ),
+                                      child: Badge(
+                                        position: BadgePosition(
+                                          top: -9.0,
+                                          end: 14.0
+                                        ),
+                                        badgeContent: Text("2",
+                                          style: poppinsRegular.copyWith(color: Colors.white),
+                                        ),
+                                        child: Icon(
+                                          Icons.chat,
+                                          color: ColorResources.BLACK,
+                                          size: 17.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   SizedBox(width: 10.0),
                                   InkWell(
                                     onTap: () => scaffoldKey.currentState.openEndDrawer(),
@@ -377,21 +379,7 @@ class _HomePageState extends State<HomePage> {
                                                                           SizedBox(height: 20.0),
 
                                                                           Container(
-                                                                            child: profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
-                                                                            ? SizedBox(
-                                                                                width: 18.0,
-                                                                                height: 18.0,
-                                                                                child: CircularProgressIndicator(
-                                                                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
-                                                                                ),
-                                                                              )
-                                                                            : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
-                                                                            ? CircleAvatar(
-                                                                                backgroundColor: Colors.transparent,
-                                                                                backgroundImage: NetworkImage("assets/images/profile-drawer.png"),
-                                                                                radius: 30.0,
-                                                                              )
-                                                                            : CachedNetworkImage(
+                                                                            child: CachedNetworkImage(
                                                                               imageUrl: "${AppConstants.BASE_URL_IMG}${profileProvider.getSingleUserProfilePic}",
                                                                               imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) {
                                                                                 return CircleAvatar(
@@ -467,36 +455,40 @@ class _HomePageState extends State<HomePage> {
                                                         margin: EdgeInsets.only(top: 0.0, left: i == 0 ? 6.0 : 5.0, right: 5.0),
                                                         child: Column(
                                                           children: [
-                                                            Container(
-                                                              child: CachedNetworkImage(
-                                                                imageUrl: "${AppConstants.BASE_URL_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
-                                                                imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
-                                                                  radius: 25.0,
-                                                                  backgroundImage: imageProvider
-                                                                ),
-                                                                placeholder: (BuildContext context, String url) => CircleAvatar(
-                                                                  backgroundColor: ColorResources.WHITE,
-                                                                  radius: 25.0,
-                                                                  child: Loader(
-                                                                    color: ColorResources.BTN_PRIMARY,
-                                                                  ),
-                                                                ),                                                
-                                                                errorWidget: (BuildContext context, String url, dynamic error) => Container(
-                                                                  padding: EdgeInsets.all(8.0),
-                                                                  decoration: BoxDecoration(
-                                                                    border: Border.all(
-                                                                      color: ColorResources.BLACK,
-                                                                      width: 0.5
-                                                                    ),
-                                                                    borderRadius: BorderRadius.circular(30.0)
-                                                                  ),
-                                                                  child: SvgPicture.asset(
-                                                                    'assets/images/svg/user.svg',
-                                                                    width: 32.0,
-                                                                    height: 32.0,
-                                                                  ),
-                                                                )
+                                                            CachedNetworkImage(
+                                                              imageUrl: "${AppConstants.BASE_URL_IMG}${nearMemberProvider.nearMemberData[i].avatarUrl}",
+                                                              imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
+                                                                radius: 25.0,
+                                                                backgroundImage: imageProvider
                                                               ),
+                                                              placeholder: (BuildContext context, String url) => Container(
+                                                                padding: EdgeInsets.all(8.0),
+                                                                decoration: BoxDecoration(
+                                                                  border: Border.all(
+                                                                    color: ColorResources.BLACK,
+                                                                    width: 0.5
+                                                                  ),
+                                                                  borderRadius: BorderRadius.circular(30.0)
+                                                                ),
+                                                                child: SvgPicture.asset('assets/images/svg/user.svg',
+                                                                  width: 32.0,
+                                                                  height: 32.0,
+                                                                ),
+                                                              ),                                                
+                                                              errorWidget: (BuildContext context, String url, dynamic error) => Container(
+                                                                padding: EdgeInsets.all(8.0),
+                                                                decoration: BoxDecoration(
+                                                                  border: Border.all(
+                                                                    color: ColorResources.BLACK,
+                                                                    width: 0.5
+                                                                  ),
+                                                                  borderRadius: BorderRadius.circular(30.0)
+                                                                ),
+                                                                child: SvgPicture.asset('assets/images/svg/user.svg',
+                                                                  width: 32.0,
+                                                                  height: 32.0,
+                                                                ),
+                                                              )
                                                             ),
                                                             Container(
                                                               width: 100.0,

@@ -64,23 +64,24 @@ class EventProvider with ChangeNotifier {
         _eventData.addAll(eventData);
         setStateEventStatus(EventStatus.loaded);
         for (int i = 0; i < _eventData.length; i++) {
-          createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].eventDate.toString())] = [
-            [{
-              "event_id": _eventData[i].eventId,
-              "user_joined": _eventData[i].userJoined,
-              "description": _eventData[i].description,
-              "location": _eventData[i].location,
-              "summary": _eventData[i].summary,
-              "start": _eventData[i].start,
-              "end": _eventData[i].end,
-              "path": _eventData[i].path
-            }]
-          ];
-          DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
-          _events = createEvent[dateNow] ?? [];
+          for (int z = 0; z < _eventData[i].arrayEventDate.length; z++) {
+            createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].arrayEventDate[z].toString())] = [
+              [{
+                "event_id": _eventData[i].eventId,
+                "user_joined": _eventData[i].userJoined,
+                "description": _eventData[i].description,
+                "location": _eventData[i].location,
+                "summary": _eventData[i].summary,
+                "start": _eventData[i].start,
+                "end": _eventData[i].end,
+                "path": _eventData[i].path
+              }]
+            ];
+            DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+            _events = createEvent[dateNow] ?? [];
+          }
         }
       }
-     
       if(_eventData.isEmpty) {
         setStateEventStatus(EventStatus.empty);
       }

@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/views/screens/store/seller_store.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/store/seller_store.dart';
 import 'package:mbw204_club_ina/views/screens/store/form_store.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/cashout/list.dart';
@@ -140,9 +140,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         padding: EdgeInsets.zero,
         child: Consumer<ProfileProvider>(
           builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
-            if(profileProvider.profileStatus == ProfileStatus.loading) {
-              return CircularProgressIndicator();
-            }
             return CachedNetworkImage(
               errorWidget: (BuildContext context, String url, dynamic error) {
                 return Container(

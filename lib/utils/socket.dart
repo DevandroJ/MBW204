@@ -1,8 +1,8 @@
-import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/mobx/feed.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/repository/feed.dart';
@@ -27,14 +27,16 @@ class SocketHelper {
     socket.connect();
     socket.on("connect", (data) async {
       print('=== SOCKET CONNECT ===');
+      Provider.of<ChatProvider>(context, listen: false).fetchListChat(context).then((_) {
+        
+      });
       socket.on("messages", (data) async {
-        print(data);
-        if(data["payload"]["activity"] == "COMMENT") {
-          getIt<FeedState>().addComment(data);
-        }
-        if(data["payload"]["activity"] == "REPLY") {
-          getIt<FeedState>().addReply(data);
-        }
+        // if(data["payload"]["activity"] == "COMMENT") {
+        //   getIt<FeedState>().addComment(data);
+        // }
+        // if(data["payload"]["activity"] == "REPLY") {
+        //   getIt<FeedState>().addReply(data);
+        // }
       });
     });
   }

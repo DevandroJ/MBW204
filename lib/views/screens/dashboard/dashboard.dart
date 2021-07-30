@@ -37,13 +37,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this);
-    Future.delayed(Duration.zero, () {
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "purchase");
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "disbursement");
-      Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "order");
+    Future.delayed(Duration.zero, () async {
+      await Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
+      await Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
+      await Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
     });
   }
 

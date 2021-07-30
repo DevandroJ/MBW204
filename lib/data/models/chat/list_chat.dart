@@ -33,6 +33,7 @@ class ListChatData {
     this.userId,
     this.displayName,
     this.profilePic,
+    this.group,
     this.classId,
   });
 
@@ -42,6 +43,7 @@ class ListChatData {
   String userId;
   String displayName;
   ProfilePic profilePic;
+  bool group;
   String classId;
 
   factory ListChatData.fromJson(Map<String, dynamic> json) => ListChatData(
@@ -51,6 +53,7 @@ class ListChatData {
     userId: json["userId"] == null ? null : json["userId"],
     displayName: json["displayName"] == null ? null : json["displayName"],
     profilePic: json["profilePic"] == null ? null : ProfilePic.fromJson(json["profilePic"]),
+    group: json["group"] == null ? null : json["group"],
     classId: json["classId"] == null ? null : json["classId"],
   );
 }
