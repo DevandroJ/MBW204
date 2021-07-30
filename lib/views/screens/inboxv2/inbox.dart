@@ -93,24 +93,24 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                 labelStyle: poppinsRegular,
                 tabs: [
                   Tab(text: "SOS"),
-                  Tab(text: "Pembayaran"),
-                  Tab(text: "Lainnya"),
+                  Tab(text: getTranslated("TRANSACTION", context)),
+                  Tab(text: getTranslated("OTHER", context)),
                 ]
               ),
             )
           ];
         },
-        body: Builder(
-          builder: (BuildContext context) {
-            if(tabbarname == "sos")
-              return getInbox(context, "sos");
-            if(tabbarname == "payment")
-              return getInbox(context, "payment");
-            return getInbox(context, "other");
-          },
+        body: SafeArea(
+          child: Builder(
+            builder: (BuildContext context) {
+              if(tabbarname == "sos")
+                return getInbox(context, "sos");
+              if(tabbarname == "payment")
+                return getInbox(context, "payment");
+              return getInbox(context, "other");
+            },
+          ),
         )
-        
-  
       )
     );
   }
@@ -272,7 +272,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            Text("Name",
+                                                            Text(getTranslated("NAME", context),
                                                               style: poppinsRegular,
                                                             ),
                                                             Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
@@ -376,7 +376,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                                     ? "..."
                                                                     : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                                     ? "..."
-                                                                    : "Phone",
+                                                                    : getTranslated("PHONE_NUMBER", context),
                                                                     style: poppinsRegular.copyWith(
                                                                       color: ColorResources.WHITE
                                                                     ),

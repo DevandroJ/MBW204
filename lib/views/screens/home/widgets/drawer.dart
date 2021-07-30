@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/views/screens/store/seller_store.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/store/form_store.dart';
-import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/cashout/list.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -320,150 +320,154 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   Widget drawerItems(BuildContext context, Widget widget, String menu, String icon, String title) {
     return Container(
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
-      child: ListTile(
-        dense: true,
-        isThreeLine: false,
-        visualDensity: VisualDensity(horizontal: 0.0, vertical: -1.0),
-        minVerticalPadding: 0.0,
-        minLeadingWidth: 0.0,
-        contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-        onTap: () { 
-          if(menu == "logout") {
-            custom_widget.showAnimatedDialog(
-              context,
-              SignOutConfirmationDialog(),
-              isFlip: true
-            );
-            // showAnimatedDialog(
-            //   barrierDismissible: true,
-            //   context: context,
-            //   builder: (BuildContext context) {
-            //     return Dialog(
-            //       child: Padding(
-            //         padding: EdgeInsets.all(8.0),
-            //         child: Container(
-            //           height: 110.0,
-            //           child: Container(
-            //             margin: EdgeInsets.only(top: 20.0),
-            //             child: Column(
-            //               mainAxisAlignment: MainAxisAlignment.center,
-            //               children: [
-            //                 Text("Apa kamu ingin Logout?",
-            //                   style: poppinsRegular.copyWith(
-            //                     fontWeight: FontWeight.bold
-            //                   ),
-            //                 ),
-            //                 SizedBox(height: 15.0),
-            //                 Container(
-            //                   child: Row(
-            //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //                     children: [
-            //                       ElevatedButton(
-            //                         style: ElevatedButton.styleFrom(
-            //                           primary: ColorResources.BTN_PRIMARY,
-            //                         ),
-            //                         onPressed: () => Navigator.of(context).pop(), 
-            //                         child: Text("Tidak")
-            //                       ),
-            //                       ElevatedButton(
-            //                         style: ElevatedButton.styleFrom(
-            //                           primary: ColorResources.BTN_PRIMARY_SECOND
-            //                         ),
-            //                         onPressed: () => SignOutConfirmationDialog(), 
-            //                         child: Text("Ya")
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 )
-            //               ],
-            //             )
-            //           )
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // );
-          } else if(menu == "store") {
-            int balance = int.parse(Provider.of<PPOBProvider>(context, listen: false).balance.toStringAsFixed(0));
-            if(balance >= 50000) {
-              if(Provider.of<WarungProvider>(context, listen: false).sellerStoreModel?.code == 0) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => StoreScreen()));
-              } else {
-                Navigator.push(context,  MaterialPageRoute(builder: (context) => FormStoreScreen()));
-              }
-            } else {
-              showAnimatedDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (context) {
-                  return Dialog( 
-                    child: Container(
-                      height: 230.0,
-                      padding: EdgeInsets.all(10.0),
-                      child: Column(
-                        children: [
-                          Text("${getTranslated("ATTENTION", context)} !",
-                            style: poppinsRegular,
-                          ),
-                          SizedBox(height: 8.0),
-                          Text("Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
-                            softWrap: true,
-                            textAlign: TextAlign.justify,
-                            style: poppinsRegular.copyWith(
-                              height: 1.8
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Container(
-                            width: double.infinity,
-                            margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: ColorResources.DIM_GRAY
-                              ),
-                              onPressed: () => Navigator.of(context).pop(), 
-                              child: Text("OK",
+      child: Consumer<WarungProvider>(
+        builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
+          return ListTile(
+            dense: true,
+            isThreeLine: false,
+            visualDensity: VisualDensity(horizontal: 0.0, vertical: -1.0),
+            minVerticalPadding: 0.0,
+            minLeadingWidth: 0.0,
+            contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+            onTap: () { 
+              if(menu == "logout") {
+                custom_widget.showAnimatedDialog(
+                  context,
+                  SignOutConfirmationDialog(),
+                  isFlip: true
+                );
+                // showAnimatedDialog(
+                //   barrierDismissible: true,
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //     return Dialog(
+                //       child: Padding(
+                //         padding: EdgeInsets.all(8.0),
+                //         child: Container(
+                //           height: 110.0,
+                //           child: Container(
+                //             margin: EdgeInsets.only(top: 20.0),
+                //             child: Column(
+                //               mainAxisAlignment: MainAxisAlignment.center,
+                //               children: [
+                //                 Text("Apa kamu ingin Logout?",
+                //                   style: poppinsRegular.copyWith(
+                //                     fontWeight: FontWeight.bold
+                //                   ),
+                //                 ),
+                //                 SizedBox(height: 15.0),
+                //                 Container(
+                //                   child: Row(
+                //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //                     children: [
+                //                       ElevatedButton(
+                //                         style: ElevatedButton.styleFrom(
+                //                           primary: ColorResources.BTN_PRIMARY,
+                //                         ),
+                //                         onPressed: () => Navigator.of(context).pop(), 
+                //                         child: Text("Tidak")
+                //                       ),
+                //                       ElevatedButton(
+                //                         style: ElevatedButton.styleFrom(
+                //                           primary: ColorResources.BTN_PRIMARY_SECOND
+                //                         ),
+                //                         onPressed: () => SignOutConfirmationDialog(), 
+                //                         child: Text("Ya")
+                //                       ),
+                //                     ],
+                //                   ),
+                //                 )
+                //               ],
+                //             )
+                //           )
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // );
+              } else if(menu == "store") {
+                int balance = int.parse(Provider.of<PPOBProvider>(context, listen: false).balance.toStringAsFixed(0));
+                if(balance >= 50000) {
+                  if(warungProvider.sellerStoreStatus != SellerStoreStatus.empty) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SellerStoreScreen()));
+                  } else {
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) => FormStoreScreen()));
+                  }
+                } else {
+                  showAnimatedDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (context) {
+                      return Dialog( 
+                        child: Container(
+                          height: 230.0,
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(
+                            children: [
+                              Text("${getTranslated("ATTENTION", context)} !",
                                 style: poppinsRegular,
+                              ),
+                              SizedBox(height: 8.0),
+                              Text("Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
+                                softWrap: true,
+                                textAlign: TextAlign.justify,
+                                style: poppinsRegular.copyWith(
+                                  height: 1.8
+                                ),
+                              ),
+                              SizedBox(height: 8.0),
+                              Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: ColorResources.DIM_GRAY
+                                  ),
+                                  onPressed: () => Navigator.of(context).pop(), 
+                                  child: Text("OK",
+                                    style: poppinsRegular,
+                                  )
+                                ),
                               )
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );      
+                            ],
+                          ),
+                        ),
+                      );      
+                    }
+                  );
                 }
-              );
-            }
-          } else if(menu == "cashout") {
-            Navigator.push(context,  MaterialPageRoute(builder: (context) => CashoutScreen()));
-          } else if(menu == "tos") {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
-              title: 'Term of Service',
-              url: 'https://connexist.com/mobile-bantuan'
-            )));
-          } else if(menu == "bantuan") {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
-              title: 'Bantuan',
-              url: 'https://commboard.connexist.id/contactus'
-            )));
-          } else {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
-          }
-        },  
-        title: Text(title,
-          style: poppinsRegular.copyWith(
-            fontSize: 13.0
-          ),
-        ),
-        leading: Container(
-          width: 20.0,
-          height: 20.0,
-          child: Container(
-            child: Image.asset(icon,
-              color: menu == "store" ? ColorResources.BLACK : null,
-            )
-          )
-        ),
+              } else if(menu == "cashout") {
+                Navigator.push(context,  MaterialPageRoute(builder: (context) => CashoutScreen()));
+              } else if(menu == "tos") {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
+                  title: 'Term of Service',
+                  url: 'https://connexist.com/mobile-bantuan'
+                )));
+              } else if(menu == "bantuan") {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewScreen(
+                  title: 'Bantuan',
+                  url: 'https://commboard.connexist.id/contactus'
+                )));
+              } else {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+              }
+            },  
+            title: Text(title,
+              style: poppinsRegular.copyWith(
+                fontSize: 13.0
+              ),
+            ),
+            leading: Container(
+              width: 20.0,
+              height: 20.0,
+              child: Container(
+                child: Image.asset(icon,
+                  color: menu == "store" ? ColorResources.BLACK : null,
+                )
+              )
+            ),
+          );
+        },
       )
     );
   }

@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/views/screens/store/cart_product.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/views/screens/store/buyer_transaction_order.dart';
@@ -37,7 +38,6 @@ import 'package:mbw204_club_ina/data/models/warung/transaction_warung_paid_model
 import 'package:mbw204_club_ina/data/models/warung/transaction_warung_paid_single_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/transaction_warung_unpaid_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/seller_store_model.dart';
-import 'package:webview_flutter/platform_interface.dart';
 
 enum CategoryProductStatus { loading, loaded, empty, error } 
 enum CategoryProductByParentStatus { loading, loaded, empty, error }
@@ -45,7 +45,6 @@ enum SellerStoreStatus { loading, loaded, empty, error }
 enum CartStatus { loading, loaded, empty, error }
 enum SingleProductStatus { loading, loaded, empty, error }
 enum CourierStatus { idle, loading, loaded, error, empty }
-enum CreateStoreStatus { idle, loading, loaded, error, empty }
 enum PickupTimeslotsStatus { idle, loading, loaded, error, empty }
 enum DeliveryTimeslotsStatus { idle, loading, loaded, error, empty }
 enum DimenstionStatus { idle, loading, loaded, error, empty }
@@ -71,9 +70,6 @@ class WarungProvider with ChangeNotifier {
 
   CategoryProductStatus _categoryProductStatus = CategoryProductStatus.loading;
   CategoryProductStatus get categoryProductStatus => _categoryProductStatus;
-
-  CreateStoreStatus _createStoreStatus = CreateStoreStatus.loading;
-  CreateStoreStatus get createStoreStatus => _createStoreStatus;
 
   CartStatus _cartStatus = CartStatus.loading;
   CartStatus get cartStatus => _cartStatus;
@@ -153,11 +149,6 @@ class WarungProvider with ChangeNotifier {
 
   void setStateCartStatus(CartStatus cartStatus) {
     _cartStatus = cartStatus;
-    Future.delayed(Duration.zero, () => notifyListeners());
-  }
-
-  void setStateCreateStoreStatus(CreateStoreStatus createStoreStatus) {
-    _createStoreStatus = createStoreStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
@@ -294,6 +285,9 @@ class WarungProvider with ChangeNotifier {
         textColor: ColorResources.WHITE,
         fontSize: 14.0,
         msg: "Selamat! Toko Anda berhasil dibuka" 
+      );
+      Navigator.push(context,
+        MaterialPageRoute(builder: (context) => DashBoardScreen()),
       );
       SellerStoreModel sellerStoreModel = SellerStoreModel.fromJson(res.data);
       return sellerStoreModel;
