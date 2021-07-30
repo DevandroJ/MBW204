@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
@@ -93,9 +94,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
                                                             Container(
-                                                              child: Text("Informasi Pelanggan",
+                                                              child: Text(getTranslated("CUSTOMER_INFORMATION", context),
                                                                 softWrap: true,
-                                                                style: TextStyle(
+                                                                style: poppinsRegular.copyWith(
                                                                   fontSize: 17.0,
                                                                   fontWeight: FontWeight.bold
                                                                 ),
@@ -105,7 +106,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                             Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                Text("Nomor Ponsel"),
+                                                                Text(getTranslated("PHONE_NUMBER", context),
+                                                                  style: poppinsRegular,
+                                                                ),
                                                                 Text(Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber)
                                                               ],
                                                             ),
@@ -133,9 +136,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
                                                             Container(
-                                                              child: Text("Detail Pembayaran",
+                                                              child: Text(getTranslated("DETAIL_PAYMENT", context),
                                                                 softWrap: true,
-                                                                style: TextStyle(
+                                                                style: poppinsRegular.copyWith(
                                                                   fontSize: 17.0,
                                                                   fontWeight: FontWeight.bold
                                                                 ),
@@ -145,8 +148,12 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                             Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                Text("Harga Voucher"),
-                                                                Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())))
+                                                                Text(getTranslated("VOUHCER_PRICE", context),
+                                                                  style: poppinsRegular,
+                                                                ),
+                                                                Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())),
+                                                                  style: poppinsRegular,
+                                                                )
                                                               ],
                                                             ),
                                                             SizedBox(height: 10.0),
@@ -158,13 +165,13 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                             Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
-                                                                Text("Total Pembayaran",
-                                                                  style: TextStyle(
+                                                                Text(getTranslated("TOTAL_PAYMENT", context),
+                                                                  style: poppinsRegular.copyWith(
                                                                     fontWeight: FontWeight.bold
                                                                   ),
                                                                 ),
                                                                 Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())),
-                                                                  style: TextStyle(
+                                                                  style: poppinsRegular.copyWith(
                                                                     fontWeight: FontWeight.bold
                                                                   ),
                                                                 )
@@ -179,18 +186,20 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                         children: [
                                                           Container(
                                                             width: 140.0,
-                                                            child: RaisedButton(
-                                                              elevation: 0.0,
-                                                              color: ColorResources.WHITE,
-                                                              shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.circular(20.0),
-                                                                side: BorderSide.none
+                                                            child: TextButton(
+                                                              style: TextButton.styleFrom(
+                                                                elevation: 0.0,
+                                                                backgroundColor: ColorResources.WHITE,
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(20.0),
+                                                                  side: BorderSide.none
+                                                                )
                                                               ),
                                                               onPressed: () {
                                                                 Navigator.of(ctx).pop();
                                                               },
-                                                              child: Text("Ubah",
-                                                                style: TextStyle(
+                                                              child: Text(getTranslated("CHANGE", context),
+                                                                style: poppinsRegular.copyWith(
                                                                   color: ColorResources.BTN_PRIMARY
                                                                 ),
                                                               ),
@@ -198,12 +207,14 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                           ),
                                                           Container(
                                                             width: 140.0,
-                                                            child: RaisedButton(
-                                                              elevation: 0.0,
-                                                              color: ColorResources.BTN_PRIMARY,
-                                                              shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.circular(20.0),
-                                                                side: BorderSide.none
+                                                            child: TextButton(
+                                                              style: TextButton.styleFrom(
+                                                                elevation: 0.0,
+                                                                shadowColor: ColorResources.BTN_PRIMARY,
+                                                                shape: RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(20.0),
+                                                                  side: BorderSide.none
+                                                                )
                                                               ),
                                                               onPressed: () {
                                                                 Navigator.push(ctx,
@@ -217,8 +228,8 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                                   )),
                                                                 );
                                                               },
-                                                              child: Text("Konfirmasi",
-                                                                style: TextStyle(
+                                                              child: Text(getTranslated("CONFIRM", context),
+                                                                style: poppinsRegular.copyWith(
                                                                   color: ColorResources.WHITE
                                                                 ),
                                                               ),
@@ -243,7 +254,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                             children: [
                                               Center(
                                                 child: Text(NumberFormat("###,000", "id_ID").format(ppobProvider.listTopUpEmoney[i].price),
-                                                  style: TextStyle(
+                                                  style: poppinsRegular.copyWith(
                                                     color: selected == i ? ColorResources.WHITE : ColorResources.BTN_PRIMARY,
                                                     fontSize:16.0
                                                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/emoney/detail_voucher_emoney.dart';
@@ -13,7 +14,7 @@ class ListVoucherEmoneyScreen extends StatelessWidget {
         child: Column(
           children: [
 
-            CustomAppBar(title: "Uang Elektronik"),
+            CustomAppBar(title: getTranslated("E_MONEY", context)),
 
             Expanded(
               child: Container(

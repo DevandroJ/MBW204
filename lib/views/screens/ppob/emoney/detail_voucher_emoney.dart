@@ -4,6 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:native_contact_picker/native_contact_picker.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
@@ -64,7 +65,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                           color: ColorResources.BLACK
                         ),
                         decoration: InputDecoration(
-                          hintText: "No Ponsel",
+                          hintText: getTranslated("PHONE_NUMBER", context),
                           fillColor: ColorResources.WHITE,
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
@@ -125,14 +126,18 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                 if(ppobProvider.listTopUpEmoneyStatus == ListTopUpEmoneyStatus.empty) {
                   return Expanded(
                     child: Center(
-                      child: Text("Data tidak ditemukan"),
+                      child: Text(getTranslated("DATA_NOT_FOUND", context),
+                        style: poppinsRegular,
+                      ),
                     ),
                   );
                 }
                 if(ppobProvider.listTopUpEmoneyStatus == ListTopUpEmoneyStatus.error) {
                   return Expanded(
                     child: Center(
-                      child: Text("Ups! Terjadi kesalahan, mohon ulangi kembali"),
+                      child: Text(getTranslated("THERE_WAS_PROBLEM", context),
+                        style: poppinsRegular,
+                      ),
                     ),
                   );
                 }
@@ -170,7 +175,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                       onTap: () async {
                                       try {
                                         if(getController.text.length <= 11) {
-                                          throw CustomException("Nomor Ponsel minimal 10 karakter");
+                                          throw CustomException(getTranslated("PHONE_NUMBER_10_REQUIRED", context));
                                         }
                                         s(() => selected = i);
                                         showMaterialModalBottomSheet(        
@@ -190,9 +195,9 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Container(
-                                                            child: Text("Informasi Pelanggan",
+                                                            child: Text(getTranslated("CUSTOMER_INFORMATION", context),
                                                               softWrap: true,
-                                                              style: TextStyle(
+                                                              style: poppinsRegular.copyWith(
                                                                 fontSize: 17.0,
                                                                 fontWeight: FontWeight.bold
                                                               ),
@@ -202,16 +207,24 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text("Nomor Ponsel"),
-                                                              Text(getController.text)
+                                                              Text(getTranslated("PHONE_NUMBER", context),
+                                                                style: poppinsRegular,
+                                                              ),
+                                                              Text(getController.text,
+                                                                style: poppinsRegular,
+                                                              )
                                                             ],
                                                           ),
                                                           SizedBox(height: 8.0),
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text(ppobProvider.listTopUpEmoney[i].description),
-                                                              Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())))
+                                                              Text(ppobProvider.listTopUpEmoney[i].description,
+                                                                style: poppinsRegular,
+                                                              ),
+                                                              Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())),
+                                                                style: poppinsRegular,
+                                                              )
                                                             ],
                                                           ),
                                                         ],
@@ -230,9 +243,9 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Container(
-                                                            child: Text("Detail Pembayaran",
+                                                            child: Text(getTranslated("DETAIL_PAYMENT", context),
                                                               softWrap: true,
-                                                              style: TextStyle(
+                                                              style: poppinsRegular.copyWith(
                                                                 fontSize: 17.0,
                                                                 fontWeight: FontWeight.bold
                                                               ),
@@ -242,8 +255,12 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text("Harga Voucher"),
-                                                              Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())))
+                                                              Text(getTranslated("VOUCHER_PRICE", context),
+                                                                style: poppinsRegular,
+                                                              ),
+                                                              Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())),
+                                                                style: poppinsRegular,
+                                                              )
                                                             ],
                                                           ),
                                                           SizedBox(height: 10.0),
@@ -255,13 +272,13 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text("Total Pembayaran",
-                                                                style: TextStyle(
+                                                              Text(getTranslated("TOTAL_PAYMENT", context),
+                                                                style: poppinsRegular.copyWith(
                                                                   fontWeight: FontWeight.bold
                                                                 ),
                                                               ),
                                                               Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.listTopUpEmoney[i].price.toString())),
-                                                                style: TextStyle(
+                                                                style: poppinsRegular.copyWith(
                                                                   fontWeight: FontWeight.bold
                                                                 ),
                                                               )
@@ -276,19 +293,21 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                       children: [
                                                         Container(
                                                           width: 140.0,
-                                                          child: RaisedButton(
-                                                            elevation: 0.0,
-                                                            color: ColorResources.WHITE,
-                                                            shape: RoundedRectangleBorder(
+                                                          child: TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              elevation: 0.0,
+                                                              backgroundColor: ColorResources.WHITE,
+                                                              shape: RoundedRectangleBorder(
                                                               borderRadius: BorderRadius.circular(20.0),
                                                               side: BorderSide.none
+                                                            ),
                                                             ),
                                                             onPressed: () {
                                                               s(() { selected = null; });
                                                               Navigator.of(ctx).pop();
                                                             },
-                                                            child: Text("Ubah",
-                                                              style: TextStyle(
+                                                            child: Text(getTranslated("CHANGE", context),
+                                                              style: poppinsRegular.copyWith(
                                                                 color: ColorResources.PURPLE_DARK
                                                               ),
                                                             ),
@@ -296,12 +315,14 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                         ),
                                                         Container(
                                                           width: 140.0,
-                                                          child: RaisedButton(
-                                                            elevation: 0.0,
-                                                            color: ColorResources.PURPLE_DARK,
-                                                            shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(20.0),
-                                                              side: BorderSide.none
+                                                          child: TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              elevation: 0.0,
+                                                              backgroundColor: ColorResources.PURPLE_DARK,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20.0),
+                                                                side: BorderSide.none
+                                                              )
                                                             ),
                                                             onPressed: () {
                                                               Navigator.push(ctx,
@@ -315,8 +336,8 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                                 )),
                                                               );
                                                             },
-                                                            child: Text("Konfirmasi",
-                                                              style: TextStyle(
+                                                            child: Text(getTranslated("CONFIRM", context),
+                                                              style: poppinsRegular.copyWith(
                                                                 color: ColorResources.WHITE
                                                               ),
                                                             ),
@@ -351,7 +372,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                               children: [
                                                 Center(
                                                   child: Text(ppobProvider.listTopUpEmoney[i].name,
-                                                    style: TextStyle(
+                                                    style: poppinsRegular.copyWith(
                                                       color: selected == i ? ColorResources.PURPLE_DARK : ColorResources.DIM_GRAY.withOpacity(0.8),
                                                       fontSize: 12.0
                                                     ),
@@ -360,7 +381,7 @@ class _DetailVoucherEmoneyScreenState extends State<DetailVoucherEmoneyScreen> {
                                                 // SizedBox(height: 5.0),
                                                 // Center(
                                                 //   child: Text(NumberFormat("###,000", "id_ID").format(ppobProvider.listTopUpEmoney[i].price),
-                                                //     style: TextStyle(
+                                                //     style: poppinsRegular.copyWith(
                                                 //       color: selected == i ? ColorResources.WHITE : ColorResources.PRIMARY,
                                                 //       fontSize: 12.0
                                                 //     ),

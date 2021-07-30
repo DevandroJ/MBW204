@@ -319,12 +319,14 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                       children: [
                                                         Container(
                                                           width: 140.0,
-                                                          child: RaisedButton(
-                                                            elevation: 0.0,
-                                                            color: ColorResources.WHITE,
-                                                            shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(20.0),
-                                                              side: BorderSide.none
+                                                          child:TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              elevation: 0.0,
+                                                              backgroundColor: ColorResources.WHITE,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20.0),
+                                                                side: BorderSide.none
+                                                              ),
                                                             ),
                                                             onPressed: () {
                                                               Future.delayed(Duration(seconds: 1), () {
@@ -341,12 +343,14 @@ class _ListVoucherPulsaByPrefixScreenState extends State<ListVoucherPulsaByPrefi
                                                         ),
                                                         Container(
                                                           width: 140.0,
-                                                          child: RaisedButton(
-                                                            elevation: 0.0,
-                                                            color: ColorResources.PURPLE_DARK,
-                                                            shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(20.0),
-                                                              side: BorderSide.none
+                                                          child: TextButton(
+                                                            style: TextButton.styleFrom(
+                                                              elevation: 0.0,
+                                                              backgroundColor: ColorResources.PURPLE_DARK,
+                                                              shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20.0),
+                                                                side: BorderSide.none
+                                                              )
                                                             ),
                                                             onPressed: () {
                                                               Navigator.push(context,
