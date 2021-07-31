@@ -68,10 +68,10 @@ class InboxDetailScreen extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("No Transaksi", 
+                                    SelectableText("No Transaksi", 
                                       style: poppinsRegular,
                                     ),
-                                    Text(field1.toString() == null ? "-" : field1,
+                                    SelectableText(field1.toString() == null ? "-" : field1,
                                       style: poppinsRegular,
                                     )
                                   ],
@@ -80,10 +80,10 @@ class InboxDetailScreen extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Harga",
+                                    SelectableText("Harga",
                                       style: poppinsRegular,
                                     ),
-                                    Text(field2.toString() == null ? "-" : ConnexistHelper.formatCurrency(double.parse(field2)),
+                                    SelectableText(field2.toString() == null ? "-" : ConnexistHelper.formatCurrency(double.parse(field2)),
                                       style: poppinsRegular,
                                     )
                                   ],
@@ -92,10 +92,10 @@ class InboxDetailScreen extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("Status",
+                                    SelectableText("Status",
                                       style: poppinsRegular,
                                     ),
-                                    Text(subject.toString() == null ? "-" : subject,
+                                    SelectableText(subject.toString() == null ? "-" : subject,
                                       style: poppinsRegular,
                                     )
                                   ],
@@ -119,18 +119,15 @@ class InboxDetailScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                            
-                              Text(body,
+                              SelectableText(body,
                                 style: poppinsRegular.copyWith(
                                   height: 1.8
                                 ),
                                 textAlign: TextAlign.justify,
-                                softWrap: true,
                               ),
                               SizedBox(height: 10.0),
-                              Text(field6.toString() == null ? "-" : field6, 
+                              SelectableText(field6.toString() == null ? "-" : field6, 
                                 textAlign: TextAlign.justify,
-                                softWrap: true,
                                 style: poppinsRegular,
                               ),
                               SizedBox(height: 10.0),
@@ -149,12 +146,11 @@ class InboxDetailScreen extends StatelessWidget {
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(ColorResources.GREEN)
                                   ),
-                                  child: Text("Lihat Tagihan",
+                                  child: SelectableText("Lihat Tagihan",
                                     style: poppinsRegular.copyWith(
                                       color: ColorResources.WHITE
                                     ),
                                     textAlign: TextAlign.justify,
-                                    softWrap: true,
                                   ),
                                 ),
                               ),
@@ -173,12 +169,11 @@ class InboxDetailScreen extends StatelessWidget {
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(ColorResources.GREEN)
                                   ),
-                                  child: Text("Cara Pembayaran",
+                                  child: SelectableText("Cara Pembayaran",
                                     style: poppinsRegular.copyWith(
                                       color: ColorResources.WHITE
                                     ),
                                     textAlign: TextAlign.justify,
-                                    softWrap: true,
                                   ),
                                 ),
                               ),

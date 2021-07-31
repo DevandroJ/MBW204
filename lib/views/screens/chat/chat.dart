@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/chat/body.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -26,25 +25,25 @@ class ChatScreen extends StatelessWidget {
           color: ColorResources.BLACK,
         ),
       ),
-      title: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: ColorResources.WHITE,
-            backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif"),
-          ),
-          SizedBox(width: 10.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Daniel Radclife",
-                style: poppinsRegular.copyWith(
-                  color: ColorResources.BLACK
-                ),
-              )
-            ],
-          )
-        ],
-      )
+      // title: Row(
+      //   children: [
+      //     CircleAvatar(
+      //       backgroundColor: ColorResources.WHITE,
+      //       backgroundImage: NetworkImage("https://cdn0-production-images-kly.akamaized.net/0r0vo4waPk9g2ZOtSePxceTuoyE=/640x480/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/706185/original/Daniel-Radcliffe-140710.gif"),
+      //     ),
+      //     SizedBox(width: 10.0),
+      //     Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         Text("Daniel Radclife",
+      //           style: poppinsRegular.copyWith(
+      //             color: ColorResources.BLACK
+      //           ),
+      //         )
+      //       ],
+      //     )
+      //   ],
+      // )
     );
   }
 

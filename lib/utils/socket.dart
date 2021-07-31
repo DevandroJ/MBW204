@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import 'package:mbw204_club_ina/helpers/random_string.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/mobx/feed.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -27,10 +30,28 @@ class SocketHelper {
     socket.connect();
     socket.on("connect", (data) async {
       print('=== SOCKET CONNECT ===');
-      Provider.of<ChatProvider>(context, listen: false).fetchListChat(context).then((_) {
-        
-      });
+      await Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
       socket.on("messages", (data) async {
+        final res = data as List; 
+        if(res[0]["action"] == "CHAT_CONVERSATION") {
+          print(res[0]);
+          await Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, "8ac4b07ce0b8dbe7a879a22a6467b6d5");
+          final dataList = data as List;
+          final ack = dataList.last as Function;
+          String encode = json.encode({
+            "id": getRandomString(16),
+            "replyToId": data[0]["id"],
+            "timestamp": DateTime.now().millisecondsSinceEpoch,
+            "event": "ACK",
+            "action": "CHAT_CONVERSATION",
+            "payload": {
+              "code": 0,
+              "message": "Successfully"
+            }
+          });
+          ack(encode);
+        }
+        // await Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, data[0]["id"]);
         // if(data["payload"]["activity"] == "COMMENT") {
         //   getIt<FeedState>().addComment(data);
         // }

@@ -82,32 +82,32 @@ class Content {
 class Remote {
   Remote({
     this.identity,
-    this.displayName,
     this.userId,
     this.group,
     this.profilePic,
+    this.displayName,
     this.classId,
   });
 
   String identity;
-  String displayName;
   String userId;
   bool group;
-  ProfilePic profilePic;
+  ListConversationProfilePic profilePic;
+  String displayName;
   String classId;
 
   factory Remote.fromJson(Map<String, dynamic> json) => Remote(
     identity: json["identity"] == null ? null : json["identity"],
-    displayName: json["displayName"] == null ? null : json["displayName"],
     userId: json["userId"] == null ? null : json["userId"],
     group: json["group"] == null ? null : json["group"],
-    profilePic: json["profilePic"] == null ? null : ProfilePic.fromJson(json["profilePic"]),
+    profilePic: json["profilePic"] == null ? null : ListConversationProfilePic.fromJson(json["profilePic"]),
+    displayName: json["displayName"] == null ? null : json["displayName"],
     classId: json["classId"] == null ? null : json["classId"],
   );
 }
 
-class ProfilePic {
-  ProfilePic({
+class ListConversationProfilePic {
+  ListConversationProfilePic({
     this.originalName,
     this.fileLength,
     this.path,
@@ -115,13 +115,13 @@ class ProfilePic {
     this.kind,
   });
 
-    String originalName;
-    int fileLength;
-    String path;
-    String contentType;
-    String kind;
+  String originalName;
+  int fileLength;
+  String path;
+  String contentType;
+  String kind;
 
-  factory ProfilePic.fromJson(Map<String, dynamic> json) => ProfilePic(
+  factory ListConversationProfilePic.fromJson(Map<String, dynamic> json) => ListConversationProfilePic(
     originalName: json["originalName"] == null ? null : json["originalName"],
     fileLength: json["fileLength"] == null ? null : json["fileLength"],
     path: json["path"] == null ? null : json["path"],
@@ -129,3 +129,4 @@ class ProfilePic {
     kind: json["kind"] == null ? null : json["kind"],
   );
 }
+

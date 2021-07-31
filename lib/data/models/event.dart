@@ -20,6 +20,7 @@ class EventData {
   EventData({
     this.eventId,
     this.description,
+    this.descriptionList,
     this.eventDate,
     this.eventEndDate,
     this.arrayEventDate,
@@ -34,6 +35,7 @@ class EventData {
 
   int eventId;
   String description;
+  List<String> descriptionList;
   DateTime eventDate;
   DateTime eventEndDate;
   List<DateTime> arrayEventDate;
@@ -49,9 +51,10 @@ class EventData {
   factory EventData.fromJson(Map<String, dynamic> json) => EventData(
     eventId: json["event_id"] == null ? null : json["event_id"],
     description: json["description"] == null ? null : json["description"],
+    descriptionList: json["description_list"] == null ? null : List<String>.from(json["description_list"]),
     eventDate: json["event_date"] == null ? null : DateTime.parse(json["event_date"]),
     eventEndDate: json["event_end_date"] == null ? null : DateTime.parse(json["event_end_date"]),
-    arrayEventDate: List<DateTime>.from(json["array_date"].map((x) => DateTime.parse(x))),
+    arrayEventDate: json["array_date"] == null ? null : List<DateTime>.from(json["array_date"].map((x) => DateTime.parse(x))),
     status: json["status"] == null ? null : json["status"],
     location: json["location"] == null ? null : json["location"],
     start: json["start"] == null ? null : json["start"],

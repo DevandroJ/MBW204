@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 
+import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/data/models/chat_message.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
 import 'package:mbw204_club_ina/data/repository/chat.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
 
 enum GetChatStatus { idle, loading, loaded, error, isEmpty }
 enum GetListConversations { idle, loading, loaded, error, isEmpty }
+enum SendMessageStatus { idle, loading, loaded, error, isEmpty }
 
 class ChatProvider with ChangeNotifier {
   final ChatRepo chatRepo;
@@ -19,6 +21,9 @@ class ChatProvider with ChangeNotifier {
 
   GetChatStatus _getChatStatus = GetChatStatus.loading;
   GetChatStatus get getChatStatus => _getChatStatus;
+
+  SendMessageStatus _sendMessageStatus = SendMessageStatus.loading;
+  SendMessageStatus get sendMessageStatus => _sendMessageStatus;
 
   List<ListConversationData> _listConversationData = [];
   List<ListConversationData> get listConversationsData => [..._listConversationData];
@@ -35,6 +40,11 @@ class ChatProvider with ChangeNotifier {
     _getChatStatus = getChatStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
+
+  void setStateSendMessage(SendMessageStatus sendMessageMessageStatus) {
+    _sendMessageStatus = sendMessageMessageStatus;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  } 
   
   Future fetchListChat(BuildContext context) async {
     try {
@@ -54,48 +64,26 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  Future fetchListConversations(BuildContext context) async {
+  Future fetchListConversations(BuildContext context, String groupId) async {
     try {
-      List<ListConversationData> listConversationData = await chatRepo.fetchListConversations(context);
-      if(listConversationsData != null || listConversationsData.isNotEmpty) {
-        if(listConversationData.length != _listConversationData.length) {
-          _listConversationData.clear();
-          _listConversationData.addAll(listConversationData);
-          setStateGetListConversations(GetListConversations.loaded);
-        }
-      } else {
-        setStateGetListConversations(GetListConversations.isEmpty);
-      }
+      List<ListConversationData> listConversationDatas = await chatRepo.fetchListConversations(context, groupId);
+      _listConversationData.clear();
+      _listConversationData.addAll(listConversationDatas);
+      setStateGetListConversations(GetListConversations.loaded);
     } catch(e) {
+      setStateGetListConversations(GetListConversations.error);
       print(e);
     }
   }
 
-  List<ChatMessage> _chatMessage = [
-    ChatMessage(
-      isSender: false,
-      text: "Hello John"
-    ),
-    ChatMessage(
-      isSender: false,
-      text: "P"
-    ),
-  ];
+  Future sendMessageToConversations(BuildContext context, [List data]) async {
+    try { 
 
-  List<ChatMessage> get chatMessage => [..._chatMessage];
-
-  fetchMessage() {
-   
-  }
-
-  sendMessage(String msg) {
-    _chatMessage.add(
-      ChatMessage(
-        isSender: true,
-        text: msg
-      )
-    );
-    notifyListeners();
+      setStateSendMessage(SendMessageStatus.loaded);
+    } catch(e) {
+      setStateSendMessage(SendMessageStatus.error);
+      print(e);
+    }
   }
 
 }

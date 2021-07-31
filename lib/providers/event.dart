@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import "package:collection/collection.dart";
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:mbw204_club_ina/data/models/event.dart';
@@ -61,25 +62,26 @@ class EventProvider with ChangeNotifier {
       if(eventData == null) {
         setStateEventStatus(EventStatus.empty);
       } else {
+        _eventData.clear();
         _eventData.addAll(eventData);
         setStateEventStatus(EventStatus.loaded);
         for (int i = 0; i < _eventData.length; i++) {
-          for (int z = 0; z < _eventData[i].arrayEventDate.length; z++) {
+          for (var z = 0; z < _eventData[i].arrayEventDate.length; z++) {
             createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].arrayEventDate[z].toString())] = [
               [{
                 "event_id": _eventData[i].eventId,
                 "user_joined": _eventData[i].userJoined,
-                "description": _eventData[i].description,
+                "description": _eventData[i].descriptionList,
                 "location": _eventData[i].location,
                 "summary": _eventData[i].summary,
                 "start": _eventData[i].start,
                 "end": _eventData[i].end,
                 "path": _eventData[i].path
               }]
-            ];
-            DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
-            _events = createEvent[dateNow] ?? [];
+            ]; 
           }
+          DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+          _events = createEvent[dateNow] ?? [];
         }
       }
       if(_eventData.isEmpty) {

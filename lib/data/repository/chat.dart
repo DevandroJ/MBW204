@@ -14,10 +14,10 @@ class ChatRepo {
   List<ListConversationData> listConversationData = [];
   List<ListChatData> listChatData = [];
 
-  Future<List<ListConversationData>> fetchListConversations(BuildContext context) async {
+  Future<List<ListConversationData>> fetchListConversations(BuildContext context, String groupId) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
-      Response res = await dio.get("https://apidev.cxid.xyz:7443/api/v1/chat/conversation/c4b93a517a6bd43d9a5fd7289e719475");
+      Response res = await dio.get("${AppConstants.BASE_URL_CHAT}/conversation/$groupId");
       ListConversationModel listConversationModel = ListConversationModel.fromJson(res.data);
       List<ListConversationData> _listConversationData = listConversationModel.data;
       listConversationData = _listConversationData;
@@ -35,7 +35,6 @@ class ChatRepo {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL_CHAT}/list");
-      print(res.data);
       ListChatModel listChatModel = ListChatModel.fromJson(res.data);
       List<ListChatData> _listChatData = listChatModel.data;
       listChatData = _listChatData;
@@ -47,6 +46,10 @@ class ChatRepo {
       print(e);
     }
     return listChatData;
+  }
+
+  Future sendMessageToConversations(BuildContext context) {
+    
   }
 
 }

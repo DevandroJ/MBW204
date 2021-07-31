@@ -12,7 +12,6 @@ import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/screens/chat/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 
-
 class InboxScreen extends StatefulWidget {
   @override
   _InboxScreenState createState() => _InboxScreenState();
@@ -87,14 +86,20 @@ class _InboxScreenState extends State<InboxScreen> {
                     return Container(
                       margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
                       child: ListTile(
-                        onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen())),
+                        onTap: () { 
+                          Map<String, dynamic> basket = Provider.of(context, listen:  false);
+                          basket.addAll({
+                            "conversationId" : chatProvider.listChatData[i].id
+                          }); 
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                        },
                         dense: true,
                         title: Text(chatProvider.listChatData[i].displayName,
                           softWrap: true,
                           style: poppinsRegular,
                         ),
                         trailing: chatProvider.listChatData[i].group
-                        ? Text("") 
+                        ? SizedBox() 
                         : Text(DateFormat('dd MMM yyyy kk:mm').format(DateTime.parse(chatProvider.listChatData[i].updated)),
                           softWrap: true,
                           style: poppinsRegular.copyWith(

@@ -4,6 +4,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/providers/event.dart';
@@ -108,6 +109,7 @@ class _EventScreenState extends State<EventScreen> {
                             physics: AlwaysScrollableScrollPhysics(),
                             itemCount: eventProvider.events.length,
                             itemBuilder: (BuildContext context, int  i) {
+                              List descriptions = eventProvider.events[i][0]["description"];
 
                               return Card(
                                 elevation: 0.3,
@@ -244,7 +246,7 @@ class _EventScreenState extends State<EventScreen> {
                                                             ? Loader(
                                                                 color: ColorResources.YELLOW_PRIMARY,
                                                               ) 
-                                                            : Text("Gabung",
+                                                            : Text(getTranslated("JOIN", context),
                                                               style: poppinsRegular.copyWith(
                                                                 color: ColorResources.WHITE
                                                               ),
@@ -270,7 +272,8 @@ class _EventScreenState extends State<EventScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(eventProvider.events[i][0]["description"].toString(),
+                                        for(int i = 0; i < descriptions.length; i++)
+                                        Text(descriptions[i].toString(),
                                           style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ),

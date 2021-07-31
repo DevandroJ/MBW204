@@ -453,7 +453,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                         ),
                         title: Container(
                           margin: EdgeInsets.symmetric(vertical: 5.0),
-                          child: Text(
+                          child: SelectableText(
                             inboxProvider.inboxStatus == InboxStatus.loading 
                             ? "..."
                             : inboxProvider.inboxStatus == InboxStatus.error 
@@ -471,14 +471,11 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                           children: [
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 2.0),
-                              child: Text(inboxProvider.inboxStatus == InboxStatus.loading 
+                              child: SelectableText(inboxProvider.inboxStatus == InboxStatus.loading 
                               ? "..."
                               : inboxProvider.inboxStatus == InboxStatus.error 
                               ? "..."
                               : inboxProvider.inboxes[i].body,
-                                overflow: inboxProvider.inboxes[i].subject == "Emergency" 
-                              ? TextOverflow.fade
-                              : TextOverflow.ellipsis,
                                 style: poppinsRegular.copyWith(
                                   height: 1.6
                                 ),
@@ -487,7 +484,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 6.0),
-                              child: Text(inboxProvider.inboxStatus == InboxStatus.loading 
+                              child: SelectableText(inboxProvider.inboxStatus == InboxStatus.loading 
                               ? "..."
                               : inboxProvider.inboxStatus == InboxStatus.error 
                               ? "..."

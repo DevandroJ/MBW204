@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/data/models/chat_message.dart';
+import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
+import 'package:mbw204_club_ina/views/screens/chat/input.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/views/screens/chat/input.dart';
 
 class ChatBody extends StatefulWidget {
 
@@ -18,36 +19,46 @@ class _ChatBodyState extends State<ChatBody> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    Future.delayed(Duration.zero, () {
+      Map<String, dynamic> basket = Provider.of(context, listen: false);
+      Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, basket["conversationId"]);
+    }); 
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Consumer<ChatProvider>(
-              builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
-                return ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: chatProvider.chatMessage.length,
-                  itemBuilder: (BuildContext context, int i) => Message(
-                    message: chatProvider.chatMessage[i]
-                  ),
-                );
-              },
+    
+    return Consumer<ChatProvider>(
+      builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
+        if(chatProvider.getListConversations == GetListConversations.loading) {
+          return Loader(
+            color: ColorResources.BTN_PRIMARY_SECOND,
+          );
+        }
+        return Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: Consumer<ChatProvider>(
+                  builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
+                    return ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: chatProvider.listConversationsData.length,
+                      itemBuilder: (BuildContext context, int i) => Message(
+                        message: chatProvider.listConversationsData[i]
+                      ),
+                    );
+                  },
+                ),
+              )
             ),
-          )
-        ),
-        ChatInput()
-      ],
+            ChatInput()
+          ],
+        );
+      },
     );
+
   }
 }
 
@@ -57,12 +68,12 @@ class Message extends StatelessWidget {
     @required this.message,
   }) : super(key: key);
 
-  final ChatMessage message;
+  final ListConversationData message;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: message.isSender 
+      mainAxisAlignment: message.fromMe 
       ? MainAxisAlignment.start 
       : MainAxisAlignment.end,
       children: [       
@@ -80,7 +91,7 @@ class Message extends StatelessWidget {
               color: ColorResources.GRAY_LIGHT_PRIMARY,
               borderRadius: BorderRadius.circular(20.0)
             ),
-            child: Text(message.text,
+            child: Text(message.content.text,
               style: poppinsRegular,
             ),
           ),

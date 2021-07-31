@@ -127,11 +127,15 @@ class _ChatInputState extends State<ChatInput> {
             Container(
               child: IconButton(
                 onPressed: isSend 
-                ? () { 
+                ? () async { 
                     if(inputMsgController.text.trim() == "") {
                       return;
                     }
-                    Provider.of<ChatProvider>(context, listen: false).sendMessage(inputMsgController.text);
+                    try {
+                      await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context);
+                    } catch(e) {
+                      print(e);
+                    }
                     inputMsgController.text = "";
                   } 
                 : null,
