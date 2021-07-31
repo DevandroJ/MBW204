@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
     //     setState(() => lastStatus = isShrink);
     //   }
     // });
-    SocketHelper.shared.connect(context);
+    // SocketHelper.shared.connect(context);
   }
 
   Future<bool> onWillPop() {
@@ -127,35 +127,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       actions: [
-                        Container(
-                          margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
-                          child: InkWell(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                            child: Container(
-                              width: 28.0,
-                              height: 28.0,
-                              margin: EdgeInsets.only(right: 10.sp),
-                              decoration: BoxDecoration(
-                                color: ColorResources.GREY,
-                                borderRadius: BorderRadius.circular(20.0)
-                              ),
-                              child: Badge(
-                                position: BadgePosition(
-                                  top: -9.0,
-                                  end: 14.0
-                                ),
-                                badgeContent: Text("2",
-                                  style: poppinsRegular.copyWith(color: Colors.white),
-                                ),
-                                child: Icon(
-                                  Icons.chat,
-                                  color: ColorResources.BLACK,
-                                  size: 18.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
+                        //   child: InkWell(
+                        //     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                        //     child: Container(
+                        //       width: 28.0,
+                        //       height: 28.0,
+                        //       margin: EdgeInsets.only(right: 10.sp),
+                        //       decoration: BoxDecoration(
+                        //         color: ColorResources.GREY,
+                        //         borderRadius: BorderRadius.circular(20.0)
+                        //       ),
+                        //       child: Badge(
+                        //         position: BadgePosition(
+                        //           top: -9.0,
+                        //           end: 14.0
+                        //         ),
+                        //         badgeContent: Text("2",
+                        //           style: poppinsRegular.copyWith(color: Colors.white),
+                        //         ),
+                        //         child: Icon(
+                        //           Icons.chat,
+                        //           color: ColorResources.BLACK,
+                        //           size: 18.0,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
                           margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
                           child: InkWell(
