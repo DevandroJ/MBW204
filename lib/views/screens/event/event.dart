@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/data/models/event.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -77,7 +78,6 @@ class _EventScreenState extends State<EventScreen> {
                         );
                       return TableCalendar(
                         events: eventProvider.createEvent,
-                        
                         onDaySelected: (DateTime date, List events, List holidays) {
                           eventProvider.changeEvent(context, events);
                         },  
@@ -109,7 +109,7 @@ class _EventScreenState extends State<EventScreen> {
                             physics: AlwaysScrollableScrollPhysics(),
                             itemCount: eventProvider.events.length,
                             itemBuilder: (BuildContext context, int  i) {
-                              List descriptions = eventProvider.events[i][0]["description"];
+                              EventData eventData = eventProvider.events[i];
 
                               return Card(
                                 elevation: 0.3,
@@ -137,7 +137,7 @@ class _EventScreenState extends State<EventScreen> {
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
                                                     CachedNetworkImage(
-                                                      imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${eventProvider.events[i][0]["path"].toString()}",
+                                                      imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${eventData.path}",
                                                       imageBuilder: (BuildContext context, ImageProvider imageProvider) {
                                                         return Container(
                                                           width: double.infinity,
@@ -166,7 +166,7 @@ class _EventScreenState extends State<EventScreen> {
                                                           fontSize: 12.0
                                                         )
                                                       ),
-                                                      title: Text(eventProvider.events[i][0]["description"].toString(),
+                                                      title: Text(eventData.description,
                                                         style: poppinsRegular.copyWith(
                                                           fontSize: 12.0
                                                         ),
@@ -180,7 +180,7 @@ class _EventScreenState extends State<EventScreen> {
                                                           fontSize: 12.0                                                       
                                                         )
                                                       ),
-                                                      title: Text(eventProvider.events[i][0]["location"].toString(),
+                                                      title: Text(eventData.location,
                                                         style: poppinsRegular.copyWith(
                                                           fontSize: 12.0
                                                         ),
@@ -197,7 +197,7 @@ class _EventScreenState extends State<EventScreen> {
                                                                 fontSize: 12.0
                                                               )
                                                             ),
-                                                            title: Text(eventProvider.events[i][0]["start"].toString(),
+                                                            title: Text(eventData.start,
                                                               style: poppinsRegular.copyWith(
                                                                 fontSize: 12.0
                                                               ),
@@ -212,7 +212,7 @@ class _EventScreenState extends State<EventScreen> {
                                                                 fontSize: 12.0
                                                               )
                                                             ),
-                                                            title: Text(eventProvider.events[i][0]["end"].toString(),
+                                                            title: Text(eventData.end,
                                                               style: poppinsRegular.copyWith(
                                                                 fontSize: 12.0
                                                               ),
@@ -225,7 +225,7 @@ class _EventScreenState extends State<EventScreen> {
                                                       builder: (BuildContext context, EventProvider eventProvider, Widget child) {
                                                         return Container(
                                                           width: double.infinity,
-                                                          child: eventProvider.events[i][0]["user_joined"] 
+                                                          child: eventData.userJoined 
                                                           ? TextButton(
                                                             style: TextButton.styleFrom(
                                                               backgroundColor: ColorResources.DIM_GRAY
@@ -272,8 +272,7 @@ class _EventScreenState extends State<EventScreen> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        for(int i = 0; i < descriptions.length; i++)
-                                        Text(descriptions[i].toString(),
+                                        Text(eventData.description,
                                           style: poppinsRegular.copyWith(
                                             color: ColorResources.WHITE
                                           ),

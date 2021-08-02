@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
-import 'package:mbw204_club_ina/data/models/chat_message.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
 import 'package:mbw204_club_ina/data/repository/chat.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -76,9 +75,41 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  Future sendMessageToConversations(BuildContext context, [List data]) async {
+  Future sendMessageToConversations(BuildContext context, String from, String text, [dynamic content]) async {
     try { 
-
+      if(from == "input") {
+        await chatRepo.sendMessageToConversations(context, text, content);
+      }
+      if(from == "socket") {
+      _listConversationData.add(ListConversationData(
+        id: content["payload"]["conversationId"],
+        replyToConversationId: null,
+        fromMe: true,
+        contextId: AppConstants.X_CONTEXT_ID,
+        group: false,
+        remote: Remote(
+          userId: content["payload"]["remote"]["userId"],
+          identity: content["payload"]["remote"]["identity"],
+          displayName: content["payload"]["remote"]["displayName"],
+          group: false,
+          classId: content["payload"]["remote"]["classId"],
+          profilePic: ListConversationProfilePic(
+            path: content["payload"]["remote"]["profilePic"]["path"],
+            originalName: content["payload"]["remote"]["profilePic"]["originalName"],
+            fileLength: content["payload"]["remote"]["profilePic"]["fileLength"],
+            contentType: content["payload"]["remote"]["profilePic"]["contentType"],
+            kind: content["payload"]["remote"]["profilePic"]["kind"]
+          )
+        ),
+        messageStatus: "DELIVERED",
+        type: content["payload"]["type"],
+        classId: "oconversation",
+        content: Content(
+          charset: content["payload"]["content"]["charset"],
+          text: content["payload"]["content"]["text"]
+        )
+      ));
+    }
       setStateSendMessage(SendMessageStatus.loaded);
     } catch(e) {
       setStateSendMessage(SendMessageStatus.error);

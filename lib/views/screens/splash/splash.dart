@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/splash.dart';
@@ -15,6 +16,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  PackageInfo packageInfo;
 
   @override
   void initState() {
@@ -35,6 +38,17 @@ class _SplashScreenState extends State<SplashScreen> {
         });
       }
     });
+    (() async {
+      PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+      setState(() {      
+        packageInfo = PackageInfo(
+          appName: _packageInfo.appName,
+          buildNumber: _packageInfo.buildNumber,
+          packageName: _packageInfo.packageName,
+          version: _packageInfo.version
+        );
+      });
+    })();
   }
 
   @override
@@ -63,11 +77,26 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ) 
           ),
+
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 115.0),
+              child: Text("Version ${packageInfo?.version}+${packageInfo?.buildNumber}",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.normal,
+                  color: ColorResources.WHITE
+                ),
+              ) 
+            ),
+          ),
           
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.only(bottom: 90.0),
+              margin: EdgeInsets.only(bottom: 80.0),
               child: Text("Poweredby:",
                 style: TextStyle(
                   color: ColorResources.WHITE

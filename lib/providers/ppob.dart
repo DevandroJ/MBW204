@@ -958,7 +958,7 @@ class PPOBProvider with ChangeNotifier {
     }
   }
 
-  void getBalance(BuildContext context) async {
+  Future getBalance(BuildContext context) async {
     try {
       setStateBalanceStatus(BalanceStatus.loading);
       Dio dio = await DioManager.shared.getClient(context);

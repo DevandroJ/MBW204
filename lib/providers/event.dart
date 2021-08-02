@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import "package:collection/collection.dart";
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:mbw204_club_ina/data/models/event.dart';
@@ -34,8 +33,8 @@ class EventProvider with ChangeNotifier {
   EventJoinStatus _eventJoinStatus = EventJoinStatus.idle;
   EventJoinStatus get eventJoinStatus => _eventJoinStatus;
   
-  List<EventData> _eventData = [];
-  List<EventData> get eventData => [..._eventData];
+  List<EventBody> _eventBody = [];
+  List<EventBody> get eventBody => [..._eventBody];
 
   List<EventSearchData> _eventSearchData = [];
   List<EventSearchData> get eventSearchData => [..._eventSearchData];
@@ -55,36 +54,26 @@ class EventProvider with ChangeNotifier {
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
-  void getEvent(BuildContext context) async {
+  Future getEvent(BuildContext context) async {
     try {
       setStateEventStatus(EventStatus.loading);
-      List<EventData> eventData = await eventRepo.getEvent(context);
-      if(eventData == null) {
+      List<EventBody> eventBody = await eventRepo.getEvent(context);
+      if(eventBody == null) {
         setStateEventStatus(EventStatus.empty);
       } else {
-        _eventData.clear();
-        _eventData.addAll(eventData);
+        _eventBody.clear();
+        _eventBody.addAll(eventBody);
         setStateEventStatus(EventStatus.loaded);
-        for (int i = 0; i < _eventData.length; i++) {
-          for (var z = 0; z < _eventData[i].arrayEventDate.length; z++) {
-            createEvent[DateFormat("yyyy-MM-dd").parse(_eventData[i].arrayEventDate[z].toString())] = [
-              [{
-                "event_id": _eventData[i].eventId,
-                "user_joined": _eventData[i].userJoined,
-                "description": _eventData[i].descriptionList,
-                "location": _eventData[i].location,
-                "summary": _eventData[i].summary,
-                "start": _eventData[i].start,
-                "end": _eventData[i].end,
-                "path": _eventData[i].path
-              }]
-            ]; 
+        for (int i = 0; i < _eventBody.length; i++) {
+          for (int z = 0; z < _eventBody[i].listDate.length; z++) {
+            DateTime dateTime = DateFormat("yyyy-MM-dd").parse( _eventBody[i].listDate[z].toString());
+            createEvent[dateTime] = _eventBody[i].events;
+            DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+            _events = createEvent[dateNow] ?? [];
           }
-          DateTime dateNow = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
-          _events = createEvent[dateNow] ?? [];
         }
       }
-      if(_eventData.isEmpty) {
+      if(_eventBody.isEmpty) {
         setStateEventStatus(EventStatus.empty);
       }
     } on ServerErrorException catch(_) {

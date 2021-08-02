@@ -40,16 +40,32 @@ class ChatRepo {
       listChatData = _listChatData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
-      print(e.response.data);
-      print(e?.response?.statusMessage);
+      print(e?.response?.data);
     } catch(e) {
       print(e);
     }
     return listChatData;
   }
 
-  Future sendMessageToConversations(BuildContext context) {
-    
+  Future sendMessageToConversations(BuildContext context, String text, dynamic content) async {
+    try {
+      Dio dio = await DioManager.shared.getClient(context);
+      await dio.post("${AppConstants.BASE_URL_CHAT}/write", 
+        data: {
+          "remote": "6289670558381",
+          "type": "TEXT",
+          "content": {
+            "charset": "UTF_8",
+            "text": text
+          }
+        }
+      );
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+    } catch(e) {
+      print(e);
+    }
   }
 
 }

@@ -11,7 +11,7 @@ class FcmProvider with ChangeNotifier {
   IOSInitializationSettings iosInitializationSettings;
   InitializationSettings initializationSettings;
 
-  void initializing(BuildContext context) async {
+  Future initializing(BuildContext context) async {
     androidInitializationSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
     iosInitializationSettings = IOSInitializationSettings();
     initializationSettings = InitializationSettings(android: androidInitializationSettings, iOS: iosInitializationSettings);

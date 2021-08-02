@@ -8,3 +8,5 @@
 -keep class androidx.lifecycle.** { *; }
 -keep class com.shockwave.**
 -keep class vn.hunghd.flutterdownloader.**  { *; }
+-dontwarn io.flutter.embedding.**
+-ignorewarnings

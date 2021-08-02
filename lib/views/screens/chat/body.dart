@@ -27,6 +27,7 @@ class _ChatBodyState extends State<ChatBody> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> basket = Provider.of(context, listen: false);
     
     return Consumer<ChatProvider>(
       builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
@@ -39,14 +40,22 @@ class _ChatBodyState extends State<ChatBody> {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                 child: Consumer<ChatProvider>(
                   builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
-                    return ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemCount: chatProvider.listConversationsData.length,
-                      itemBuilder: (BuildContext context, int i) => Message(
-                        message: chatProvider.listConversationsData[i]
+                    return RefreshIndicator(
+                      onRefresh: () {
+                        return Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, basket["conversationId"]);
+                      },
+                      backgroundColor: ColorResources.BTN_PRIMARY,
+                      color: ColorResources.WHITE,
+                      child: ListView.builder(
+                        reverse: true,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: chatProvider.listConversationsData.length,
+                        itemBuilder: (BuildContext context, int i) => Message(
+                          message: chatProvider.listConversationsData[i]
+                        ),
                       ),
                     );
                   },

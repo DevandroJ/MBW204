@@ -14,17 +14,17 @@ class EventRepo {
   EventRepo({
     this.sharedPreferences
   });
-  List<EventData> eventData = [];
+  List<EventBody> eventBody = [];
   List<EventSearchData> eventSearchData = [];
  
-  Future<List<EventData>> getEvent(BuildContext context) async {
+  Future<List<EventBody>> getEvent(BuildContext context) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL}/content-service/event");
       EventModel eventModel = EventModel.fromJson(json.decode(res.data));
-      List<EventData> _eventData = eventModel.body;
-      eventData = _eventData; 
-      return eventData;
+      List<EventBody> _eventBody = eventModel.data;
+      eventBody = _eventBody; 
+      return eventBody;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
@@ -32,7 +32,7 @@ class EventRepo {
     } catch(e) {
       print(e);
     }
-    return eventData;
+    return eventBody;
   }
 
   Future<List<EventSearchData>> getEventSearchData(BuildContext context, String query) async {

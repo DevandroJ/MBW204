@@ -22,7 +22,7 @@ class NewsProvider with ChangeNotifier {
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
-  void getNews(BuildContext context) async {
+  Future getNews(BuildContext context) async {
     try {
       Dio dio = Dio();
       Response res = await dio.get("${AppConstants.BASE_URL}/content-service/article",

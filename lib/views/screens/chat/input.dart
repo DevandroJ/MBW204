@@ -132,11 +132,11 @@ class _ChatInputState extends State<ChatInput> {
                       return;
                     }
                     try {
-                      await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context);
+                      await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, "input", inputMsgController.text, {});
+                      inputMsgController.text = "";
                     } catch(e) {
                       print(e);
                     }
-                    inputMsgController.text = "";
                   } 
                 : null,
                   icon: Icon(

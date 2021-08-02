@@ -30,27 +30,28 @@ class SocketHelper {
     socket.connect();
     socket.on("connect", (data) async {
       print('=== SOCKET CONNECT ===');
-      await Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
       socket.on("messages", (data) async {
-        final res = data as List; 
-        if(res[0]["action"] == "CHAT_CONVERSATION") {
-          print(res[0]);
-          await Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, "8ac4b07ce0b8dbe7a879a22a6467b6d5");
-          final dataList = data as List;
-          final ack = dataList.last as Function;
-          String encode = json.encode({
-            "id": getRandomString(16),
-            "replyToId": data[0]["id"],
-            "timestamp": DateTime.now().millisecondsSinceEpoch,
-            "event": "ACK",
-            "action": "CHAT_CONVERSATION",
-            "payload": {
-              "code": 0,
-              "message": "Successfully"
-            }
-          });
-          ack(encode);
+        final res = data as dynamic; 
+        if(res is List) {
+          if(res[0]["action"] == "CHAT_CONVERSATION") {
+            await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, "socket", "", res[0]);
+            final dataList = data as List;
+            final ack = dataList.last as Function;
+            String encode = json.encode({
+              "id": getRandomString(16),
+              "replyToId": res[0]["id"],
+              "timestamp": DateTime.now().millisecondsSinceEpoch,
+              "event": "ACK",
+              "action": "CHAT_CONVERSATION",
+              "payload": {
+                "code": 0,
+                "message": "Successfully"
+              }
+            });
+            ack(encode);
+          }
         }
+        
         // await Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, data[0]["id"]);
         // if(data["payload"]["activity"] == "COMMENT") {
         //   getIt<FeedState>().addComment(data);

@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
 
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/pdf.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -44,7 +44,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   }
 
   Future<File> fromAsset(String asset, String filename) async {
-    // To open from assets, you can copy them to the app storage folder, and the access them "locally"
     Completer<File> completer = Completer();
     try {
       var dir = await getApplicationDocumentsDirectory();
@@ -120,61 +119,32 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             ],
           ),
 
-          Container(
-            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-            child: Row(
-              children: [ 
-                Text("HISTORY",
-                  style: poppinsRegular.copyWith(
-                    fontWeight: FontWeight.bold
-                  ),
-                  softWrap: true,
-                ),
+          // Container(
+          //   margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+          //   child: Row(
+          //     children: [ 
+          //       Text("HISTORY",
+          //         style: poppinsRegular.copyWith(
+          //           fontWeight: FontWeight.bold
+          //         ),
+          //         softWrap: true,
+          //       ),
 
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 15.0, right: 10.0),
-                    child: Divider(
-                      color: Colors.black,
-                      height: 50.0,
-                    )
-                  ),
-                ),
-              ]
-            ),
-          ),
-
-
-        if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
-          Container(
-            margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: ColorResources.BTN_PRIMARY
-              ),
-              onPressed: () { 
-                if (aDaRt != null || aDaRt.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PDFScreen(
-                        path: aDaRt,
-                        title: "AD - ART",
-                      ),
-                    ),
-                  );
-                }
-              }, 
-              child: Text("AD - ART",
-                style: poppinsRegular.copyWith(
-                  color: ColorResources.WHITE
-                ),
-              ),
-            )
-          ),
+          //       Expanded(
+          //         child: Container(
+          //           margin: EdgeInsets.only(left: 15.0, right: 10.0),
+          //           child: Divider(
+          //             color: Colors.black,
+          //             height: 50.0,
+          //           )
+          //         ),
+          //       ),
+          //     ]
+          //   ),
+          // ),
 
           Container(
-            margin: EdgeInsets.only(top: 0.0, left: 16.0, right: 16.0),
+            margin: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ColorResources.BTN_PRIMARY
@@ -193,6 +163,34 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 }
               }, 
               child: Text("About Us",
+                style: poppinsRegular.copyWith(
+                  color: ColorResources.WHITE
+                ),
+              ),
+            )
+          ),
+
+        if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+          Container(
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: ColorResources.BTN_PRIMARY
+              ),
+              onPressed: () { 
+                if (aDaRt != null || aDaRt.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PDFScreen(
+                        path: aDaRt,
+                        title: "AD - ART",
+                      ),
+                    ),
+                  );
+                }
+              }, 
+              child: Text("AD - ART",
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),

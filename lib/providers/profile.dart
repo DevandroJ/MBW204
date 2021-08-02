@@ -65,7 +65,7 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
   
-  void getUserProfile(BuildContext context) async {
+  Future getUserProfile(BuildContext context) async {
     try {
       ProfileData profileData = await profileRepo.getUserProfile(context);
       _userProfile = profileData;
