@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
   ScrollController scrollController = ScrollController();    
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   TabController tabController;
+  bool isEvent;
   bool lastStatus = true;
 
   bool get isShrink {
@@ -60,11 +61,11 @@ class _HomePageState extends State<HomePage> {
       Provider.of<FcmProvider>(context, listen: false).initializing(context);
       Provider.of<FcmProvider>(context, listen: false).initFcm(context);
       Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
+      Provider.of<NearMemberProvider>(context, listen: false).getCurrentPosition(context);
       Provider.of<LocationProvider>(context, listen: false).insertUpdateLatLng(context);
       Provider.of<BannerProvider>(context, listen: false).getBanner(context);
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
       Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
-      Provider.of<NewsProvider>(context, listen: false).getNews(context);
       Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);  
       Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
     });
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     //     setState(() => lastStatus = isShrink);
     //   }
     // });
-    SocketHelper.shared.connect(context);
+    // SocketHelper.shared.connect(context);
   }
 
   Future<bool> onWillPop() {
@@ -107,7 +108,8 @@ class _HomePageState extends State<HomePage> {
                     Provider.of<BannerProvider>(context, listen: false).getBanner(context);
                     Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
                     Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
-                    Provider.of<NewsProvider>(context, listen: false).getNews(context);
+                    Provider.of<NewsProvider>(context, listen: false).getNews(context, true);
+                    Provider.of<NewsProvider>(context, listen: false).getNews(context, false);
                     Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);
                   });               
                 },
@@ -129,35 +131,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       actions: [
-                        Container(
-                          margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
-                          child: InkWell(
-                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                            child: Container(
-                              width: 28.0,
-                              height: 28.0,
-                              margin: EdgeInsets.only(right: 10.sp),
-                              decoration: BoxDecoration(
-                                color: ColorResources.GREY,
-                                borderRadius: BorderRadius.circular(20.0)
-                              ),
-                              child: Badge(
-                                position: BadgePosition(
-                                  top: -9.0,
-                                  end: 14.0
-                                ),
-                                badgeContent: Text("2",
-                                  style: poppinsRegular.copyWith(color: Colors.white),
-                                ),
-                                child: Icon(
-                                  Icons.chat,
-                                  color: ColorResources.BLACK,
-                                  size: 18.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
+                        //   child: InkWell(
+                        //     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                        //     child: Container(
+                        //       width: 28.0,
+                        //       height: 28.0,
+                        //       margin: EdgeInsets.only(right: 10.sp),
+                        //       decoration: BoxDecoration(
+                        //         color: ColorResources.GREY,
+                        //         borderRadius: BorderRadius.circular(20.0)
+                        //       ),
+                        //       child: Badge(
+                        //         position: BadgePosition(
+                        //           top: -9.0,
+                        //           end: 14.0
+                        //         ),
+                        //         badgeContent: Text("2",
+                        //           style: poppinsRegular.copyWith(color: Colors.white),
+                        //         ),
+                        //         child: Icon(
+                        //           Icons.chat,
+                        //           color: ColorResources.BLACK,
+                        //           size: 18.0,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
                           margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
                           child: InkWell(
@@ -1116,7 +1118,7 @@ class _HomePageState extends State<HomePage> {
                                           child: Image.asset(Images.search_member)
                                         ),
                                         SizedBox(width: 10.0),
-                                        Text("Search\nMember",
+                                        Text(getTranslated("SEARCH_MEMBER", context),
                                           style: poppinsRegular.copyWith(
                                             fontSize: 11.0
                                           )
@@ -1140,6 +1142,17 @@ class _HomePageState extends State<HomePage> {
                       pinned: true,
                       delegate: StickyTabBarDelegate(
                         TabBar(
+                          onTap: (val) {
+                            switch (val) {
+                              case 0:
+                                setState(() => isEvent = false);
+                              break;
+                              case 1:
+                                setState(() => isEvent = true);
+                              break;
+                              default:
+                            }
+                          },
                           controller: tabController,
                           indicatorColor: ColorResources.BLACK,
                           labelColor: ColorResources.BLACK,
@@ -1160,231 +1173,8 @@ class _HomePageState extends State<HomePage> {
                       child: TabBarView(
                         children: [
 
-                          Consumer<NewsProvider>(
-                            builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
-                              
-                              if(newsProvider.getNewsStatus == GetNewsStatus.loading) {
-                                return Loader(
-                                  color: ColorResources.BTN_PRIMARY_SECOND,
-                                );
-                              }
-
-                              if(newsProvider.getNewsStatus == GetNewsStatus.empty) {
-                                return Center(
-                                  child: Text("No News Available", 
-                                    style: poppinsRegular,
-                                  ),
-                                );
-                              }
-
-                              return Container(
-                                margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: ListView.builder(
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  itemCount: newsProvider.newsBody.length,
-                                  itemBuilder: (BuildContext context, int i) {
-                                    return Container(
-                                      width: double.infinity,
-                                      margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-                                      decoration: BoxDecoration(
-                                        color: ColorResources.WHITE,
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                          width: 0.5
-                                        ),
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      child: Stack(
-                                        children: [
-
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CachedNetworkImage(
-                                                imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
-                                                  imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                  width: 120.0,
-                                                  height: 80.0,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                    image: DecorationImage(
-                                                      image: imageProvider, 
-                                                      fit: BoxFit.cover
-                                                    ),
-                                                  ),
-                                                ),
-                                                placeholder: (BuildContext context, String url) {
-                                                  return Container(
-                                                    width: 120.0,
-                                                    height: 80.0,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10.0),
-                                                      image: DecorationImage(
-                                                        image: AssetImage('assets/images/default_image.png'), 
-                                                        fit: BoxFit.cover
-                                                      ),
-                                                    ),
-                                                  );                          
-                                                },
-                                                errorWidget: (BuildContext context, String url, dynamic error) {
-                                                 return Container(
-                                                    width: 120.0,
-                                                    height: 80.0,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10.0),
-                                                      image: DecorationImage(
-                                                        image: AssetImage('assets/images/default_image.png'), 
-                                                        fit: BoxFit.cover
-                                                      ),
-                                                    ),
-                                                  );                                              
-                                                },
-                                              ),
-                                              SizedBox(width: 10.0),
-                                              Container(
-                                                width: 180.0,
-                                                margin: EdgeInsets.only(top: 10.0),
-                                                child: Text(newsProvider.newsBody[i].title,
-                                                  maxLines: 3,
-                                                  softWrap: true,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: poppinsRegular.copyWith(
-                                                    fontSize: 11.0,
-                                                    fontWeight: FontWeight.bold
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                          Positioned(
-                                            top: 55.0,
-                                            right: 10.0,
-                                            child: InkWell(
-                                              onTap: () => Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => DetailNewsScreen(
-                                                title: newsProvider.newsBody[i].title,
-                                                content: newsProvider.newsBody[i].content,
-                                                date: newsProvider.newsBody[i].created,
-                                                imageUrl: newsProvider.newsBody[i].media[0].path,
-                                              ))),
-                                              child: Text(getTranslated("READ_MORE", context),
-                                                style: poppinsRegular.copyWith(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0
-                                                ),
-                                              ),
-                                            )
-                                          )
-
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ); 
-                            },
-                          ),
-
-                          Consumer<NewsProvider>(
-                            builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
-                              
-                              if(newsProvider.getNewsStatus == GetNewsStatus.loading) {
-                                return Loader(
-                                  color: ColorResources.BTN_PRIMARY_SECOND,
-                                );
-                              }
-
-                              if(newsProvider.getNewsStatus == GetNewsStatus.empty) {
-                                return Center(
-                                  child: Text(getTranslated("THERE_IS_NO_NEWS", context), 
-                                    style: poppinsRegular,
-                                  ),
-                                );
-                              }
-
-                              return Container(
-                                margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: ListView.builder(
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  itemCount: newsProvider.newsBody.length,
-                                  itemBuilder: (BuildContext context, int i) {
-                                    return Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: ColorResources.WHITE,
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                          width: 0.5
-                                        ),
-                                        borderRadius: BorderRadius.circular(10.0)
-                                      ),
-                                      margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-                                      child: Stack(
-                                        children: [
-
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              CachedNetworkImage(
-                                                imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
-                                                  imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                                                  width: 120.0,
-                                                  height: 80.0,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.0),
-                                                    image: DecorationImage(
-                                                      image: imageProvider, 
-                                                      fit: BoxFit.cover
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(width: 10.0),
-                                              Container(
-                                                width: 180.0,
-                                                margin: EdgeInsets.only(top: 10.0),
-                                                child: Text(newsProvider.newsBody[i].title,
-                                                  maxLines: 3,
-                                                  softWrap: true,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: poppinsRegular.copyWith(
-                                                    fontSize: 11.0,
-                                                    fontWeight: FontWeight.bold
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-
-                                          Positioned(
-                                            top: 55.0,
-                                            right: 10.0,
-                                            child: InkWell(
-                                              onTap: () => Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => DetailNewsScreen(
-                                                title: newsProvider.newsBody[i].title,
-                                                content: newsProvider.newsBody[i].content,
-                                                date: newsProvider.newsBody[i].created,
-                                                imageUrl: newsProvider.newsBody[i].media[0].path,
-                                              ))),
-                                              child: Text(getTranslated("READ_MORE", context),
-                                                style: poppinsRegular.copyWith(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0
-                                                ),
-                                              ),
-                                            )
-                                          )
-
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ); 
-                            },
-                          ),
+                          newsComponent(context, isEvent),
+                          newsComponent(context, isEvent)
 
                           // Container(
                           //   decoration: BoxDecoration(
@@ -1477,6 +1267,135 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Widget newsComponent(BuildContext context, bool isEvent) {
+  Provider.of<NewsProvider>(context, listen: false).getNews(context, isEvent);
+  return Consumer<NewsProvider>(
+    builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
+      
+      if(newsProvider.getNewsStatus == GetNewsStatus.loading) {
+        return Loader(
+          color: ColorResources.BTN_PRIMARY_SECOND,
+        );
+      }
+
+      if(newsProvider.getNewsStatus == GetNewsStatus.empty) {
+        return Center(
+          child: Text(getTranslated("THERE_IS_NO_NEWS", context), 
+            style: poppinsRegular,
+          ),
+        );
+      }
+
+      return Container(
+        margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+        child: ListView.builder(
+          physics: AlwaysScrollableScrollPhysics(),
+          itemCount: newsProvider.newsBody.length,
+          itemBuilder: (BuildContext context, int i) {
+            return Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+              decoration: BoxDecoration(
+                color: ColorResources.WHITE,
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 0.5
+                ),
+                borderRadius: BorderRadius.circular(10.0)
+              ),
+              child: Stack(
+                children: [
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
+                          imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                          width: 120.0,
+                          height: 80.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: imageProvider, 
+                              fit: BoxFit.cover
+                            ),
+                          ),
+                        ),
+                        placeholder: (BuildContext context, String url) {
+                          return Container(
+                            width: 120.0,
+                            height: 80.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/default_image.png'), 
+                                fit: BoxFit.cover
+                              ),
+                            ),
+                          );                          
+                        },
+                        errorWidget: (BuildContext context, String url, dynamic error) {
+                          return Container(
+                            width: 120.0,
+                            height: 80.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/default_image.png'), 
+                                fit: BoxFit.cover
+                              ),
+                            ),
+                          );                                              
+                        },
+                      ),
+                      SizedBox(width: 10.0),
+                      Container(
+                        width: 180.0,
+                        margin: EdgeInsets.only(top: 10.0),
+                        child: Text(newsProvider.newsBody[i].title,
+                          maxLines: 3,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: poppinsRegular.copyWith(
+                            fontSize: 11.0,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Positioned(
+                    top: 55.0,
+                    right: 10.0,
+                    child: InkWell(
+                      onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DetailNewsScreen(
+                        title: newsProvider.newsBody[i].title,
+                        content: newsProvider.newsBody[i].content,
+                        date: newsProvider.newsBody[i].created,
+                        imageUrl: newsProvider.newsBody[i].media[0].path,
+                      ))),
+                      child: Text(getTranslated("READ_MORE", context),
+                        style: poppinsRegular.copyWith(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.0
+                        ),
+                      ),
+                    )
+                  )
+
+                ],
+              ),
+            );
+          },
+        ),
+      ); 
+    },
+  );
 }
 
 class StickyTabBarDelegate extends SliverPersistentHeaderDelegate {

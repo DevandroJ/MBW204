@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -132,8 +133,11 @@ class _ChatInputState extends State<ChatInput> {
                       return;
                     }
                     try {
-                      await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, "input", inputMsgController.text, {});
-                      inputMsgController.text = "";
+                      Map<String, dynamic> basket = Provider.of(context, listen: false);
+                      ListChatData listChatData = basket["listChatData"];
+                      Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, inputMsgController.text, listChatData).then((val){
+                        inputMsgController.text = "";
+                      });
                     } catch(e) {
                       print(e);
                     }

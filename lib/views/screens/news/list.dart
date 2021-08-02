@@ -14,8 +14,6 @@ class NewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<NewsProvider>(context, listen: false).getNews(context);
-
     return Scaffold(
       body: SafeArea(
         child: Column(

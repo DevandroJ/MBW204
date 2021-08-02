@@ -29,7 +29,8 @@ class MemberNearScreen extends StatefulWidget {
 class _MemberNearScreenState extends State<MemberNearScreen> {
 
   Completer<GoogleMapController> mapsController = Completer();
-  
+  List<Marker> markers = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

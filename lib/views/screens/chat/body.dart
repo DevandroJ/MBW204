@@ -5,6 +5,7 @@ import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
 import 'package:mbw204_club_ina/views/screens/chat/input.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
+import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 
@@ -21,7 +22,8 @@ class _ChatBodyState extends State<ChatBody> {
     super.initState();
     Future.delayed(Duration.zero, () {
       Map<String, dynamic> basket = Provider.of(context, listen: false);
-      Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, basket["conversationId"]);
+      ListChatData listChatData = basket["listChatData"];
+      Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, listChatData.id);
     }); 
   }
 
@@ -36,25 +38,25 @@ class _ChatBodyState extends State<ChatBody> {
             color: ColorResources.BTN_PRIMARY_SECOND,
           );
         }
+        List<ListConversationData> data = chatProvider.listConversationsData.reversed.toList();
         return Column(
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
                 child: Consumer<ChatProvider>(
                   builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
                     return RefreshIndicator(
-                      onRefresh: () {
-                        return Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, basket["conversationId"]);
-                      },
+                      onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, basket["conversationId"]),
                       backgroundColor: ColorResources.BTN_PRIMARY,
                       color: ColorResources.WHITE,
                       child: ListView.builder(
-                        reverse: true,
+                        controller: chatProvider.scrollController,
+                        shrinkWrap: true,
                         physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: chatProvider.listConversationsData.length,
+                        itemCount: data.length,
                         itemBuilder: (BuildContext context, int i) => Message(
-                          message: chatProvider.listConversationsData[i]
+                          message: data[i]
                         ),
                       ),
                     );

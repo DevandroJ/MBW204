@@ -13,6 +13,7 @@ import 'package:mbw204_club_ina/providers/localization.dart';
 import 'package:mbw204_club_ina/providers.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/views/screens/splash/splash.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();

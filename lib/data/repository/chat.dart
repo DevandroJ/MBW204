@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/data/models/chat/response_send_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
 
@@ -23,7 +24,6 @@ class ChatRepo {
       listConversationData = _listConversationData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
-      print(e.response.data);
       print(e?.response?.statusMessage);
     } catch(e) {
       print(e);
@@ -40,19 +40,19 @@ class ChatRepo {
       listChatData = _listChatData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
-      print(e?.response?.data);
+      print(e?.response?.statusMessage);
     } catch(e) {
       print(e);
     }
     return listChatData;
   }
 
-  Future sendMessageToConversations(BuildContext context, String text, dynamic content) async {
+  Future<ResponseSendMessageConversationModelData> sendMessageToConversations(BuildContext context, String text, String identity) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
-      await dio.post("${AppConstants.BASE_URL_CHAT}/write", 
+      Response res = await dio.post("${AppConstants.BASE_URL_CHAT}/write", 
         data: {
-          "remote": "6289670558381",
+          "remote": identity,
           "type": "TEXT",
           "content": {
             "charset": "UTF_8",
@@ -60,6 +60,8 @@ class ChatRepo {
           }
         }
       );
+      ResponseSendMessageConversationModelData responseSendMessageConversationModelData = ResponseSendMessageConversationModelData.fromJson(res.data);
+      return responseSendMessageConversationModelData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);

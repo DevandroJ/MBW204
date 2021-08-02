@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/data/models/event.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'package:mbw204_club_ina/data/models/event.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -110,7 +110,6 @@ class _EventScreenState extends State<EventScreen> {
                             itemCount: eventProvider.events.length,
                             itemBuilder: (BuildContext context, int  i) {
                               EventData eventData = eventProvider.events[i];
-
                               return Card(
                                 elevation: 0.3,
                                 child: Container(

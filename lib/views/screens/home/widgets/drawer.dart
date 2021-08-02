@@ -89,10 +89,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     margin: EdgeInsets.all(10.0),
                     child: Column(
                       children: [
-                        drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204\nClub Indonesia"),
+                        drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204 Club Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
                         drawerItems(context, null, "store", Images.shopping_image, getTranslated("MY_STORE", context)),
-                        drawerItems(context, null, "cashout", Images.cash_out, getTranslated("CASH_OUT", context)),
+                        drawerItems(context, CashoutScreen(), getTranslated("CASH_OUT", context), Images.cash_out, getTranslated("CASH_OUT", context)),
                         drawerItems(context, SettingsScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
                         drawerItems(context, null, "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
                         drawerItems(context, null, "logout", Images.logout_drawer, getTranslated("LOGOUT", context))

@@ -87,9 +87,9 @@ class _InboxScreenState extends State<InboxScreen> {
                       margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
                       child: ListTile(
                         onTap: () { 
-                          Map<String, dynamic> basket = Provider.of(context, listen:  false);
+                          Map<String, dynamic> basket = Provider.of(context, listen: false);
                           basket.addAll({
-                            "conversationId" : chatProvider.listChatData[i].id
+                            "listChatData": chatProvider.listChatData[i]
                           }); 
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
                         },
@@ -106,7 +106,7 @@ class _InboxScreenState extends State<InboxScreen> {
                             fontSize: 11.0
                           ),
                         ),
-                        subtitle: Text("",
+                        subtitle: Text(chatProvider.listChatData[i].latestConversation.content.text,
                           softWrap: true,
                           style: poppinsRegular.copyWith(
                             fontSize: 13.0

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -24,6 +25,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   File file;
   ImageSource imageSource;
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  bool loading = false;
+  String subModel = "";
+  String bodyStyle = "";
 
   TextEditingController emailController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
@@ -104,7 +108,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       }
       profileData.fullname = fullnameController.text;
       profileData.address = addressController.text;
-
+      profileData.bodyStyle = bodyStyle;
+      profileData.subModel = subModel;
       await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, file);  
     } catch(e) {
       print(e);
@@ -115,6 +120,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   void initState() {
     super.initState();
+    loading = true;
     Future.delayed(Duration.zero, () async {
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
       fullnameController.text = Provider.of<ProfileProvider>(context, listen: false).getUserFullname;
@@ -122,7 +128,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       emailController.text = Provider.of<ProfileProvider>(context, listen: false).getUserEmail;
       noHpController.text = Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber;
       addressController.text = Provider.of<ProfileProvider>(context, listen: false).getUserAddress;
-    });
+      bodyStyle = Provider.of<ProfileProvider>(context, listen: false).userProfile.bodyStyle;
+      subModel = Provider.of<ProfileProvider>(context, listen: false).userProfile.subModel;
+      setState(() => loading = false);
+    }); 
   }
 
   @override
@@ -316,6 +325,130 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        child: StatefulBuilder(
+                          builder: (BuildContext context, Function setState) {
+                            return CustomDropDownFormField(
+                              titleText: 'Body Style',
+                              titleColor: ColorResources.BLACK,
+                              hintText: 'Body Style',
+                              contentPadding: EdgeInsets.zero,
+                              value: loading ? "..." : bodyStyle,
+                              filled: false,
+                              onSaved: (val) {
+                                setState(() => bodyStyle = val);
+                              },
+                              onChanged: (val) {  
+                                setState(() => bodyStyle = val);
+                              },
+                              dataSource: [
+                                {
+                                  "display": "Station Wagon",
+                                  "value": "Station Wagon",
+                                },
+                                {
+                                  "display": "Saloon",
+                                  "value": "Saloon",
+                                },
+                                {
+                                  "display": "Coupe",
+                                  "value": "Coupe",
+                                },
+                              ],
+                              textField: 'display',
+                              valueField: 'value',
+                            );
+                            
+                          }, 
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        margin: EdgeInsets.only(top: 15.0),
+                        child: StatefulBuilder(
+                          builder: (BuildContext context, Function setState) {
+                            return CustomDropDownFormField(
+                              titleText: 'Sub Model',
+                              titleColor: ColorResources.BLACK,
+                              hintText: 'Sub Model',
+                              contentPadding: EdgeInsets.zero,
+                              value: loading ? "..." : subModel,
+                              filled: false,
+                              onSaved: (val) {
+                                setState(() => subModel = val);
+                              },
+                              onChanged: (val) {  
+                                setState(() => subModel = val);
+                              },
+                              dataSource: [
+                                {
+                                  "display": "C 180 Kompressor",
+                                  "value": "C 180 Kompressor",
+                                },
+                                {
+                                  "display": "C 200 Kompressor",
+                                  "value": "C 200 Kompressor",
+                                },
+                                {
+                                  "display": "C 230",
+                                  "value": "C 230",
+                                },
+                                {
+                                  "display": "C 250",
+                                  "value":"C 250"
+                                },
+                                {
+                                  "display": "C 280",
+                                  "value": "C 280",
+                                },
+                                {
+                                  "display": "C 350",
+                                  "value": "C 350",
+                                },
+                                {
+                                  "display": "C 200 CDI",
+                                  "value": "C 200 CDI",
+                                },
+                                {
+                                  "display": "C 220 CDI",
+                                  "value": "C 220 CDI",
+                                },
+                                {
+                                  "display": "C 250 CDI",
+                                  "value": "C 250 CDI"
+                                },
+                                {
+                                  "display": "C 320 CDI",
+                                  "value": "C 320 CDI",
+                                },
+                                {
+                                  "display": "C 180 CGI",
+                                  "value": "C 180 CGI"
+                                },
+                                {
+                                  "display": "C 200 CGI",
+                                  "value": "C 200 CGI"
+                                },
+                                {
+                                  "display": "C 250 CGI",
+                                  "value": "C 250 CGI"
+                                },
+                                {
+                                  "display": "C 350 CGI",
+                                  "value": "C 350 CGI"
+                                },
+                                {
+                                  "display": "C 63 AMG",
+                                  "value": "C 63 AMG"
+                                }
+                              ],
+                              textField: 'display',
+                              valueField: 'value',
+                            );
+                          }, 
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
                       inputComponent(context, getTranslated("ADDRESS", context), addressController, false),
                       SizedBox(height: 10.0),
                     ],

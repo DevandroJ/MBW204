@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
+import 'package:mbw204_club_ina/data/models/chat/response_send_message.dart';
 import 'package:mbw204_club_ina/data/repository/chat.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 
 enum GetChatStatus { idle, loading, loaded, error, isEmpty }
 enum GetListConversations { idle, loading, loaded, error, isEmpty }
 enum SendMessageStatus { idle, loading, loaded, error, isEmpty }
+enum SendMessageStatusConfirm { idle, loading, loaded, erorr, isEmpty }
 
 class ChatProvider with ChangeNotifier {
   final ChatRepo chatRepo;
+  final SharedPreferences sharedPreferences;
   ChatProvider({
-    this.chatRepo
+    this.chatRepo,
+    this.sharedPreferences
   });
+
+  ScrollController scrollController = ScrollController(); 
 
   GetListConversations _getListConversations = GetListConversations.loading;
   GetListConversations get getListConversations =>  _getListConversations;
@@ -23,6 +30,9 @@ class ChatProvider with ChangeNotifier {
 
   SendMessageStatus _sendMessageStatus = SendMessageStatus.loading;
   SendMessageStatus get sendMessageStatus => _sendMessageStatus;
+  
+  SendMessageStatusConfirm _sendMessageStatusConfirm = SendMessageStatusConfirm.loading;
+  SendMessageStatusConfirm get sendMessageStatusConfirm => _sendMessageStatusConfirm;
 
   List<ListConversationData> _listConversationData = [];
   List<ListConversationData> get listConversationsData => [..._listConversationData];
@@ -44,6 +54,11 @@ class ChatProvider with ChangeNotifier {
     _sendMessageStatus = sendMessageMessageStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   } 
+
+  void setStateSendMessageStatusConfirm(SendMessageStatusConfirm sendMessageStatusConfirm) {
+    _sendMessageStatusConfirm = sendMessageStatusConfirm;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  }
   
   Future fetchListChat(BuildContext context) async {
     try {
@@ -75,41 +90,53 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  Future sendMessageToConversations(BuildContext context, String from, String text, [dynamic content]) async {
+  Future sendMessageToConversations(BuildContext context, String text, ListChatData listChatData) async {
     try { 
-      if(from == "input") {
-        await chatRepo.sendMessageToConversations(context, text, content);
-      }
-      if(from == "socket") {
-      _listConversationData.add(ListConversationData(
-        id: content["payload"]["conversationId"],
+      ResponseSendMessageConversationModelData responseSendMessageConversationModelData = await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
+      _listConversationData.insert(0, ListConversationData(
+        id: responseSendMessageConversationModelData.conversationId,
         replyToConversationId: null,
         fromMe: true,
         contextId: AppConstants.X_CONTEXT_ID,
         group: false,
-        remote: Remote(
-          userId: content["payload"]["remote"]["userId"],
-          identity: content["payload"]["remote"]["identity"],
-          displayName: content["payload"]["remote"]["displayName"],
+        origin: Origin(
+          userId: sharedPreferences.getString("userId"),
+          identity: sharedPreferences.getString("phoneNumber"),
+          displayName: sharedPreferences.getString("userName"),
           group: false,
-          classId: content["payload"]["remote"]["classId"],
+          classId: "ojidinfo",
           profilePic: ListConversationProfilePic(
-            path: content["payload"]["remote"]["profilePic"]["path"],
-            originalName: content["payload"]["remote"]["profilePic"]["originalName"],
-            fileLength: content["payload"]["remote"]["profilePic"]["fileLength"],
-            contentType: content["payload"]["remote"]["profilePic"]["contentType"],
-            kind: content["payload"]["remote"]["profilePic"]["kind"]
+            originalName: "",
+            path: "",
+            fileLength: 0,
+            contentType: "image/jpeg",
+            kind: "IMAGE"
           )
         ),
-        messageStatus: "DELIVERED",
-        type: content["payload"]["type"],
+        remote: Origin(
+          userId: listChatData.userId,
+          identity: listChatData.identity,
+          displayName: listChatData.displayName,
+          group: false,
+          classId: "ojidinfo",
+          profilePic: ListConversationProfilePic(
+            path: listChatData.profilePic.path,
+            originalName: listChatData.profilePic.originalName,
+            fileLength: listChatData.profilePic.fileLength,
+            contentType: listChatData.profilePic.contentType,
+            kind: listChatData.profilePic.kind
+          )
+        ),
+        messageStatus: "SENT",
+        type: "TEXT",
         classId: "oconversation",
         content: Content(
-          charset: content["payload"]["content"]["charset"],
-          text: content["payload"]["content"]["text"]
+          charset: "UTF_8",
+          text: text
         )
       ));
-    }
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      fetchListChat(context);
       setStateSendMessage(SendMessageStatus.loaded);
     } catch(e) {
       setStateSendMessage(SendMessageStatus.error);
@@ -117,4 +144,12 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
+  Future sendMessageToConversationsSocket(BuildContext context) {
+    try {
+      
+      setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
+    } catch(e) {
+      print(e);
+    }
+  }
 }

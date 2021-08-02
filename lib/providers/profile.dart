@@ -87,9 +87,7 @@ class ProfileProvider extends ChangeNotifier {
       }
       await profileRepo.updateProfile(context, profileData);
       getUserProfile(context);
-      Future.delayed(Duration(seconds: 1), () {
-        Navigator.of(context).pop();
-      });
+      Navigator.of(context).pop();
       setStateUpdateProfileStatus(UpdateProfileStatus.loaded);
       Fluttertoast.showToast(
         msg: "Ubah Profil berhasil",

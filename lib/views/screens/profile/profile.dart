@@ -69,7 +69,6 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       profileData.fullname = fullnameTextController.text;
       profileData.address = addressTextController.text;
       profileData.shortBio = shortBioTextController.text;
-      // profileData.idCardNumber = cardNumberTextController.text;
       profileData.gender = selectedGender;
       await Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, profileData, file);
       ShowSnackbar.snackbar(context, getTranslated("UPDATE_ACCOUNT_SUCCESSFUL" ,context), "", Colors.green);
@@ -244,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               ),
                               SizedBox(width: 10.0),
                               Consumer<PPOBProvider>(
-                                builder: (context, PPOBProvider ppobProvider, Widget child) {
+                                builder: (BuildContext context, PPOBProvider ppobProvider, Widget child) {
                                   return Text(ppobProvider.balanceStatus == BalanceStatus.loading 
                                     ? "..." 
                                     : ppobProvider.balanceStatus == BalanceStatus.error 
@@ -364,12 +363,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("REFERRAL_CODE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserCodeReferral
-                      ),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProviuder, Widget child) {
+                          return profileListAccount(context, getTranslated("REFERRAL_CODE", context), profileProviuder.profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProviuder.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProviuder.getUserCodeReferral
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -379,12 +382,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("REFERRAL_BY", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserReferralBy
-                      ),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, getTranslated("REFERRAL_BY", context), profileProvider.profileStatus == ProfileStatus.loading
+                            ? "..."
+                            : profileProvider.profileStatus == ProfileStatus.error 
+                            ? "..."
+                            : profileProvider.getUserReferralBy
+                          );  
+                        }
+                      )
                     ],
                   ),
                 ),
@@ -394,12 +401,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("CHAPTER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserChapter
-                      ),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, getTranslated("CHAPTER", context), profileProvider.profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProvider.getUserChapter
+                          );
+                        },
+                      )
                     ],  
                   ),
                 ),
@@ -409,12 +420,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("SUB_MODEL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserSubModel
-                      ),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, getTranslated("SUB_MODEL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : Provider.of<ProfileProvider>(context, listen: false).getUserSubModel
+                          );                    
+                        },  
+                      )
                     ],
                   ),
                 ),
@@ -424,27 +439,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("BODY_STYLE", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserBodyStyle
-                      ),
-                    ],
-                  ),
-                ),
-              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
-                Container(
-                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Column(
-                    children: [
-                    SizedBox(height: 10.0),
-                      profileListAccount(context, "No KTP", Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserNoKtp
-                      ),  
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, getTranslated("BODY_STYLE", context), profileProvider.profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProvider.getUserBodyStyle
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -454,11 +458,34 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("COMPANY_NAME", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserCompany
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, "No KTP", profileProvider.profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProvider.getUserNoKtp
+                          );
+                        }         
+                      )
+                    ],
+                  ),
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead")
+                Container(
+                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.0),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, getTranslated("COMPANY_NAME", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProvider.getUserCompany
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -467,12 +494,16 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               SizedBox(height: 10.0),
               Container(
                 margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: profileListAccount(context, getTranslated("EMAIL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                ? "..."
-                : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                ? "..."
-                : Provider.of<ProfileProvider>(context, listen: false).getUserEmail
-                ),
+                child: Consumer<ProfileProvider>(
+                  builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                    return profileListAccount(context, getTranslated("EMAIL", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                    ? "..."
+                    : profileProvider.profileStatus == ProfileStatus.error 
+                    ? "..."
+                    : profileProvider.getUserEmail
+                    );          
+                  },
+                ) 
               ),
               if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
                 Container(
@@ -480,32 +511,35 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   child: Column(
                     children: [
                       SizedBox(height: 10.0),
-                      profileListAccount(context, getTranslated("NO_MEMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                      ? "..."
-                      : Provider.of<ProfileProvider>(context, listen: false).getUserIdNumber
-                      ),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                          return profileListAccount(context, getTranslated("NO_MEMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProvider.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProvider.getUserIdNumber
+                          );                    
+                        },  
+                      )
+                      
                     ],
                   ),
                 ),
               SizedBox(height: 10.0),
               Container(
                 margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: profileListAccount(context, getTranslated("ADDRESS", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
-                ? "..." 
-                : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                ? "..." 
-                : Provider.of<ProfileProvider>(context, listen: false).getUserAddress),
-              ),
-              SizedBox(height: 10.0),
-              Container(
-                margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                child: profileListAccount(context, getTranslated("PHONE_NUMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
-                ? "..." 
-                : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                ? "..." 
-                : Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber),
+                child: Consumer<ProfileProvider>(
+                  builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                    return Container(
+                      margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: profileListAccount(context, getTranslated("PHONE_NUMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+                      ? "..." 
+                      : profileProvider.profileStatus == ProfileStatus.error 
+                      ? "..." 
+                      : profileProvider.getUserPhoneNumber),
+                    );                  
+                  },
+                ) 
               ),
               SizedBox(height: 10.0),
               Center(

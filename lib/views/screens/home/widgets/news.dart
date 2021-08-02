@@ -18,8 +18,6 @@ class _NewsViewState extends State<NewsView> {
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<NewsProvider>(context, listen: false).getNews(context);
-
     return Consumer<NewsProvider>(
       builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
         return  Container(

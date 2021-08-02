@@ -34,7 +34,7 @@ class SocketHelper {
         final res = data as dynamic; 
         if(res is List) {
           if(res[0]["action"] == "CHAT_CONVERSATION") {
-            await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, "socket", "", res[0]);
+            // await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, "socket", "", "", res[0]);
             final dataList = data as List;
             final ack = dataList.last as Function;
             String encode = json.encode({

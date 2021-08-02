@@ -5,6 +5,7 @@ import 'package:mbw204_club_ina/utils/custom_themes.dart';
 
 class CustomDropDownFormField extends FormField<dynamic> {
   final String titleText;
+  final Color titleColor;
   final String hintText;
   final bool required;
   final String errorText;
@@ -21,6 +22,7 @@ class CustomDropDownFormField extends FormField<dynamic> {
       FormFieldValidator<dynamic> validator,
       bool autovalidate = false,
       this.titleText = '',
+      this.titleColor = ColorResources.WHITE,
       this.hintText = 'Select one option',
       this.required = false,
       this.errorText = 'Please select one option',
@@ -34,7 +36,7 @@ class CustomDropDownFormField extends FormField<dynamic> {
       : super(
           onSaved: onSaved,
           validator: validator,
-          autovalidate: autovalidate,
+          autovalidateMode: AutovalidateMode.always,
           initialValue: value == '' ? null : value,
           builder: (FormFieldState<dynamic> state) {
             return Container(
@@ -46,7 +48,7 @@ class CustomDropDownFormField extends FormField<dynamic> {
                       contentPadding: contentPadding,
                       labelText: titleText,
                       labelStyle: poppinsRegular.copyWith(
-                        color: ColorResources.WHITE,
+                        color: titleColor,
                         fontSize: 20.0
                       ),
                       filled: filled,

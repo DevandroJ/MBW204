@@ -22,10 +22,10 @@ class NewsProvider with ChangeNotifier {
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
-  Future getNews(BuildContext context) async {
+  Future getNews(BuildContext context, bool isEvent) async {
     try {
       Dio dio = Dio();
-      Response res = await dio.get("${AppConstants.BASE_URL}/content-service/article",
+      Response res = await dio.get("${AppConstants.BASE_URL}/content-service/article?eventNews=$isEvent",
         options: Options(
           headers: {
             "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjI1MDg1NTM1NzAsInJvbGUiOiJwdWJsaWMifQ.4-zFh5j6LyfpoB4uuVVWu1YaLIv-M9VWXrahBZ4JRGs"

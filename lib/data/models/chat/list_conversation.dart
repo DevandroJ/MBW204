@@ -28,6 +28,8 @@ class ListConversationModel {
 class ListConversationData {
   ListConversationData({
     this.id,
+    this.created,
+    this.origin,
     this.remote,
     this.messageStatus,
     this.fromMe,
@@ -39,20 +41,24 @@ class ListConversationData {
     this.classId,
   });
 
-  String id;
-  Remote remote;
-  String messageStatus;
-  bool fromMe;
-  String contextId;
-  String type;
-  bool group;
-  Content content;
-  dynamic replyToConversationId;
-  String classId;
+    String id;
+    String created;
+    Origin origin;
+    Origin remote;
+    String messageStatus;
+    bool fromMe;
+    String contextId;
+    String type;
+    bool group;
+    Content content;
+    dynamic replyToConversationId;
+    String classId;
 
   factory ListConversationData.fromJson(Map<String, dynamic> json) => ListConversationData(
     id: json["id"] == null ? null : json["id"],
-    remote: json["remote"] == null ? null : Remote.fromJson(json["remote"]),
+    created: json["created"] == null ? null : json["created"],
+    origin: json["origin"] == null ? null : Origin.fromJson(json["origin"]),
+    remote: json["remote"] == null ? null : Origin.fromJson(json["remote"]),
     messageStatus: json["messageStatus"] == null ? null : json["messageStatus"],
     fromMe: json["fromMe"] == null ? null : json["fromMe"],
     contextId: json["contextId"] == null ? null : json["contextId"],
@@ -79,29 +85,29 @@ class Content {
   );
 }
 
-class Remote {
-  Remote({
-    this.identity,
+class Origin {
+  Origin({
     this.userId,
-    this.group,
-    this.profilePic,
+    this.identity,
     this.displayName,
+    this.profilePic,
+    this.group,
     this.classId,
   });
 
-  String identity;
   String userId;
-  bool group;
-  ListConversationProfilePic profilePic;
+  String identity;
   String displayName;
+  ListConversationProfilePic profilePic;
+  bool group;
   String classId;
 
-  factory Remote.fromJson(Map<String, dynamic> json) => Remote(
-    identity: json["identity"] == null ? null : json["identity"],
+  factory Origin.fromJson(Map<String, dynamic> json) => Origin(
     userId: json["userId"] == null ? null : json["userId"],
-    group: json["group"] == null ? null : json["group"],
-    profilePic: json["profilePic"] == null ? null : ListConversationProfilePic.fromJson(json["profilePic"]),
+    identity: json["identity"] == null ? null : json["identity"],
     displayName: json["displayName"] == null ? null : json["displayName"],
+    profilePic: json["profilePic"] == null ? null : ListConversationProfilePic.fromJson(json["profilePic"]),
+    group: json["group"] == null ? null : json["group"],
     classId: json["classId"] == null ? null : json["classId"],
   );
 }
@@ -129,4 +135,3 @@ class ListConversationProfilePic {
     kind: json["kind"] == null ? null : json["kind"],
   );
 }
-

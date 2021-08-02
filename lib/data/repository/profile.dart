@@ -53,6 +53,8 @@ class ProfileRepo {
           "fullname" : profileData.fullname ?? "",
           "gender" : profileData.gender ?? "",
           "profile_pic": profileData.profilePic ?? "",
+          "body_style": profileData.bodyStyle ?? "",
+          "sub_modal": profileData.subModel ?? "",
           // "id_card_number": profileData.idCardNumber ?? "",
           "short_bio": profileData.shortBio ?? "",
         } 

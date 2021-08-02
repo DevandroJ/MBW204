@@ -77,8 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ) 
           ),
-
-
+          
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
