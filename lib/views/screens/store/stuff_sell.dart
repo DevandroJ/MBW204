@@ -36,7 +36,7 @@ class _StuffSellerScreenState extends State<StuffSellerScreen> with TickerProvid
   Animation<Offset> offset;
   
   List<ProductWarungList> product = [];
-  String idCategory;
+  String idCategory = "all";
   int page = 0;
 
   var isVisible;
@@ -49,7 +49,6 @@ class _StuffSellerScreenState extends State<StuffSellerScreen> with TickerProvid
       if(categoryProductModel != null) {
         setState(() {
           categoryProductModel = categoryProductModel;
-          idCategory = categoryProductModel.body.first.id;
           isLoadingProduct = false;
           getMoreData(page);          
         });

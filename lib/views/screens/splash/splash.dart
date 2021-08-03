@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/providers/banner.dart';
+import 'package:mbw204_club_ina/providers/chat.dart';
+import 'package:mbw204_club_ina/providers/fcm.dart';
+import 'package:mbw204_club_ina/providers/location.dart';
+import 'package:mbw204_club_ina/providers/nearmember.dart';
+import 'package:mbw204_club_ina/providers/ppob.dart';
+import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/splash.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
 import 'package:mbw204_club_ina/providers/auth.dart';
@@ -23,6 +30,16 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Provider.of<SplashProvider>(context, listen: false).initConfig().then((val) {
+      Provider.of<FcmProvider>(context, listen: false).initializing(context);
+      Provider.of<FcmProvider>(context, listen: false).initFcm(context);
+      Provider.of<LocationProvider>(context, listen: false).getCurrentPosition(context);
+      Provider.of<NearMemberProvider>(context, listen: false).getCurrentPosition(context);
+      Provider.of<LocationProvider>(context, listen: false).insertUpdateLatLng(context);
+      Provider.of<BannerProvider>(context, listen: false).getBanner(context);
+      Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
+      Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
+      Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);  
+      Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
       if(val) {
         Timer(Duration(seconds: 1), () {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {

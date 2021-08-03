@@ -1,3 +1,4 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -94,11 +95,11 @@ class _InboxScreenState extends State<InboxScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
                         },
                         dense: true,
-                        title: Text(chatProvider.listChatData[i].displayName,
+                        title: Text(chatProvider?.listChatData[i]?.displayName ?? "-",
                           softWrap: true,
                           style: poppinsRegular,
                         ),
-                        trailing: chatProvider.listChatData[i].group
+                        trailing: chatProvider?.listChatData[i].group
                         ? SizedBox() 
                         : Text(DateFormat('dd MMM yyyy kk:mm').format(DateTime.parse(chatProvider.listChatData[i].updated)),
                           softWrap: true,
@@ -106,7 +107,7 @@ class _InboxScreenState extends State<InboxScreen> {
                             fontSize: 11.0
                           ),
                         ),
-                        subtitle: Text(chatProvider.listChatData[i].latestConversation.content.text,
+                        subtitle: Text(chatProvider?.listChatData[i]?.latestConversation?.content?.text ?? "-",
                           softWrap: true,
                           style: poppinsRegular.copyWith(
                             fontSize: 13.0
@@ -114,18 +115,41 @@ class _InboxScreenState extends State<InboxScreen> {
                         ),
                         leading: Container(
                           child: CachedNetworkImage(
-                            imageUrl: "${AppConstants.BASE_URL_IMG}${chatProvider.listChatData[i].profilePic.path}",
+                            imageUrl: "${AppConstants.BASE_URL_IMG}${chatProvider?.listChatData[i]?.profilePic?.path}",
                             imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
                               backgroundImage: imageProvider,
                               radius: 30.0,
                             ),
-                            placeholder: (context, string) => SizedBox(
-                              width: 18.0,
-                              height: 18.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
+                            placeholder: (BuildContext context, String string) => Container(
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: ColorResources.BLACK,
+                                  width: 0.5
+                                ),
+                                borderRadius: BorderRadius.circular(50.0)
+                              ),
+                              child: SvgPicture.asset('assets/images/svg/user.svg',
+                                width: 30.0,
+                                height: 30.0,
                               ),
                             ),
+                            errorWidget: (BuildContext context, String url, dynamic error) {
+                              return Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorResources.BLACK,
+                                    width: 0.5
+                                  ),
+                                  borderRadius: BorderRadius.circular(50.0)
+                                ),
+                                child: SvgPicture.asset('assets/images/svg/user.svg',
+                                  width: 30.0,
+                                  height: 30.0,
+                                ),
+                              );
+                            },
                             filterQuality: FilterQuality.medium,
                           ),
                         ),

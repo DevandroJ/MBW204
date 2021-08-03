@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
@@ -39,7 +39,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     imageSource = await showDialog<ImageSource>(context: context, builder: (context) => 
       AlertDialog(
         title: Text(getTranslated("SOURCE_IMAGE", context),
-        style: TextStyle(
+        style: poppinsRegular.copyWith(
           color: ColorResources.BTN_PRIMARY_SECOND,
           fontWeight: FontWeight.bold, 
         ),
@@ -47,7 +47,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       actions: [
         MaterialButton(
           child: Text(getTranslated("CAMERA", context),
-            style: TextStyle(
+            style: poppinsRegular.copyWith(
               color: Colors.black
             )
           ),
@@ -55,7 +55,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         ),
         MaterialButton(
           child: Text(getTranslated("GALLERY", context),
-            style: TextStyle(color: Colors.black),
+            style: poppinsRegular.copyWith(color: Colors.black),
           ),
           onPressed: () => Navigator.pop(context, ImageSource.gallery)
           )

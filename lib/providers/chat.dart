@@ -113,7 +113,7 @@ class ChatProvider with ChangeNotifier {
           contextId: AppConstants.X_CONTEXT_ID,
           replyToConversationId: null,
           created: DateTime.now().toString(),
-          fromMe: sharedPreferences.getString("userId") == listChatData.userId ? false : true,
+          fromMe: true,
           group: false,
           origin: Origin(
             userId: sharedPreferences.getString("userId"),
@@ -151,10 +151,10 @@ class ChatProvider with ChangeNotifier {
             text: text
           )
         ));
+        Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+        await loadSound();
+        fetchListChat(context);
       }
-      Timer(Duration(milliseconds: 300),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
-      await loadSound();
-      fetchListChat(context);
       setStateSendMessage(SendMessageStatus.loaded);
     } catch(e) {
       setStateSendMessage(SendMessageStatus.error);
@@ -168,7 +168,7 @@ class ChatProvider with ChangeNotifier {
         id: data["id"],
         replyToConversationId: data["payload"]["replyToConversationId"],
         created: DateTime.now().toString(),
-        fromMe: true,
+        fromMe: false,
         contextId: AppConstants.X_CONTEXT_ID,
         group: data["payload"]["group"],
         origin: Origin(
@@ -207,8 +207,9 @@ class ChatProvider with ChangeNotifier {
           text: data["payload"]["content"]["text"]
         )
       ));
-      Timer(Duration(milliseconds: 300),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+      Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
       await loadSound();
+      fetchListChat(context);
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
     } catch(e) {
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.error);

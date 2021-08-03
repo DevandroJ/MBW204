@@ -7,13 +7,13 @@ import "package:flutter/material.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icon_shadow/icon_shadow.dart';
-import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -405,12 +405,33 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(productSingleWarungModel.body.store.name,
-                          style: poppinsRegular.copyWith(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold
-                          )
+                        Row(
+                          children: [
+                            Text(productSingleWarungModel.body.store.name,
+                              style: poppinsRegular.copyWith(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold
+                              )
+                            ),
+                            productSingleWarungModel.body.store.open 
+                            ? SizedBox.shrink()
+                            : Container(
+                              decoration: BoxDecoration(
+                                color: ColorResources.ERROR,
+                                borderRadius: BorderRadius.circular(10.0)
+                              ),
+                              padding: EdgeInsets.all(5.0),
+                              margin: EdgeInsets.only(left: 10.0),
+                              child: Text("Toko Tutup",
+                                style: poppinsRegular.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                                )
+                              ),
+                            )
+                          ],
                         ),
                         SizedBox(height: 5.0),
                         Text(productSingleWarungModel.body.store.city,
@@ -656,7 +677,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   children: [
                     Expanded(
                       child: GestureDetector(
-                        onTap: () async {
+                        onTap: productSingleWarungModel.body.store.open ? () async {
                           if (sellerStoreModel?.body != null) {
                             if (productSingleWarungModel.body.store.id != sellerStoreModel?.body?.id) {
                               if (productSingleWarungModel.body.stock < 1) {
@@ -699,7 +720,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                               await Provider.of<WarungProvider>(context, listen: false).postAddCart(context, productSingleWarungModel.body.id, productSingleWarungModel.body.minOrder);
                             }
                           }
-                        },
+                        } : null,
                         child: Container(
                           height: 50.0,
                           decoration: BoxDecoration(

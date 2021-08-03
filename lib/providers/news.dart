@@ -33,10 +33,14 @@ class NewsProvider with ChangeNotifier {
         )
       );
       NewsModel newsModel = NewsModel.fromJson(json.decode(res.data));
-      _newsBody = [];
       List<NewsBody> listNewsBody = newsModel.body;
-      _newsBody.addAll(listNewsBody);
+      _newsBody = listNewsBody;
       setStateGetNewsStatus(GetNewsStatus.loaded);
+      if(listNewsBody.length != _newsBody.length) {
+        _newsBody.clear();
+        _newsBody.addAll(listNewsBody);
+        setStateGetNewsStatus(GetNewsStatus.loaded);
+      }
       if(_newsBody.isEmpty) {
         setStateGetNewsStatus(GetNewsStatus.empty);
       }
