@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,9 +13,8 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:mbw204_club_ina/providers/chat.dart';
-import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/utils/socket.dart';
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/media/media.dart';
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     //     setState(() => lastStatus = isShrink);
     //   }
     // });
-    // SocketHelper.shared.connect(context);
+    SocketHelper.shared.connect(context);
   }
 
   Future<bool> onWillPop() {
@@ -131,35 +131,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       actions: [
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
-                        //   child: InkWell(
-                        //     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                        //     child: Container(
-                        //       width: 28.0,
-                        //       height: 28.0,
-                        //       margin: EdgeInsets.only(right: 10.sp),
-                        //       decoration: BoxDecoration(
-                        //         color: ColorResources.GREY,
-                        //         borderRadius: BorderRadius.circular(20.0)
-                        //       ),
-                        //       child: Badge(
-                        //         position: BadgePosition(
-                        //           top: -9.0,
-                        //           end: 14.0
-                        //         ),
-                        //         badgeContent: Text("2",
-                        //           style: poppinsRegular.copyWith(color: Colors.white),
-                        //         ),
-                        //         child: Icon(
-                        //           Icons.chat,
-                        //           color: ColorResources.BLACK,
-                        //           size: 18.0,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Container(
+                          margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
+                          child: InkWell(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                            child: Container(
+                              width: 28.0,
+                              height: 28.0,
+                              margin: EdgeInsets.only(right: 10.sp),
+                              decoration: BoxDecoration(
+                                color: ColorResources.GREY,
+                                borderRadius: BorderRadius.circular(20.0)
+                              ),
+                              child: Badge(
+                                position: BadgePosition(
+                                  top: -9.0,
+                                  end: 14.0
+                                ),
+                                badgeContent: Text("2",
+                                  style: poppinsRegular.copyWith(color: Colors.white),
+                                ),
+                                child: Icon(
+                                  Icons.chat,
+                                  color: ColorResources.BLACK,
+                                  size: 18.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Container(
                           margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
                           child: InkWell(

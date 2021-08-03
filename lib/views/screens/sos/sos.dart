@@ -65,6 +65,8 @@ class _SosScreenState extends State<SosScreen> {
                     margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     child: Column(
                       children: [
+                        getSosList(context, getTranslated("WORKSHOP_INFO", context), Images.workshop_info, "+621316982889 StarPro Service"),
+                        SizedBox(height: 10.0),
                         getSosList(context, getTranslated("AMBULANCE", context), Images.ambulance, "${getTranslated("I_NEED_HELP_AMBULANCE", context)} ${getTranslated("AMBULANCE", context)}"),
                         SizedBox(height: 10.0),
                         getSosList(context, getTranslated("ACCIDENT", context), Images.strike, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("ACCIDENT", context)}"),
@@ -74,8 +76,6 @@ class _SosScreenState extends State<SosScreen> {
                         getSosList(context, getTranslated("THEFT", context), Images.thief, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("THEFT", context)}"),
                         SizedBox(height: 10.0),
                         getSosList(context, getTranslated("WILDFIRE", context), Images.fire, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("WILDFIRE", context)}"),
-                        SizedBox(height: 10.0),
-                        getSosList(context, getTranslated("WORKSHOP_INFO", context), Images.workshop_info, "O81316982889 StarPro Service"),
                         SizedBox(height: 10.0),
                         getSosList(context, getTranslated("DISASTER", context), Images.disaster, "${getTranslated("I_NEED_HELP", context)} ${getTranslated("DISASTER", context)}"),
                       ],
@@ -95,7 +95,8 @@ class _SosScreenState extends State<SosScreen> {
 
 Widget getSosList(BuildContext context, String label, String images, String content) {
   return InkWell(
-    onTap: () async => label == getTranslated("WORKSHOP_INFO", context) ? await launch("tel://O81316982889") : Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
+    onTap: () async => label == getTranslated("WORKSHOP_INFO", context) 
+    ? await launch("tel://+6281316982889") : Navigator.push(context, MaterialPageRoute(builder: (context) => SosDetailScreen(
       label: label,
       content: content,
     ))),

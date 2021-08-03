@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:soundpool/soundpool.dart';
 
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
@@ -10,7 +14,7 @@ import 'package:mbw204_club_ina/utils/constant.dart';
 enum GetChatStatus { idle, loading, loaded, error, isEmpty }
 enum GetListConversations { idle, loading, loaded, error, isEmpty }
 enum SendMessageStatus { idle, loading, loaded, error, isEmpty }
-enum SendMessageStatusConfirm { idle, loading, loaded, erorr, isEmpty }
+enum SendMessageStatusConfirm { idle, loading, loaded, error, isEmpty }
 
 class ChatProvider with ChangeNotifier {
   final ChatRepo chatRepo;
@@ -19,6 +23,10 @@ class ChatProvider with ChangeNotifier {
     this.chatRepo,
     this.sharedPreferences
   });
+
+  Soundpool pool = Soundpool(
+    streamType: StreamType.notification
+  );
 
   ScrollController scrollController = ScrollController(); 
 
@@ -62,14 +70,15 @@ class ChatProvider with ChangeNotifier {
   
   Future fetchListChat(BuildContext context) async {
     try {
-      List<ListChatData> listChatData = await chatRepo.fetchListChat(context);
-      if(listChatData != null || listChatData.isNotEmpty) {
-        if(listChatData.length != _listChatData.length) {
-          _listChatData.clear();
-          _listChatData.addAll(listChatData);
-          setStateGetChatStatus(GetChatStatus.loaded);
-        }
-      } else {
+      List<ListChatData> lcd = await chatRepo.fetchListChat(context);
+      _listChatData = lcd;
+      setStateGetChatStatus(GetChatStatus.loaded);
+      if(_listChatData.length != lcd.length) {
+        _listChatData.clear();
+        _listChatData.addAll(lcd);
+        setStateGetChatStatus(GetChatStatus.loaded);
+      }
+      if(_listChatData.isEmpty) {
         setStateGetChatStatus(GetChatStatus.isEmpty);
       }
     } catch(e) {
@@ -80,9 +89,14 @@ class ChatProvider with ChangeNotifier {
 
   Future fetchListConversations(BuildContext context, String groupId) async {
     try {
-      List<ListConversationData> listConversationDatas = await chatRepo.fetchListConversations(context, groupId);
-      _listConversationData.clear();
-      _listConversationData.addAll(listConversationDatas);
+      List<ListConversationData> lcd = await chatRepo.fetchListConversations(context, groupId);
+      _listConversationData = lcd;
+      setStateGetListConversations(GetListConversations.loaded);
+      if(_listConversationData.length != lcd.length) {
+        _listConversationData.clear();
+        _listConversationData.addAll(lcd);
+        setStateGetListConversations(GetListConversations.loaded);
+      }
       setStateGetListConversations(GetListConversations.loaded);
     } catch(e) {
       setStateGetListConversations(GetListConversations.error);
@@ -90,15 +104,72 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  Future sendMessageToConversations(BuildContext context, String text, ListChatData listChatData) async {
+  Future sendMessageToConversations(BuildContext context, String text, ListChatData listChatData, [dynamic data]) async {
     try { 
       ResponseSendMessageConversationModelData responseSendMessageConversationModelData = await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
+      if(sharedPreferences.getString("userId") != listChatData.userId) {
+        _listConversationData.insert(0, ListConversationData(
+          id: responseSendMessageConversationModelData.conversationId,
+          contextId: AppConstants.X_CONTEXT_ID,
+          replyToConversationId: null,
+          created: DateTime.now().toString(),
+          fromMe: sharedPreferences.getString("userId") == listChatData.userId ? true : false,
+          group: false,
+          origin: Origin(
+            userId: sharedPreferences.getString("userId"),
+            identity: sharedPreferences.getString("phoneNumber"),
+            displayName: sharedPreferences.getString("userName"),
+            group: false,
+            classId: "ojidinfo",
+            profilePic: ListConversationProfilePic(
+              originalName: "",
+              path: "",
+              fileLength: 0,
+              contentType: "image/jpeg",
+              kind: "IMAGE"
+            )
+          ),
+          remote: Origin(
+            userId: listChatData.userId,
+            identity: listChatData.identity,
+            displayName: listChatData.displayName,
+            group: false,
+            classId: "ojidinfo",
+            profilePic: ListConversationProfilePic(
+              path: listChatData.profilePic.path,
+              originalName: listChatData.profilePic.originalName,
+              fileLength: listChatData.profilePic.fileLength,
+              contentType: listChatData.profilePic.contentType,
+              kind: listChatData.profilePic.kind
+            )
+          ),
+          messageStatus: "SENT",
+          type: "TEXT",
+          classId: "oconversation",
+          content: Content(
+            charset: "UTF_8",
+            text: text
+          )
+        ));
+      }
+      Timer(Duration(milliseconds: 300),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+      fetchListChat(context);
+      setStateSendMessage(SendMessageStatus.loaded);
+    } catch(e) {
+      setStateSendMessage(SendMessageStatus.error);
+      print(e);
+    }
+  }
+
+  Future sendMessageToConversationsSocket(BuildContext context, dynamic data) async {
+    try { 
       _listConversationData.insert(0, ListConversationData(
-        id: responseSendMessageConversationModelData.conversationId,
-        replyToConversationId: null,
-        fromMe: true,
+        id: data["id"],
+        replyToConversationId: data["payload"]["replyToConversationId"],
+        created: DateTime.now().toString(),
+        fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
         contextId: AppConstants.X_CONTEXT_ID,
-        group: false,
+        group: data["payload"]["group"],
         origin: Origin(
           userId: sharedPreferences.getString("userId"),
           identity: sharedPreferences.getString("phoneNumber"),
@@ -114,42 +185,39 @@ class ChatProvider with ChangeNotifier {
           )
         ),
         remote: Origin(
-          userId: listChatData.userId,
-          identity: listChatData.identity,
-          displayName: listChatData.displayName,
-          group: false,
-          classId: "ojidinfo",
+          userId: data["payload"]["remote"]["userId"],
+          identity: data["payload"]["remote"]["identity"],
+          displayName: data["payload"]["remote"]["displayName"],
+          group: data["payload"]["remote"]["group"],
+          classId: data["payload"]["remote"]["classId"],
           profilePic: ListConversationProfilePic(
-            path: listChatData.profilePic.path,
-            originalName: listChatData.profilePic.originalName,
-            fileLength: listChatData.profilePic.fileLength,
-            contentType: listChatData.profilePic.contentType,
-            kind: listChatData.profilePic.kind
+            originalName: data["payload"]["remote"]["profilePic"]["originalName"],
+            path: data["payload"]["remote"]["profilePic"]["originalName"],
+            fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
+            contentType: data["payload"]["remote"]["profilePic"]["contentType"],
+            kind: data["payload"]["remote"]["profilePic"]["kind"]
           )
         ),
         messageStatus: "SENT",
-        type: "TEXT",
-        classId: "oconversation",
+        type: data["payload"]["type"],
+        classId: data["payload"]["classId"],
         content: Content(
-          charset: "UTF_8",
-          text: text
+          charset: data["payload"]["content"]["charset"],
+          text: data["payload"]["content"]["text"]
         )
       ));
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
-      fetchListChat(context);
-      setStateSendMessage(SendMessageStatus.loaded);
+      Timer(Duration(milliseconds: 300),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+      await loadSound();
+      setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
     } catch(e) {
-      setStateSendMessage(SendMessageStatus.error);
+      setStateSendMessageStatusConfirm(SendMessageStatusConfirm.error);
       print(e);
     }
   }
 
-  Future sendMessageToConversationsSocket(BuildContext context) {
-    try {
-      
-      setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
-    } catch(e) {
-      print(e);
-    }
+  Future<int> loadSound() async {
+    var asset = await rootBundle.load("assets/sounds/sent.mp3");
+    return await pool.play(await pool.load(asset));
   }
+
 }

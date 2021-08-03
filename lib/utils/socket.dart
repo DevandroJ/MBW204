@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-import 'package:mbw204_club_ina/helpers/random_string.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
+import 'package:mbw204_club_ina/helpers/random_string.dart';
 import 'package:mbw204_club_ina/mobx/feed.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/repository/feed.dart';
@@ -34,7 +34,7 @@ class SocketHelper {
         final res = data as dynamic; 
         if(res is List) {
           if(res[0]["action"] == "CHAT_CONVERSATION") {
-            // await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, "socket", "", "", res[0]);
+            await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversationsSocket(context, res[0]);
             final dataList = data as List;
             final ack = dataList.last as Function;
             String encode = json.encode({
