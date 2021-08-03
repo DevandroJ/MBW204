@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/pdf.dart';
@@ -11,7 +12,6 @@ import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
-import 'package:provider/provider.dart';
 
 class AboutUsScreen extends StatefulWidget {
   @override
@@ -156,13 +156,13 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                     MaterialPageRoute(
                       builder: (context) => PDFScreen(
                         path: pathAboutUsPDF,
-                        title: "About Us",
+                        title: getTranslated("HISTORY_ORGANIZATION", context),
                       ),
                     ),
                   );
                 }
               }, 
-              child: Text("About Us",
+              child: Text(getTranslated("HISTORY_ORGANIZATION", context),
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),
@@ -211,13 +211,40 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                     MaterialPageRoute(
                       builder: (context) => PDFScreen(
                         path: structureOrganization,
-                        title: "Structure Organization",
+                        title: getTranslated("ORGANIZATION_RULES", context),
                       ),
                     ),
                   );
                 }
               }, 
-              child: Text("Structure Organization",
+              child: Text(getTranslated("ORGANIZATION_RULES", context),
+                style: poppinsRegular.copyWith(
+                  color: ColorResources.WHITE
+                ),
+              ),
+            )
+          ),
+
+          Container(
+            margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 10.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: ColorResources.BTN_PRIMARY
+              ),
+              onPressed: () { 
+                if (structureOrganization != null || structureOrganization.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PDFScreen(
+                        path: structureOrganization,
+                        title: getTranslated("STRUCTURE_ORGANIZATION", context),
+                      ),
+                    ),
+                  );
+                }
+              }, 
+              child: Text(getTranslated("STRUCTURE_ORGANIZATION", context),
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),

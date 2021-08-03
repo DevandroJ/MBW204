@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           title: 'MB W204 Club INA',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            primaryColor: ColorResources.BTN_PRIMARY,
             backgroundColor: ColorResources.BTN_PRIMARY
           ),
           locale: Provider.of<LocalizationProvider>(context).locale,

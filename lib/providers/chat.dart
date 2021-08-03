@@ -113,7 +113,7 @@ class ChatProvider with ChangeNotifier {
           contextId: AppConstants.X_CONTEXT_ID,
           replyToConversationId: null,
           created: DateTime.now().toString(),
-          fromMe: sharedPreferences.getString("userId") == listChatData.userId ? true : false,
+          fromMe: sharedPreferences.getString("userId") == listChatData.userId ? false : true,
           group: false,
           origin: Origin(
             userId: sharedPreferences.getString("userId"),
@@ -153,6 +153,7 @@ class ChatProvider with ChangeNotifier {
         ));
       }
       Timer(Duration(milliseconds: 300),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+      await loadSound();
       fetchListChat(context);
       setStateSendMessage(SendMessageStatus.loaded);
     } catch(e) {
@@ -167,7 +168,7 @@ class ChatProvider with ChangeNotifier {
         id: data["id"],
         replyToConversationId: data["payload"]["replyToConversationId"],
         created: DateTime.now().toString(),
-        fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
+        fromMe: true,
         contextId: AppConstants.X_CONTEXT_ID,
         group: data["payload"]["group"],
         origin: Origin(

@@ -530,14 +530,11 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 margin: EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Consumer<ProfileProvider>(
                   builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 16.0, right: 16.0),
-                      child: profileListAccount(context, getTranslated("PHONE_NUMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
-                      ? "..." 
-                      : profileProvider.profileStatus == ProfileStatus.error 
-                      ? "..." 
-                      : profileProvider.getUserPhoneNumber),
-                    );                  
+                    return profileListAccount(context, getTranslated("PHONE_NUMBER", context), Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading 
+                    ? "..." 
+                    : profileProvider.profileStatus == ProfileStatus.error 
+                    ? "..." 
+                    : profileProvider.getUserPhoneNumber);                  
                   },
                 ) 
               ),
