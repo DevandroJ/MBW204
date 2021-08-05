@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/data/models/chat/response_send_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mbw204_club_ina/data/models/chat/response_send_message.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
@@ -24,12 +24,24 @@ class ChatRepo {
       listConversationData = _listConversationData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
-      print(e?.response?.statusMessage);
+      print(e?.response?.data);
     } catch(e) {
       print(e);
     }
     return listConversationData;
   } 
+
+  Future ackRead(BuildContext context, String chatId) async {
+    try { 
+      Dio dio = await DioManager.shared.getClient(context);
+      await dio.put("${AppConstants.BASE_URL_CHAT}/ack/$chatId");
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+    } catch(e) {
+      print(e);
+    }
+  }
 
   Future<List<ListChatData>> fetchListChat(BuildContext context) async {
     try {
@@ -40,7 +52,7 @@ class ChatRepo {
       listChatData = _listChatData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
-      print(e?.response?.statusMessage);
+      print(e?.response?.data);
     } catch(e) {
       print(e);
     }

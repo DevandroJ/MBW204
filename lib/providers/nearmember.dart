@@ -22,16 +22,15 @@ class NearMemberProvider with ChangeNotifier {
     @required this.nearMemberRepo, 
   });
   
-
+  NearMemberStatus _nearMemberStatus = NearMemberStatus.loading;
+  NearMemberStatus get nearMemberStatus => _nearMemberStatus;
+  
   GoogleMapController googleMapController;
 
   List<Marker> markers = [];
 
   List<NearMemberData> _nearMemberData = [];
   List<NearMemberData> get nearMemberData => [..._nearMemberData];
-
-  NearMemberStatus _nearMemberStatus = NearMemberStatus.loading;
-  NearMemberStatus get nearMemberStatus => _nearMemberStatus;
 
   void setStateNearMemberStatus(NearMemberStatus nearMemberStatus) {
     _nearMemberStatus = nearMemberStatus;
@@ -40,16 +39,15 @@ class NearMemberProvider with ChangeNotifier {
   
   Future getNearMember(BuildContext context) async {
     try { 
-      List<NearMemberData> nearMemberData = await nearMemberRepo.getNearMember(context, Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong);
-      if(_nearMemberData.length != nearMemberData.length) {
+      List<NearMemberData> nd = await nearMemberRepo.getNearMember(context, Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong);
+      if(_nearMemberData.length != nd.length) {
         _nearMemberData.clear();
-        _nearMemberData.addAll(nearMemberData);
+        _nearMemberData.addAll(nd);
         setStateNearMemberStatus(NearMemberStatus.loaded);
         if(_nearMemberData.isEmpty) {
           setStateNearMemberStatus(NearMemberStatus.empty);
         }
       }
-      setStateNearMemberStatus(NearMemberStatus.loaded);
     } catch(e) {
       setStateNearMemberStatus(NearMemberStatus.error);
       print(e);

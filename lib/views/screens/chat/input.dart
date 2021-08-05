@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
 
@@ -122,7 +123,7 @@ class _ChatInputState extends State<ChatInput> {
                       },
                       controller: Provider.of<ChatProvider>(context, listen: false).inputMsgController,
                       decoration: InputDecoration(
-                        hintText: "Type Message",
+                        hintText: getTranslated("TYPE_MESSAGE", context),
                         border: InputBorder.none
                       ),
                     )

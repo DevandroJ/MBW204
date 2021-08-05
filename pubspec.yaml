@@ -75,6 +75,7 @@ dependencies:
 
   # I
   icon_shadow: ^1.0.1
+  ionicons: ^0.1.2
 
   # J
   jwt_decoder: ^2.0.1

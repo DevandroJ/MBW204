@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:ionicons/ionicons.dart';
 
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
 import 'package:mbw204_club_ina/views/screens/chat/input.dart';
@@ -170,8 +171,20 @@ class Message extends StatelessWidget {
             child: Icon(
               message.messageStatus == "UNDELIVERED"
               ? Icons.error 
-              : Icons.check,
-              color: message.messageStatus == "UNDELIVERED" ? ColorResources.ERROR : ColorResources.SUCCESS,
+              : message.messageStatus == "SENT" 
+              ? Ionicons.checkmark 
+              : message.messageStatus == "READ" 
+              ? Ionicons.checkmark_done
+              : message.messageStatus == "DELIVERED" 
+              ? Ionicons.hourglass_outline
+              : null, 
+              color: message.messageStatus == "UNDELIVERED" 
+              ? ColorResources.ERROR 
+              : message.messageStatus == "SENT" || message.messageStatus == "DELIVERED"
+              ? ColorResources.BLACK 
+              : message.messageStatus == "READ" 
+              ? ColorResources.SUCCESS 
+              : null,
               size: 25.0,
             ),
           ),

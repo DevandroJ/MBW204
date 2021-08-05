@@ -91,11 +91,14 @@ class _InboxScreenState extends State<InboxScreen> {
                       return Container(
                         margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
                         child: ListTile(
-                          onTap: () { 
+                          onTap: () async { 
                             Map<String, dynamic> basket = Provider.of(context, listen: false);
                             basket.addAll({
                               "listChatData": chatProvider.listChatData[i]
                             }); 
+                            Future.delayed(Duration.zero, () async {
+                              Provider.of<ChatProvider>(context, listen: false).ackRead(context, chatProvider.listChatData[i].id);
+                            });
                             Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
                           },
                           dense: true,

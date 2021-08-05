@@ -15,12 +15,15 @@ class NearMemberRepo {
     @required this.sharedPreferences
   });
 
+  List<NearMemberData> listNearMemberData = [];
+
   Future<List<NearMemberData>> getNearMember(BuildContext context, double lat, double long) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL}/data/nearme?lat=$lat&lng=$long");
       NearMemberModel nearMemberModel = NearMemberModel.fromJson(json.decode(res.data));
-      List<NearMemberData> listNearMemberData = nearMemberModel.body;
+      List<NearMemberData> nearMemberData = nearMemberModel.body;
+      listNearMemberData = nearMemberData;
       return listNearMemberData;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
@@ -28,6 +31,7 @@ class NearMemberRepo {
     } catch(e) {
       print(e);
     }
+    return listNearMemberData;
   }
 
 }

@@ -2,19 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mbw204_club_ina/maps/src/utils/uuid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soundpool/soundpool.dart';
 
+import 'package:mbw204_club_ina/maps/src/utils/uuid.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
 import 'package:mbw204_club_ina/data/repository/chat.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 
-enum ListChatStatus { idle, loading, loaded, refetch, error, isEmpty }
-enum ListConversationsStatus { idle, loading, loaded, error, isEmpty }
-enum SendMessageStatus { idle, loading, loaded, error, isEmpty }
-enum SendMessageStatusConfirm { idle, loading, loaded, error, isEmpty }
+enum ListChatStatus { idle, loading, loaded, refetch, error, empty }
+enum ListConversationsStatus { idle, loading, loaded, error, empty }
+enum SendMessageStatus { idle, loading, loaded, error, empty }
+enum SendMessageStatusConfirm { idle, loading, loaded, error, empty }
 
 class ChatProvider with ChangeNotifier {
   final ChatRepo chatRepo;
@@ -78,9 +78,9 @@ class ChatProvider with ChangeNotifier {
         _listChatData.clear();
         _listChatData.addAll(lcd);
         setStateListChatStatus(ListChatStatus.loaded);
-      }
-      if(_listChatData.isEmpty) {
-        setStateListChatStatus(ListChatStatus.isEmpty);
+        if(_listChatData.isEmpty) {
+          setStateListChatStatus(ListChatStatus.empty);
+        }
       }
     } catch(e) {
       setStateListChatStatus(ListChatStatus.error);
@@ -95,6 +95,9 @@ class ChatProvider with ChangeNotifier {
         _listConversationData.clear();
         _listConversationData.addAll(lcd);
         setStateListConversationsStatus(ListConversationsStatus.loaded);
+        if(_listConversationData.isEmpty) {
+          setStateListConversationsStatus(ListConversationsStatus.empty);
+        }
       }
     } catch(e) {
       setStateListConversationsStatus(ListConversationsStatus.error);
@@ -140,7 +143,7 @@ class ChatProvider with ChangeNotifier {
               kind: listChatData.profilePic.kind
             )
           ),
-          messageStatus: "SENT",
+          messageStatus: "DELIVERED",
           type: "TEXT",
           classId: "oconversation",
           content: Content(
@@ -154,7 +157,9 @@ class ChatProvider with ChangeNotifier {
       fetchListChat(context);
       setStateListChatStatus(ListChatStatus.refetch);
       inputMsgController.text = "";
+      int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
+      _listConversationData[index].messageStatus = "SENT";
       setStateSendMessage(SendMessageStatus.loaded);
     } on Error catch(_) {
       int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
@@ -227,6 +232,14 @@ class ChatProvider with ChangeNotifier {
   Future<int> loadSoundSent() async {
     var asset = await rootBundle.load("assets/sounds/sent.mp3");
     return await pool.play(await pool.load(asset));
+  }
+
+  Future ackRead(BuildContext context, String chatId) async {
+    try {
+      await chatRepo.ackRead(context, chatId);
+    } catch(e) {
+      print(e);
+    }
   }
 
 }
