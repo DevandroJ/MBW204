@@ -12,8 +12,30 @@ class FcmProvider with ChangeNotifier {
   InitializationSettings initializationSettings;
 
   Future initializing(BuildContext context) async {
-    androidInitializationSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-    iosInitializationSettings = IOSInitializationSettings();
+    androidInitializationSettings = AndroidInitializationSettings('@drawable/ic_notification');
+    iosInitializationSettings = IOSInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+      onDidReceiveLocalNotification: (int id, String title, String body, String payload) {
+        return showDialog(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title: Text(title),
+            content: Text(body),
+            actions: [
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                child: Text('Ok'),
+                onPressed: () async {
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
     initializationSettings = InitializationSettings(android: androidInitializationSettings, iOS: iosInitializationSettings);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }

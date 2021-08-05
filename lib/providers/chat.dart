@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mbw204_club_ina/maps/src/utils/uuid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soundpool/soundpool.dart';
 
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_conversation.dart';
-import 'package:mbw204_club_ina/data/models/chat/response_send_message.dart';
 import 'package:mbw204_club_ina/data/repository/chat.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 
-enum GetChatStatus { idle, loading, loaded, error, isEmpty }
-enum GetListConversations { idle, loading, loaded, error, isEmpty }
+enum ListChatStatus { idle, loading, loaded, refetch, error, isEmpty }
+enum ListConversationsStatus { idle, loading, loaded, error, isEmpty }
 enum SendMessageStatus { idle, loading, loaded, error, isEmpty }
 enum SendMessageStatusConfirm { idle, loading, loaded, error, isEmpty }
 
@@ -28,13 +28,16 @@ class ChatProvider with ChangeNotifier {
     streamType: StreamType.notification
   );
 
-  ScrollController scrollController = ScrollController(); 
+  String conversationIdGenerated = Uuid().generateV4();
 
-  GetListConversations _getListConversations = GetListConversations.loading;
-  GetListConversations get getListConversations =>  _getListConversations;
+  TextEditingController inputMsgController = TextEditingController();
+  ScrollController scrollController = ScrollController();   
 
-  GetChatStatus _getChatStatus = GetChatStatus.loading;
-  GetChatStatus get getChatStatus => _getChatStatus;
+  ListConversationsStatus _listConversationsStatus = ListConversationsStatus.loading;
+  ListConversationsStatus get listConversationsStatus =>  _listConversationsStatus;
+
+  ListChatStatus _listChatStatus = ListChatStatus.loading;
+  ListChatStatus get listChatStatus => _listChatStatus;
 
   SendMessageStatus _sendMessageStatus = SendMessageStatus.loading;
   SendMessageStatus get sendMessageStatus => _sendMessageStatus;
@@ -48,13 +51,13 @@ class ChatProvider with ChangeNotifier {
   List<ListChatData> _listChatData = [];
   List<ListChatData> get listChatData => [..._listChatData];
 
-  void setStateGetListConversations(GetListConversations getListConversations) {
-    _getListConversations = getListConversations;
+  void setStateListConversationsStatus(ListConversationsStatus listConversationsStatus) {
+    _listConversationsStatus = listConversationsStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
-  void setStateGetChatStatus(GetChatStatus getChatStatus) {
-    _getChatStatus = getChatStatus;
+  void setStateListChatStatus(ListChatStatus listChatStatus) {
+    _listChatStatus = listChatStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
@@ -71,18 +74,16 @@ class ChatProvider with ChangeNotifier {
   Future fetchListChat(BuildContext context) async {
     try {
       List<ListChatData> lcd = await chatRepo.fetchListChat(context);
-      _listChatData = lcd;
-      setStateGetChatStatus(GetChatStatus.loaded);
-      if(_listChatData.length != lcd.length) {
+      if(_listChatData.length != lcd.length || listChatStatus == ListChatStatus.refetch) {
         _listChatData.clear();
         _listChatData.addAll(lcd);
-        setStateGetChatStatus(GetChatStatus.loaded);
+        setStateListChatStatus(ListChatStatus.loaded);
       }
       if(_listChatData.isEmpty) {
-        setStateGetChatStatus(GetChatStatus.isEmpty);
+        setStateListChatStatus(ListChatStatus.isEmpty);
       }
     } catch(e) {
-      setStateGetChatStatus(GetChatStatus.error);
+      setStateListChatStatus(ListChatStatus.error);
       print(e);
     }
   }
@@ -90,26 +91,22 @@ class ChatProvider with ChangeNotifier {
   Future fetchListConversations(BuildContext context, String groupId) async {
     try {
       List<ListConversationData> lcd = await chatRepo.fetchListConversations(context, groupId);
-      _listConversationData = lcd;
-      setStateGetListConversations(GetListConversations.loaded);
       if(_listConversationData.length != lcd.length) {
         _listConversationData.clear();
         _listConversationData.addAll(lcd);
-        setStateGetListConversations(GetListConversations.loaded);
+        setStateListConversationsStatus(ListConversationsStatus.loaded);
       }
-      setStateGetListConversations(GetListConversations.loaded);
     } catch(e) {
-      setStateGetListConversations(GetListConversations.error);
+      setStateListConversationsStatus(ListConversationsStatus.error);
       print(e);
     }
   }
 
-  Future sendMessageToConversations(BuildContext context, String text, ListChatData listChatData, [dynamic data]) async {
+  Future sendMessageToConversations(BuildContext context, String text, ListChatData listChatData) async {
     try { 
-      ResponseSendMessageConversationModelData responseSendMessageConversationModelData = await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
       if(sharedPreferences.getString("userId") != listChatData.userId) {
         _listConversationData.insert(0, ListConversationData(
-          id: responseSendMessageConversationModelData.conversationId,
+          id: conversationIdGenerated,
           contextId: AppConstants.X_CONTEXT_ID,
           replyToConversationId: null,
           created: DateTime.now().toString(),
@@ -148,14 +145,23 @@ class ChatProvider with ChangeNotifier {
           classId: "oconversation",
           content: Content(
             charset: "UTF_8",
-            text: text
+            text: inputMsgController.text
           )
         ));
         Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
-        await loadSound();
-        fetchListChat(context);
+        await loadSoundSent();
       }
+      fetchListChat(context);
+      setStateListChatStatus(ListChatStatus.refetch);
+      inputMsgController.text = "";
+      await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
       setStateSendMessage(SendMessageStatus.loaded);
+    } on Error catch(_) {
+      int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
+      _listConversationData[index].messageStatus = "UNDELIVERED";
+      inputMsgController.text = _listConversationData[index].content.text;
+      text = _listConversationData[index].content.text;
+      setStateSendMessage(SendMessageStatus.error);
     } catch(e) {
       setStateSendMessage(SendMessageStatus.error);
       print(e);
@@ -208,8 +214,9 @@ class ChatProvider with ChangeNotifier {
         )
       ));
       Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
-      await loadSound();
+      await loadSoundSent();
       fetchListChat(context);
+      setStateListChatStatus(ListChatStatus.refetch);
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
     } catch(e) {
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.error);
@@ -217,7 +224,7 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  Future<int> loadSound() async {
+  Future<int> loadSoundSent() async {
     var asset = await rootBundle.load("assets/sounds/sent.mp3");
     return await pool.play(await pool.load(asset));
   }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -189,7 +190,8 @@ class _DetailInfoPageState extends State<DetailNewsScreen> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
-                    child: Text(removeAllHtmlTags(content))
+                    child: Html(
+                      data: content),
                   ),
                 ],
               ),

@@ -37,11 +37,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this);
-    Future.delayed(Duration.zero, () async {
-      await Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
-      await Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
-      await Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
-    });
   }
 
   Future<bool> willPopScope() {

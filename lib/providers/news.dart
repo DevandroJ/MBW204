@@ -7,7 +7,7 @@ import 'package:mbw204_club_ina/data/models/news.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 
-enum GetNewsStatus { loading, loaded, error, empty }
+enum GetNewsStatus { idle, loading, loaded, error, empty }
 
 class NewsProvider with ChangeNotifier {
 
@@ -23,7 +23,7 @@ class NewsProvider with ChangeNotifier {
   }
 
   Future getNews(BuildContext context, bool isEvent) async {
-    try {
+    try {      
       Dio dio = Dio();
       Response res = await dio.get("${AppConstants.BASE_URL}/content-service/article?eventNews=$isEvent",
         options: Options(
@@ -34,13 +34,11 @@ class NewsProvider with ChangeNotifier {
       );
       NewsModel newsModel = NewsModel.fromJson(json.decode(res.data));
       List<NewsBody> listNewsBody = newsModel.body;
-      _newsBody = listNewsBody;
-      setStateGetNewsStatus(GetNewsStatus.loaded);
-      if(listNewsBody.length != _newsBody.length) {
+      if(_newsBody.length != listNewsBody.length) {
         _newsBody.clear();
         _newsBody.addAll(listNewsBody);
-        setStateGetNewsStatus(GetNewsStatus.loaded);
       }
+      setStateGetNewsStatus(GetNewsStatus.loaded);
       if(_newsBody.isEmpty) {
         setStateGetNewsStatus(GetNewsStatus.empty);
       }
@@ -54,5 +52,14 @@ class NewsProvider with ChangeNotifier {
       print(e);
     }
   }
+
+  Future refresh(BuildContext context, bool isEvent) async {
+    setStateGetNewsStatus(GetNewsStatus.loading);
+    if(isEvent) {
+      await getNews(context, true);
+    } else {
+      await getNews(context, false);
+    }
+  } 
 
 }

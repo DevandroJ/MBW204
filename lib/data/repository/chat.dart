@@ -65,6 +65,7 @@ class ChatRepo {
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
+      throw Error();
     } catch(e) {
       print(e);
     }

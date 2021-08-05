@@ -31,10 +31,14 @@ class SocketHelper {
     socket.on("connect", (data) async {
       print('=== SOCKET CONNECT ===');
       socket.on("messages", (data) async {
+        print(data);
         final res = data as dynamic; 
         if(res is List) {
           if(res[0]["action"] == "CHAT_CONVERSATION") {
-            await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversationsSocket(context, res[0]);
+            print(res[0]);
+            Future.delayed(Duration.zero, () async {
+              await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversationsSocket(context, res[0]);
+            });
             final dataList = data as List;
             final ack = dataList.last as Function;
             String encode = json.encode({

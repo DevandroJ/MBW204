@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:provider/provider.dart';
 
+
+import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -15,8 +16,9 @@ class ChatInput extends StatefulWidget {
 }
 
 class _ChatInputState extends State<ChatInput> {
-  final TextEditingController inputMsgController = TextEditingController();
+  // final TextEditingController inputMsgController = TextEditingController();
   bool isSend = false;
+  String val;
   File _file;
 
   void pickImage() async {
@@ -59,8 +61,8 @@ class _ChatInputState extends State<ChatInput> {
   @override
   void initState() {
     super.initState();
-    inputMsgController.addListener(() {
-      if(inputMsgController.text.trim().length >= 1) {
+    Provider.of<ChatProvider>(context, listen: false).inputMsgController.addListener(() {
+      if( Provider.of<ChatProvider>(context, listen: false).inputMsgController.text.trim().length >= 1) {
         setState(() => isSend = true); 
       } else {
         setState(() => isSend = false); 
@@ -70,7 +72,7 @@ class _ChatInputState extends State<ChatInput> {
 
   @override 
   void dispose() {
-    inputMsgController.dispose();
+    Provider.of<ChatProvider>(context, listen: false).inputMsgController.dispose();
     super.dispose();
   }
 
@@ -115,7 +117,10 @@ class _ChatInputState extends State<ChatInput> {
                   SizedBox(width: 20.0),
                   Expanded(
                     child: TextField(
-                      controller: inputMsgController,
+                      onChanged: (_val) {
+                        setState(() => val = _val);
+                      },
+                      controller: Provider.of<ChatProvider>(context, listen: false).inputMsgController,
                       decoration: InputDecoration(
                         hintText: "Type Message",
                         border: InputBorder.none
@@ -129,15 +134,13 @@ class _ChatInputState extends State<ChatInput> {
               child: IconButton(
                 onPressed: isSend 
                 ? () async { 
-                    if(inputMsgController.text.trim() == "") {
+                    if( Provider.of<ChatProvider>(context, listen: false).inputMsgController.text.trim() == "") {
                       return;
                     }
                     try {
                       Map<String, dynamic> basket = Provider.of(context, listen: false);
                       ListChatData listChatData = basket["listChatData"];
-                      Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, inputMsgController.text, listChatData).then((val){
-                        inputMsgController.text = "";
-                      });
+                      await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, val, listChatData);
                     } catch(e) {
                       print(e);
                     }

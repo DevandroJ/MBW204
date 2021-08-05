@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/providers/inbox.dart';
+import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/utils/socket.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/views/screens/store/store_index.dart';
@@ -47,7 +48,7 @@ class _HomePageState extends State<HomePage> {
   ScrollController scrollController = ScrollController();    
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   TabController tabController;
-  bool isEvent;
+  bool isEvent = false;
   bool lastStatus = true;
 
   bool get isShrink {
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
       Provider.of<BannerProvider>(context, listen: false).getBanner(context);
       Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
       Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
-      Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);  
+      Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context); 
+      Provider.of<NewsProvider>(context, listen: false).getNews(context, false); 
       Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
     });
     // scrollController = ScrollController();
@@ -85,6 +87,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
+    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
+    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
 
     return WillPopScope(
       onWillPop: onWillPop,
@@ -108,9 +114,11 @@ class _HomePageState extends State<HomePage> {
                     Provider.of<BannerProvider>(context, listen: false).getBanner(context);
                     Provider.of<ProfileProvider>(context, listen: false).getUserProfile(context);
                     Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
-                    Provider.of<NewsProvider>(context, listen: false).getNews(context, true);
-                    Provider.of<NewsProvider>(context, listen: false).getNews(context, false);
+                    Provider.of<NewsProvider>(context, listen: false).refresh(context, isEvent);
                     Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);
+                    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
+                    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
+                    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
                   });               
                 },
                 child: CustomScrollView(
@@ -218,7 +226,29 @@ class _HomePageState extends State<HomePage> {
                                     margin: EdgeInsets.only(top: 120.0),
                                     child: Align(
                                       alignment: Alignment.center,
-                                      child: Text("No Banner Available"),
+                                      child: Text(getTranslated("NO_BANNER_AVAILABLE", context),
+                                        style: poppinsRegular,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ) 
+                            );
+
+                          if(bannerProvider.bannerStatus == BannerStatus.error)      
+                            return Container(
+                              width: double.infinity,
+                              height: 30.h,
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 120.0),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(getTranslated("THERE_WAS_PROBLEM", context),
+                                        style: poppinsRegular,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -1145,9 +1175,13 @@ class _HomePageState extends State<HomePage> {
                           onTap: (val) {
                             switch (val) {
                               case 0:
+                                Provider.of<NewsProvider>(context, listen: false).setStateGetNewsStatus(GetNewsStatus.loading);
+                                Provider.of<NewsProvider>(context, listen: false).getNews(context, false);
                                 setState(() => isEvent = false);
                               break;
                               case 1:
+                                Provider.of<NewsProvider>(context, listen: false).setStateGetNewsStatus(GetNewsStatus.loading);
+                                Provider.of<NewsProvider>(context, listen: false).getNews(context, true);
                                 setState(() => isEvent = true);
                               break;
                               default:
@@ -1173,8 +1207,8 @@ class _HomePageState extends State<HomePage> {
                       child: TabBarView(
                         children: [
 
-                          newsComponent(context, isEvent),
-                          newsComponent(context, isEvent)
+                          newsComponent(context),
+                          newsComponent(context)
 
                           // Container(
                           //   decoration: BoxDecoration(
@@ -1269,8 +1303,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget newsComponent(BuildContext context, bool isEvent) {
-  Provider.of<NewsProvider>(context, listen: false).getNews(context, isEvent);
+Widget newsComponent(BuildContext context) {
   return Consumer<NewsProvider>(
     builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
       
@@ -1291,7 +1324,7 @@ Widget newsComponent(BuildContext context, bool isEvent) {
       return Container(
         margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
         child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           itemCount: newsProvider.newsBody.length,
           itemBuilder: (BuildContext context, int i) {
             return Container(

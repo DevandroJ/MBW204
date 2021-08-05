@@ -3,7 +3,7 @@ description: Community App.
 
 publish_to: 'none'
 
-version: 1.0.0+14
+version: 1.0.0+15
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -121,6 +121,7 @@ dependencies:
 
   # U
   url_launcher: ^5.7.4
+  uuid: ^3.0.4
 
   # S
   shared_preferences: ^0.5.12
@@ -138,10 +139,11 @@ dependencies:
   # W
   webview_flutter: ^1.0.7
  
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  mobx_codegen:
 
 
 flutter_icons:

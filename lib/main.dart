@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override 
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
+    super.didChangeAppLifecycleState(state); 
     /* Lifecycle */
     // - Resumed (App in Foreground)
     // - Inactive (App Partially Visible - App not focused)
@@ -58,7 +60,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       print("==== RETURN BACK TO APP ====");
     }
     if(state == AppLifecycleState.paused) {
-      print("==== LEAVE APP ====");
+     
     }
   }
 

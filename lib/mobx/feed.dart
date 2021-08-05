@@ -318,7 +318,7 @@ abstract class FeedVM with Store {
     commentMostRecentStatus = CommentMostRecentStatus.loaded;
     if(c1.body.isNotEmpty) {
       c1List.clear();
-      c1List.addAll(ObservableList.of(c1.body));
+      c1List.addAll(ObservableList.of(c1.body).reversed.toList());
     } else {
       commentMostRecentStatus = CommentMostRecentStatus.empty;
     }

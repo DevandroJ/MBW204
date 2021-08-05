@@ -25,7 +25,6 @@ class InboxProvider with ChangeNotifier {
 
   Future getInboxes(BuildContext context, String type) async {
     try {
-      setStateInboxStatus(InboxStatus.loading);
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL}/data/inbox?type=$type");
       InboxModel inboxModel = InboxModel.fromJson(json.decode(res.data));
@@ -34,9 +33,9 @@ class InboxProvider with ChangeNotifier {
         _inboxes.addAll(inboxModel.body);
         setStateInboxStatus(InboxStatus.loaded);
       }
-      readCount = inboxModel.body.where((el) => el.read == false).length;
+      readCount = _inboxes.where((el) => el.read == false).length;
       setStateInboxStatus(InboxStatus.loaded);
-      if(_inboxes.length == 0) {
+      if(_inboxes.isEmpty) {
         setStateInboxStatus(InboxStatus.empty);
       }
     } on DioError catch(e) {

@@ -67,12 +67,12 @@ class _InboxScreenState extends State<InboxScreen> {
 
           Consumer<ChatProvider>(
             builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
-              if(chatProvider.getChatStatus == GetChatStatus.loading) {
+              if(chatProvider.listChatStatus == ListChatStatus.loading) {
                 return Loader(
                   color: ColorResources.BTN_PRIMARY_SECOND,
                 );
               } 
-              if(chatProvider.getChatStatus == GetChatStatus.error) {
+              if(chatProvider.listChatStatus == ListChatStatus.error) {
                 return Center(
                   child: Text(getTranslated("THERE_WAS_PROBLEM", context),
                     style: poppinsRegular,
@@ -81,61 +81,50 @@ class _InboxScreenState extends State<InboxScreen> {
               }
               return Container(
                 margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                child: ListView.builder(
-                  itemCount: chatProvider.listChatData.length,
-                  itemBuilder: (BuildContext context, int i) {
-                    return Container(
-                      margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
-                      child: ListTile(
-                        onTap: () { 
-                          Map<String, dynamic> basket = Provider.of(context, listen: false);
-                          basket.addAll({
-                            "listChatData": chatProvider.listChatData[i]
-                          }); 
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
-                        },
-                        dense: true,
-                        title: Text(chatProvider?.listChatData[i]?.displayName ?? "-",
-                          softWrap: true,
-                          style: poppinsRegular,
-                        ),
-                        trailing: chatProvider?.listChatData[i].group
-                        ? SizedBox() 
-                        : Text(DateFormat('dd MMM yyyy kk:mm').format(DateTime.parse(chatProvider.listChatData[i].updated)),
-                          softWrap: true,
-                          style: poppinsRegular.copyWith(
-                            fontSize: 11.0
+                child: RefreshIndicator(
+                  backgroundColor: ColorResources.BTN_PRIMARY,
+                  color: ColorResources.WHITE,
+                  onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListChat(context),
+                  child: ListView.builder(
+                    itemCount: chatProvider.listChatData.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Container(
+                        margin: EdgeInsets.only(top: i == 0 ? 0 : 15.0),
+                        child: ListTile(
+                          onTap: () { 
+                            Map<String, dynamic> basket = Provider.of(context, listen: false);
+                            basket.addAll({
+                              "listChatData": chatProvider.listChatData[i]
+                            }); 
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                          },
+                          dense: true,
+                          title: Text(chatProvider?.listChatData[i]?.displayName ?? "-",
+                            softWrap: true,
+                            style: poppinsRegular,
                           ),
-                        ),
-                        subtitle: Text(chatProvider?.listChatData[i]?.latestConversation?.content?.text ?? "-",
-                          softWrap: true,
-                          style: poppinsRegular.copyWith(
-                            fontSize: 13.0
+                          trailing: chatProvider?.listChatData[i].group
+                          ? SizedBox() 
+                          : Text(DateFormat('dd MMM yyyy kk:mm').format(DateTime.parse(chatProvider.listChatData[i].updated).add(Duration(hours: 7))),
+                            softWrap: true,
+                            style: poppinsRegular.copyWith(
+                              fontSize: 11.0
+                            ),
                           ),
-                        ),
-                        leading: Container(
-                          child: CachedNetworkImage(
-                            imageUrl: "${AppConstants.BASE_URL_IMG}${chatProvider?.listChatData[i]?.profilePic?.path}",
-                            imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
-                              backgroundImage: imageProvider,
-                              radius: 30.0,
+                          subtitle: Text(chatProvider?.listChatData[i]?.latestConversation?.content?.text ?? "",
+                            softWrap: true,
+                            style: poppinsRegular.copyWith(
+                              fontSize: 13.0
                             ),
-                            placeholder: (BuildContext context, String string) => Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorResources.BLACK,
-                                  width: 0.5
-                                ),
-                                borderRadius: BorderRadius.circular(50.0)
+                          ),
+                          leading: Container(
+                            child: CachedNetworkImage(
+                              imageUrl: "${AppConstants.BASE_URL_IMG}${chatProvider?.listChatData[i]?.profilePic?.path}",
+                              imageBuilder: (BuildContext context, ImageProvider imageProvider) => CircleAvatar(
+                                backgroundImage: imageProvider,
+                                radius: 30.0,
                               ),
-                              child: SvgPicture.asset('assets/images/svg/user.svg',
-                                width: 30.0,
-                                height: 30.0,
-                              ),
-                            ),
-                            errorWidget: (BuildContext context, String url, dynamic error) {
-                              return Container(
+                              placeholder: (BuildContext context, String string) => Container(
                                 padding: EdgeInsets.all(8.0),
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -148,14 +137,30 @@ class _InboxScreenState extends State<InboxScreen> {
                                   width: 30.0,
                                   height: 30.0,
                                 ),
-                              );
-                            },
-                            filterQuality: FilterQuality.medium,
+                              ),
+                              errorWidget: (BuildContext context, String url, dynamic error) {
+                                return Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: ColorResources.BLACK,
+                                      width: 0.5
+                                    ),
+                                    borderRadius: BorderRadius.circular(50.0)
+                                  ),
+                                  child: SvgPicture.asset('assets/images/svg/user.svg',
+                                    width: 30.0,
+                                    height: 30.0,
+                                  ),
+                                );
+                              },
+                              filterQuality: FilterQuality.medium,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  }, 
+                      );
+                    }, 
+                  ),
                 ),
               );
             },

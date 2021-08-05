@@ -23,6 +23,8 @@
       android:icon="@mipmap/launcher_icon"
       android:allowBackup="false"
       android:usesCleartextTraffic="true"
+      android:showWhenLocked="true"
+      android:turnScreenOn="true"
       android:requestLegacyExternalStorage="true">
 
         <!-- Flutter Downloader -->
