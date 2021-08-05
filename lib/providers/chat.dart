@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soundpool/soundpool.dart';
 
@@ -29,6 +31,8 @@ class ChatProvider with ChangeNotifier {
   );
 
   String conversationIdGenerated = Uuid().generateV4();
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   TextEditingController inputMsgController = TextEditingController();
   ScrollController scrollController = ScrollController();   
@@ -220,6 +224,7 @@ class ChatProvider with ChangeNotifier {
       ));
       Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
       await loadSoundSent();
+      notifyChat(context, data);
       fetchListChat(context);
       setStateListChatStatus(ListChatStatus.refetch);
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
@@ -239,6 +244,22 @@ class ChatProvider with ChangeNotifier {
       await chatRepo.ackRead(context, chatId);
     } catch(e) {
       print(e);
+    }
+  }
+
+  Future notifyChat(BuildContext context, [dynamic data]) async {
+    Map<String, dynamic> basket = Provider.of(context, listen: false);
+    if(basket["state"] == AppLifecycleState.paused){ 
+      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('BroadcastID', 'Broadcast', 'Broadcast',
+        priority: Priority.high,
+        importance: Importance.max,
+        enableLights: true,
+        playSound: true,
+        enableVibration: true,
+      );
+      IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+      NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
+      await flutterLocalNotificationsPlugin.show(0, data["payload"]["remote"]["displayName"], data["payload"]["content"]["text"], notificationDetails);
     }
   }
 

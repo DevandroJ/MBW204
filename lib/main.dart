@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sizer/sizer.dart';
@@ -51,17 +52,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override 
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state); 
+    Map<String, dynamic> basket = Provider.of(context, listen: false);
+    basket.addAll({
+      "state": state
+    });
     /* Lifecycle */
     // - Resumed (App in Foreground)
     // - Inactive (App Partially Visible - App not focused)
     // - Paused (App in Background)
     // - Detached (View Destroyed - App Closed)
-    if(state == AppLifecycleState.resumed) {
-      print("==== RETURN BACK TO APP ====");
-    }
-    if(state == AppLifecycleState.paused) {
-     
-    }
+    // if(state == AppLifecycleState.resumed) {
+    //   print("==== RETURN BACK TO APP ====");
+    // }
+    // if(state == AppLifecycleState.paused) {
+      Provider.of<ChatProvider>(context, listen: false).notifyChat(context);
+    // }
   }
 
   @override
