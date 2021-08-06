@@ -151,20 +151,23 @@ class _HomePageState extends State<HomePage> {
                                 color: ColorResources.GREY,
                                 borderRadius: BorderRadius.circular(20.0)
                               ),
-                              child: Badge(
-                                position: BadgePosition(
-                                  top: -9.0,
-                                  end: 14.0
-                                ),
-                                badgeContent: Text("2",
-                                  style: poppinsRegular.copyWith(color: Colors.white),
-                                ),
-                                child: Icon(
+                              child: 
+                              // Badge(
+                              //   position: BadgePosition(
+                              //     top: -9.0,
+                              //     end: 14.0
+                              //   ),
+                              //   badgeContent: Text("2",
+                              //     style: poppinsRegular.copyWith(color: Colors.white),
+                              //   ),
+                              //   child: 
+                                
+                                Icon(
                                   Icons.chat,
                                   color: ColorResources.BLACK,
                                   size: 18.0,
                                 ),
-                              ),
+                              // ),
                             ),
                           ),
                         ),

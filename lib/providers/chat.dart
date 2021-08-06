@@ -14,7 +14,7 @@ import 'package:mbw204_club_ina/data/repository/chat.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 
 enum ListChatStatus { idle, loading, loaded, refetch, error, empty }
-enum ListConversationsStatus { idle, loading, loaded, error, empty }
+enum ListConversationsStatus { idle, loading, refetch, loaded, error, empty }
 enum SendMessageStatus { idle, loading, loaded, error, empty }
 enum SendMessageStatusConfirm { idle, loading, loaded, error, empty }
 
@@ -95,7 +95,7 @@ class ChatProvider with ChangeNotifier {
   Future fetchListConversations(BuildContext context, String groupId) async {
     try {
       List<ListConversationData> lcd = await chatRepo.fetchListConversations(context, groupId);
-      if(_listConversationData.length != lcd.length) {
+      if(_listConversationData.length != lcd.length || listConversationsStatus == ListConversationsStatus.refetch) {
         _listConversationData.clear();
         _listConversationData.addAll(lcd);
         setStateListConversationsStatus(ListConversationsStatus.loaded);
@@ -147,7 +147,7 @@ class ChatProvider with ChangeNotifier {
               kind: listChatData.profilePic.kind
             )
           ),
-          messageStatus: "DELIVERED",
+          messageStatus: "SENT",
           type: "TEXT",
           classId: "oconversation",
           content: Content(
@@ -158,12 +158,12 @@ class ChatProvider with ChangeNotifier {
         Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
         await loadSoundSent();
       }
-      fetchListChat(context);
-      setStateListChatStatus(ListChatStatus.refetch);
       inputMsgController.text = "";
       int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
-      _listConversationData[index].messageStatus = "SENT";
+      _listConversationData[index].messageStatus = "DELIVERED";
+      fetchListChat(context);
+      setStateListChatStatus(ListChatStatus.refetch);
       setStateSendMessage(SendMessageStatus.loaded);
     } on Error catch(_) {
       int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
@@ -178,6 +178,7 @@ class ChatProvider with ChangeNotifier {
   }
 
   Future sendMessageToConversationsSocket(BuildContext context, dynamic data) async {
+    Map<String, dynamic> basket = Provider.of(context, listen: false);
     try { 
       _listConversationData.insert(0, ListConversationData(
         id: data["id"],
@@ -214,7 +215,7 @@ class ChatProvider with ChangeNotifier {
             kind: data["payload"]["remote"]["profilePic"]["kind"]
           )
         ),
-        messageStatus: "SENT",
+        messageStatus: "DELIVERED",
         type: data["payload"]["type"],
         classId: data["payload"]["classId"],
         content: Content(
@@ -224,10 +225,19 @@ class ChatProvider with ChangeNotifier {
       ));
       Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
       await loadSoundSent();
-      notifyChat(context, data);
+      if(basket["state"] == AppLifecycleState.paused){  
+        notifyChat(context, data);
+      }
       fetchListChat(context);
       setStateListChatStatus(ListChatStatus.refetch);
+      // fetchListConversations(context, data["payload"]["chatId"]);
+      // setStateListConversationsStatus(ListConversationsStatus.refetch);
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
+    } on Error catch(_) {
+      int index = _listConversationData.indexWhere((el) => el.id == data["id"]);
+      _listConversationData[index].messageStatus = "UNDELIVERED";
+      inputMsgController.text = _listConversationData[index].content.text;
+      setStateSendMessage(SendMessageStatus.error);
     } catch(e) {
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.error);
       print(e);
@@ -247,20 +257,17 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
-  Future notifyChat(BuildContext context, [dynamic data]) async {
-    Map<String, dynamic> basket = Provider.of(context, listen: false);
-    if(basket["state"] == AppLifecycleState.paused){ 
-      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('BroadcastID', 'Broadcast', 'Broadcast',
-        priority: Priority.high,
-        importance: Importance.max,
-        enableLights: true,
-        playSound: true,
-        enableVibration: true,
-      );
-      IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-      NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
-      await flutterLocalNotificationsPlugin.show(0, data["payload"]["remote"]["displayName"], data["payload"]["content"]["text"], notificationDetails);
-    }
+  Future notifyChat(BuildContext context, [dynamic data]) async { 
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('BroadcastID', 'Broadcast', 'Broadcast',
+      priority: Priority.high,
+      importance: Importance.max,
+      enableLights: true,
+      playSound: true,
+      enableVibration: true,
+    );
+    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(0, data["payload"]["remote"]["displayName"], data["payload"]["content"]["text"], notificationDetails);
   }
 
 }

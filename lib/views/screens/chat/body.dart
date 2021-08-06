@@ -48,8 +48,10 @@ class _ChatBodyState extends State<ChatBody> {
                 padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
                 child: Consumer<ChatProvider>(
                   builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
+                    Map<String, dynamic> basket = Provider.of(context, listen: false);
+                    ListChatData listChatData = basket["listChatData"];
                     return RefreshIndicator(
-                      onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, basket["conversationId"]),
+                      onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, listChatData.id),
                       backgroundColor: ColorResources.BTN_PRIMARY,
                       color: ColorResources.WHITE,
                       child: ListView.builder(
@@ -107,7 +109,7 @@ class Message extends StatelessWidget {
               color: ColorResources.GRAY_LIGHT_PRIMARY,
               borderRadius: BorderRadius.circular(20.0)
             ),
-            child: Text(message.content.text,
+            child: Text(message.content.text ?? "",
               style: poppinsRegular,
             ),
           ),
@@ -172,11 +174,11 @@ class Message extends StatelessWidget {
               message.messageStatus == "UNDELIVERED"
               ? Icons.error 
               : message.messageStatus == "SENT" 
-              ? Ionicons.checkmark 
+              ? Ionicons.hourglass_outline 
               : message.messageStatus == "READ" 
               ? Ionicons.checkmark_done
               : message.messageStatus == "DELIVERED" 
-              ? Ionicons.hourglass_outline
+              ? Ionicons.checkmark
               : null, 
               color: message.messageStatus == "UNDELIVERED" 
               ? ColorResources.ERROR 
@@ -185,7 +187,7 @@ class Message extends StatelessWidget {
               : message.messageStatus == "READ" 
               ? ColorResources.SUCCESS 
               : null,
-              size: 25.0,
+              size: 20.0,
             ),
           ),
         )
