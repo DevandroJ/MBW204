@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sizer/sizer.dart';
@@ -10,6 +8,7 @@ import 'localization/app_localization.dart';
 import 'container.dart' as core;
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/providers/localization.dart';
 import 'package:mbw204_club_ina/providers.dart';
@@ -35,7 +34,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   
   @override
   void initState() {

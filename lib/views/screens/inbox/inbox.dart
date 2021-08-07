@@ -79,13 +79,14 @@ class _InboxScreenState extends State<InboxScreen> {
                   )
                 );
               }
-              return Container(
-                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                child: RefreshIndicator(
-                  backgroundColor: ColorResources.BTN_PRIMARY,
-                  color: ColorResources.WHITE,
-                  onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListChat(context),
+              return RefreshIndicator(
+                backgroundColor: ColorResources.BTN_PRIMARY,
+                color: ColorResources.WHITE,
+                onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListChat(context),
+                child: Container(
+                  margin: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
                   child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: chatProvider.listChatData.length,
                     itemBuilder: (BuildContext context, int i) {
                       return Container(
@@ -101,6 +102,7 @@ class _InboxScreenState extends State<InboxScreen> {
                             });
                             Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
                           },
+                          contentPadding: EdgeInsets.zero,
                           dense: true,
                           title: Text(chatProvider?.listChatData[i]?.displayName ?? "-",
                             softWrap: true,
@@ -162,6 +164,7 @@ class _InboxScreenState extends State<InboxScreen> {
                           ),
                         ),
                       );
+                      
                     }, 
                   ),
                 ),

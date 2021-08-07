@@ -223,7 +223,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
             Tab(
               icon: Consumer<InboxProvider>(
                 builder: (BuildContext context, InboxProvider inboxProvider, Widget child) {
-                  return Badge(
+                  return inboxProvider.readCount != 0 ?  Badge(
                     badgeColor: ColorResources.BTN_PRIMARY_SECOND,
                     position: BadgePosition.topEnd(top: -4.0, end: 26.0),
                     animationDuration: Duration(milliseconds: 300),
@@ -245,6 +245,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
                         Icons.message,
                         size: 24.0,
                       ),
+                    ),
+                  ) : Container(
+                    width: 50.0,
+                    height: 60.0,
+                    child: Icon(
+                      Icons.message,
+                      size: 24.0,
                     ),
                   );
                 },

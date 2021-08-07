@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+  AppUpdateInfo updateInfo;
+
+  Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        updateInfo = info;
+      });
+    }).catchError((e) {
+      showSnack(e.toString());
+    });
+  }
+
+   void showSnack(String text) {
+    if (scaffoldKey.currentContext != null) {
+      ScaffoldMessenger.of(scaffoldKey.currentContext).showSnackBar(SnackBar(content: Text(text)));
+    }
+  }
 
   PackageInfo packageInfo;
 
@@ -71,6 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: Container(
       width:  MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -99,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
               margin: EdgeInsets.only(bottom: 115.0),
-              child: Text("Version ${packageInfo?.version}+${packageInfo?.buildNumber}",
+              child: Text("Version ${packageInfo == null ? '...' : packageInfo?.version}+${packageInfo?.buildNumber}",
                 style: TextStyle(
                   fontSize: 12.0,
                   fontWeight: FontWeight.normal,

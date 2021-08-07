@@ -31,18 +31,6 @@ class ChatRepo {
     return listConversationData;
   } 
 
-  Future ackRead(BuildContext context, String chatId) async {
-    try { 
-      Dio dio = await DioManager.shared.getClient(context);
-      await dio.put("${AppConstants.BASE_URL_CHAT}/ack/$chatId");
-    } on DioError catch(e) {
-      print(e?.response?.statusCode);
-      print(e?.response?.data);
-    } catch(e) {
-      print(e);
-    }
-  }
-
   Future<List<ListChatData>> fetchListChat(BuildContext context) async {
     try {
       Dio dio = await DioManager.shared.getClient(context);
@@ -78,6 +66,27 @@ class ChatRepo {
       print(e?.response?.statusCode);
       print(e?.response?.data);
       throw Error();
+    } catch(e) {
+      print(e);
+    }
+  }
+
+  Future ackRead(BuildContext context, String chatId) async {
+    try { 
+      Dio dio = await DioManager.shared.getClient(context);
+      await dio.put("${AppConstants.BASE_URL_CHAT}/ack/$chatId");
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+    } catch(e) {
+      print(e);
+    }
+  }
+
+  Future fetchUserPresence(BuildContext context, ) async {
+    try { 
+      Dio dio = await DioManager.shared.getClient(context);
+      await dio.get("${AppConstants.BASE_URL_CHAT}/presence");
     } catch(e) {
       print(e);
     }

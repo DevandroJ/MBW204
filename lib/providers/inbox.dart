@@ -31,7 +31,6 @@ class InboxProvider with ChangeNotifier {
       if(_inboxes.length != inboxModel.body.length) {
         _inboxes.clear();
         _inboxes.addAll(inboxModel.body);
-        setStateInboxStatus(InboxStatus.loaded);
       }
       readCount = _inboxes.where((el) => el.read == false).length;
       setStateInboxStatus(InboxStatus.loaded);

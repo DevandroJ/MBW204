@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as a;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soundpool/soundpool.dart';
@@ -32,7 +33,7 @@ class ChatProvider with ChangeNotifier {
 
   String conversationIdGenerated = Uuid().generateV4();
 
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  a.FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = a.FlutterLocalNotificationsPlugin();
 
   TextEditingController inputMsgController = TextEditingController();
   ScrollController scrollController = ScrollController();   
@@ -73,6 +74,14 @@ class ChatProvider with ChangeNotifier {
   void setStateSendMessageStatusConfirm(SendMessageStatusConfirm sendMessageStatusConfirm) {
     _sendMessageStatusConfirm = sendMessageStatusConfirm;
     Future.delayed(Duration.zero, () => notifyListeners());
+  }
+
+  Future fetchUserPresence(context) async {
+    try {
+      await chatRepo.fetchUserPresence(context);
+    } catch(e) {
+      print(e);
+    }
   }
   
   Future fetchListChat(BuildContext context) async {
@@ -155,12 +164,19 @@ class ChatProvider with ChangeNotifier {
             text: inputMsgController.text
           )
         ));
-        Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          Timer(Duration(milliseconds: 10),() => scrollController.animateTo(
+            scrollController.position.maxScrollExtent, 
+            duration: Duration(seconds: 1), 
+            curve: Curves.easeInOut
+          ));
+          // jumpTo(scrollController.position.maxScrollExtent));
+        });
         await loadSoundSent();
       }
       inputMsgController.text = "";
-      int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
+      int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       _listConversationData[index].messageStatus = "DELIVERED";
       fetchListChat(context);
       setStateListChatStatus(ListChatStatus.refetch);
@@ -215,7 +231,7 @@ class ChatProvider with ChangeNotifier {
             kind: data["payload"]["remote"]["profilePic"]["kind"]
           )
         ),
-        messageStatus: "DELIVERED",
+        messageStatus: "SENT",
         type: data["payload"]["type"],
         classId: data["payload"]["classId"],
         content: Content(
@@ -230,8 +246,6 @@ class ChatProvider with ChangeNotifier {
       }
       fetchListChat(context);
       setStateListChatStatus(ListChatStatus.refetch);
-      // fetchListConversations(context, data["payload"]["chatId"]);
-      // setStateListConversationsStatus(ListConversationsStatus.refetch);
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
     } on Error catch(_) {
       int index = _listConversationData.indexWhere((el) => el.id == data["id"]);
@@ -258,15 +272,15 @@ class ChatProvider with ChangeNotifier {
   }
 
   Future notifyChat(BuildContext context, [dynamic data]) async { 
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('BroadcastID', 'Broadcast', 'Broadcast',
-      priority: Priority.high,
-      importance: Importance.max,
+    a.AndroidNotificationDetails androidNotificationDetails = a.AndroidNotificationDetails('BroadcastID', 'Broadcast', 'Broadcast',
+      priority: a.Priority.high,
+      importance: a.Importance.max,
       enableLights: true,
       playSound: true,
       enableVibration: true,
     );
-    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
+    a.IOSNotificationDetails iosNotificationDetails = a.IOSNotificationDetails();
+    a.NotificationDetails notificationDetails = a.NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(0, data["payload"]["remote"]["displayName"], data["payload"]["content"]["text"], notificationDetails);
   }
 

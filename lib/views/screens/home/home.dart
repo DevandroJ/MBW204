@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:badges/badges.dart';
+// import 'package:badges/badges.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -116,9 +116,6 @@ class _HomePageState extends State<HomePage> {
                     Provider.of<PPOBProvider>(context, listen: false).getBalance(context);
                     Provider.of<NewsProvider>(context, listen: false).refresh(context, isEvent);
                     Provider.of<NearMemberProvider>(context, listen: false).getNearMember(context);
-                    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "payment");
-                    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "sos");
-                    Provider.of<InboxProvider>(context, listen: false).getInboxes(context, "other");
                   });               
                 },
                 child: CustomScrollView(
@@ -1151,10 +1148,13 @@ class _HomePageState extends State<HomePage> {
                                           child: Image.asset(Images.search_member)
                                         ),
                                         SizedBox(width: 10.0),
-                                        Text(getTranslated("SEARCH_MEMBER", context),
-                                          style: poppinsRegular.copyWith(
-                                            fontSize: 11.0
-                                          )
+                                        Container(
+                                          width: 80.0,
+                                          child: Text(getTranslated("SEARCH_MEMBER", context),
+                                            style: poppinsRegular.copyWith(
+                                              fontSize: 11.0
+                                            )
+                                          ),
                                         )
                                       ],
                                     ),

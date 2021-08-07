@@ -29,10 +29,15 @@ class _ChatBodyState extends State<ChatBody> {
     }); 
   }
 
+  @override 
+  void dispose() {
+    Provider.of(context, listen: false);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> basket = Provider.of(context, listen: false);
-    
+   
     return Consumer<ChatProvider>(
       builder: (BuildContext context, ChatProvider chatProvider, Widget child) {
         if(chatProvider.listConversationsStatus == ListConversationsStatus.loading) {
@@ -170,7 +175,9 @@ class Message extends StatelessWidget {
                 }
               );
             } : null,
-            child: Icon(
+            child: message.fromMe 
+            ? Container()
+            : Icon(
               message.messageStatus == "UNDELIVERED"
               ? Icons.error 
               : message.messageStatus == "SENT" 

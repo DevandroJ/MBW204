@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:provider/provider.dart';
 
-
+import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/data/models/chat/list_chat.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
@@ -118,9 +117,7 @@ class _ChatInputState extends State<ChatInput> {
                   SizedBox(width: 20.0),
                   Expanded(
                     child: TextField(
-                      onChanged: (_val) {
-                        setState(() => val = _val);
-                      },
+                      onChanged: (_val) => setState(() => val = _val),
                       controller: Provider.of<ChatProvider>(context, listen: false).inputMsgController,
                       decoration: InputDecoration(
                         hintText: getTranslated("TYPE_MESSAGE", context),
@@ -133,25 +130,25 @@ class _ChatInputState extends State<ChatInput> {
             ),
             Container(
               child: IconButton(
-                onPressed: isSend 
-                ? () async { 
-                    if( Provider.of<ChatProvider>(context, listen: false).inputMsgController.text.trim() == "") {
-                      return;
-                    }
-                    try {
-                      Map<String, dynamic> basket = Provider.of(context, listen: false);
-                      ListChatData listChatData = basket["listChatData"];
-                      await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, val, listChatData);
-                    } catch(e) {
-                      print(e);
-                    }
-                  } 
-                : null,
-                  icon: Icon(
-                    Icons.send,
-                    size: 20.0,
-                  ),
+              onPressed: isSend 
+              ? () async { 
+                  if( Provider.of<ChatProvider>(context, listen: false).inputMsgController.text.trim() == "") {
+                    return;
+                  }
+                  try {
+                    Map<String, dynamic> basket = Provider.of(context, listen: false);
+                    ListChatData listChatData = basket["listChatData"];
+                    await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversations(context, val, listChatData);
+                  } catch(e) {
+                    print(e);
+                  }
+                } 
+              : null,
+                icon: Icon(
+                  Icons.send,
+                  size: 20.0,
                 ),
+              ),
             )
           ],
         ),
