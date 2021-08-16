@@ -3,14 +3,16 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:filesize/filesize.dart';
+import 'package:sizer/sizer.dart';
 import 'package:crypto/crypto.dart';
-import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:path/path.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hex/hex.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/data/repository/feed.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/container.dart';
@@ -28,9 +30,10 @@ class CreatePostDocScreen extends StatefulWidget {
 }
 
 class _CreatePostDocScreenState extends State<CreatePostDocScreen> {
-  FeedState groupsState = getIt<FeedState>(); 
+  GlobalKey<ScaffoldMessengerState> globalKey = GlobalKey<ScaffoldMessengerState>();
+  FeedState feedState = getIt<FeedState>(); 
+  TextEditingController captionTextEditingController = TextEditingController();
   bool isLoading = false;
-  bool validateC = false;
   Color color;
 
   Widget displaySingleDoc() {
@@ -73,16 +76,16 @@ class _CreatePostDocScreenState extends State<CreatePostDocScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Filename : ${basename(file.path)}', 
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0
+            style: poppinsRegular.copyWith(
+              color: ColorResources.WHITE,
+              fontSize: 9.0.sp
             ) 
           ),
           SizedBox(height: 6.0),
           Text('Size : ${filesize(file.lengthSync())}', 
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0
+            style: poppinsRegular.copyWith(
+              color: ColorResources.WHITE,
+              fontSize: 9.0.sp
             ) 
           ),
         ],
@@ -93,14 +96,15 @@ class _CreatePostDocScreenState extends State<CreatePostDocScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalKey,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             brightness: Brightness.light,
             backgroundColor: Colors.white,
             title: Text('Create Post', 
-              style: TextStyle(
-                color: Colors.black 
+              style: poppinsRegular.copyWith(
+                color: ColorResources.BLACK 
               )
             ),
             leading: IconButton(
@@ -122,40 +126,45 @@ class _CreatePostDocScreenState extends State<CreatePostDocScreen> {
                       onTap: isLoading ? () {} : () async {
                         setState(() => isLoading = true);
                         try {
+                          String caption = captionTextEditingController.text;
+                          if(caption.trim().isNotEmpty) {
+                            if(caption.trim().length < 10) {
+                              ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: ColorResources.ERROR,
+                                  content: Text("Minimal Caption 10 Karakter",
+                                    style: poppinsRegular.copyWith(
+                                      fontSize: 9.0.sp
+                                    ),
+                                  )
+                                )
+                              );
+                              setState(() => isLoading = false);
+                              return;
+                            }
+                          } 
                           String body = await FeedService.shared.getMediaKey(); 
                           File files = File(widget.files.files[0].path);
                           Uint8List bytesFiles = files.readAsBytesSync();
                           String digestFile = sha256.convert(bytesFiles).toString();
                           String imageHash = base64Url.encode(HEX.decode(digestFile)); 
                           await FeedService.shared.uploadMedia(body, imageHash, files);
-                          await groupsState.sendPostDoc(widget.files, widget.groupId);
-                       
+                          await feedState.sendPostDoc(caption, widget.files, widget.groupId);
                           setState(() => isLoading = false);
-                            // var alert = await alertComponent(context, "New Post Created", "Success", "success");
-                            // alert.show();
-                            // Future.delayed(Duration(seconds: 1), () {
-                            //   alert.dismiss();
-                            //   Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) =>
-                            //       FeedIndex(),
-                            //     ),
-                            //   );     
-                            // });
-                         
-                            // var alert = await alertComponent(context, "There is something wrong", "Failed", "error");
-                            // alert.show();
-                            // Future.delayed(Duration(seconds: 1), () {
-                            //   alert.dismiss();
-                            //   Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) =>
-                            //       FeedIndex(),
-                            //     ),
-                            //   );     
-                            // });
-                          
-                        } catch(e) {
+                          ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                            SnackBar(
+                              backgroundColor: ColorResources.SUCCESS,
+                              content: Text("Postingan berhasil dibuat",
+                                style: poppinsRegular.copyWith(
+                                  color: ColorResources.WHITE,
+                                  fontSize: 9.0.sp
+                                ),
+                              )
+                            )
+                          );
+                          Navigator.of(context).pop();
+                        } catch(_) {
                           setState(() => isLoading = false);
-                          print(e);
                         }
                       },
                       child: Container(
@@ -165,12 +174,15 @@ class _CreatePostDocScreenState extends State<CreatePostDocScreen> {
                           color: ColorResources.PRIMARY,
                           borderRadius: BorderRadius.circular(20.0)
                         ),
-                        child: isLoading ? Loader(
-                          color: ColorResources.WHITE,
-                        ) : Text('Post',
+                        child: isLoading 
+                        ? Loader(
+                            color: ColorResources.WHITE,
+                          ) 
+                        : Text('Post',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white
+                          style: poppinsRegular.copyWith(
+                            color: ColorResources.WHITE,
+                            fontSize: 9.0.sp
                           ),
                         ),
                       ),
@@ -190,7 +202,21 @@ class _CreatePostDocScreenState extends State<CreatePostDocScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if(widget.files != null)
-                    displaySingleDoc()
+                    displaySingleDoc(),
+                  SizedBox(height: 10.0),
+                  TextField(
+                    maxLines: 4,
+                    controller: captionTextEditingController,
+                    decoration: InputDecoration(
+                      hintText: "Caption",
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )

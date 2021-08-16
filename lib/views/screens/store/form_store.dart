@@ -14,7 +14,6 @@ import 'package:mbw204_club_ina/data/repository/feed.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/data/models/warung/region_subdistrict_model.dart';
 import 'package:mbw204_club_ina/maps/google_maps_place_picker.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -244,138 +243,159 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
         centerTitle: true,
         elevation: 0,
         title: Text("Form Buka Toko",
-          style: poppinsRegular,
+          style: poppinsRegular.copyWith(
+            color: ColorResources.WHITE
+          ),
         ),
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () => pickImage(),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: _file == null 
-                    ? Container(
-                      color: ColorResources.GREY,
-                      child: Icon(
-                        Icons.store,
-                        size: 80.0,
-                        color: ColorResources.PRIMARY,
-                      ),
-                    )  
-                    : Container(
-                      color: ColorResources.GREY,
-                      child: Image.file(_file,
-                        width: 80.0,
-                        height: 80.0,
-                        fit: BoxFit.fitWidth
+          Consumer<WarungProvider>(
+            builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
+              return Container(
+                padding: EdgeInsets.all(16.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: pickImage,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: _file == null 
+                        ? Container(
+                          color: ColorResources.GREY,
+                          child: Icon(
+                            Icons.store,
+                            size: 80.0,
+                            color: ColorResources.PRIMARY,
+                          ),
+                        )  
+                        : Container(
+                          color: ColorResources.GREY,
+                          child: Image.file(_file,
+                            width: 80.0,
+                            height: 80.0,
+                            fit: BoxFit.fitWidth
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                  inputFieldStoreName(context, "Nama Toko", nameStoreController, "Nama Toko"),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  inputFieldProvince(context, "Provinsi", "Provinsi"),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      inputFieldCity(context, "Kota", "Kota"),    
-                      SizedBox(width: 15.0), 
-                      inputFieldPostCode(context, "Kode Pos", postCodeController, "Kode Pos"),
-                    ],
-                  ),
-                  SizedBox(height: 15.0),
-                  inputFieldSubDistrict(context),
-                  SizedBox(height: 15.0),
-                  inputFieldKelurahanDesa(context, "Kelurahan / Desa", villageController, "Kelurahan / Desa"),
-                  SizedBox(height: 15.0),
-                  inputFieldEmailAddress(context, "E-mail Address", emailController, "E-mail Address"),
-                  SizedBox(height: 15.0),
-                  inputFieldPhoneNumber(context, "Nomor HP", phoneController, "Nomor HP"),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Row(
-                    children: [
-                      Text("Pilih Jasa Pengiriman",
-                        style: poppinsRegular.copyWith(
-                          fontSize: 14.0, 
-                        )
+                      inputFieldStoreName(context, warungProvider, "Nama Toko", nameStoreController, "Nama Toko"),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      inputFieldProvince(context, warungProvider, "Provinsi", "Provinsi"),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          inputFieldCity(context, "Kota", "Kota"),    
+                          SizedBox(width: 15.0), 
+                          inputFieldPostCode(context, "Kode Pos", postCodeController, "Kode Pos"),
+                        ],
+                      ),
+                      SizedBox(height: 15.0),
+                      inputFieldSubDistrict(context, warungProvider),
+                      SizedBox(height: 15.0),
+                      inputFieldKelurahanDesa(context, warungProvider, "Kelurahan / Desa", villageController, "Kelurahan / Desa"),
+                      SizedBox(height: 15.0),
+                      inputFieldEmailAddress(context, "E-mail Address", emailController, "E-mail Address"),
+                      SizedBox(height: 15.0),
+                      inputFieldPhoneNumber(context, "Nomor HP", phoneController, "Nomor HP"),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Jasa Kurir", 
+                          style: poppinsRegular.copyWith(
+                            fontSize: 14.0,
+                          )
+                        ),
                       ),
                       SizedBox(
-                        width: 5.0,
+                        height: 10.0,
                       ),
-                      Expanded(
-                        child: Text("(Minimal 1 Jasa Pengiriman)",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 14.0, 
-                          )
+                      Row(
+                        children: [
+                          Text("Pilih Jasa Pengiriman",
+                            style: poppinsRegular.copyWith(
+                              fontSize: 14.0, 
+                            )
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Expanded(
+                            child: Text("(Minimal 1 Jasa Pengiriman)",
+                              style: poppinsRegular.copyWith(
+                                fontSize: 14.0, 
+                              )
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),          
+                      inputFieldCourier(context, warungProvider),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      inputFieldAddress(context, warungProvider),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      inputFieldDetailAddress(context, "Detail Alamat Toko", addressController, "Ex: Jl. Benda Raya"),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      inputFieldDescriptionStore(context, warungProvider, descStoreController),    
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                      SizedBox(
+                        height: 55.0,
+                        width: double.infinity,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: ColorResources.PRIMARY,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            )
+                          ),
+                          child: Center(
+                            child: warungProvider.createStoreStatus == CreateStoreStatus.loading 
+                            ? Loader(
+                              color: ColorResources.WHITE,
+                            ) 
+                            : Text("Submit",
+                              style: poppinsRegular.copyWith(
+                                fontSize: 14.0,
+                                color: Colors.white
+                              )
+                            ),
+                          ),
+                          onPressed: submit
                         ),
-                      ),
+                      )
                     ],
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),          
-                  inputFieldCourier(context),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  inputFieldAddress(context),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  inputFieldDetailAddress(context, "Detail Alamat Toko", addressController, "Ex: Jl. Benda Raya"),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  inputFieldDescriptionStore(context, descStoreController),    
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  SizedBox(
-                    height: 55.0,
-                    width: double.infinity,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: ColorResources.PRIMARY,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        )
-                      ),
-                      child: Center(
-                        child: Text("Submit",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 16.0, 
-                            color: Colors.white
-                          )
-                        ),
-                      ),
-                      onPressed: submit
-                    ),
                   )
-                ],
-              )
-            )
+                )
+              );
+            },
           )
         ],
       ),
     );
   }
 
-  Widget inputFieldProvince(BuildContext context, String title, String hintText) {
+  Widget inputFieldProvince(BuildContext context, WarungProvider warungProvider, String title, String hintText) {
     return Column(
       children: [
         Container(
@@ -404,7 +424,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
             ],
           ),
           child: TextFormField(
-            onTap: () {
+            onTap: warungProvider.createStoreStatus == CreateStoreStatus.loading ? null : () {
               showModalBottomSheet(
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
@@ -583,7 +603,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.red,
-                  textColor: Colors.white
+                  textColor: Colors.black
                 );
               } else {
                 showModalBottomSheet(
@@ -652,7 +672,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
                                       flex: 40,
                                       child: FutureBuilder<RegionModel>(
                                         future: Provider.of<RegionProvider>(context, listen: false).getCity(context, idProvince),
-                                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                        builder: (context, snapshot) {
                                           if (snapshot.hasData) {
                                             final RegionModel regionModel = snapshot.data;
                                             return ListView.separated(
@@ -730,7 +750,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
     ));
   }
 
-  Widget inputFieldSubDistrict(BuildContext context) {
+  Widget inputFieldSubDistrict(BuildContext context, WarungProvider warungProvider) {
     return Column(
       children: [
         Container(
@@ -759,7 +779,7 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
             ],
           ),
           child: TextFormField(
-            onTap: () {
+            onTap: warungProvider.createStoreStatus == CreateStoreStatus.loading ? null : () {
               if (idCity == null) {
                 Fluttertoast.showToast(
                   msg: "Pilih Kota Anda Terlebih Dahulu",
@@ -1156,7 +1176,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
   );
 }
 
-Widget inputFieldAddress(BuildContext context) {
+Widget inputFieldAddress(BuildContext context, WarungProvider warungProvider) {
   return Consumer<LocationProvider>(
     builder: (BuildContext context, LocationProvider locationProvider, Widget child) {
     return Container(
@@ -1188,14 +1208,15 @@ Widget inputFieldAddress(BuildContext context) {
                         ),
                         Text("(Berdasarkan pinpoint)",
                           style: poppinsRegular.copyWith(
-                            fontSize: 14.0,
+                            fontSize: 12.0,
                             color: Colors.grey[600]
                           )
                         ),
                       ],
                     ),
+                    SizedBox(width: 4.0),
                     GestureDetector(
-                      onTap: () =>
+                      onTap: warungProvider.createStoreStatus == CreateStoreStatus.loading ? null : () =>
                       Navigator.push(context,
                         MaterialPageRoute(builder: (context) => PlacePicker(
                           apiKey: AppConstants.API_KEY_GMAPS,
@@ -1210,7 +1231,7 @@ Widget inputFieldAddress(BuildContext context) {
                       )),
                       child: Text("Ubah Lokasi",
                         style: poppinsRegular.copyWith(
-                          fontSize: 14.0,
+                          fontSize: 12.0,
                           color: ColorResources.PRIMARY
                         )
                       ),
@@ -1224,7 +1245,7 @@ Widget inputFieldAddress(BuildContext context) {
               Container(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
                 child: Text( locationProvider.getCurrentNameAddress == "Location no Selected" 
-                  ? getTranslated("LOCATION_NO_SELECTED", context) 
+                  ? "Location no Selected"
                   : locationProvider.getCurrentNameAddress,
                   style: poppinsRegular.copyWith(
                     color: Colors.black,
@@ -1240,7 +1261,7 @@ Widget inputFieldAddress(BuildContext context) {
   );
 }
 
-Widget inputFieldStoreName(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldStoreName(BuildContext context, WarungProvider warungProvider,  String title, TextEditingController controller, String hintText) {
   return Column(
     children: [
       Container(
@@ -1269,6 +1290,7 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
+          readOnly: warungProvider.createStoreStatus == CreateStoreStatus.loading ? true : false,
           cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
@@ -1300,11 +1322,11 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
   );
 }
 
-Widget inputFieldCourier(BuildContext context) {
+Widget inputFieldCourier(BuildContext context, WarungProvider warungProvider) {
   return Consumer<WarungProvider>(
     builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
       return InkWell(
-        onTap: () {
+        onTap: warungProvider.createStoreStatus == CreateStoreStatus.loading ? null : () {
           showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
@@ -1486,7 +1508,7 @@ Widget inputFieldCourier(BuildContext context) {
   });
 }
 
-Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldKelurahanDesa(BuildContext context, WarungProvider warungProvider, String title, TextEditingController controller, String hintText) {
   return Column(
     children: [
       Container(
@@ -1515,6 +1537,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
+          readOnly: warungProvider.createStoreStatus == CreateStoreStatus.loading ? true : false,
           cursorColor: ColorResources.BLACK,
           controller: controller,
           style: poppinsRegular,
@@ -1575,11 +1598,11 @@ Widget inputFieldEmailAddress(BuildContext context, String title, TextEditingCon
           ],
         ),
         child: TextFormField(
+          readOnly: true , 
           cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
           style: poppinsRegular,
-          readOnly: true,
           inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
           decoration: InputDecoration(
             hintText: hintText,
@@ -1609,7 +1632,7 @@ Widget inputFieldEmailAddress(BuildContext context, String title, TextEditingCon
 
 
 
-Widget inputFieldDescriptionStore(BuildContext context, TextEditingController controller) {
+Widget inputFieldDescriptionStore(BuildContext context, WarungProvider warungProvider, TextEditingController controller) {
   return Column(
     children: [
       Container(
@@ -1624,7 +1647,7 @@ Widget inputFieldDescriptionStore(BuildContext context, TextEditingController co
         height: 10.0,
       ),
       InkWell(
-        onTap: () {
+        onTap: warungProvider.createStoreStatus == CreateStoreStatus.loading ? null : () {
           showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sizer/sizer.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/ppob.dart';
@@ -7,7 +8,6 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
 import 'package:mbw204_club_ina/views/basewidget/textfield/custom_textfield.dart';
-import 'package:provider/provider.dart';
 
 class CashoutSetAccountScreen extends StatelessWidget {
   final String title;
@@ -15,19 +15,26 @@ class CashoutSetAccountScreen extends StatelessWidget {
   CashoutSetAccountScreen({this.title});
 
   final TextEditingController paymentAccount = TextEditingController();
+  final GlobalKey<ScaffoldMessengerState> globalKey = GlobalKey<ScaffoldMessengerState>();
 
   Future saveAccountPayment(BuildContext context) async {
     try {
       if(paymentAccount.text.trim().isEmpty) {
-        Fluttertoast.showToast(
-          msg: getTranslated("PAYMENT_ACCOUNT_IS_REQUIRED", context),
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: ColorResources.ERROR
+        ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+          SnackBar(
+            backgroundColor: ColorResources.ERROR,
+            content: Text(getTranslated("PAYMENT_ACCOUNT_IS_REQUIRED", context),
+              style: poppinsRegular,
+            )
+          )
         );
         return;
       }
-      Navigator.of(context).pop();
       await Provider.of<PPOBProvider>(context, listen: false).setAccountPaymentMethod(paymentAccount.text);
+     int count = 0;
+      Navigator.popUntil(context, (route) {
+        return count++ == 2;
+      });
     } catch(e) {
       print(e);
     }
@@ -36,6 +43,7 @@ class CashoutSetAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalKey,
       body: Column(
         children: [
 
@@ -64,7 +72,8 @@ class CashoutSetAccountScreen extends StatelessWidget {
                     }, 
                     child: Text(getTranslated("SAVE_ACCOUNT", context),
                       style: poppinsRegular.copyWith(
-                        color: ColorResources.WHITE
+                        color: ColorResources.WHITE,
+                        fontSize: 9.0.sp
                       ),
                     )
                   ),

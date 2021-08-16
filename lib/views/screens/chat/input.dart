@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class ChatInput extends StatefulWidget {
 }
 
 class _ChatInputState extends State<ChatInput> {
-  // final TextEditingController inputMsgController = TextEditingController();
+  
   bool isSend = false;
   String val;
   File _file;
@@ -117,6 +118,7 @@ class _ChatInputState extends State<ChatInput> {
                   SizedBox(width: 20.0),
                   Expanded(
                     child: TextField(
+                      onTap: () => Timer(Duration(milliseconds: 300),() => Provider.of<ChatProvider>(context, listen: false).scrollController.jumpTo(Provider.of<ChatProvider>(context, listen: false).scrollController.position.maxScrollExtent)),
                       onChanged: (_val) => setState(() => val = _val),
                       controller: Provider.of<ChatProvider>(context, listen: false).inputMsgController,
                       decoration: InputDecoration(

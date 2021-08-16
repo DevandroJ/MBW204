@@ -2,13 +2,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/data/models/warung/shipping_couriers_model.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -79,7 +79,7 @@ class _PilihPengirimanPageState extends State<PilihPengirimanPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final ShippingCouriersModel shippingCM = snapshot.data;
-          if (shippingCM.body == null) {
+          if(shippingCM.body == null) {
             return emptyKurir();
           }
           return ListView.builder(
@@ -188,9 +188,7 @@ class _PilihPengirimanPageState extends State<PilihPengirimanPage> {
                                   ),
                                   shippingCM.body.categories.length == key + 1
                                   ? Container()
-                                  : Divider(
-                                    thickness: 1.0,
-                                  )
+                                  : Container()
                                 ],
                               )
                             

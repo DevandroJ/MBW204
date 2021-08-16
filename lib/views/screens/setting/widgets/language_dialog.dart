@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/localization.dart';
@@ -27,7 +28,12 @@ class LanguageDialog extends StatelessWidget {
 
         Padding(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-          child: Text(getTranslated('CHOOSE_LANGUAGE', context), style: poppinsRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+          child: Text(
+            getTranslated('CHOOSE_LANGUAGE', context),
+             style: poppinsRegular.copyWith(
+               fontSize: 10.0.sp
+              )
+            ),
         ),
 
         SizedBox(
@@ -47,12 +53,14 @@ class LanguageDialog extends StatelessWidget {
                   index = i;
                 },
                 children: valueList.map((value) {
-                  return Center(child: Text(value, 
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText1.color
+                  return Center(
+                    child: Text(value, 
+                      style: poppinsRegular.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1.color,
+                        fontSize: 9.0.sp
+                      )
                     )
-                  )
-                );
+                  );
                 }).toList(),
               );
             },
@@ -66,7 +74,8 @@ class LanguageDialog extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               child: Text(getTranslated('CANCEL', context), 
                 style: poppinsRegular.copyWith(
-                color: ColorResources.BLACK
+                  color: ColorResources.BLACK,
+                  fontSize: 9.0.sp
                 )
               ),
             )
@@ -90,7 +99,8 @@ class LanguageDialog extends StatelessWidget {
             },
             child: Text(getTranslated('OK', context), 
               style: poppinsRegular.copyWith(
-                color: ColorResources.BLACK
+                color: ColorResources.BLACK,
+                fontSize: 9.0.sp
               )
             ),
           )),

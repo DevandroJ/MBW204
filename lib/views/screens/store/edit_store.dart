@@ -17,7 +17,6 @@ import 'package:mbw204_club_ina/data/models/warung/region_subdistrict_model.dart
 import 'package:mbw204_club_ina/data/repository/feed.dart';
 import 'package:mbw204_club_ina/maps/google_maps_place_picker.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/warung/region_model.dart';
@@ -70,7 +69,6 @@ class EditTokoPage extends StatefulWidget {
 class _EditTokoPageState extends State<EditTokoPage> {
   File f1;
   TextEditingController nameStoreController = TextEditingController();
-  TextEditingController descStoreController = TextEditingController();
   TextEditingController provinceController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController postCodeController = TextEditingController();
@@ -101,7 +99,6 @@ class _EditTokoPageState extends State<EditTokoPage> {
     loading = true;
     Future.delayed(Duration.zero, () async {
       nameStoreController = TextEditingController(text: "...");
-      descStoreController = TextEditingController(text: "...");
       postCodeController = TextEditingController(text: "...");
       addressController = TextEditingController(text: "...");
       emailController = TextEditingController(text: "...");
@@ -114,7 +111,6 @@ class _EditTokoPageState extends State<EditTokoPage> {
       addressController = TextEditingController(text: sellerStoreModel.body.address);
       emailController = TextEditingController(text: sellerStoreModel.body.email);
       phoneController = TextEditingController(text: sellerStoreModel.body.phone);
-      descStoreController= TextEditingController(text: sellerStoreModel.body.description);
       statusToko = sellerStoreModel.body.open;
       province = sellerStoreModel.body.province;
       cityName = sellerStoreModel.body.city;
@@ -125,18 +121,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
         Provider.of<WarungProvider>(context, listen: false).isCheckedKurir.add(sellerStoreModel.body.supportedCouriers[i].id);
       }
     });
-    descStoreController.addListener(() {
-      setState(() {
-        
-      });
-    });
   }
-
-  // @override
-  // void dispose() {
-  //   descStoreController.dispose();
-  //   super.dispose();
-  // }
 
   void _pickImage() async {
     final imageSource = await showDialog<ImageSource>(
@@ -263,14 +248,6 @@ class _EditTokoPageState extends State<EditTokoPage> {
         );
         return;
       }
-      if(descStoreController.text.trim().isEmpty) {
-        Fluttertoast.showToast(
-          backgroundColor: ColorResources.ERROR,
-          msg: "Deskripsi toko tidak boleh kosong",
-          fontSize: 14.0
-        );
-        return;
-      }
       if(f1 != null) {
         String body = await FeedService.shared.getMediaKey();
         File file = File(f1.path);
@@ -352,18 +329,33 @@ class _EditTokoPageState extends State<EditTokoPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Stack(children: [
-                          Center(
-                            child: Container(
+                          
+                          f1 == null 
+                          ? Center(
+                              child: Container(
+                                width: 120.0,
+                                height: 120.0,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(120),
+                                  child: CachedNetworkImage(
+                                    imageUrl: "${AppConstants.BASE_URL_FEED_IMG}$path",
+                                    fit: BoxFit.cover,
+                                    placeholder: (BuildContext context, String url) => Loader(color: ColorResources.PRIMARY),
+                                    errorWidget: (BuildContext context, String url, dynamic error) => Image.asset("assets/images/default_image.png"),
+                                  )
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                )
+                              ),
+                            ) 
+                          : Center(
+                              child: Container(
                               width: 120.0,
                               height: 120.0,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(120),
-                                child: CachedNetworkImage(
-                                  imageUrl: "${AppConstants.BASE_URL_FEED_IMG}$path",
-                                  fit: BoxFit.cover,
-                                  placeholder: (BuildContext context, String url) => Loader(color: ColorResources.PRIMARY),
-                                  errorWidget: (BuildContext context, String url, dynamic error) => Image.asset("assets/images/default_image.png"),
-                                )
+                                child: Image.file(f1)
                               ),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
@@ -444,63 +436,70 @@ class _EditTokoPageState extends State<EditTokoPage> {
                           ],
                         ),
                         SizedBox(height: 15.0),
-                        inputFieldStoreName(context, "Nama Toko", nameStoreController, "Nama Toko"),
+                        inputFieldStoreName(context, warungProvider, "Nama Toko", nameStoreController, "Nama Toko"),
                         SizedBox(height: 15.0),
-                        inputFieldProvince(context, "Provinsi", "Provinsi"),
+                        inputFieldProvince(context, warungProvider, "Provinsi", "Provinsi"),
                         SizedBox(height: 15.0),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             inputFieldCity(context, "Kota", "Kota"),    
                             SizedBox(width: 15.0), 
-                            inputFieldPostCode(context, "Kode Pos", postCodeController, "Kode Pos"),
+                            inputFieldPostCode(context, warungProvider, "Kode Pos", postCodeController, "Kode Pos"),
                           ],
                         ),
                         SizedBox(height: 15.0),
                         inputFieldSubDistrict(context),
                         SizedBox(height: 15.0),
-                        inputFieldKelurahanDesa(context, "Kelurahan / Desa", villageController, "Kelurahan / Desa"),
+                        inputFieldKelurahanDesa(context, warungProvider, "Kelurahan / Desa", villageController, "Kelurahan / Desa"),
                         SizedBox(height: 15.0),
                         inputFieldEmailAddress(context, "E-mail Address", emailController, "E-mail Address"),
                         SizedBox(height: 15.0),
                         inputFieldPhoneNumber(context, "Nomor HP", phoneController, "Nomor HP"),
                         SizedBox(height: 15.0),
-                        inputFieldCourier(context),
-                        SizedBox(height: 15.0),
-                        inputFieldAddress(context),
-                        SizedBox(height: 15.0),
-                        inputFieldDetailAddress(context, "Detail Alamat Toko", addressController, "Ex: Jl. Benda Raya"),
-                        SizedBox(height: 15.0),
-                        inputFieldDescriptionStore(context),
-                        SizedBox(height: 25.0),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Jasa Kurir",
+                            style: poppinsRegular.copyWith(
+                              fontSize: 14.0,
+                            )
+                          ),
+                        ),   
                         SizedBox(
-                          height: 55.0,
-                          width: double.infinity,
-                          child: Consumer<LocationProvider>(
-                          builder: (BuildContext context, LocationProvider locationProvider, Widget child) {
-                          return TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor:  ColorResources.PRIMARY,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                          height: 10.0,
+                        ),
+                        inputFieldCourier(context, warungProvider),
+                        SizedBox(height: 15.0),
+                        inputFieldAddress(context, warungProvider),
+                        SizedBox(height: 15.0),
+                        inputFieldDetailAddress(context, warungProvider, "Detail Alamat Toko", addressController, "Ex: Jl. Benda Raya"),
+                        SizedBox(height: 15.0),
+                        inputFieldDescriptionStore(context, warungProvider),
+                        SizedBox(height: 25.0),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor:  ColorResources.PRIMARY,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Center(
-                              child: Text("Simpan",
-                                style: poppinsRegular.copyWith(
-                                  fontSize: 14.0,
-                                  color: Colors.white
-                                )
-                              ),
+                          ),
+                          child: Center(
+                            child: warungProvider.editStoreStatus == EditStoreStatus.loading 
+                            ? Loader(
+                              color: ColorResources.WHITE,
+                            ) 
+                            : Text("Simpan",
+                              style: poppinsRegular.copyWith(
+                                fontSize: 14.0,
+                                color: Colors.white
+                              )
                             ),
-                            onPressed: submit 
-                          );
-                        },
-                      )
+                          ),
+                          onPressed: submit 
+                        )
+                      ],
                     )
-                  ],
-                )
-              );
+                  );
                 },
               )
             )
@@ -511,7 +510,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
   }
 
 
-  Widget inputFieldProvince(BuildContext context, String title, String hintText) {
+  Widget inputFieldProvince(BuildContext context, WarungProvider warungProvider, String title, String hintText) {
     return Column(
       children: [
         Container(
@@ -540,7 +539,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
             ],
           ),
           child: TextFormField(
-            onTap: () {
+            onTap: warungProvider.editStoreStatus == EditStoreStatus.loading ? null : () {
               showModalBottomSheet(
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
@@ -1050,7 +1049,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
     );       
   }
 
-  Widget inputFieldDescriptionStore(BuildContext context) {
+  Widget inputFieldDescriptionStore(BuildContext context, WarungProvider warungProvider) {
     return Column(
       children: [
       Container(
@@ -1065,7 +1064,7 @@ class _EditTokoPageState extends State<EditTokoPage> {
         height: 10.0,
       ),
       InkWell(
-        onTap: () {
+        onTap: warungProvider.editStoreStatus == EditStoreStatus.loading ? null : () {
           showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
@@ -1324,11 +1323,11 @@ Widget inputFieldPhoneNumber(BuildContext context, String title, TextEditingCont
     );
   }
 
-Widget inputFieldCourier(BuildContext context) {
+Widget inputFieldCourier(BuildContext context, WarungProvider warungProvider) {
   return Consumer<WarungProvider>(
     builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
       return InkWell(
-        onTap: () {
+        onTap: warungProvider.editStoreStatus == EditStoreStatus.loading ? null : () {
           showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
@@ -1510,7 +1509,7 @@ Widget inputFieldCourier(BuildContext context) {
   });
 }
 
-Widget inputFieldKecamatan(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldKecamatan(BuildContext context, WarungProvider warungProvider, String title, TextEditingController controller, String hintText) {
   return Column(
     children: [            
       Container(
@@ -1539,6 +1538,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
+          readOnly: warungProvider.editStoreStatus == EditStoreStatus.loading ? true : false,
           cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
@@ -1571,7 +1571,7 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
   
 }
 
-Widget inputFieldStoreName(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldStoreName(BuildContext context, WarungProvider warungProvider, String title, TextEditingController controller, String hintText) {
   return Column(
     children: [
       Container(
@@ -1600,6 +1600,7 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
           ],
         ),
         child: TextFormField(
+          readOnly: warungProvider.editStoreStatus == EditStoreStatus.loading ? true : false,
           cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
@@ -1631,7 +1632,7 @@ Widget inputFieldStoreName(BuildContext context, String title, TextEditingContro
   );
 }
 
-Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldDetailAddress(BuildContext context, WarungProvider warungProvider, String title, TextEditingController controller, String hintText) {
   return Column(
     children: [
       Container(
@@ -1660,6 +1661,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
+          readOnly: warungProvider.editStoreStatus == EditStoreStatus.loading ? true : false,
           cursorColor: ColorResources.BLACK,
           controller: controller,
           keyboardType: TextInputType.text,
@@ -1691,7 +1693,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
   );
 }
 
-Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldKelurahanDesa(BuildContext context, WarungProvider warungProvider, String title, TextEditingController controller, String hintText) {
   return Column(
     children: [
       Container(
@@ -1720,6 +1722,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
           ],
         ),
         child: TextFormField(
+          readOnly: warungProvider.editStoreStatus == EditStoreStatus.loading ? true : false,
           cursorColor: ColorResources.BLACK,
           controller: controller,
           style: poppinsRegular,
@@ -1751,7 +1754,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
   );
 }
 
-Widget inputFieldAddress(BuildContext context) {
+Widget inputFieldAddress(BuildContext context, WarungProvider warungProvider) {
   return Consumer<LocationProvider>(
     builder: (BuildContext context, LocationProvider locationProvider, Widget child) {
     return Container(
@@ -1790,11 +1793,11 @@ Widget inputFieldAddress(BuildContext context) {
                       ],
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.push(context,
+                      onTap: warungProvider.editStoreStatus == EditStoreStatus.loading ? null : () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) => PlacePicker(
                           apiKey: AppConstants.API_KEY_GMAPS,
                           useCurrentLocation: true,
-                          onPlacePicked: (result) async {
+                          onPlacePicked: warungProvider.editStoreStatus == EditStoreStatus.loading ? null : (result) async {
                             await locationProvider.updateCurrentPosition(context, result); 
                             Navigator.of(context).pop();
                           },
@@ -1818,7 +1821,7 @@ Widget inputFieldAddress(BuildContext context) {
               Container(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
                 child: Text( locationProvider.getCurrentNameAddress == "Location no Selected" 
-                  ? getTranslated("LOCATION_NO_SELECTED", context) 
+                  ? "Location no Seleected" 
                   : locationProvider.getCurrentNameAddress,
                   style: poppinsRegular.copyWith(
                     color: Colors.black,
@@ -1835,7 +1838,7 @@ Widget inputFieldAddress(BuildContext context) {
 }
 
 
-Widget inputFieldPostCode(BuildContext context, String title, TextEditingController controller, String hintText) {
+Widget inputFieldPostCode(BuildContext context, WarungProvider warungProvider, String title, TextEditingController controller, String hintText) {
   return Container(
     width: 150.0,
     child: Column(
@@ -1865,6 +1868,7 @@ Widget inputFieldPostCode(BuildContext context, String title, TextEditingControl
             ],
           ),
           child: TextFormField(
+            readOnly: warungProvider.editStoreStatus == EditStoreStatus.loading ? true : false,
             style: poppinsRegular,
             cursorColor: ColorResources.BLACK,
             controller: controller,

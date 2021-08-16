@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hex/hex.dart';
+import 'package:chips_choice/chips_choice.dart';
 import 'package:crypto/crypto.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
@@ -45,7 +46,6 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
 
   String typeConditionName = "NEW";
   int typeCondition = 0;
-  String typeStuffName;
   String idCategoryparent;
   int typeStuff = 0;
   String descStuff;
@@ -55,6 +55,8 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
   List<Asset> images = [];
   List<File> files = [];
   List<File> before = [];
+  List<String> kindStuff = [];
+  List<int> kindStuffSelected = [];
   List<PictureProductWarung> pictures = [];
 
   bool loading = false;
@@ -62,7 +64,6 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
   @override
   void initState() {
     super.initState();
-    Map<String, dynamic> basket = Provider.of(context, listen: false);
     loading = true;
     Future.delayed(Duration.zero, () async {
       nameStuffController = TextEditingController(text: '...');
@@ -72,6 +73,18 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
       minOrderController = TextEditingController(text: '...');
       ProductSingleWarungModel productSingleWarungModel = await Provider.of<WarungProvider>(context, listen: false).getDataSingleProduct(context, widget.idProduct, widget.typeProduct, widget.path);
       loading = false;
+      kindStuff = [
+        "Berbahaya",
+        "Mudah Terbakar",
+        "Cair",
+        "Mudah Pecah"
+      ];
+      kindStuffSelected = [
+        productSingleWarungModel.body.harmful ? 0 : null,
+        productSingleWarungModel.body.flammable ? 1 : null,
+        productSingleWarungModel.body.liquid ? 2 : null,
+        productSingleWarungModel.body.fragile ? 3 : null
+      ];
       nameStuffController = TextEditingController(text: productSingleWarungModel.body.name);
       priceController = TextEditingController(text: (productSingleWarungModel.body.price - productSingleWarungModel.body.adminCharge).toStringAsFixed(0).trim());
       stockController = TextEditingController(text: productSingleWarungModel.body.stock.toString());       
@@ -80,24 +93,6 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
       typeConditionName = productSingleWarungModel.body.condition;
       pictures = productSingleWarungModel.body.pictures;
       typeCondition = typeConditionName == "NEW" ? 0 : 1;
-      typeStuffName = productSingleWarungModel.body.harmful == true 
-      ? "Berbahaya"
-      : productSingleWarungModel.body.liquid == true 
-      ? "Cair" 
-      : productSingleWarungModel.body.flammable == true 
-      ? "Mudah Terbakar"
-      : productSingleWarungModel.body.fragile == true 
-      ? "Mudah Pecah"
-      : typeStuffName;
-      typeStuff = productSingleWarungModel.body.harmful == true 
-      ? 0
-      : productSingleWarungModel.body.liquid == true 
-      ? 1 
-      : productSingleWarungModel.body.flammable == true 
-      ? 2
-      : productSingleWarungModel.body.fragile == true 
-      ? 0
-      : typeStuff;
     });
   }
 
@@ -220,22 +215,6 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
         );
         return;
       }
-      if(typeStuffName == "" || typeStuffName == null) {
-        Fluttertoast.showToast(
-          backgroundColor: ColorResources.ERROR,
-          fontSize: 14.0,
-          msg: "Jenis Barang belum diisi"
-        );
-        return;
-      }
-      if(Provider.of<WarungProvider>(context, listen: false).descEditSellerStore == null || Provider.of<WarungProvider>(context, listen: false).descEditSellerStore.isEmpty) {
-        Fluttertoast.showToast(
-          backgroundColor: ColorResources.ERROR,
-          fontSize: 14.0,
-          msg: "Deskripsi Barang belum diisi"
-        );
-        return;
-      }
       if(files != null || files.isNotEmpty) {
         for (int i = 0; i < files.length; i++) {
           String body = await Provider.of<WarungProvider>(context, listen: false).getMediaKeyMedia(context);
@@ -256,7 +235,7 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
         int.parse(stockController.text),
         typeConditionName,
         int.parse(minOrderController.text),
-        typeStuffName
+        kindStuffSelected
       );
     } catch(e) {
       print(e);
@@ -271,19 +250,8 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
   @override
   Widget build(BuildContext context) {
 
-    Map<String, dynamic> basket = Provider.of(context, listen: false);
-    // Provider.of<WarungProvider>(context, listen: false).getDataCategoryProduct(context, "commerce");
- 
     return WillPopScope(
-      onWillPop: () {
-        setState(() {
-          basket.addAll({
-            "idCategory": null,
-            "nameCategory": null,
-          });
-        });
-        return onWillPop();
-      },
+      onWillPop: onWillPop,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -300,6 +268,7 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
           elevation: 0.0,
           title: Text("Ubah Barang",
             style: poppinsRegular.copyWith(
+              color: ColorResources.WHITE,
               fontSize: 16.0
             ),
           ),
@@ -316,7 +285,7 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        inputFieldCategoryStuff(context, "Kategori Barang", "Kategori Barang"),
+                        inputFieldCategoryStuff(context, "Kategori Barang *", "Kategori Barang"),
                         SizedBox(height: 15.0),
                         inputFieldNameStuff(context, nameStuffController),
                         SizedBox(height: 15.0),
@@ -370,7 +339,7 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
                         SizedBox(
                           height: 15.0,
                         ),
-                        Text("Kondisi",
+                        Text("Kondisi *",
                           style: poppinsRegular.copyWith(
                             fontSize: 14.0,
                           )
@@ -390,6 +359,7 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
                                     margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0),
                                     child: ChoiceChip(
                                       label: Text(['Baru', 'Bekas'][i]),
+                                      selectedColor: ColorResources.PRIMARY,
                                       selected: typeCondition == i,
                                       onSelected: (bool selected) {
                                         setState(() {
@@ -404,40 +374,21 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
                             ),
                           ]
                         ),
-                        SizedBox(height: 15.0),
-                        Text("Jenis Barang",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 14.0,
-                          )
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Wrap(
-                          children: [ 
-                            Container(
-                              height: 30.0,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: ['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'].length,
-                                itemBuilder: (BuildContext context, int i) {
-                                  return Container(
-                                    margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0),
-                                    child: ChoiceChip(
-                                      label: Text(['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'][i]),
-                                      selected: typeStuff == i,
-                                      onSelected: (bool selected) {
-                                        setState(() {
-                                          typeStuff = selected ? i : null;
-                                          typeStuffName = selected ? ['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'][i] : null;
-                                        });
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ]
+                        SizedBox(height: 10.0),
+                        ChipsChoice.multiple(
+                          choiceActiveStyle: C2ChoiceStyle(
+                            color: ColorResources.BTN_PRIMARY
+                          ),
+                          wrapped: true,
+                          errorBuilder: (context) => Container(),
+                          placeholder: "",
+                          value: kindStuffSelected,
+                          onChanged: (val) => setState(() => kindStuffSelected = val),
+                          choiceItems: C2Choice.listFrom<int, String>(
+                            source: kindStuff,
+                            value: (i, v) => i,
+                            label: (i, v) => v,
+                          ),
                         ),
                         SizedBox(
                           height: 15.0,
@@ -446,7 +397,7 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
                         SizedBox(
                           height: 15.0,
                         ),
-                        Text("Gambar Barang",
+                        Text("Gambar Barang *",
                           style: poppinsRegular.copyWith(
                             fontSize: 14.0,
                           )
@@ -611,746 +562,6 @@ class _EditProductWarungPageState extends State<EditProductWarungPage> {
             )
           ],
         )
-          
-          // isLoading
-          //     ? Loader(
-          //       color: ColorResources.PRIMARY,
-          //     )
-          //     : ListView(
-          //         physics: BouncingScrollPhysics(),
-          //         children: [
-          //           Container(
-          //             padding: EdgeInsets.all(16),
-          //             child: Form(
-          //                 key: formKey,
-          //                 child: Column(
-          //                   crossAxisAlignment: CrossAxisAlignment.start,
-          //                   children: [
-          //                     Text("Kategori Barang",
-          //                       style: TextStyle(
-          //                         fontSize: 18.0,
-          //                       )
-          //                     ),
-          //                     SizedBox(
-          //                       height: 10.0,
-          //                     ),
-          //                     GestureDetector(
-          //                       onTap: () {
-          //                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //                           return PilihKategoriPage(
-          //                             idCategory: "",
-          //                             idProduct: product.body.id,
-          //                             typeProduct: "seller",
-          //                             path: widget.path);
-          //                            }
-          //                           )
-          //                         );
-          //                       },
-          //                       child: Container(
-          //                           height: 60,
-          //                           width: double.infinity,
-          //                           padding: EdgeInsets.all(10),
-          //                           decoration: BoxDecoration(
-          //                               borderRadius: BorderRadius.circular(10),
-          //                               border: Border.all(color: Colors.grey),
-          //                               color: Colors.grey[100]),
-          //                           child: Column(
-          //                             mainAxisAlignment:
-          //                                 MainAxisAlignment.center,
-          //                             crossAxisAlignment:
-          //                                 CrossAxisAlignment.start,
-          //                             children: [
-          //                               Text(
-          //                                   basket['nameCategory'] == null
-          //                                       ? product.body.category.name
-          //                                       : basket['nameCategory'],
-          //                                   style: TextStyle(
-          //                                       fontSize: 16.0,
-          //                                       color: Colors.grey[600])),
-          //                             ],
-          //                           )),
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15.0,
-          //                     ),
-          //                     Text("Nama Barang",
-          //                       style: TextStyle(
-          //                         fontSize: 18.0,
-          //                       )
-          //                     ),
-          //                     SizedBox(
-          //                       height: 10.0,
-          //                     ),
-          //                     Container(
-          //                       decoration: BoxDecoration(
-          //                         color: Colors.white,
-          //                         borderRadius: BorderRadius.circular(10.0)
-          //                       ),
-          //                       child: TextFormField(
-          //                         initialValue: product.body.name,
-          //                         decoration: InputDecoration(
-          //                           hintText: "Masukan Nama Barang",
-          //                           fillColor: Colors.white,
-          //                           border: OutlineInputBorder(
-          //                             borderRadius: BorderRadius.circular(10.0),
-          //                             borderSide: BorderSide(),
-          //                           ),
-          //                         ),
-          //                         validator: (val) {
-          //                           if (val.isEmpty) {
-          //                             return "Nama barang tidak boleh kosong";
-          //                           } else {
-          //                             return null;
-          //                           }
-          //                         },
-          //                         onSaved: (newValue) => _namaBarang = newValue,
-          //                         keyboardType: TextInputType.text,
-          //                         style: TextStyle(
-          //                           fontFamily: 'Proppins',
-          //                         ),
-          //                       ),
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15,
-          //                     ),
-          //                     Row(
-          //                       crossAxisAlignment: CrossAxisAlignment.center,
-          //                       children: [
-          //                         Expanded(
-          //                           child: Column(
-          //                             crossAxisAlignment:
-          //                                 CrossAxisAlignment.start,
-          //                             children: [
-          //                               Text("Harga",
-          //                                   style: TextStyle(
-          //                                     fontSize: 18.0,
-          //                                   )),
-          //                               SizedBox(
-          //                                 height: 10,
-          //                               ),
-          //                               Container(
-          //                                 decoration: BoxDecoration(
-          //                                   color: Colors.white,
-          //                                   borderRadius: BorderRadius.circular(10.0)
-          //                                 ),
-          //                                 child: TextFormField(
-          //                                   initialValue: (product.body.price - product.body.adminCharge).toString().replaceAll(RegExp(r"([.]*0)(?!.*\d)"), ""),
-          //                                   decoration: InputDecoration(
-          //                                     hintText: "0",
-          //                                     fillColor: Colors.white,
-          //                                     prefixIcon: Container(
-          //                                       width: 50,
-          //                                       child: Center(
-          //                                         child: Text(
-          //                                           "Rp",
-          //                                           textAlign: TextAlign.center,
-          //                                           style: TextStyle(
-          //                                               fontWeight:
-          //                                                   FontWeight.bold),
-          //                                         ),
-          //                                       ),
-          //                                     ),
-          //                                     border: OutlineInputBorder(
-          //                                       borderRadius: BorderRadius.circular(10.0),
-          //                                       borderSide: BorderSide(),
-          //                                     ),
-          //                                     //fillColor: Colors.green
-          //                                   ),
-          //                                   validator: (val) {
-          //                                     if (val.isEmpty) {
-          //                                       return "Harga tidak boleh kosong";
-          //                                     } else {
-          //                                       return null;
-          //                                     }
-          //                                   },
-          //                                   onSaved: (newValue) =>
-          //                                       _harga = newValue,
-          //                                   keyboardType: TextInputType.number,
-          //                                   inputFormatters: <
-          //                                       TextInputFormatter>[
-          //                                     FilteringTextInputFormatter
-          //                                         .digitsOnly
-          //                                   ],
-          //                                   style: TextStyle(
-          //                                     fontFamily: 'Proppins',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           ),
-          //                         ),
-          //                         SizedBox(
-          //                           width: 10,
-          //                         ),
-          //                         Container(
-          //                           width: 120,
-          //                           child: Column(
-          //                             crossAxisAlignment:
-          //                                 CrossAxisAlignment.start,
-          //                             children: [
-          //                               Text("Min Order",
-          //                                   style: TextStyle(
-          //                                     fontSize: 18.0,
-          //                                   )),
-          //                               SizedBox(
-          //                                 height: 10,
-          //                               ),
-          //                               Container(
-          //                                 decoration: BoxDecoration(
-          //                                     color: Colors.white,
-          //                                     borderRadius:
-          //                                         BorderRadius.circular(10.0)),
-          //                                 child: TextFormField(
-          //                                   initialValue: product.body.minOrder
-          //                                       .toString(),
-          //                                   decoration: InputDecoration(
-          //                                     hintText: "0",
-          //                                     fillColor: Colors.white,
-          //                                     border: OutlineInputBorder(
-          //                                       borderRadius: BorderRadius.circular(10.0),
-          //                                       borderSide: BorderSide(),
-          //                                     ),
-          //                                     //fillColor: Colors.green
-          //                                   ),
-          //                                   validator: (val) {
-          //                                     if (val.isEmpty) {
-          //                                       return "Min Order tidak boleh kosong";
-          //                                     } else {
-          //                                       return null;
-          //                                     }
-          //                                   },
-          //                                   onSaved: (newValue) =>
-          //                                       _minOrder = newValue,
-          //                                   keyboardType: TextInputType.number,
-          //                                   inputFormatters: <
-          //                                       TextInputFormatter>[
-          //                                     FilteringTextInputFormatter
-          //                                         .digitsOnly
-          //                                   ],
-          //                                   style: TextStyle(
-          //                                     fontFamily: 'Proppins',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           ),
-          //                         )
-          //                       ],
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15,
-          //                     ),
-          //                     Row(
-          //                       children: [
-          //                         Container(
-          //                           width: 120,
-          //                           child: Column(
-          //                             crossAxisAlignment:
-          //                                 CrossAxisAlignment.start,
-          //                             children: [
-          //                               Text("Stok",
-          //                                 style: TextStyle(
-          //                                   fontSize: 18.0,
-          //                                 )
-          //                               ),
-          //                               SizedBox(
-          //                                 height: 10.0,
-          //                               ),
-          //                               Container(
-          //                                 decoration: BoxDecoration(
-          //                                   color: Colors.white,
-          //                                   borderRadius: BorderRadius.circular(10.0)
-          //                                 ),
-          //                                 child: TextFormField(
-          //                                   initialValue: product.body.stock.toString(),
-          //                                   decoration: InputDecoration(
-          //                                     hintText: "0",
-          //                                     fillColor: Colors.white,
-          //                                     border: OutlineInputBorder(
-          //                                       borderRadius: BorderRadius.circular(10.0),
-          //                                       borderSide: BorderSide(),
-          //                                     ),
-          //                                     //fillColor: Colors.green
-          //                                   ),
-          //                                   validator: (val) {
-          //                                     if (val.isEmpty) {
-          //                                       return "Stok tidak boleh kosong";
-          //                                     } else {
-          //                                       return null;
-          //                                     }
-          //                                   },
-          //                                   onSaved: (newValue) =>
-          //                                       _stok = newValue,
-          //                                   keyboardType: TextInputType.number,
-          //                                   inputFormatters: <
-          //                                       TextInputFormatter>[
-          //                                     FilteringTextInputFormatter
-          //                                         .digitsOnly
-          //                                   ],
-          //                                   style: TextStyle(
-          //                                     fontFamily: 'Proppins',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           ),
-          //                         ),
-          //                         SizedBox(
-          //                           width: 10,
-          //                         ),
-          //                         Expanded(
-          //                           child: Column(
-          //                             crossAxisAlignment: CrossAxisAlignment.start,
-          //                             children: [
-          //                               Text("Berat",
-          //                                 style: TextStyle(
-          //                                   fontSize: 18.0,
-          //                                 )
-          //                               ),
-          //                               SizedBox(
-          //                                 height: 10.0,
-          //                               ),
-          //                               Container(
-          //                                 decoration: BoxDecoration(
-          //                                   color: Colors.white,
-          //                                   borderRadius: BorderRadius.circular(10.0)
-          //                                 ),
-          //                                 child: TextFormField(
-          //                                   initialValue: product.body.weight.toString(),
-          //                                   decoration: InputDecoration(
-          //                                     hintText: "0",
-          //                                     fillColor: Colors.white,
-          //                                     suffixIcon: Container(
-          //                                       width: 80.0,
-          //                                       child: Center(
-          //                                         child: Text("Gram",
-          //                                           textAlign: TextAlign.center,
-          //                                           style: TextStyle(
-          //                                             fontWeight: FontWeight.bold
-          //                                           ),
-          //                                         ),
-          //                                       ),
-          //                                     ),
-          //                                     border: OutlineInputBorder(
-          //                                       borderRadius: BorderRadius.circular(10.0),
-          //                                       borderSide: BorderSide(),
-          //                                     ),
-          //                                     //fillColor: Colors.green
-          //                                   ),
-          //                                   validator: (val) {
-          //                                     if (val.isEmpty) {
-          //                                       return "Berat tidak boleh kosong";
-          //                                     } else {
-          //                                       return null;
-          //                                     }
-          //                                   },
-          //                                   onSaved: (newValue) =>
-          //                                       _berat = newValue,
-          //                                   keyboardType: TextInputType.number,
-          //                                   inputFormatters: <
-          //                                       TextInputFormatter>[
-          //                                     FilteringTextInputFormatter
-          //                                         .digitsOnly
-          //                                   ],
-          //                                   style: TextStyle(
-          //                                     fontFamily: 'Proppins',
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           ),
-          //                         ),
-          //                       ],
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15,
-          //                     ),
-          //                     Text("Kondisi",
-          //                         style: TextStyle(
-          //                           fontSize: 18.0,
-          //                         )),
-          //                     SizedBox(
-          //                       height: 10,
-          //                     ),
-          //                     Row(
-          //                       children: <Widget>[
-          //                         Expanded(
-          //                           child: GestureDetector(
-          //                             onTap: () {
-          //                               setState(() {
-          //                                 _value = 0;
-          //                                 kondisi = "USED";
-          //                                 print(kondisi);
-          //                               });
-          //                             },
-          //                             child: Container(
-          //                               height: 55,
-          //                               width: double.infinity,
-          //                               padding: EdgeInsets.all(16),
-          //                               decoration: BoxDecoration(
-          //                                 borderRadius:
-          //                                     BorderRadius.circular(55),
-          //                                 border:
-          //                                     Border.all(color: Colors.grey),
-          //                                 color: _value == 0
-          //                                     ? ColorResources.PRIMARY
-          //                                     : Colors.transparent,
-          //                               ),
-          //                               child: Center(
-          //                                   child: Text("Bekas",
-          //                                       style: TextStyle(
-          //                                           fontSize: 16.0,
-          //                                           color: _value == 0
-          //                                               ? Colors.white
-          //                                               : Colors.black))),
-          //                             ),
-          //                           ),
-          //                         ),
-          //                         SizedBox(width: 10),
-          //                         Expanded(
-          //                           child: GestureDetector(
-          //                             onTap: () {
-          //                               setState(() {
-          //                                 _value = 1;
-          //                                 kondisi = "NEW";
-          //                                 print(kondisi);
-          //                               });
-          //                             },
-          //                             child: Container(
-          //                               height: 55,
-          //                               width: double.infinity,
-          //                               padding: EdgeInsets.all(16),
-          //                               decoration: BoxDecoration(
-          //                                 borderRadius:
-          //                                     BorderRadius.circular(55),
-          //                                 border:
-          //                                     Border.all(color: Colors.grey),
-          //                                 color: _value == 1
-          //                                     ? ColorResources.PRIMARY
-          //                                     : Colors.transparent,
-          //                               ),
-          //                               child: Center(
-          //                                   child: Text("Baru",
-          //                                       style: TextStyle(
-          //                                           fontSize: 16.0,
-          //                                           color: _value == 1
-          //                                               ? Colors.white
-          //                                               : Colors.black))),
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ],
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15,
-          //                     ),
-          //                     Text("Deskripsi",
-          //                         style: TextStyle(
-          //                           fontSize: 18.0,
-          //                         )),
-          //                     SizedBox(
-          //                       height: 10,
-          //                     ),
-          //                     Container(
-          //                       // color: Colors.white,
-          //                       decoration: BoxDecoration(
-          //                           color: Colors.white,
-          //                           borderRadius: BorderRadius.circular(10.0)),
-          //                       child: TextFormField(
-          //                         initialValue: product.body.description,
-          //                         maxLines: null,
-          //                         maxLength: null,
-          //                         decoration: InputDecoration(
-          //                           // labelText: "No Ponsel",
-          //                           hintText: "Masukan Deskripsi",
-          //                           fillColor: Colors.white,
-          //                           border: OutlineInputBorder(
-          //                             borderRadius: BorderRadius.circular(10.0),
-          //                             borderSide: BorderSide(),
-          //                           ),
-          //                           //fillColor: Colors.green
-          //                         ),
-          //                         validator: (val) {
-          //                           if (val.isEmpty) {
-          //                             return "Deskripsi tidak boleh kosong";
-          //                           } else {
-          //                             return null;
-          //                           }
-          //                         },
-          //                         onSaved: (newValue) => _deskripsi = newValue,
-          //                         keyboardType: TextInputType.text,
-          //                         style: TextStyle(
-          //                           fontFamily: 'Proppins',
-          //                         ),
-          //                       ),
-          //                     ),
-          //                     SizedBox(
-          //                       height: 15,
-          //                     ),
-          //                     Text("Gambar Barang",
-          //                         style: TextStyle(
-          //                           fontSize: 18.0,
-          //                         )),
-          //                     SizedBox(
-          //                       height: 10,
-          //                     ),
-          //                     Container(
-          //                       height: 100,
-          //                       width: double.infinity,
-          //                       padding: EdgeInsets.all(10),
-          //                       decoration: BoxDecoration(
-          //                           border: Border.all(color: Colors.grey[600]),
-          //                           borderRadius: BorderRadius.circular(10)),
-          //                       child: files == null || files.length == 0
-          //                           ? ListView.builder(
-          //                               shrinkWrap: true,
-          //                               scrollDirection: Axis.horizontal,
-          //                               itemCount:
-          //                                   product.body.pictures.length + 1,
-          //                               itemBuilder: (context, index) {
-          //                                 if (index <
-          //                                     product.body.pictures.length) {
-          //                                   return Container(
-          //                                     height: 80,
-          //                                     width: 80,
-          //                                     margin: EdgeInsets.only(right: 4),
-          //                                     decoration: BoxDecoration(
-          //                                         borderRadius:
-          //                                             BorderRadius.circular(10),
-          //                                         border: Border.all(
-          //                                             color: Colors.grey[400]),
-          //                                         color: Colors.grey[350]),
-          //                                     child: Center(
-          //                                       child: ClipRRect(
-          //                                         borderRadius:
-          //                                             BorderRadius.circular(10),
-          //                                         child: CachedNetworkImage(
-          //                                           imageUrl: AppConstants.BASE_URL_FEED_IMG +
-          //                                               product
-          //                                                   .body
-          //                                                   .pictures[index]
-          //                                                   .path,
-          //                                           width: double.infinity,
-          //                                           height: double.infinity,
-          //                                           fit: BoxFit.cover,
-          //                                           placeholder: (context, url) => Loader(
-          //                                             color: ColorResources.PRIMARY,
-          //                                           ),
-          //                                           errorWidget: (context, url, error) => Image.asset("assets/default_image.png"),
-          //                                         ),
-          //                                       ),
-          //                                     ),
-          //                                   );
-          //                                 } else {
-          //                                   return GestureDetector(
-          //                                     onTap: () {
-          //                                       uploadPic();
-          //                                     },
-          //                                     child: Container(
-          //                                       height: 80,
-          //                                       width: 80,
-          //                                       margin:
-          //                                           EdgeInsets.only(right: 4),
-          //                                       decoration: BoxDecoration(
-          //                                           borderRadius:
-          //                                               BorderRadius.circular(
-          //                                                   10),
-          //                                           border: Border.all(
-          //                                               color:
-          //                                                   Colors.grey[400]),
-          //                                           color: Colors.grey[350]),
-          //                                       child: Center(
-          //                                         child: Icon(
-          //                                           Icons.camera_alt,
-          //                                           color: Colors.grey[600],
-          //                                           size: 35,
-          //                                         ),
-          //                                       ),
-          //                                     ),
-          //                                   );
-          //                                 }
-          //                               },
-          //                             )
-          //                           : ListView.builder(
-          //                               scrollDirection: Axis.horizontal,
-          //                               itemCount: files.length + 1,
-          //                               itemBuilder: (context, index) {
-          //                                 if (index < files.length) {
-          //                                   return Container(
-          //                                     height: 80,
-          //                                     width: 80,
-          //                                     margin: EdgeInsets.only(right: 4),
-          //                                     decoration: BoxDecoration(
-          //                                         borderRadius:
-          //                                             BorderRadius.circular(10),
-          //                                         border: Border.all(
-          //                                             color: Colors.grey[400]),
-          //                                         color: Colors.grey[350]),
-          //                                     child: Center(
-          //                                       child: ClipRRect(
-          //                                         borderRadius:
-          //                                             BorderRadius.circular(10),
-          //                                         child: FadeInImage(
-          //                                             fit: BoxFit.cover,
-          //                                             height: double.infinity,
-          //                                             width: double.infinity,
-          //                                             image: FileImage(
-          //                                                 files[index]),
-          //                                             placeholder: AssetImage(
-          //                                                 "assets/default_profile.png")),
-          //                                       ),
-          //                                     ),
-          //                                   );
-          //                                 } else {
-          //                                   return GestureDetector(
-          //                                     onTap: () {
-          //                                       if (files.length < 5) {
-          //                                         uploadPic();
-          //                                       } else if (files.length >= 5) {
-          //                                         setState(() {
-          //                                           files.clear();
-          //                                           images.clear();
-          //                                         });
-          //                                       }
-          //                                     },
-          //                                     child: Container(
-          //                                       height: 80,
-          //                                       width: 80,
-          //                                       margin:
-          //                                           EdgeInsets.only(right: 4),
-          //                                       decoration: BoxDecoration(
-          //                                           borderRadius:
-          //                                               BorderRadius.circular(
-          //                                                   10),
-          //                                           border: Border.all(
-          //                                               color:
-          //                                                   Colors.grey[400]),
-          //                                           color: files.length < 5
-          //                                               ? Colors.grey[350]
-          //                                               : Colors.red),
-          //                                       child: Center(
-          //                                         child: Icon(
-          //                                           files.length < 5
-          //                                               ? Icons.camera_alt
-          //                                               : Icons.delete,
-          //                                           color: files.length < 5
-          //                                               ? Colors.grey[600]
-          //                                               : Colors.white,
-          //                                           size: 35,
-          //                                         ),
-          //                                       ),
-          //                                     ),
-          //                                   );
-          //                                 }
-          //                               },
-          //                             ),
-          //                     ),
-          //                     SizedBox(
-          //                       height: 25,
-          //                     ),
-          //                     SizedBox(
-          //                       height: 55,
-          //                       width: double.infinity,
-          //                       child: RaisedButton(
-          //                           color: ColorResources.PRIMARY,
-          //                           shape: RoundedRectangleBorder(
-          //                             borderRadius: BorderRadius.circular(10),
-          //                           ),
-          //                           child: Center(
-          //                             child: Text("Simpan",
-          //                                 style: TextStyle(
-          //                                     fontSize: 16,
-          //                                     color: Colors.white)),
-          //                           ),
-          //                           onPressed: () async {
-          //                             pr.show();
-          //                             final form = formKey.currentState;
-          //                             if (form.validate()) {
-          //                               form.save();
-
-          //                               if (files != null || files.length > 0) {
-          //                                 for (int i = 0;
-          //                                     i < files.length;
-          //                                     i++) {
-          //                                   String body = await warungVM
-          //                                       .getMediaKeyMedia(context);
-          //                                   File file = File(files[i].path);
-          //                                   Uint8List bytes =
-          //                                       files[i].readAsBytesSync();
-          //                                   String digestFile = sha256
-          //                                       .convert(bytes)
-          //                                       .toString();
-          //                                   String imageHash = base64Url
-          //                                       .encode(HEX.decode(digestFile));
-          //                                   warungVM
-          //                                       .uploadImageProduct(
-          //                                           context,
-          //                                           body,
-          //                                           imageHash,
-          //                                           product.body.store.id,
-          //                                           file)
-          //                                       .then((res) {
-          //                                     print(res);
-          //                                   });
-          //                                 }
-          //                               }
-
-          //                               await warungVM
-          //                                   .postEditDataProductWarung(
-          //                                       context,
-          //                                       widget.idProduct,
-          //                                       _namaBarang,
-          //                                       idCategory,
-          //                                       int.parse(_harga),
-          //                                       files,
-          //                                       int.parse(_berat),
-          //                                       _deskripsi,
-          //                                       int.parse(_stok),
-          //                                       kondisi,
-          //                                       int.parse(_minOrder),
-          //                                       product.body.store.id)
-          //                                   .then((value) {
-          //                                 if (value.code == 0) {
-          //                                   pr.hide();
-          //                                   Fluttertoast.showToast(
-          //                                       msg: "Ubah Produk Sukses",
-          //                                       toastLength: Toast.LENGTH_SHORT,
-          //                                       gravity: ToastGravity.BOTTOM,
-          //                                       timeInSecForIosWeb: 1,
-          //                                       backgroundColor:
-          //                                           ColorResources.PRIMARY,
-          //                                       textColor: Colors.white);
-          //                                   basket.addAll({
-          //                                     "idCategory": null,
-          //                                     "nameCategory": null,
-          //                                   });
-          //                                   Navigator.push(context,
-          //                                       MaterialPageRoute(
-          //                                           builder: (context) {
-          //                                     return BarangJualanPage(
-          //                                       idStore: product.body.store.id,
-          //                                     );
-          //                                   }));
-          //                                 } else {
-          //                                   pr.hide();
-          //                                   Fluttertoast.showToast(
-          //                                       msg:
-          //                                           "Terjadi Kesalahan, Periksa Kembali Data",
-          //                                       toastLength: Toast.LENGTH_SHORT,
-          //                                       gravity: ToastGravity.BOTTOM,
-          //                                       timeInSecForIosWeb: 1,
-          //                                       backgroundColor: Colors.red,
-          //                                       textColor: Colors.white);
-          //                                 }
-          //                               });
-          //                             }
-          //                           }),
-          //                     )
-          //                   ],
-          //                 )),
-          //           )
-          //         ],
-          //       )),
       )    
     );
   }
@@ -1442,34 +653,77 @@ Widget inputFieldCategoryStuff(BuildContext context, String title, String hintTe
                                     Divider(
                                       thickness: 3.0,
                                     ),
-                                    Expanded(
-                                      child: ListView.separated(
-                                        separatorBuilder: (BuildContext context, int i) => Divider(
-                                          color: ColorResources.DIM_GRAY,
-                                          thickness: 0.1,
-                                        ),
-                                        shrinkWrap: true,
-                                        physics: BouncingScrollPhysics(),
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: warungProvider.categoryProductList.length,
-                                        itemBuilder: (BuildContext context, int i) {
-                                          return ListTile(
-                                            title: Text(warungProvider.categoryProductList[i].name,
-                                              style: poppinsRegular,
-                                            ),
-                                            trailing: InkWell(
-                                              onTap: () {
-                                                warungProvider.changeCategoryEditProductTitle(warungProvider.categoryProductList[i].name,warungProvider.categoryProductList[i].id);
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text("Pilih",
-                                                style: poppinsRegular,
-                                              ),
-                                            )
-                                          );                                    
-                                        },
-                                      )  
-                                    )                                
+                                     Expanded(
+                                        child: ListView.separated(
+                                          separatorBuilder: (BuildContext context, int i) => Divider(
+                                            color: ColorResources.DIM_GRAY,
+                                            thickness: 0.1,
+                                          ),
+                                          shrinkWrap: true,
+                                          physics: BouncingScrollPhysics(),
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: warungProvider.categoryProductList.length,
+                                          itemBuilder: (BuildContext context, int i) {
+                                            return Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [ 
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 5.0, left: 16.0, right: 16.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(warungProvider.categoryProductList[i].name,
+                                                        style: poppinsRegular.copyWith(
+                                                          fontSize: 16.0,
+                                                          fontWeight: FontWeight.bold
+                                                        )
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          warungProvider.changeCategoryAddProductTitle(warungProvider.categoryProductList[i].name,warungProvider.categoryProductList[i].id);
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Text("Pilih",
+                                                          style: poppinsRegular,
+                                                        ),
+                                                      )                                              
+                                                    ],
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 5.0, left: 16.0, right: 16.0),
+                                                  child: ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: warungProvider.categoryProductList[i].childs.length,
+                                                    itemBuilder:(BuildContext context, int z) {
+                                                      return Container(
+                                                        margin: EdgeInsets.only(top: 8.0),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(warungProvider.categoryProductList[i].childs[z].name,
+                                                              style: poppinsRegular,
+                                                            ),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                warungProvider.changeCategoryAddProductTitle(warungProvider.categoryProductList[i].childs[z].name, warungProvider.categoryProductList[i].childs[z].id);
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              child: Text("Pilih",
+                                                                style: poppinsRegular,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ) 
+                                                      );
+                                                    },
+                                                  ),
+                                                )
+                                              ]
+                                            );                                                                      
+                                          },
+                                        )  
+                                      )    
                                   ],
                                 ),
                               ],
@@ -1523,7 +777,7 @@ Widget inputFieldNameStuff(BuildContext context, TextEditingController controlle
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Nama Barang",
+        child: Text("Nama Barang *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -1583,7 +837,7 @@ Widget inputFieldPriceStuff(BuildContext context, TextEditingController controll
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Harga",
+        child: Text("Harga *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -1653,7 +907,7 @@ Widget inputFieldMinOrder(BuildContext context, TextEditingController controller
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Min Order",
+        child: Text("Min Order *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -1712,7 +966,7 @@ Widget inputFieldStock(BuildContext context, TextEditingController controller) {
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Stok",
+        child: Text("Stok *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -1922,7 +1176,7 @@ Widget inputFieldWeight(BuildContext context, TextEditingController controller) 
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Berat",
+        child: Text("Berat *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )

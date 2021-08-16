@@ -6,9 +6,8 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/views/basewidget/error_component.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -134,16 +133,16 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
           LottieBuilder.asset(
             "assets/lottie/shopping.json",
-            height: 200,
-            width: 200,
+            height: 200.0,
+            width: 200.0,
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 20.0),
           Container(
             child: Text(
               "Wah, Keranjang belanjaanmu kosong",
@@ -168,10 +167,12 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
             SizedBox(
               height: 50.0,
               width: double.infinity,
-              child: RaisedButton(
-              color: ColorResources.PRIMARY,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+              child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: ColorResources.PRIMARY,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               child: Center(
                 child: Text("Mulai Belanja",
@@ -181,9 +182,8 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
                   )
                 ),
               ),
-              onPressed: () {
-                Navigator.pop(context, true);
-              }),
+              onPressed: () => Navigator.pop(context, true)
+              ),
             )
           ]
         )
@@ -260,10 +260,22 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
         }
         if(warungProvider.cartStatus == CartStatus.error) {
           return Center(
-            child: ErrorComponent(
-              width: 120.0,
-              height: 120.0,
-            )
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LottieBuilder.asset("assets/lottie/error.json",
+                    width: 120.0,
+                    height: 120.0,
+                  ),
+                  Text("Ups! Server lagi ada Masalah",
+                    style: poppinsRegular.copyWith(
+                      color: ColorResources.BLACK
+                    ),
+                  )
+                ],
+              )
+            ) 
           );
         }
         return Stack(
@@ -313,7 +325,7 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.0,
                       ),
                       ...warungProvider.cartStores[i].items.map((item) {
                         return Column(
@@ -348,9 +360,9 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(12.0),
                                               child: CachedNetworkImage(
-                                                imageUrl: item.product.pictures.length == 0 ? "" : AppConstants.BASE_URL_FEED_IMG + item.product.pictures.first.path,
+                                                imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${item.product.pictures.first.path}",
                                                 fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
+                                                placeholder: (BuildContext context, String url) =>
                                                 Center(
                                                   child: Shimmer.fromColors(
                                                   baseColor: Colors.grey[200],
@@ -361,34 +373,34 @@ class _CartProdukPageState extends State<CartProdukPage> with WidgetsBindingObse
                                                     height: double.infinity,
                                                   ),
                                                 )),
-                                                errorWidget: (context, url, error) => Center(child: Image.asset( "assets/default_image.png",fit: BoxFit.cover,
+                                                errorWidget: (BuildContext context, String url, dynamic error) => Center(child: Image.asset( "assets/default_image.png",fit: BoxFit.cover,
                                                 )),
                                               ),
                                             )),
                                           item.product.discount != null
-                                            ? Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Container(
-                                                  height: 20,
-                                                  width: 25,
-                                                  padding: EdgeInsets.all(5),
-                                                  decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.only(
-                                                    bottomRight: Radius.circular(12.0),
-                                                    topLeft: Radius.circular(12.0)
-                                                  ),
-                                                  color: Colors.red[900]),
-                                                  child: Center(
-                                                    child: Text(item.product.discount.discount.toString().replaceAll(RegExp(r"([.]*0)(?!.*\d)"), "") + "%",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 10,
-                                                      ),
+                                          ? Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Container(
+                                                height: 20.0,
+                                                width: 25.0,
+                                                padding: EdgeInsets.all(5.0),
+                                                decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomRight: Radius.circular(12.0),
+                                                  topLeft: Radius.circular(12.0)
+                                                ),
+                                                color: Colors.red[900]),
+                                                child: Center(
+                                                  child: Text(item.product.discount.discount.toString().replaceAll(RegExp(r"([.]*0)(?!.*\d)"), "") + "%",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 10.0,
                                                     ),
                                                   ),
                                                 ),
-                                              )
-                                            : Container()
+                                              ),
+                                            )
+                                          : Container()
                                         ],
                                       ),
                                     ),

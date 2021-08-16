@@ -1074,9 +1074,10 @@ mixin _$FeedState on FeedVM, Store {
   final _$sendPostDocAsyncAction = AsyncAction('FeedVM.sendPostDoc');
 
   @override
-  Future<dynamic> sendPostDoc(FilePickerResult files, [String groupId = ""]) {
+  Future<dynamic> sendPostDoc(String caption, FilePickerResult files,
+      [String groupId = ""]) {
     return _$sendPostDocAsyncAction
-        .run(() => super.sendPostDoc(files, groupId));
+        .run(() => super.sendPostDoc(caption, files, groupId));
   }
 
   final _$sendPostVideoAsyncAction = AsyncAction('FeedVM.sendPostVideo');

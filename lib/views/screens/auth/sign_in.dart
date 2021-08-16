@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/localization.dart';
@@ -22,6 +23,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  GlobalKey<ScaffoldMessengerState> globalKey = GlobalKey<ScaffoldMessengerState>();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -31,32 +33,32 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future login(BuildContext context) async {
     try {
-      if(phoneNumberController.text.trim().isEmpty) {
+      String phoneNumber = phoneNumberController.text;
+      String password = passwordController.text;
+      if(phoneNumber.trim().isEmpty) {
         ShowSnackbar.snackbar(context, "Phone Number / No Member is Required", "", ColorResources.ERROR); 
         return;
       } 
-      // if(phoneNumberController.text.trim().length < 10) {
-      //   ShowSnackbar.snackbar(context, "Phone number Must be 12 Character", "", ColorResources.ERROR);
-      //   return;
-      // }
-      if(passwordController.text.trim().isEmpty) {
+      if(password.trim().isEmpty) {
         ShowSnackbar.snackbar(context, "Password is Required", "", ColorResources.ERROR); 
         return;
       }
       userData.phoneNumber = phoneNumberController.text;
       userData.password = passwordController.text;
-      await Provider.of<AuthProvider>(context, listen: false).login(context, userData);
+      await Provider.of<AuthProvider>(context, listen: false).login(context, globalKey, userData);
     } on CustomException catch(e) {
       String error = e.toString();
       ShowSnackbar.snackbar(context, error, "", ColorResources.ERROR); 
-    } catch(e) {
-      print(e);
-    }
+    } on ConnectionTimeoutException catch(e) {
+      String error = e.toString();
+      ShowSnackbar.snackbar(context, getTranslated(error, context), "", ColorResources.ERROR); 
+    } catch(_) {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalKey,
       body: Consumer<AuthProvider>(
         builder: (BuildContext context, AuthProvider authProvider, Widget child) {
           return Stack(
@@ -105,7 +107,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                           ),
                                           SizedBox(width: 15.0),
                                           Text("${getTranslated("PHONE_NUMBER", context)} / ${getTranslated("NO_MEMBER", context)}", style: poppinsRegular.copyWith(
-                                            color: ColorResources.WHITE
+                                            color: ColorResources.WHITE,
+                                            fontSize: 9.0.sp
                                           ))
                                         ],
                                       ),
@@ -113,13 +116,15 @@ class _SignInScreenState extends State<SignInScreen> {
                                         child: TextField(
                                           controller: phoneNumberController,
                                           style: poppinsRegular.copyWith(
-                                            color: ColorResources.WHITE
+                                            color: ColorResources.WHITE,
+                                            fontSize: 9.0.sp
                                           ),
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
                                             hintText: "ex. 0896xxxxxxxx / W204xxxxxxx",
                                             hintStyle: poppinsRegular.copyWith(
-                                              color: ColorResources.GRAY_PRIMARY
+                                              color: ColorResources.GRAY_PRIMARY,
+                                              fontSize: 9.0.sp
                                             ),
                                             isDense: true,
                                             enabledBorder: UnderlineInputBorder(      
@@ -149,7 +154,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                           ),
                                           SizedBox(width: 15.0),
                                           Text(getTranslated("PASSWORD", context), style: poppinsRegular.copyWith(
-                                            color: ColorResources.WHITE
+                                            color: ColorResources.WHITE,
+                                            fontSize: 9.0.sp
                                           ))
                                         ],
                                       ),
@@ -159,7 +165,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                             controller: passwordController,
                                             obscureText: passwordObscure,
                                             style: poppinsRegular.copyWith(
-                                              color: ColorResources.WHITE
+                                              color: ColorResources.WHITE,
+                                              fontSize: 9.0.sp
                                             ),
                                             decoration: InputDecoration(
                                               hintText: getTranslated("ENTER_YOUR_PASSWORD", context),
@@ -174,7 +181,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                               ),
                                               contentPadding: EdgeInsets.only(top: 13),
                                               hintStyle: poppinsRegular.copyWith(
-                                                color: ColorResources.GRAY_PRIMARY
+                                                color: ColorResources.GRAY_PRIMARY,
+                                                fontSize: 9.0.sp
                                               ),
                                               isDense: true,
                                               enabledBorder: UnderlineInputBorder(      
@@ -212,7 +220,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     )
                                     : Text(getTranslated("SIGN_IN", context),
                                       style: poppinsRegular.copyWith(
-                                        color: ColorResources.BLACK
+                                        color: ColorResources.BLACK,
+                                        fontSize: 9.0.sp
                                       ),
                                     ),
                                   ),
@@ -233,7 +242,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                     ),
                                     child: Text(getTranslated("SIGN_AS_ANONYM", context),
                                       style: poppinsRegular.copyWith(
-                                        color: ColorResources.WHITE
+                                        color: ColorResources.WHITE,
+                                        fontSize: 9.0.sp
                                       ),
                                     ),
                                   ),
@@ -248,7 +258,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                       builder: (BuildContext context, LocalizationProvider localizationProvider, Widget child) {
                                         return Text("${getTranslated("CHOOSE_LANGUAGE", context)} - ${localizationProvider.locale}",
                                           style: poppinsRegular.copyWith(
-                                            color: ColorResources.WHITE
+                                            color: ColorResources.WHITE,
+                                            fontSize: 9.0.sp
                                           ), 
                                         );
                                       },
@@ -273,7 +284,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen())),
                                         child: Text(getTranslated("CREATE_ACCOUNT", context),
                                           style: poppinsRegular.copyWith(
-                                            color: ColorResources.YELLOW_PRIMARY
+                                            color: ColorResources.YELLOW_PRIMARY,
+                                            fontSize: 9.0.sp
                                           ),
                                         ),
                                       ),

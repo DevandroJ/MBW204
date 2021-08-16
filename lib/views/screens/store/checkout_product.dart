@@ -1,12 +1,12 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
+import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
+import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 
 class CheckoutProductScreen extends StatefulWidget {
@@ -63,8 +63,10 @@ class _CheckoutProductScreenState extends State<CheckoutProductScreen> with Sing
           automaticallyImplyLeading: false,
           centerTitle: true,
           elevation: 0,
-          title: Text( "Checkout Pembayaran",
-            style: poppinsRegular,
+          title: Text("Checkout Pembayaran",
+            style: poppinsRegular.copyWith(
+              color: ColorResources.WHITE
+            ),
           ),
         ),
         body: Stack(
@@ -204,7 +206,9 @@ class _CheckoutProductScreenState extends State<CheckoutProductScreen> with Sing
                       )
                     ),
                   ),
-                  onPressed: () =>  Navigator.pushNamed(context, "/")
+                  onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashBoardScreen()),
+                  )
                 ),
               )
             )

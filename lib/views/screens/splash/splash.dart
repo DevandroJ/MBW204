@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
@@ -120,7 +121,23 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
               margin: EdgeInsets.only(bottom: 115.0),
-              child: Text("Version ${packageInfo == null ? '...' : packageInfo?.version}+${packageInfo?.buildNumber}",
+              child: Text("Version ${packageInfo == null ? '...' : packageInfo?.version} + ${packageInfo == null ? '...' : packageInfo?.buildNumber}",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.normal,
+                  color: ColorResources.WHITE
+                ),
+              ) 
+            ),
+          ),
+
+          AppConstants.SWITCH_TO == "prod" 
+          ? Container() 
+          : Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 115.0),
+              child: Text("DEV",
                 style: TextStyle(
                   fontSize: 12.0,
                   fontWeight: FontWeight.normal,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -49,17 +50,23 @@ class CustomDropDownFormField extends FormField<dynamic> {
                       labelText: titleText,
                       labelStyle: poppinsRegular.copyWith(
                         color: titleColor,
-                        fontSize: 20.0
+                        fontSize: 12.0.sp
                       ),
                       filled: filled,
+                      hintStyle: poppinsRegular.copyWith(
+                        fontSize: 9.0.sp
+                      )
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<dynamic>(
                         hint: Text(hintText,
                           style: poppinsRegular.copyWith(
-                            color: Colors.grey.shade500,
-                            fontSize: 14.0
+                            color: Colors.grey,
+                            fontSize: 9.0.sp
                           ),
+                        ),
+                        style: poppinsRegular.copyWith(
+                          fontSize: 9.0.sp
                         ),
                         value: value == '' ? null : value,
                         onChanged: (dynamic newValue) {
@@ -73,7 +80,7 @@ class CustomDropDownFormField extends FormField<dynamic> {
                               overflow: TextOverflow.ellipsis,
                               style: poppinsRegular.copyWith(
                                 color: ColorResources.BTN_PRIMARY_SECOND,
-                                fontSize: 14.0
+                                fontSize: 9.0.sp
                               ),
                             ),
                           );
@@ -84,9 +91,10 @@ class CustomDropDownFormField extends FormField<dynamic> {
                   SizedBox(height: state.hasError ? 5.0 : 0.0),
                   Text(
                     state.hasError ? state.errorText : '',
-                    style: TextStyle(
-                        color: Colors.redAccent.shade700,
-                        fontSize: state.hasError ? 12.0 : 0.0),
+                    style: poppinsRegular.copyWith(
+                      color: Colors.redAccent.shade700,
+                      fontSize: state.hasError ? 12.0 : 0.0
+                    ),
                   ),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
 import 'package:mbw204_club_ina/utils/images.dart';
@@ -95,7 +96,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: Text("Selamat Datang", 
                                   style: poppinsRegular.copyWith(
-                                    fontSize: 30.0, 
+                                    fontSize: 14.sp, 
                                     color: ColorResources.BLACK
                                   ))
                                 ),
@@ -104,7 +105,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   margin: EdgeInsets.only(top: 10.0),
                                   child: Text("News & Event", 
                                     style: poppinsRegular.copyWith(
-                                      fontSize: 30.0, 
+                                      fontSize: 14.sp, 
                                       color: ColorResources.PRIMARY
                                     )
                                   ),
@@ -116,7 +117,7 @@ class OnBoardingScreen extends StatelessWidget {
                                     textAlign: TextAlign.center, 
                                     style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,
-                                      fontSize: 25.0
+                                      fontSize: 14.0.sp
                                     )
                                   ),
                                 ),
@@ -127,7 +128,7 @@ class OnBoardingScreen extends StatelessWidget {
                                     textAlign: TextAlign.center, 
                                     style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,
-                                      fontSize: 25.0
+                                      fontSize: 14.sp
                                     )
                                   ),
                                 ),
@@ -136,7 +137,7 @@ class OnBoardingScreen extends StatelessWidget {
                                 child: Text(onBoardingProvider.onBoardingList[i].title, 
                                   textAlign: TextAlign.center, 
                                   style: poppinsRegular.copyWith(
-                                    fontSize: 25.0
+                                    fontSize: 14.sp
                                   )
                                 ),
                               ),
@@ -146,7 +147,7 @@ class OnBoardingScreen extends StatelessWidget {
                                     textAlign: TextAlign.center, 
                                     style: poppinsRegular.copyWith(
                                       color: ColorResources.PRIMARY,
-                                      fontSize: 25.0
+                                      fontSize: 13.sp
                                     )
                                   ),
                                 ),
@@ -156,6 +157,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   textAlign: TextAlign.center, 
                                   style: poppinsRegular.copyWith(
                                     color: ColorResources.DIM_GRAY,
+                                    fontSize: 10.0.sp
                                   )
                                 )
                               ),
@@ -209,7 +211,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   : getTranslated('NEXT', context),
                                   style: poppinsRegular.copyWith(
                                     color: onBoardingProvider.selectedIndex == onBoardingProvider.onBoardingList.length - 1 ? ColorResources.YELLOW_PRIMARY : ColorResources.WHITE, 
-                                    fontSize: Dimensions.FONT_SIZE_LARGE
+                                    fontSize: 10.sp
                                   )
                                 ),
                               ),

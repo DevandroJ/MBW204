@@ -6,13 +6,13 @@ import 'package:lottie/lottie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
+import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:mbw204_club_ina/utils/images.dart';
+import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/views/screens/store/buyer_transaction_order.dart';
 import 'package:mbw204_club_ina/data/models/warung/product_warung_model.dart';
-import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/views/screens/store/detail_product.dart';
@@ -22,9 +22,7 @@ import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 import 'package:mbw204_club_ina/views/screens/store/cart_product.dart';
 import 'package:mbw204_club_ina/views/screens/store/product.dart';
-import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/views/basewidget/error_component.dart';
 
 class StoreScreen extends StatefulWidget {
   @override
@@ -96,33 +94,26 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                       SliverToBoxAdapter(
                         child: Stack(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5)),
-                              child: Image.asset(
-                                Images.toolbar_background, 
-                                fit: BoxFit.fill,
-                                height: 30 + MediaQuery.of(context).padding.top, 
-                                width: MediaQuery.of(context).size.width,
-                                color: Colors.black,
-                              ),
-                            ),
                             Container(
                               height: 55.0,
                               alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: ColorResources.PRIMARY
+                              ),
                               child: Row(
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(left: 15.0),
                                     child: CupertinoNavigationBarBackButton(
                                     onPressed: onWillPop,
-                                    color: ColorResources.BTN_PRIMARY_SECOND,
+                                    color: Colors.white,
                                   )),
                                   SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                                   Expanded(
                                     child: Text("W204 Mart",
                                       style: poppinsRegular.copyWith(
                                         fontSize: 20.0, 
-                                        color: ColorResources.PRIMARY
+                                        color: ColorResources.WHITE
                                       ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -144,14 +135,13 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                             horizontal: Dimensions.PADDING_SIZE_SMALL, 
                             vertical: isShrink ? 2.0 : 0.0 
                           ),
-                          color: ColorResources.BG_GREY,
+                          color: isShrink ? Colors.transparent : Colors.white,
                           alignment: Alignment.center,
                           child: Row(
                             children: [
                               Expanded(
                                 child: SearchWidget(
                                   hintText: "Cari Produk",
-                                  type: "commerce"
                                 )
                               ),
                               InkWell(
@@ -191,7 +181,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                       child: IconButton(
                                       icon: Icon(
                                         Icons.shopping_cart,
-                                        color: isShrink ? Colors.white : ColorResources.PRIMARY
+                                        color: ColorResources.PRIMARY
                                       ),
                                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CartProdukPage())),
                                     )
@@ -229,17 +219,29 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
           return SizedBox(
             height: MediaQuery.of(context).size.height / 2,
             child: Loader(
-              color: ColorResources.BTN_PRIMARY,
+              color: ColorResources.PRIMARY,
             ),
           );
         }
 
         if(warungProvider.categoryProductStatus == CategoryProductStatus.error) {
           return Center(
-            child: ErrorComponent(
-              width: 120.0,
-              height: 120.0,
-            )
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LottieBuilder.asset("assets/lottie/error.json",
+                    width: 120.0,
+                    height: 120.0,
+                  ),
+                  Text("Ups! Server lagi ada Masalah",
+                    style: poppinsRegular.copyWith(
+                      color: ColorResources.BLACK
+                    ),
+                  )
+                ],
+              )
+            ) 
           );
         }
       
@@ -273,6 +275,10 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int i) {
             List<ProductWarungList> categoryHasManyProduct = warungProvider.categoryHasManyProduct[i]["items"];
+            if(warungProvider.categoryHasManyProduct[i]["items"].length == 0) {
+              return Container();
+            }
+            
             return Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Column(
@@ -377,33 +383,44 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AspectRatio(
-                                      aspectRatio: 5 / 4.8,
+                                      aspectRatio: 5 / 5,
                                       child: Stack(
                                         children: [
-                                          Align(
-                                            alignment: Alignment.center,
-                                              child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(15.0),
-                                              child: CachedNetworkImage(
-                                                imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${categoryHasManyProduct[z].pictures.first.path}",
-                                                fit: BoxFit.cover,
-                                                placeholder: (BuildContext context, String url) => Center(
-                                                child: Shimmer.fromColors(
-                                                  baseColor: Colors.grey[300],
-                                                  highlightColor: Colors.grey[100],
-                                                  child: Container(
-                                                    color: Colors.white,
-                                                    width: double.infinity,
-                                                    height: double.infinity,
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10.0),
+                                              topRight: Radius.circular(10.0)
+                                            ),
+                                            child: CachedNetworkImage(
+                                              imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${categoryHasManyProduct[z].pictures.first.path}",
+                                              imageBuilder: (context, imageProvider) {
+                                                return Container(
+                                                  height: 100.0,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: imageProvider
+                                                    )
                                                   ),
-                                                )),
-                                                errorWidget: (BuildContext context, String url, dynamic error) => Center(
-                                                child: Image.asset("assets/images/default_image.png",
-                                                  fit: BoxFit.cover,
+                                                );
+                                              },
+                                              fit: BoxFit.cover,
+                                              placeholder: (BuildContext context, String url) => Center(
+                                              child: Shimmer.fromColors(
+                                                baseColor: Colors.grey[300],
+                                                highlightColor: Colors.grey[100],
+                                                child: Container(
+                                                  color: Colors.white,
                                                   width: double.infinity,
                                                   height: double.infinity,
-                                                )),
-                                              ),
+                                                ),
+                                              )),
+                                              errorWidget: (BuildContext context, String url, dynamic error) => Center(
+                                              child: Image.asset("assets/images/default_image.png",
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                              )),
                                             ),
                                           ),
                                           categoryHasManyProduct[z].discount != null

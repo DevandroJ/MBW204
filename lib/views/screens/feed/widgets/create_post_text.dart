@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 
 import 'package:mbw204_club_ina/container.dart';
 import 'package:mbw204_club_ina/mobx/feed.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 
@@ -20,17 +20,16 @@ class CreatePostText extends StatefulWidget {
 }
 
 class _CreatePostTextState extends State<CreatePostText> {
+  GlobalKey<ScaffoldMessengerState> globalKey= GlobalKey<ScaffoldMessengerState>();
   FeedState feedState = getIt<FeedState>(); 
   ScrollController  scrollController = ScrollController();
-  TextEditingController postTextEditingController = TextEditingController();
-  int current = 0;
-  bool validateN = false;
+  TextEditingController captionController = TextEditingController();
   bool isLoading = false;
-  var alert;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalKey,
       body: NestedScrollView(
         controller: scrollController,
         headerSliverBuilder: (BuildContext context, bool inner) {
@@ -39,7 +38,7 @@ class _CreatePostTextState extends State<CreatePostText> {
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text('Create Post', 
-                style: TextStyle(
+                style: poppinsRegular.copyWith(
                   color: Colors.black
                 )
               ),
@@ -48,9 +47,7 @@ class _CreatePostTextState extends State<CreatePostText> {
                   Icons.arrow_back,
                   color: Colors.black,
                 ),
-                onPressed: isLoading ? () {} : () {
-                  Navigator.of(context).pop();
-                },
+                onPressed: isLoading ? () {} : () => Navigator.of(context).pop(),
               ),
               actions: [
                 Container(
@@ -63,35 +60,56 @@ class _CreatePostTextState extends State<CreatePostText> {
                         onTap: isLoading ? () {} : () async {
                           setState(() => isLoading = true);
                           try {
-                            if(postTextEditingController.text.trim().isEmpty) {
-                              setState(() => validateN = true);
+                            String caption = captionController.text;
+                            if(caption.trim().isEmpty) {
+                              ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: ColorResources.ERROR,
+                                  content: Text("Caption wajib diisi",
+                                    style: poppinsRegular,
+                                  )
+                                )
+                              );
                               setState(() => isLoading = false);
-                              throw CustomException();
+                              return;
                             }
-                            await feedState.sendPostText(postTextEditingController.text, widget.groupId);                 
-                            setState(() => isLoading = false);
-                            showAnimatedDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (BuildContext context) {
-                                return Center(
-                                  child: Container(
-                                    color: ColorResources.WHITE,
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.check,
-                                      size: 18.0,
-                                      color: ColorResources.GREEN,
-                                    ),
-                                  ),
+                            if(caption.trim().isNotEmpty) {
+                              if(caption.trim().length < 10) {
+                                ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: ColorResources.ERROR,
+                                    content: Text("Minimal Caption 10 Karakter",
+                                      style: poppinsRegular,
+                                    )
+                                  )
                                 );
-                              },
-                              animationType: DialogTransitionType.scale,
-                              curve: Curves.fastOutSlowIn,
-                              duration: Duration(seconds: 1),
+                                setState(() => isLoading = false);
+                                return;
+                              }
+                            } 
+                            if(caption.trim().length > 1000) {
+                              ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: ColorResources.ERROR,
+                                  content: Text("Maksimal Caption 1000",
+                                    style: poppinsRegular,
+                                  )
+                                )
+                              );
+                              setState(() => isLoading = false);
+                              return;
+                            }
+                            await feedState.sendPostText(caption, widget.groupId);                 
+                            setState(() => isLoading = false);
+                            ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                              SnackBar(
+                                backgroundColor: ColorResources.SUCCESS,
+                                content: Text("Postingan berhasil dibuat",
+                                  style: poppinsRegular,
+                                )
+                              )
                             );
-                            Future.delayed(Duration(seconds: 1), () => Navigator.of(context, rootNavigator: true).pop());
-                            Future.delayed(Duration(seconds: 2), () => Navigator.of(context).pop());
+                            Navigator.of(context).pop();
                           } on CustomException catch(_) {
                             setState(() => isLoading = false);
                           } catch(e) {
@@ -106,11 +124,13 @@ class _CreatePostTextState extends State<CreatePostText> {
                             color: ColorResources.PRIMARY,
                             borderRadius: BorderRadius.circular(20.0)
                           ),
-                          child:isLoading ? Loader(
-                            color: ColorResources.WHITE,
-                          ) : Text('Post',
+                          child:isLoading 
+                          ? Loader(
+                              color: ColorResources.WHITE,
+                            ) 
+                          : Text('Post',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: poppinsRegular.copyWith(
                               color: Colors.white
                             ),
                           ),
@@ -132,9 +152,15 @@ class _CreatePostTextState extends State<CreatePostText> {
             children: [
               TextField(
                 maxLines: 4,
-                controller: postTextEditingController,
+                controller: captionController,
                 decoration: InputDecoration(
-                  errorText: validateN ? "Caption tidak boleh kosong" : null,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                  ),
+                  hintText: "Tulis post",
                 ),
               ),
             ],
@@ -144,4 +170,3 @@ class _CreatePostTextState extends State<CreatePostText> {
     );
   }
 }
-

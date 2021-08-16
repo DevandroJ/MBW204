@@ -19,6 +19,7 @@ class ChatRepo {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL_CHAT}/conversation/$groupId");
+      print("${AppConstants.BASE_URL_CHAT}/conversation/$groupId");
       ListConversationModel listConversationModel = ListConversationModel.fromJson(res.data);
       List<ListConversationData> _listConversationData = listConversationModel.data;
       listConversationData = _listConversationData;

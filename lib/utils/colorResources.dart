@@ -11,6 +11,7 @@ class ColorResources {
   static const Color PINK_PRIMARY = Color(0xFFf66a6a);
   static const Color BG_GREY = Color(0xffF5F5F5);
   static const Color DIM_GRAY = Color(0xff6D6D6D);
+  static const Color YELLOW_BOOTSTRAP = Color(0xffFFF3cd);
   static const Color GRAY_PRIMARY = Color(0xffCECECE);
   static const Color GRAY_DARK_PRIMARY = Color(0xFF707070);
   static const Color GRAY_LIGHT_PRIMARY = Color(0xFFebebeb);

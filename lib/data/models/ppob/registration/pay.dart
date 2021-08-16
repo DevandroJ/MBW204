@@ -38,7 +38,7 @@ class PayRegisterData {
 
   String purchaseStatus;
   String paymentStatus;
-  double productPrice;
+  var productPrice;
   String productId;
   String productCode;
   String accountNumber1;

@@ -16,5 +16,4 @@ class SplashRepo {
     List<String> languageList = ['English', 'Indonesia'];
     return languageList;
   }
-
 }

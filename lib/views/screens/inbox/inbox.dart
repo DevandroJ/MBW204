@@ -82,7 +82,12 @@ class _InboxScreenState extends State<InboxScreen> {
               return RefreshIndicator(
                 backgroundColor: ColorResources.BTN_PRIMARY,
                 color: ColorResources.WHITE,
-                onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListChat(context),
+                onRefresh: () { 
+                  return Future.delayed(Duration(seconds: 1), () {
+                    Provider.of<ChatProvider>(context, listen: false).setStateListChatStatus(ListChatStatus.refetch);
+                    Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
+                  });
+                },
                 child: Container(
                   margin: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
                   child: ListView.builder(
@@ -95,7 +100,7 @@ class _InboxScreenState extends State<InboxScreen> {
                           onTap: () async { 
                             Map<String, dynamic> basket = Provider.of(context, listen: false);
                             basket.addAll({
-                              "listChatData": chatProvider.listChatData[i]
+                              "listChatData": chatProvider.listChatData[i],
                             }); 
                             Future.delayed(Duration.zero, () async {
                               Provider.of<ChatProvider>(context, listen: false).ackRead(context, chatProvider.listChatData[i].id);

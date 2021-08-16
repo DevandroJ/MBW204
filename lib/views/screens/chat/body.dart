@@ -31,7 +31,7 @@ class _ChatBodyState extends State<ChatBody> {
 
   @override 
   void dispose() {
-    Provider.of(context, listen: false);
+    Provider.of<ChatProvider>(context, listen: false).scrollController.dispose();
     super.dispose();
   }
 
@@ -56,18 +56,30 @@ class _ChatBodyState extends State<ChatBody> {
                     Map<String, dynamic> basket = Provider.of(context, listen: false);
                     ListChatData listChatData = basket["listChatData"];
                     return RefreshIndicator(
-                      onRefresh: () => Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, listChatData.id),
+                      onRefresh: () { 
+                        return Future.delayed(Duration(seconds: 1), () {
+                          Provider.of<ChatProvider>(context, listen: false).setStateListConversationsStatus(ListConversationsStatus.refetch);
+                          Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, listChatData.id);
+                        });
+                      },
                       backgroundColor: ColorResources.BTN_PRIMARY,
                       color: ColorResources.WHITE,
                       child: ListView.builder(
-                        controller: chatProvider.scrollController,
+                        controller:  Provider.of<ChatProvider>(context, listen: false).scrollController,
                         shrinkWrap: true,
                         physics: AlwaysScrollableScrollPhysics(),
                         itemCount: data.length,
-                        itemBuilder: (BuildContext context, int i) => Message(
-                          chatProvider: chatProvider,
-                          message: data[i]
-                        ),
+                        itemBuilder: (BuildContext context, int i) {
+                          if(chatProvider.listConversationsData.length == i) {
+                            return SizedBox(
+                              height: 10.0,
+                            );
+                          }
+                          return Message(
+                            chatProvider: chatProvider,
+                            message: data[i]
+                          );   
+                        }
                       ),
                     );
                   },

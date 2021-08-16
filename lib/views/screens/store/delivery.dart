@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mbw204_club_ina/data/models/warung/address_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/data/models/warung/address_model.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/warung/card_add_model.dart';
 import 'package:mbw204_club_ina/providers/region.dart';
@@ -107,7 +107,7 @@ class _PengirimanPageState extends State<PengirimanPage> {
                             color: ColorResources.PRIMARY,
                           );
                         }
-                        List<AddressList> addresses =  regionProvider.addresList.where((el) => el.defaultLocation == true).toList();
+                        List<AddressList> addresses = regionProvider.addresList.where((el) => el.defaultLocation == true).toList();
                         return regionProvider.addresList.length == 0
                           ? Text("Silahkan pilih alamat pengiriman Anda.",
                               style: poppinsRegular.copyWith(
@@ -127,22 +127,22 @@ class _PengirimanPageState extends State<PengirimanPage> {
                                   Text(addresses[i].name,
                                     style: poppinsRegular.copyWith(
                                       color: Colors.black,
-                                      fontSize: 14,
+                                      fontSize: 14.0,
                                       fontWeight: FontWeight.bold
                                     )
                                   ),
-                                  SizedBox(height: 5),
+                                  SizedBox(height: 5.0),
                                   Text(addresses[i].phoneNumber,
                                     style: poppinsRegular.copyWith(
                                       color: Colors.black,
-                                      fontSize: 14,
+                                      fontSize: 14.0,
                                     )
                                   ),
-                                  SizedBox(height: 3),
-                                  Text(addresses [i].address,
+                                  SizedBox(height: 3.0),
+                                  Text(addresses[i].address,
                                     style: poppinsRegular.copyWith(
                                       color: Colors.black,
-                                      fontSize: 14,
+                                      fontSize: 14.0,
                                     )
                                   ),
                                 ],
@@ -343,19 +343,17 @@ class _PengirimanPageState extends State<PengirimanPage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    if (warungProvider.cartBody?.shippingAddress != null) {
+                                    if(Provider.of<RegionProvider>(context, listen: false).addresList.where((el) => el.defaultLocation == true).length == 0) {
+                                      Fluttertoast.showToast(
+                                        backgroundColor: ColorResources.ERROR,
+                                        textColor: ColorResources.WHITE,
+                                        fontSize: 14.0,
+                                        msg: "Anda belum memilih alamat pengiriman"
+                                      );
+                                    } else {
                                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                                         return PilihPengirimanPage(idStore: data.storeId);
                                       }));
-                                    } else {
-                                      Fluttertoast.showToast(
-                                        msg: "Anda belum memilih alamat",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: ColorResources.ERROR,
-                                        textColor: Colors.white
-                                      );
                                     }
                                   },
                                   child: Container(

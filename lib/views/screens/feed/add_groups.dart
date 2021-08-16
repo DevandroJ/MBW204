@@ -11,11 +11,9 @@ import 'package:hex/hex.dart';
 import 'package:mbw204_club_ina/container.dart';
 import 'package:mbw204_club_ina/data/repository/feed.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-// import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:mbw204_club_ina/views/screens/feed/feed_index.dart';
-// import 'package:mbw204_club_ina/views/screens/feed/widgets/alert_component.dart';
 import 'package:mbw204_club_ina/mobx/feed.dart';
 
 class AddGroupsScreen extends StatefulWidget {

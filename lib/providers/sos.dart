@@ -45,8 +45,8 @@ class SosProvider extends ChangeNotifier {
         "userId": userId,
         "geoPosition": geoPosition,
         "address": address,
-        "sosType": type,
-        "Message": "Telah terjadi $body di $address",
+        "sosType": "sos",
+        "Message": "$body $address",
         "sender": sender,
         "phoneNumber": phoneNumber
       });
@@ -58,9 +58,7 @@ class SosProvider extends ChangeNotifier {
             titleText: "${getTranslated("SENT_SOS", context)} !",
             contentText: '',
             positiveText: 'Ok',
-            onPositiveClick: () {
-              Navigator.of(context).pop();
-            },
+            onPositiveClick: () => Navigator.of(context).pop(),
           );                   
         },
         animationType: DialogTransitionType.scale,
@@ -84,7 +82,6 @@ class SosProvider extends ChangeNotifier {
         },
         animationType: DialogTransitionType.scale,
         curve: Curves.fastOutSlowIn,
-        duration: Duration(seconds: 1),
       );
       setStateSosConfirmStatus(SosConfirmStatus.error);
     } catch(e) {

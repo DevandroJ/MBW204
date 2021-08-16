@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/views/screens/store/cart_product.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
@@ -20,7 +21,6 @@ import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/data/models/warung/couriers_model.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
@@ -39,8 +39,12 @@ import 'package:mbw204_club_ina/data/models/warung/transaction_warung_paid_singl
 import 'package:mbw204_club_ina/data/models/warung/transaction_warung_unpaid_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/seller_store_model.dart';
 
-enum CategoryProductStatus { loading, loaded, empty, error } 
+enum CategoryProductByCategoryConsumenStatus { idle, loading, loaded, refetch, empty, error }
+enum CategoryProductByCategorySellerStatus { idle, loading, loaded, refetch, empty, error }
+enum CategoryProductStatus { idle, loading, loaded, refetch, empty, error } 
 enum CategoryProductByParentStatus { loading, loaded, empty, error }
+enum CreateStoreStatus { idle, loading, loaded, error, empty }
+enum EditStoreStatus { idle, loading, loaded, empty, error }
 enum SellerStoreStatus { loading, loaded, empty, error }
 enum CartStatus { loading, loaded, empty, error }
 enum SingleProductStatus { loading, loaded, empty, error }
@@ -56,6 +60,14 @@ class WarungProvider with ChangeNotifier {
   String descAddSellerStore;
   String descEditSellerStore;
 
+  bool stopped = true;
+
+  int _pageProductConsumen = 0;
+  int get pageProductConsumen => _pageProductConsumen;
+
+  int _pageListProduct = 0;
+  int get pageListProduct => _pageListProduct;
+
   String _categoryAddProductTitle;
   String get categoryAddProductTitle => _categoryAddProductTitle;
 
@@ -68,8 +80,14 @@ class WarungProvider with ChangeNotifier {
   String _categoryEditProductId;
   String get categoryEditProductId => _categoryEditProductId;
 
+  EditStoreStatus _editStoreStatus = EditStoreStatus.idle;
+  EditStoreStatus get editStoreStatus => _editStoreStatus;
+
   CategoryProductStatus _categoryProductStatus = CategoryProductStatus.loading;
   CategoryProductStatus get categoryProductStatus => _categoryProductStatus;
+
+  CreateStoreStatus _createStoreStatus = CreateStoreStatus.loading;
+  CreateStoreStatus get createStoreStatus => _createStoreStatus;
 
   CartStatus _cartStatus = CartStatus.loading;
   CartStatus get cartStatus => _cartStatus;
@@ -98,12 +116,24 @@ class WarungProvider with ChangeNotifier {
   CategoryProductByParentStatus _categoryProductByParentStatus = CategoryProductByParentStatus.loading;
   CategoryProductByParentStatus get categoryProductByParentStatus => _categoryProductByParentStatus; 
 
+  CategoryProductByCategoryConsumenStatus _categoryProductByCategoryConsumenStatus = CategoryProductByCategoryConsumenStatus.loading;
+  CategoryProductByCategoryConsumenStatus get categoryProductByCategoryConsumenStatus => _categoryProductByCategoryConsumenStatus;
+
+  CategoryProductByCategorySellerStatus _categoryProductByCategorySellerStatus = CategoryProductByCategorySellerStatus.loading;
+  CategoryProductByCategorySellerStatus get categoryProductByCategorySellerStatus => _categoryProductByCategorySellerStatus;
+
   List<Map<String, Object>> assignCampaignListProduct = [];
   List<StoreElement> _cartStores = [];
   List<String> isCheckedKurir = [];
 
   List categoryHasManyProduct = []; 
   List<CategoryProductList> categoryProductList = [];
+
+  List<ProductWarungList> _productWarungList = [];
+  List<ProductWarungList> get productWarungList => [..._productWarungList];
+
+  List<ProductWarungList> _productWarungConsumenList = [];
+  List<ProductWarungList> get productWarungConsumenList => [..._productWarungConsumenList];
   
   List<CategoryProductList> _categoryProductByParentList = [];
   List<CategoryProductList> get categoryProductByParentList => [..._categoryProductByParentList];
@@ -137,6 +167,16 @@ class WarungProvider with ChangeNotifier {
   CartBody cartBody;
   SellerStoreModel sellerStoreModel;
 
+  void setStateCategoryProductByConsumenStatus(CategoryProductByCategoryConsumenStatus categoryProductByCategoryConsumenStatus) {
+    _categoryProductByCategoryConsumenStatus = categoryProductByCategoryConsumenStatus;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  }
+
+  void setStateCategoryProductBySellerStatus(CategoryProductByCategorySellerStatus categoryProductByCategorySellerStatus) {
+    _categoryProductByCategorySellerStatus = categoryProductByCategorySellerStatus;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  }
+
   void setStateCategoryProductParentStatus(CategoryProductByParentStatus categoryProductByParentStatus) {
     _categoryProductByParentStatus = categoryProductByParentStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
@@ -149,6 +189,11 @@ class WarungProvider with ChangeNotifier {
 
   void setStateCartStatus(CartStatus cartStatus) {
     _cartStatus = cartStatus;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  }
+
+  void setStateCreateStoreStatus(CreateStoreStatus createStoreStatus) {
+    _createStoreStatus = createStoreStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
@@ -186,7 +231,11 @@ class WarungProvider with ChangeNotifier {
     _approximatelyStatus = approximatelyStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
-  
+
+  void setStateEditStoreStatus(EditStoreStatus editStoreStatus) {
+    _editStoreStatus = editStoreStatus;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  }
  
   Future<SellerStoreModel> getDataStore(BuildContext context) async {
     try {
@@ -213,8 +262,8 @@ class WarungProvider with ChangeNotifier {
       } else {
         setStateSellerStoreStatus(SellerStoreStatus.error);
       }
-    } catch (e) {
-      print(e);
+    } catch (_) {
+      setStateSellerStoreStatus(SellerStoreStatus.error);
     }
   }
 
@@ -232,34 +281,13 @@ class WarungProvider with ChangeNotifier {
     String phone, 
     [String deskripsi = ""]
   ) async {
-    ProgressDialog pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
-      message: ' Mohon Tunggu...',
-      borderRadius: 10.0,
-      backgroundColor: Colors.white,
-      progressWidget: Loader(
-        color: ColorResources.PRIMARY,
-      ),
-      elevation: 10.0,
-      insetAnimCurve: Curves.easeInOut,
-      progressTextStyle: poppinsRegular.copyWith(
-        color: Colors.black, 
-        fontSize: 13.0, 
-        fontWeight: FontWeight.w400
-      ),
-      messageTextStyle: poppinsRegular.copyWith(
-        color: Colors.black, 
-        fontSize: 19.0, 
-        fontWeight: FontWeight.w600
-      )
-    );
-    pr.show();
+    setStateCreateStoreStatus(CreateStoreStatus.loading);
     Map<String, dynamic> data = {
       "name": nameStore,
       "picture": {
         "originalName": basename(file.path),
         "fileLength": file.lengthSync(),
-        "path": "/commerce/indomini/$phone/${basename(file.path)}",
+        "path": "/commerce/benzmart/$phone/${basename(file.path)}",
         "contentType": lookupMimeType(basename(file.path))
       },
       "province": province,
@@ -279,7 +307,7 @@ class WarungProvider with ChangeNotifier {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.post("${AppConstants.BASE_URL_ECOMMERCE}/seller/store/create", data: data);
-      pr.hide();
+      setStateCreateStoreStatus(CreateStoreStatus.loaded);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.SUCCESS,
         textColor: ColorResources.WHITE,
@@ -294,15 +322,15 @@ class WarungProvider with ChangeNotifier {
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
-      pr.hide();
+      setStateCreateStoreStatus(CreateStoreStatus.error);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.ERROR,
         textColor: ColorResources.WHITE,
         fontSize: 14.0,
         msg: e?.response?.data['error'],
       );
-    } catch (e) {
-      print(e);
+    } catch (_) {
+      setStateCreateStoreStatus(CreateStoreStatus.error);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.ERROR,
         textColor: ColorResources.WHITE,
@@ -325,28 +353,7 @@ class WarungProvider with ChangeNotifier {
     String email,
     String phone,
     bool statusToko, [File file]) async {
-    ProgressDialog pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
-      message: 'Mohon Tunggu...',
-      borderRadius: 10.0,
-      backgroundColor: Colors.white,
-      progressWidget: Loader(
-        color: ColorResources.PRIMARY,
-      ),
-      elevation: 10.0,
-      insetAnimCurve: Curves.easeInOut,
-      progressTextStyle: poppinsRegular.copyWith(
-        color: Colors.black, 
-        fontSize: 13.0, 
-        fontWeight: FontWeight.w400
-      ),
-      messageTextStyle: poppinsRegular.copyWith(
-        color: Colors.black, 
-        fontSize: 19.0, 
-        fontWeight: FontWeight.w600
-      )
-    );
-    pr.show();
+    setStateEditStoreStatus(EditStoreStatus.loading);
     Map<String, dynamic> data = {
       "id": idStore,
       "name": nameStore,
@@ -369,7 +376,7 @@ class WarungProvider with ChangeNotifier {
         "picture": {
           "originalName": basename(file.path),
           "fileLength": file.lengthSync(),
-          "path": "/commerce/indomini/$path/${basename(file.path)}",
+          "path": "/commerce/benzmart/$path/${basename(file.path)}",
           "contentType": lookupMimeType(basename(file.path)),
           "classId": "media"
         }
@@ -378,7 +385,7 @@ class WarungProvider with ChangeNotifier {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.post("${AppConstants.BASE_URL_ECOMMERCE}/seller/store/update", data: data);
-      pr.hide();
+      setStateEditStoreStatus(EditStoreStatus.loaded);
       getDataStore(context);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.SUCCESS,
@@ -387,20 +394,28 @@ class WarungProvider with ChangeNotifier {
         msg: "Toko berhasil diubah" 
       );
       Navigator.of(context).pop();
-      final SellerStoreModel sellerStoreModel = SellerStoreModel.fromJson(res.data);
+      SellerStoreModel sellerStoreModel = SellerStoreModel.fromJson(res.data);
       return sellerStoreModel;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
-      pr.hide();
+      setStateEditStoreStatus(EditStoreStatus.error);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.ERROR,
         textColor: ColorResources.WHITE,
         fontSize: 14.0,
         msg: e?.response?.data['error'],
       );
-    } catch (e) {
-      print(e);
+    } on SocketException catch(_) { 
+      setStateEditStoreStatus(EditStoreStatus.error);
+      Fluttertoast.showToast(
+        backgroundColor: ColorResources.ERROR,
+        textColor: ColorResources.WHITE,
+        fontSize: 14.0,
+        msg: "Failed: Socket Exception",
+      );
+    } catch (_) {
+      setStateEditStoreStatus(EditStoreStatus.error);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.ERROR,
         textColor: ColorResources.WHITE,
@@ -416,7 +431,7 @@ class WarungProvider with ChangeNotifier {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/$typeProduct/product/categories");
       CategoryProductModel categoryProductModel = CategoryProductModel.fromJson(res.data);
-    
+      
       if(res.data['code'] == 404) {
         throw DioError(error: 404);
       } 
@@ -424,18 +439,18 @@ class WarungProvider with ChangeNotifier {
       if(res.data['code'] == 500) {
         throw DioError(error: 500);
       } 
-      
-      if(categoryHasManyProduct.length != categoryProductModel.body.length) {
+
+      if(categoryHasManyProduct.length != categoryProductModel.body.length || categoryProductStatus == CategoryProductStatus.refetch) {
         var categoryHasManyProductAssign = [];
         categoryProductList = [];
         categoryProductList.addAll(categoryProductModel.body);
         for (var item in categoryProductModel.body) {
-          ProductWarungModel productWarungModel = await getDataProductByCategoryConsumen(context, "", item.id, 0);
+          ProductWarungModel productWarungModel = await getDataProductByCategoryConsumen(context, "", item.id);
           List<ProductWarungList> productWarungList = productWarungModel.body;
           categoryHasManyProductAssign.add({
             "id": item.id,
             "category": item.name,
-            "items": productWarungList,
+            "items": productWarungList,    
           });
         }
         categoryHasManyProduct = categoryHasManyProductAssign;
@@ -497,11 +512,39 @@ class WarungProvider with ChangeNotifier {
     }
   }
 
-  Future<ProductWarungModel> getDataProductByCategoryConsumen(BuildContext context, String name, String idCategory, int page) async {
+  Future<ProductWarungModel> getDataProductByCategoryConsumen(BuildContext context, String name, String idCategory) async {
+    try {
+      setStateCategoryProductByConsumenStatus(CategoryProductByCategoryConsumenStatus.loading);
+      Dio dio = await DioManager.shared.getClient(context);
+      Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/commerce/product/filter?categoryId=$idCategory&search=$name&page=0&size=10&sort=stock,desc");
+      ProductWarungModel productWarungModel = ProductWarungModel.fromJson(res.data);
+      _productWarungConsumenList.clear();
+      _productWarungConsumenList.addAll(productWarungModel.body);
+      setStateCategoryProductByConsumenStatus(CategoryProductByCategoryConsumenStatus.loaded);
+      return productWarungModel;
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+      Fluttertoast.showToast(
+        backgroundColor: ColorResources.ERROR,
+        textColor: ColorResources.WHITE,
+        fontSize: 14.0,
+        msg: "Failed: Internal Server Problem",
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<ProductWarungModel> getDataProductByCategoryConsumenLoad(BuildContext context, String name, String idCategory) async {
+    _pageProductConsumen++;
+    notifyListeners();
     try {
       Dio dio = await DioManager.shared.getClient(context);
-      Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/commerce/product/filter?categoryId=$idCategory&search=$name&page=$page&size=10&sort=stock,desc");
+      Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/commerce/product/filter?categoryId=$idCategory&search=$name&page=$pageProductConsumen&size=10&sort=stock,desc");
       ProductWarungModel productWarungModel = ProductWarungModel.fromJson(res.data);
+      _productWarungConsumenList.addAll(productWarungModel.body);
+      setStateCategoryProductByConsumenStatus(CategoryProductByCategoryConsumenStatus.loaded);
       return productWarungModel;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
@@ -543,11 +586,48 @@ class WarungProvider with ChangeNotifier {
     }
   }
 
-  Future<ProductWarungModel> getDataProductByCategorySeller(BuildContext context, String idCategory, int page) async {
+  Future<ProductWarungModel> getDataProductByCategorySeller(BuildContext context, String idCategory) async {
+    try {
+      setStateCategoryProductBySellerStatus(CategoryProductByCategorySellerStatus.loading);
+      Dio dio = await DioManager.shared.getClient(context);
+      Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/seller/product/filter?categoryId=$idCategory&page=$pageListProduct&size=10&sort=stock,desc");
+      ProductWarungModel productWarungModel = ProductWarungModel.fromJson(res.data);
+      _productWarungList.clear();
+      _productWarungList.addAll(productWarungModel.body); 
+      setStateCategoryProductBySellerStatus(CategoryProductByCategorySellerStatus.loaded);
+      if(_productWarungList.isEmpty) {
+        setStateCategoryProductBySellerStatus(CategoryProductByCategorySellerStatus.empty);
+      }
+      return productWarungModel;
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+      Fluttertoast.showToast(
+        backgroundColor: ColorResources.ERROR,
+        textColor: ColorResources.WHITE,
+        fontSize: 14.0,
+        msg: e?.response?.data['error']
+      );
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(
+        backgroundColor: ColorResources.ERROR,
+        textColor: ColorResources.WHITE,
+        fontSize: 14.0,
+        msg: "Failed: Internal Server Problem",
+      );
+    }
+  }
+
+  Future<ProductWarungModel> getDataProductByCategorySellerLoad(BuildContext context, String idCategory) async {
+    _pageListProduct++;
+    notifyListeners();
     try {
       Dio dio = await DioManager.shared.getClient(context);
-      Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/seller/product/filter?categoryId=$idCategory&page=$page&size=10&sort=stock,desc");
+      Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/seller/product/filter?categoryId=$idCategory&page=$pageListProduct&size=10&sort=stock,desc");
       ProductWarungModel productWarungModel = ProductWarungModel.fromJson(res.data);
+      _productWarungList.addAll(productWarungModel.body); 
+      setStateCategoryProductBySellerStatus(CategoryProductByCategorySellerStatus.loaded);
       return productWarungModel;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
@@ -643,7 +723,7 @@ class WarungProvider with ChangeNotifier {
   Future<Response> uploadImageProduct(BuildContext context, String mediaKey, String base64, File file) async {
     try {
       Dio dio = Dio();
-      String url = "${AppConstants.BASE_URL_FEED_MEDIA}/$mediaKey/$base64?path=/commerce/indomini/${Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber}/${basename(file.path)}";
+      String url = "${AppConstants.BASE_URL_FEED_MEDIA}/$mediaKey/$base64?path=/commerce/benzmart/${Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber}/${basename(file.path)}";
       Response res = await dio.post(url, data: file.readAsBytesSync());
       return res;
     } on DioError catch(e) {
@@ -666,7 +746,7 @@ class WarungProvider with ChangeNotifier {
     }
   }
 
-  Future<ProductSingleWarungModel> postDataProductWarung(BuildContext context, String nameProduct, int price, List<File> files, int weight, int stock, String condition, String typeStuff, int minOrder, String idStore) async {
+  Future<ProductSingleWarungModel> postDataProductWarung(BuildContext context, String nameProduct, int price, List<File> files, int weight, int stock, String condition, List<int> kindStuffSelected, int minOrder, String idStore) async {
     ProgressDialog pr = ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
     pr.style(
       message: 'Mohon Tunggu...',
@@ -694,7 +774,7 @@ class WarungProvider with ChangeNotifier {
       postsPictures.add({
         "originalName": basename(files[i].path),
         "fileLength": files[i].lengthSync(),
-        "path": "/commerce/indomini/${Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber}/${basename(files[i].path)}",
+        "path": "/commerce/benzmart/${Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber}/${basename(files[i].path)}",
         "contentType": lookupMimeType(basename(files[i].path))
       });
     }
@@ -710,10 +790,10 @@ class WarungProvider with ChangeNotifier {
         "stock": stock,
         "condition": condition,
         "minOrder": minOrder,
-        "harmful" : typeStuff == "Berbahaya" ? true : false,
-        "liquid" : typeStuff == "Cair" ? true : false,
-        "flammable" : typeStuff == "Mudah Terbakar" ? true : false,
-        "fragile" : typeStuff == "Mudah Pecah" ? true : false
+        "harmful" : kindStuffSelected.contains(0),
+        "flammable" : kindStuffSelected.contains(1),
+        "liquid" : kindStuffSelected.contains(2),
+        "fragile" : kindStuffSelected.contains(3),
       });
       pr.hide();
       Fluttertoast.showToast(
@@ -726,6 +806,9 @@ class WarungProvider with ChangeNotifier {
       Navigator.popUntil(context, (route) {
         return count++ == 1;
       });
+      getDataProductByCategorySeller(context, "all");
+      getDataCategoryProduct(context, "commerce");
+      setStateCategoryProductStatus(CategoryProductStatus.refetch);
       ProductSingleWarungModel productSingleWarungModel = ProductSingleWarungModel.fromJson(res.data);
       return productSingleWarungModel;
     } on DioError catch(e) {
@@ -750,7 +833,7 @@ class WarungProvider with ChangeNotifier {
     }
   }
 
-  Future<ProductSingleWarungModel> postEditDataProductWarung(BuildContext context, String idProduct, String nameProduct, int price, List<File> files, int weight, int stock, String condition, int minOrder, String typeStuff) async {
+  Future<ProductSingleWarungModel> postEditDataProductWarung(BuildContext context, String idProduct, String nameProduct, int price, List<File> files, int weight, int stock, String condition, int minOrder, List<int> kindStuffSelected) async {
     ProgressDialog pr = ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
     pr.style(
       message: 'Mohon Tunggu...',
@@ -779,7 +862,7 @@ class WarungProvider with ChangeNotifier {
         postsPictures.add({
           "originalName": basename(files[i].path),
           "fileLength": files[i].lengthSync(),
-          "path": "/commerce/indomini/${Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber}/${basename(files[i].path)}",
+          "path": "/commerce/benzmart/${Provider.of<ProfileProvider>(context, listen: false).getUserPhoneNumber}/${basename(files[i].path)}",
           "contentType": lookupMimeType(basename(files[i].path))
         });
       }
@@ -796,10 +879,10 @@ class WarungProvider with ChangeNotifier {
           "stock": stock,
           "condition": condition,
           "minOrder": minOrder,
-          "harmful" : typeStuff == "Berbahaya" ? true : false,
-          "liquid" : typeStuff == "Cair" ? true : false,
-          "flammable" : typeStuff == "Mudah Terbakar" ? true : false,
-          "fragile" : typeStuff == "Mudah Pecah" ? true : false
+          "harmful" : kindStuffSelected.contains(0),
+          "flammable" : kindStuffSelected.contains(1),
+          "liquid" : kindStuffSelected.contains(2),
+          "fragile" : kindStuffSelected.contains(3)
         });
         pr.hide();
         Fluttertoast.showToast(
@@ -809,6 +892,9 @@ class WarungProvider with ChangeNotifier {
           msg: "Produk telah diubah",
         );
         Navigator.of(context).pop();
+        getDataProductByCategorySeller(context, "all");
+        getDataCategoryProduct(context, "commerce");
+        setStateCategoryProductStatus(CategoryProductStatus.refetch);
         final ProductSingleWarungModel productSingleWarungModel = ProductSingleWarungModel.fromJson(res.data);
         return productSingleWarungModel;
       } on DioError catch(e) {
@@ -844,10 +930,10 @@ class WarungProvider with ChangeNotifier {
           "stock": stock,
           "condition": condition,
           "minOrder": minOrder,
-          "harmful" : typeStuff == "Berbahaya" ? true : false,
-          "liquid" : typeStuff == "Cair" ? true : false,
-          "flammable" : typeStuff == "Mudah Terbakar" ? true : false,
-          "fragile" : typeStuff == "Mudah Pecah" ? true : false
+          "harmful" : kindStuffSelected.contains(0),
+          "flammable" : kindStuffSelected.contains(1),
+          "liquid" : kindStuffSelected.contains(2),
+          "fragile" : kindStuffSelected.contains(3)
         });
         pr.hide();
         Fluttertoast.showToast(
@@ -857,6 +943,8 @@ class WarungProvider with ChangeNotifier {
           msg: "Produk telah diubah",
         );
         Navigator.of(context).pop();
+        getDataCategoryProduct(context, "commerce");
+        setStateCategoryProductStatus(CategoryProductStatus.refetch);
         ProductSingleWarungModel productSingleWarungModel = ProductSingleWarungModel.fromJson(res.data);
         return productSingleWarungModel;
       } on DioError catch(e) {

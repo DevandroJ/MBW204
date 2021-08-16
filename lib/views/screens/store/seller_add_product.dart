@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:chips_choice/chips_choice.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +16,6 @@ import 'package:provider/provider.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/views/screens/store/select_category.dart';
 
 class TambahJualanPage extends StatefulWidget {
   final String idStore;
@@ -35,11 +35,20 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
   TextEditingController weightController = TextEditingController();
   TextEditingController minOrderController = TextEditingController();
 
+  List<String> kindStuff = [
+    "Berbahaya",
+    "Mudah Terbakar",
+    "Cair",
+    "Mudah Pecah"
+  ];
+
+  List<int> kindStuffSelected = [];
+
   String typeConditionName = "NEW";
   int typeCondition = 0;
-  String typeStuffName;
+  // String typeStuffName;
   String idCategoryparent;
-  int typeStuff = 0;
+  // int typeStuff;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ImageSource imageSource;
@@ -168,22 +177,6 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
         );
         return;
       }
-      if(typeStuffName.isEmpty || typeStuffName == null) {
-        Fluttertoast.showToast(
-          backgroundColor: ColorResources.ERROR,
-          fontSize: 14.0,
-          msg: "Jenis Barang belum diisi"
-        );
-        return;
-      }
-      if(Provider.of<WarungProvider>(context, listen: false).descAddSellerStore == "" || Provider.of<WarungProvider>(context, listen: false).descAddSellerStore == null) {
-        Fluttertoast.showToast(
-          backgroundColor: ColorResources.ERROR,
-          fontSize: 14.0,
-          msg: "Deskripsi Barang belum diisi"
-        );
-        return;
-      }
       if(files == null || files.isEmpty) {
         Fluttertoast.showToast(
           backgroundColor: ColorResources.ERROR,
@@ -208,9 +201,9 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
         int.parse(weightController.text),
         int.parse(stockController.text),
         typeConditionName,
-        typeStuffName,
+        kindStuffSelected,
         int.parse(minOrderController.text),
-        widget.idStore
+        widget.idStore,
       );
     } catch(e) {
       print(e);
@@ -221,7 +214,6 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
     Navigator.of(context).pop();
     return Future.value(true);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +243,8 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
         elevation: 0,
         title: Text( "Jual Barang",
           style: poppinsRegular.copyWith(
-            fontSize: 16.0
+            fontSize: 16.0,
+            color: ColorResources.WHITE
           ),
         ),
       ),
@@ -265,7 +258,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputFieldCategoryStuff(context, "Kategori Barang", "Kategori Barang"),
+                    inputFieldCategoryStuff(context, "Kategori Barang *", "Kategori Barang"),
                     SizedBox(height: 15.0),
                     inputFieldNameStuff(context, nameStuffController),
                     SizedBox(height: 15.0),
@@ -319,7 +312,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                     SizedBox(
                       height: 15.0,
                     ),
-                    Text("Kondisi",
+                    Text("Kondisi *",
                       style: poppinsRegular.copyWith(
                         fontSize: 14.0,
                       )
@@ -339,6 +332,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                                 margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0),
                                 child: ChoiceChip(
                                   label: Text(['Baru', 'Bekas'][i]),
+                                  selectedColor: ColorResources.PRIMARY,
                                   selected: typeCondition == i,
                                   onSelected: (bool selected) {
                                     setState(() {
@@ -353,41 +347,58 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                         ),
                       ]
                     ),
-                    SizedBox(height: 15.0),
-                    Text("Jenis Barang",
-                      style: poppinsRegular.copyWith(
-                        fontSize: 14.0,
-                      )
-                    ),
                     SizedBox(
                       height: 10.0,
                     ),
-                    Wrap(
-                      children: [ 
-                        Container(
-                          height: 30.0,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: ['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'].length,
-                            itemBuilder: (BuildContext context, int i) {
-                              return Container(
-                                margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0),
-                                child: ChoiceChip(
-                                  label: Text(['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'][i]),
-                                  selected: typeStuff == i,
-                                  onSelected: (bool selected) {
-                                    setState(() {
-                                      typeStuff = selected ? i : null;
-                                      typeStuffName = selected ? ['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'][i] : null;
-                                    });
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ]
+                    ChipsChoice.multiple(
+                      choiceActiveStyle: C2ChoiceStyle(
+                        color: ColorResources.BTN_PRIMARY
+                      ),
+                      wrapped: true,
+                      errorBuilder: (context) => Container(),
+                      placeholder: "",
+                      value: kindStuffSelected,
+                      onChanged: (val) => setState(() => kindStuffSelected = val),
+                      choiceItems: C2Choice.listFrom<int, String>(
+                        source: kindStuff,
+                        value: (i, v) => i,
+                        label: (i, v) => v,
+                      ),
                     ),
+                    // Wrap(
+                    //   children: [ 
+                    //     // Container(
+                    //     //   height: 30.0,
+                    //     //   child: ListView.builder(
+                    //     //     scrollDirection: Axis.horizontal,
+                    //     //     itemCount: ['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'].length,
+                    //     //     itemBuilder: (BuildContext context, int i) {
+                    //     //       return Container(
+                    //     //         margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0),
+                    //     //         child: ChoiceChip(
+                    //     //           label: Text(['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'][i]),
+                    //     //           selected: typeStuff == i,
+                    //     //           selectedColor: ColorResources.PRIMARY,
+                    //     //           onSelected: (bool selected) {
+                    //     //             setState(() {
+                    //     //               typeStuff = selected ? i : null;
+                    //     //               typeStuffName = selected ? ['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'][i] : null;
+                    //     //             });
+                    //     //           },
+                    //     //         ),
+                    //     //       );
+                    //     //     },
+                    //     //   ),
+                    //     // ),
+                    //     MultiSelectChip(['Berbahaya', 'Cair', 'Mudah Terbakar', 'Mudah Pecah'],
+                    //       onSelectionChanged: (selectedList) { 
+                    //         setState(() {
+                    //           selectKindStuff = selectedList;
+                    //         });
+                    //       },
+                    //     )
+                    //   ]
+                    // ),
                     SizedBox(
                       height: 15.0,
                     ),
@@ -395,7 +406,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                     SizedBox(
                       height: 15.0,
                     ),
-                    Text("Gambar Barang",
+                    Text("Gambar Barang *",
                       style: poppinsRegular.copyWith(
                         fontSize: 14.0,
                       )
@@ -439,7 +450,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                                             height: double.infinity,
                                             width: double.infinity,
                                             image: FileImage(files.first),
-                                            placeholder: AssetImage("assets/default_profile.png")
+                                            placeholder: AssetImage("assets/images/default_image.png")
                                           ),
                                       ),
                                     ),
@@ -455,7 +466,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                                   children: [
                                     Text("Upload Gambar Barang",
                                       style: poppinsRegular.copyWith(
-                                        fontSize: 14.0,
+                                        fontSize: 12.0,
                                       )
                                     ),
                                     SizedBox(
@@ -463,7 +474,7 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                                     ),
                                     Text("Maksimum 5 gambar, ukuran minimal 300x300px berformat JPG atau PNG",
                                       style: poppinsRegular.copyWith(
-                                        fontSize: 14.0,
+                                        fontSize: 12.0,
                                         color: Colors.grey[600]
                                       )
                                     ),
@@ -670,20 +681,63 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                                           scrollDirection: Axis.vertical,
                                           itemCount: warungProvider.categoryProductList.length,
                                           itemBuilder: (BuildContext context, int i) {
-                                            return ListTile(
-                                              title: Text(warungProvider.categoryProductList[i].name,
-                                                style: poppinsRegular,
-                                              ),
-                                              trailing: InkWell(
-                                                onTap: () {
-                                                  warungProvider.changeCategoryAddProductTitle(warungProvider.categoryProductList[i].name,warungProvider.categoryProductList[i].id);
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text("Pilih",
-                                                  style: poppinsRegular,
+                                            return Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [ 
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 5.0, left: 16.0, right: 16.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(warungProvider.categoryProductList[i].name,
+                                                        style: poppinsRegular.copyWith(
+                                                          fontSize: 16.0,
+                                                          fontWeight: FontWeight.bold
+                                                        )
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          warungProvider.changeCategoryAddProductTitle(warungProvider.categoryProductList[i].name,warungProvider.categoryProductList[i].id);
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Text("Pilih",
+                                                          style: poppinsRegular,
+                                                        ),
+                                                      )                                              
+                                                    ],
+                                                  ),
                                                 ),
-                                              )
-                                            );                                    
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 5.0, left: 16.0, right: 16.0),
+                                                  child: ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: warungProvider.categoryProductList[i].childs.length,
+                                                    itemBuilder:(BuildContext context, int z) {
+                                                      return Container(
+                                                        margin: EdgeInsets.only(top: 8.0),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(warungProvider.categoryProductList[i].childs[z].name,
+                                                              style: poppinsRegular,
+                                                            ),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                warungProvider.changeCategoryAddProductTitle(warungProvider.categoryProductList[i].childs[z].name, warungProvider.categoryProductList[i].childs[z].id);
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              child: Text("Pilih",
+                                                                style: poppinsRegular,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ) 
+                                                      );
+                                                    },
+                                                  ),
+                                                )
+                                              ]
+                                            );                                                                      
                                           },
                                         )  
                                       )                                
@@ -740,7 +794,7 @@ Widget inputFieldNameStuff(BuildContext context, TextEditingController controlle
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Nama Barang",
+        child: Text("Nama Barang *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -800,7 +854,7 @@ Widget inputFieldPriceStuff(BuildContext context, TextEditingController controll
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Harga",
+        child: Text("Harga *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -870,7 +924,7 @@ Widget inputFieldMinOrder(BuildContext context, TextEditingController controller
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Min Order",
+        child: Text("Min Order *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -929,7 +983,7 @@ Widget inputFieldStock(BuildContext context, TextEditingController controller) {
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Stok",
+        child: Text("Stok *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )
@@ -1077,7 +1131,7 @@ Widget inputFieldDescriptionStore(BuildContext context) {
                                     warungProvider.changeDescAddSellerStore(val);
                                   },
                                   decoration: InputDecoration(
-                                    hintText: "Masukan Deskripsi Toko Anda",
+                                    hintText: "Masukan Deskripsi Barang Anda",
                                     hintStyle: poppinsRegular.copyWith(
                                       color: warungProvider.descAddSellerStore != null
                                       ? ColorResources.BLACK
@@ -1139,7 +1193,7 @@ Widget inputFieldWeight(BuildContext context, TextEditingController controller) 
     children: [
       Container(
         alignment: Alignment.centerLeft,
-        child: Text("Berat",
+        child: Text("Berat *",
           style: poppinsRegular.copyWith(
             fontSize: 13.0,
           )

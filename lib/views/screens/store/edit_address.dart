@@ -7,7 +7,6 @@ import 'package:mbw204_club_ina/data/models/warung/region_subdistrict_model.dart
 import 'package:mbw204_club_ina/maps/src/place_picker.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -302,7 +301,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: ColorResources.WHITE,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -473,7 +472,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: ColorResources.WHITE,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -533,7 +532,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: ColorResources.WHITE,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -716,7 +715,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: ColorResources.WHITE,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -896,7 +895,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: ColorResources.WHITE,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(6),
             boxShadow: [
               BoxShadow(
@@ -959,7 +958,7 @@ class _EditAlamatPageState extends State<EditAlamatPage> {
           child:   Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: ColorResources.WHITE,
+              color: Theme.of(context).accentColor,
               borderRadius: BorderRadius.circular(6.0),
               boxShadow: [
                 BoxShadow(
@@ -1027,7 +1026,7 @@ Widget inputFieldKelurahanDesa(BuildContext context, String title, TextEditingCo
         Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: ColorResources.WHITE,
+          color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
@@ -1138,7 +1137,7 @@ Widget inputFieldAddress(BuildContext context) {
               Container(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
                 child: Text( locationProvider.getCurrentNameAddress == "Location no Selected" 
-                  ? getTranslated("LOCATION_NO_SELECTED", context) 
+                  ? "Location no Selected"
                   : locationProvider.getCurrentNameAddress,
                   style: poppinsRegular.copyWith(
                     color: Colors.black,
@@ -1171,7 +1170,7 @@ Widget inputFieldDetailAddress(BuildContext context, String title, TextEditingCo
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: ColorResources.WHITE,
+          color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             BoxShadow(
@@ -1231,8 +1230,8 @@ Widget inputFieldKecamatan(BuildContext context, String title, TextEditingContro
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: ColorResources.WHITE,
-          borderRadius: BorderRadius.circular(6),
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.1), 

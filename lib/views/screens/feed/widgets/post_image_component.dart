@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:readmore/readmore.dart';
+import 'package:sizer/sizer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -35,20 +36,20 @@ class _PostImageComponentState extends State<PostImageComponent> {
           Container(
             margin: EdgeInsets.only(left: 70.0),
             child: ReadMoreText(widget.caption,
-              style: TextStyle(
-                fontSize: 14.0,
+              style: poppinsRegular.copyWith(
+                fontSize: 9.0.sp,
               ),
               trimLines: 2,
               colorClickableText: Colors.black,
               trimMode: TrimMode.Line,
               trimCollapsedText: 'Tampilkan Lebih',
               trimExpandedText: 'Tutup',
-              moreStyle: TextStyle(
-                fontSize: 14.0, 
+              moreStyle: poppinsRegular.copyWith(
+                fontSize: 9.0.sp, 
                 fontWeight: FontWeight.bold
               ),
-              lessStyle: TextStyle(
-                fontSize: 14.0, 
+              lessStyle: poppinsRegular.copyWith(
+                fontSize: 9.0.sp, 
                 fontWeight: FontWeight.bold
               ),
             ),
@@ -135,7 +136,8 @@ class _PostImageComponentState extends State<PostImageComponent> {
           margin: EdgeInsets.only(left: 70.0),
           child: ReadMoreText(widget.caption,
             style: poppinsRegular.copyWith(
-              color: ColorResources.BLACK
+              color: ColorResources.BLACK,
+              fontSize: 9.0.sp
             ),
             trimLines: 2,
             colorClickableText: Colors.black,
@@ -143,11 +145,11 @@ class _PostImageComponentState extends State<PostImageComponent> {
             trimCollapsedText: 'Tampilkan Lebih',
             trimExpandedText: 'Tutup',
             moreStyle: poppinsRegular.copyWith(
-              fontSize: 14.0, 
+              fontSize: 9.0.sp, 
               fontWeight: FontWeight.bold
             ),
             lessStyle: poppinsRegular.copyWith(
-              fontSize: 14.0, 
+              fontSize: 9.0.sp, 
               fontWeight: FontWeight.bold
             ),
           ),
@@ -173,7 +175,7 @@ class _PostImageComponentState extends State<PostImageComponent> {
                 ),
               ),
             ),
-            placeholder: (context, url) => Shimmer.fromColors(
+            placeholder: (BuildContext context, String url) => Shimmer.fromColors(
               highlightColor: Colors.white,
               baseColor: Colors.grey[200],
               child: Container(

@@ -29,8 +29,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   String subModel = "";
   String bodyStyle = "";
 
-  TextEditingController emailController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController noAnggotaController = TextEditingController();
   TextEditingController noHpController = TextEditingController();
   TextEditingController addressController = TextEditingController();

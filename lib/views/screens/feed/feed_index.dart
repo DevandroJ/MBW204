@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
@@ -24,6 +25,7 @@ class FeedIndex extends StatefulWidget {
 }
 
 class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
+  GlobalKey<ScaffoldMessengerState> globalKey = GlobalKey<ScaffoldMessengerState>();
   FeedState feedState = getIt<FeedState>();
   TabController tabController;
   GlobalKey g1Key = GlobalKey();
@@ -49,8 +51,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
     return (showDialog(context: context,
       builder: (context) => AlertDialog(
         title: Text(getTranslated("EXIT_PAGE", context),
-          style: TextStyle(
-            color: ColorResources.PRIMARY, 
+          style: poppinsRegular.copyWith(
+            color: ColorResources.BLACK, 
             fontWeight: FontWeight.bold
           ),
         ),
@@ -79,7 +81,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
             return Container(
               height: 80.0,
               child: Loader(
-                color: ColorResources.BTN_PRIMARY,
+                color: ColorResources.WHITE,
               )
             );
           }
@@ -106,7 +108,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                           width: 15.0,
                           height: 15.0,
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
+                            valueColor: AlwaysStoppedAnimation<Color>(ColorResources.WHITE),
                           )
                         )
                       );
@@ -133,7 +135,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                           SizedBox(height: 8.0),
                           Text(feedState.groupsMetaDataList[i].name,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.black)
+                            style: poppinsRegular.copyWith(color: Colors.black)
                           )
                         ]
                       )
@@ -144,12 +146,15 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                   if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
                     if (feedState.groupsMetaData.nextCursor != null) {
                       feedState.fetchGroupsMetaDataListLoad(feedState.groupsMetaData.nextCursor);
+                      feedState.groupsMetaData.nextCursor = null;
                     }
                   }
                   return false;
                 },
-              ));
-        }),
+              )
+            );
+          }
+        ),
       ),
     );
   }
@@ -169,9 +174,9 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               );
             },
             elevation: 0.0,
-            fillColor: ColorResources.BTN_PRIMARY,
+            fillColor: ColorResources.WHITE,
             child: Text('+',
-              style: TextStyle(
+              style: poppinsRegular.copyWith(
                 fontSize: 20.0, 
                 color: Colors.white
               ),
@@ -190,8 +195,8 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              color: ColorResources.BTN_PRIMARY,
-              child: Text('All Member', style: TextStyle(color: Colors.white)),
+              color: ColorResources.WHITE,
+              child: Text('All Member', style: poppinsRegular.copyWith(color: Colors.white)),
             ),
           )
         ]),
@@ -212,7 +217,9 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           indicatorColor: ColorResources.BTN_PRIMARY,
           tabBarIndicatorSize: TabBarIndicatorSize.tab,
         ),
-        labelStyle: poppinsRegular,
+        labelStyle: poppinsRegular.copyWith(
+          fontSize: 9.0.sp
+        ),
       tabs: [
         Tab(text: getTranslated("LATEST", context)),
         Tab(text: getTranslated("POPULAR", context)),
@@ -261,11 +268,12 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                   itemBuilder: (BuildContext content, int i) {
                   if (feedState.g1List.length == i) {
                     return Loader(
-                      color: ColorResources.BTN_PRIMARY
+                      color: ColorResources.WHITE
                     );
                   }
                   return NewsComponent(
                     i: i,
+                    globalKey: globalKey,
                     groupsBody: feedState.g1List,
                   );
                 }
@@ -326,6 +334,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                   }
                   return NewsComponent(
                     i: i,
+                    globalKey: globalKey,
                     groupsBody: feedState.g2List,
                   );
                 },
@@ -345,7 +354,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
         Observer(builder: (_) {
           if (feedState.groupsSelfStatus == GroupsSelfStatus.loading) {
             return Loader(
-              color: ColorResources.BTN_PRIMARY,
+              color: ColorResources.BTN_PRIMARY
             );
           }
           if (feedState.groupsSelfStatus == GroupsSelfStatus.empty) {
@@ -358,7 +367,9 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           }
           if (feedState.groupsSelfStatus == GroupsSelfStatus.error) {
             return Center(
-              child: Text('Ups! Server sedang ada gangguan, Mohon tunggu...')
+              child: Text(getTranslated("THERE_WAS_PROBLEM", context),
+                style: poppinsRegular,
+              )
             );
           }
           return NotificationListener<ScrollNotification>(
@@ -380,11 +391,12 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                 itemBuilder: (BuildContext content, int i) {
                   if (feedState.g3List.length == i) {
                     return Loader(
-                      color: ColorResources.BTN_PRIMARY,
+                      color: ColorResources.WHITE,
                     );
                   }
                   return NewsComponent(
                     i: i,
+                    globalKey: globalKey,
                     groupsBody: feedState.g3List,
                   );
                 },
@@ -408,7 +420,6 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     (() async {
-      // await feedState.fetchGroupsMetaDataList();
       await feedState.fetchGroupsMostRecent();
       await feedState.fetchGroupsMostPopular();
       await feedState.fetchGroupsSelf();
@@ -425,6 +436,7 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
     return WillPopScope(
      onWillPop: onWillPop,
      child: Scaffold(
+      key: globalKey,
       body: NestedScrollView(
         physics: ScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxScrolled) {
@@ -432,10 +444,11 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           SliverAppBar(
             brightness: Brightness.light,
             backgroundColor: Colors.white,
+            automaticallyImplyLeading: false,
             title: Text('Community Feed',
              style: poppinsRegular.copyWith(
-               color: ColorResources.BLACK,
-               fontSize: 16.0
+               color: ColorResources.BTN_PRIMARY,
+               fontSize: 10.0.sp
               )
             ),
             actions: [
@@ -449,11 +462,10 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
                 },
                 icon: Icon(
                   Icons.notifications,
-                  color: ColorResources.PRIMARY
+                  color: ColorResources.BTN_PRIMARY
                 ),
               ),
             ],
-            automaticallyImplyLeading: false,
             elevation: 0.0,
             forceElevated: true,
             pinned: true,
@@ -462,7 +474,10 @@ class _FeedIndexState extends State<FeedIndex> with TickerProviderStateMixin {
           ),
           // groupslistSection(context),
           // memberAndAddGroupsSection(context),
-          InputPostComponent(null),
+          InputPostComponent(
+            groupId: null,
+            globalKey: globalKey,
+          ),
           tabSection(context)
           ];
         },

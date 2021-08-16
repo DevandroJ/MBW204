@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -30,8 +31,12 @@ import 'package:mbw204_club_ina/views/screens/feed/widgets/post_video_component.
 
 class PostDetailScreen extends StatefulWidget {
   final String postId;
+  final GlobalKey<ScaffoldMessengerState> globalKey;
 
-  PostDetailScreen({this.postId});
+  PostDetailScreen({
+    this.postId,
+    this.globalKey,
+  });
 
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();
@@ -143,7 +148,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               if(feedState.post.body.postType == PostType.LINK)
                 PostLinkComponent(url: feedState.post.body.content.url),
               if (feedState.post.body.postType == PostType.DOCUMENT)
-                PostDocComponent(feedState.post.body.content.medias),
+                PostDocComponent(
+                  globalKey: widget.globalKey,
+                  medias: feedState.post.body.content.medias, 
+                  caption: feedState.post.body.content.caption
+                ),
               if (feedState.post.body.postType == PostType.IMAGE)
                 PostImageComponent(feedState.post.body.content.medias, feedState.post.body.content.caption),
               if (feedState.post.body.postType == PostType.VIDEO)
@@ -174,7 +183,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                               padding: EdgeInsets.all(5.0),
                               child: Icon(Icons.thumb_up,
                                 size: 16.0,
-                                color: feedState.post.body.liked.isNotEmpty ? Colors.blue : ColorResources.BLACK
+                                color: feedState.post.body.liked.isNotEmpty ? Colors.blue : ColorResources.WHITE
                               ),
                             ),
                           )
@@ -209,7 +218,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               leading: IconButton(
                 icon: Icon(
                   Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-                  color: Colors.black,
+                  color: ColorResources.BLACK,
                 ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -225,7 +234,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             builder: (_) {
               if (feedState.commentMostRecentStatus == CommentMostRecentStatus.loading) {
                 return Loader(
-                  color: ColorResources.BTN_PRIMARY,
+                  color: ColorResources.BTN_PRIMARY
                 );
               }
               if (feedState.commentMostRecentStatus == CommentMostRecentStatus.empty) {
@@ -262,8 +271,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           title: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              color: ColorResources.BLUE_GREY,
-                              borderRadius: BorderRadius.all(Radius.circular(8.0))
+                              color: ColorResources.BLACK,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.0)
+                              )
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,10 +363,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   },
                 ),
                 onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                  if (scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent) {
                     if (feedState.c1.nextCursor != null) {
                       feedState.fetchListCommentMostRecentLoad(widget.postId, feedState.c1.nextCursor);
-                      feedState.c1.nextCursor = null;
                     }
                   }
                   return false;
@@ -460,7 +471,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   controller: commentTextEditingController,
                   style: poppinsRegular.copyWith(
                     color: ColorResources.BLACK,
-                    fontSize: 16.0
+                    fontSize: 9.0.sp
                   ),
                   decoration: InputDecoration.collapsed(
                     hintText: '${getTranslated("WRITE_COMMENT", context)} ...',
@@ -524,12 +535,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     SizedBox(height: 10.0),
                     Icon(
                       Icons.delete,
-                      color: ColorResources.BLACK,
+                      color: ColorResources.WHITE,
                     ),
                     SizedBox(height: 10.0),
                     Text(getTranslated("DELETE_POST", context),
                       style: poppinsRegular.copyWith(
-                        fontSize: 16.0,
+                        fontSize: 10.0.sp,
                         fontWeight: FontWeight.bold
                       ),
                     ),
@@ -568,8 +579,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             color: ColorResources.WHITE,
                           )
                           : Text(getTranslated("YES", context),
-                            style: poppinsRegular,
-                          )
+                              style: poppinsRegular.copyWith(
+                                fontSize: 9.0.sp
+                              ),
+                            )
                           );
                         })
                       ],

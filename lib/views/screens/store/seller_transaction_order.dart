@@ -5,8 +5,8 @@ import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:mbw204_club_ina/views/screens/store/seller_store.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/views/screens/store/seller_store.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/data/models/warung/transaction_warung_paid_model.dart';
@@ -49,12 +49,12 @@ class _SellerTransactionOrderScreenState extends State<SellerTransactionOrderScr
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: ColorResources.WHITE,
+          backgroundColor: ColorResources.BTN_PRIMARY,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
               size: 20.0,
-              color: ColorResources.PRIMARY,
+              color: ColorResources.WHITE,
             ),
             onPressed: onWillPop
           ),
@@ -62,7 +62,7 @@ class _SellerTransactionOrderScreenState extends State<SellerTransactionOrderScr
           elevation: 0.0,
           title: Text("Penjualan Saya",
             style: poppinsRegular.copyWith(
-              color: ColorResources.PRIMARY
+              color: ColorResources.WHITE
             ),
           ),
         ),

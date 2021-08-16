@@ -7,17 +7,16 @@ import "package:flutter/material.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:icon_shadow/icon_shadow.dart';
+import 'package:lottie/lottie.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:mbw204_club_ina/views/basewidget/search.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
-import 'package:mbw204_club_ina/views/basewidget/error_component.dart';
 import 'package:mbw204_club_ina/data/models/warung/card_add_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/product_single_warung_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/product_warung_model.dart';
@@ -50,14 +49,17 @@ class _DetailProductPageState extends State<DetailProductPage> {
   ScrollController scrollController = ScrollController();
 
   bool lastStatus = true;
-
   bool start = false;
-  int current = 0;
-  CartModel cartModel;
   bool isLoading = true;
   bool isLoadingBottom = true;
   bool isLoadingProduct = true;
   bool isLoadingCategory = true;
+
+  List<dynamic> kindStuffSelected = [];
+
+  int current = 0;
+  CartModel cartModel;
+ 
   SellerStoreModel sellerStoreModel;
   ProgressDialog pr;
 
@@ -107,7 +109,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
   }
 
   _getProductByCategory() async {
-    await Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, productSingleWarungModel.body.name, productSingleWarungModel.body.category.id, 0).then((valueCategory) {
+    await Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, productSingleWarungModel.body.name, productSingleWarungModel.body.category.id).then((valueCategory) {
       if (valueCategory.code == 0) {
         setState(() {
           isLoadingCategory = false;
@@ -163,7 +165,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
         backgroundColor: Colors.white,
         body: isLoadingBottom 
         ? loadingDetailPage() 
-        : isLoadingProduct ? loadingDetailPage() 
+        : isLoadingProduct 
+        ? loadingDetailPage() 
         : detailProduct(),
       ),
     );
@@ -174,12 +177,44 @@ class _DetailProductPageState extends State<DetailProductPage> {
       builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
         if(warungProvider.sellerStoreStatus == SellerStoreStatus.error) {
           return Center(
-            child: ErrorComponent(
-              height: 120.0,
-              width: 120.0,
-            ),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LottieBuilder.asset("assets/lottie/error.json",
+                    width: 120.0,
+                    height: 120.0,
+                  ),
+                  Text("Ups! Server lagi ada Masalah",
+                    style: poppinsRegular.copyWith(
+                      color: ColorResources.BLACK
+                    ),
+                  )
+                ],
+              )
+            ) 
           );
         }
+
+        kindStuffSelected = [
+          { 
+            'name': 'Berbahaya',
+            'checked': productSingleWarungModel.body.harmful 
+          },
+          {
+            'name': 'Mudah Terbakar',
+            'checked': productSingleWarungModel.body.flammable
+          },
+          {
+            'name': 'Cair',
+            'checked': productSingleWarungModel.body.liquid
+          },
+          {
+            'name': 'Mudah Pecah',
+            'checked': productSingleWarungModel.body.fragile
+          }
+        ];
+        
         return Stack(
           children: [
           CustomScrollView(
@@ -352,7 +387,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                           direction: Axis.horizontal,
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 8, right: 15),
+                          margin: EdgeInsets.only(left: 8.0, right: 15.0),
                           child: Text(productSingleWarungModel.body.stats.ratingAvg.toString().substring(0, 3),
                             style: poppinsRegular.copyWith(
                               fontSize: 12.0,
@@ -384,7 +419,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(55.0),
                         child: CachedNetworkImage(
-                          imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productSingleWarungModel.body.store.picture.path}",
+                          imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productSingleWarungModel?.body?.store?.picture?.path}",
                           fit: BoxFit.cover,
                           placeholder: (BuildContext context, String url) => Loader(
                             color: ColorResources.PRIMARY,
@@ -493,7 +528,50 @@ class _DetailProductPageState extends State<DetailProductPage> {
               Container(
                 margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Jual",
+                          style: poppinsRegular.copyWith(
+                            color: Colors.black, 
+                            fontSize: 16.0
+                          )
+                        ),
+                        Container(
+                          child: Text(
+                            productSingleWarungModel.body.stats.numOfSold.toString(),
+                            style: poppinsRegular.copyWith(
+                                color: ColorResources.PRIMARY,
+                                fontSize: 16.0
+                              )
+                            ),
+                        )
+                      ]
+                    ),
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Review",
+                          style: poppinsRegular.copyWith(
+                            color: Colors.black, 
+                            fontSize: 16.0
+                          )
+                        ),
+                        Container(
+                          child: Text(
+                            productSingleWarungModel.body.stats.numOfSold.toString(),
+                            style: poppinsRegular.copyWith(
+                                color: ColorResources.PRIMARY,
+                                fontSize: 16.0
+                              )
+                            ),
+                        )
+                      ]
+                    ),
+                    SizedBox(height: 10.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -563,11 +641,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       children: [
                         Text("Kategori",
                           style: poppinsRegular.copyWith(
-                            color: Colors.black, 
+                            color: ColorResources.BLACK, 
                             fontSize: 16.0
                           )
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                               return ProductPage(
@@ -580,12 +658,38 @@ class _DetailProductPageState extends State<DetailProductPage> {
                           },
                           child: Text(
                             productSingleWarungModel.body.category.name,
-                            style: poppinsRegular.copyWith(                                  fontSize: 16.0,
+                            style: poppinsRegular.copyWith(                                  
+                              fontSize: 16.0,
                               color: ColorResources.PRIMARY
                             )
                           ),
                         )
                       ]
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      height: 40.0,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: kindStuffSelected.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          if(kindStuffSelected[i]["checked"])
+                            return Container(
+                              margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0, right: 4.0),
+                              padding: EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0),
+                                color: kindStuffSelected[i]["checked"] ? ColorResources.YELLOW_BOOTSTRAP : ColorResources.WHITE
+                              ),
+                              child: Text(kindStuffSelected[i]["name"], 
+                              style: poppinsRegular.copyWith(
+                                color: kindStuffSelected[i]["checked"] ? ColorResources.BLACK : ColorResources.BTN_PRIMARY
+                              ),
+                            ));
+                          return Container();
+                        }  
+                      ),
                     ),
                     SizedBox(height: 10.0),
                   ],
@@ -725,7 +829,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                           height: 50.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
-                            color: ColorResources.PRIMARY
+                            color: productSingleWarungModel.body.store.open ? ColorResources.PRIMARY : Colors.grey
                           ),
                           child: Center(
                             child: getStatusText(),
@@ -843,7 +947,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
               color: Color(0xffC4C6CC),
             ),
           ),
-          Text("Cari Produk di Indomini Mart",
+          Text("Cari Produk",
             style: poppinsRegular.copyWith(
               color: Color(0xffC4C6CC),
               fontSize: 14.0,
@@ -869,7 +973,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   ),
                   child: ClipRRect(
                       child: CachedNetworkImage(
-                    imageUrl: AppConstants.BASE_URL_FEED_IMG + fileImage.path,
+                    imageUrl: AppConstants.BASE_URL_FEED_IMG + fileImage?.path,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Center(
                         child: Shimmer.fromColors(
@@ -965,11 +1069,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                     ),
                     builder: (context, index) {
                       return PhotoViewGalleryPageOptions(
-                        imageProvider: NetworkImage(AppConstants.BASE_URL_FEED_IMG + imageUrl.body.pictures[index].path),
+                        imageProvider: NetworkImage(AppConstants.BASE_URL_FEED_IMG + imageUrl?.body?.pictures[index]?.path),
                         initialScale: PhotoViewComputedScale.contained * 1,
                         heroAttributes: PhotoViewHeroAttributes(
                           tag: AppConstants.BASE_URL_FEED_IMG +
-                          imageUrl.body.pictures[index].path
+                          imageUrl.body.pictures[index]?.path
                         ),
                       );
                     },
@@ -1010,41 +1114,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
             ? Container()
             : Container(
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Produk yang serupa",
-                    style: poppinsRegular.copyWith(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return ProductPage(
-                          idCategory: productSingleWarungModel.body.category.id,
-                          nameCategory: productSingleWarungModel.body.category.name,
-                          typeProduct: widget.typeProduct,
-                          path: widget.path
-                        );
-                      }));
-                    },
-                    child: Text("Lihat Semua",
-                      style: poppinsRegular.copyWith(
-                        fontSize: 16.0,
-                        color: ColorResources.PRIMARY,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 10.0),
-              child: SearchWidget(
-                hintText: "Cari Produk di Toko Benz Mart",
+              child: Text("Produk yang serupa",
+                style: poppinsRegular.copyWith(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold
+                ),
               ),
             ),
             delivered.length == 0 || delivered == null
@@ -1155,7 +1230,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                           topRight: Radius.circular(12.0)
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productWarungList.pictures.first.path}",
+                          imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productWarungList?.pictures?.first?.path}",
                           fit: BoxFit.cover,
                           placeholder: (BuildContext context, String url) => Center(
                             child: Shimmer.fromColors(
@@ -1376,10 +1451,10 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.only(
-                            top: 8,
-                            bottom: 8,
-                            left: 16,
-                            right: 16,
+                            top: 8.0,
+                            bottom: 8.0,
+                            left: 16.0,
+                            right: 16.0,
                           ),
                           child: Row(
                             children: [
@@ -1514,7 +1589,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(12.0),
                                         child: CachedNetworkImage(
-                                          imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productSingleWarungModel.body.pictures.first.path}",
+                                          imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productSingleWarungModel?.body?.pictures?.first?.path}",
                                           fit: BoxFit.cover,
                                           placeholder: (BuildContext context, String url) =>
                                             Center(

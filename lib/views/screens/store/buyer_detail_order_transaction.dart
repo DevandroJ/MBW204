@@ -12,8 +12,8 @@ import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'package:timelines/timelines.dart' as t;
 
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/warung/shipping_tracking_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/transaction_warung_paid_single_model.dart';
@@ -122,7 +122,7 @@ class _DetailBuyerTransactionScreenState extends State<DetailBuyerTransactionScr
         : Stack(
         children: [
           RefreshIndicator(
-            backgroundColor: ColorResources.BTN_PRIMARY,
+            backgroundColor: ColorResources.PRIMARY,
             color: ColorResources.WHITE,
             onRefresh: () {
               Map<String, dynamic> basket = Provider.of(context, listen: false);

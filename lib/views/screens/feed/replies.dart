@@ -98,7 +98,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
           return Container(
             height: 100.0,
             child: Loader(
-              color: ColorResources.BTN_PRIMARY
+              color: ColorResources.WHITE
             )
           );
         }
@@ -180,7 +180,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                 padding: EdgeInsets.all(5.0),
                                 child: Icon(Icons.thumb_up,
                                   size: 16.0,
-                                  color: groupsState.singleComment.body.liked.isNotEmpty ? Colors.blue : ColorResources.BLACK
+                                  color: groupsState.singleComment.body.liked.isNotEmpty ? Colors.blue : ColorResources.BLACK,
                                 ),
                               ),
                             )
@@ -238,7 +238,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
         builder: (_) {
           if (groupsState.replyStatus == ReplyStatus.loading) {
             return Loader(
-              color: ColorResources.BTN_PRIMARY
+              color: ColorResources.WHITE
             );
           }
           if (groupsState.replyStatus == ReplyStatus.empty) {
@@ -355,7 +355,6 @@ class _RepliesScreenState extends State<RepliesScreen> {
               if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
                 if (groupsState.reply.nextCursor != null) {
                   groupsState.fetchAllReplyLoad(widget.id, groupsState.reply.nextCursor);
-                  groupsState.reply.nextCursor = null;
                 }
               }
               return false;

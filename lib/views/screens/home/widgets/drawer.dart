@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/views/screens/store/seller_store.dart';
 import 'package:mbw204_club_ina/views/screens/store/form_store.dart';
@@ -91,7 +92,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       children: [
                         drawerItems(context, AboutUsScreen(), "about", Images.logo_app, "${getTranslated("ABOUT", context)} MBW204 Club Indonesia"),
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
-                        drawerItems(context, null, "store", Images.shopping_image, getTranslated("MY_STORE", context)),
+                        Consumer<WarungProvider>(
+                          builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
+                            return drawerItems(context, null, "store", Images.shopping_image, warungProvider.sellerStoreStatus == SellerStoreStatus.empty ? getTranslated("OPEN_STORE", context) : getTranslated("MY_STORE", context));                
+                          },
+                        ),
                         drawerItems(context, CashoutScreen(), getTranslated("CASH_OUT", context), Images.cash_out, getTranslated("CASH_OUT", context)),
                         drawerItems(context, SettingsScreen(), "setting", Images.settings_drawer, getTranslated("SETTINGS", context)),
                         drawerItems(context, null, "bantuan", Images.bantuan_drawer, getTranslated("SUPPORT", context)),
@@ -102,7 +107,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 } else {
                   return Center(
                     child: Container(
-                      width: double.infinity,
+                      width: double.infinity, 
                       margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                       child: TextButton(
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen())),
@@ -394,42 +399,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   showAnimatedDialog(
                     context: context,
                     barrierDismissible: true,
-                    builder: (context) {
-                      return Dialog( 
-                        child: Container(
-                          height: 230.0,
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            children: [
-                              Text("${getTranslated("ATTENTION", context)} !",
-                                style: poppinsRegular,
-                              ),
-                              SizedBox(height: 8.0),
-                              Text("Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
-                                softWrap: true,
-                                textAlign: TextAlign.justify,
-                                style: poppinsRegular.copyWith(
-                                  height: 1.8
-                                ),
-                              ),
-                              SizedBox(height: 8.0),
-                              Container(
-                                width: double.infinity,
-                                margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: ColorResources.DIM_GRAY
-                                  ),
-                                  onPressed: () => Navigator.of(context).pop(), 
-                                  child: Text("OK",
-                                    style: poppinsRegular,
-                                  )
-                                ),
-                              )
-                            ],
-                          ),
+                    builder: (BuildContext context) {
+                      return ClassicGeneralDialogWidget(
+                        titleText: "${getTranslated("ATTENTION", context)} !",
+                        contentText: "Tenant/Penjual diwajibkan mengisi e-Wallet minimal Rp. 50.000,- untuk mengcover beban biaya yang timbul, jika tidak memproses pemesanan pembeli dalam waktu yang ditentukan",
+                        onPositiveClick: () => Navigator.of(context).pop(),
+                        positiveText: "Ok",
+                        positiveTextStyle: poppinsRegular.copyWith(
+                          color: ColorResources.BTN_PRIMARY,
+                          fontSize: 9.0.sp
                         ),
-                      );      
+                      );  
                     }
                   );
                 }

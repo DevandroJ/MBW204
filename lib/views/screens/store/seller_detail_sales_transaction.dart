@@ -15,9 +15,9 @@ import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/warung/shipping_tracking_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/transaction_warung_paid_single_model.dart';
@@ -1298,7 +1298,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                       child: Container(
                                                         width: double.infinity,
                                                         decoration: BoxDecoration(
-                                                          color: ColorResources.WHITE,
+                                                          color: Theme.of(context).accentColor,
                                                           borderRadius: BorderRadius.circular(6.0),
                                                           boxShadow: [
                                                             BoxShadow(
@@ -1367,7 +1367,7 @@ class _DetailSellerTransactionScreenState extends State<DetailSellerTransactionS
                                                       child: Container(
                                                         width: double.infinity,
                                                         decoration: BoxDecoration(
-                                                          color: ColorResources.WHITE,
+                                                          color: Theme.of(context).accentColor,
                                                           borderRadius: BorderRadius.circular(6.0),
                                                           boxShadow: [
                                                             BoxShadow(

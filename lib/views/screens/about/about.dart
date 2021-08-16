@@ -156,13 +156,13 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                     MaterialPageRoute(
                       builder: (context) => PDFScreen(
                         path: pathAboutUsPDF,
-                        title: getTranslated("HISTORY_ORGANIZATION", context),
+                        title: getTranslated("ABOUT_US", context),
                       ),
                     ),
                   );
                 }
               }, 
-              child: Text(getTranslated("HISTORY_ORGANIZATION", context),
+              child: Text(getTranslated("ABOUT_US", context),
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),
@@ -205,19 +205,19 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 backgroundColor: ColorResources.BTN_PRIMARY
               ),
               onPressed: () { 
-                if (structureOrganization != null || structureOrganization.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PDFScreen(
-                        path: structureOrganization,
-                        title: getTranslated("ORGANIZATION_RULES", context),
-                      ),
-                    ),
-                  );
-                }
+                // if (structureOrganization != null || structureOrganization.isNotEmpty) {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => PDFScreen(
+                //         path: structureOrganization,
+                //         title: getTranslated("ORGANIZATION_RULES", context),
+                //       ),
+                //     ),
+                //   );
+                // }
               }, 
-              child: Text(getTranslated("ORGANIZATION_RULES", context),
+              child: Text(getTranslated("ORGANIZATION_POLICY", context),
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),

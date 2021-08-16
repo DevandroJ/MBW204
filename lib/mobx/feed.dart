@@ -698,8 +698,8 @@ abstract class FeedVM with Store {
   }
 
   @action
-  Future sendPostDoc(FilePickerResult files, [String groupId = ""]) async {
-    await FeedService.shared.sendPostDoc(files, groupId);
+  Future sendPostDoc(String caption, FilePickerResult files, [String groupId = ""]) async {
+    await FeedService.shared.sendPostDoc(caption, files, groupId);
     if (groupId == null) {
       Future.delayed(Duration.zero, () {
         fetchGroupsMostRecent();

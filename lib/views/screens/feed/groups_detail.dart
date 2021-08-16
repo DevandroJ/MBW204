@@ -303,7 +303,6 @@ class _GroupsDetailScreenState extends State<GroupsDetailScreen> with TickerProv
 
   void initState() {
     super.initState();
-    SocketHelper.shared.connect(context);
     (() async {
       await groupsState.fetchGroup(widget.groupsMetaDataListBody.id);
       await groupsState.fetchGroupsMostRecentChild(widget.groupsMetaDataListBody.id);
@@ -366,7 +365,10 @@ class _GroupsDetailScreenState extends State<GroupsDetailScreen> with TickerProv
                   ],
                 ),
                 bannersection(context),
-                InputPostComponent(widget.groupsMetaDataListBody.id),
+                InputPostComponent(
+                  groupId: widget.groupsMetaDataListBody.id,
+                  globalKey: null,
+                ),
                 tabsection(context),
               ];
             },

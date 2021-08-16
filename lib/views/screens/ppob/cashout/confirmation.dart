@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -35,7 +36,7 @@ class CashOutInformationScreen extends StatefulWidget {
 class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
   FocusNode passNode = FocusNode();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldMessengerState> globalKey = GlobalKey<ScaffoldMessengerState>();
   TextEditingController passwordTextController = TextEditingController();
 
   void initState() {
@@ -54,128 +55,144 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
     void submit() async {
       try {
         if(Provider.of<PPOBProvider>(context, listen: false).getGlobalPaymentMethodName.isEmpty) {
-          Fluttertoast.showToast(
-            msg: "Please select destination cash out method",
-            backgroundColor: ColorResources.ERROR,
-            toastLength: Toast.LENGTH_LONG,
-            textColor: ColorResources.WHITE
+          ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+            SnackBar(
+              backgroundColor: ColorResources.ERROR,
+              content: Text("Please select destination cash out method",
+                style: poppinsRegular,
+              )
+            )
           );
           return;
         }
         if(Provider.of<PPOBProvider>(context, listen: false).getGlobalPaymentAccount.trim().isEmpty) {
-          Fluttertoast.showToast(
-            msg: "Please fill no account",
-            backgroundColor: ColorResources.ERROR,
-            toastLength: Toast.LENGTH_LONG,
-            textColor: ColorResources.WHITE
+          ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+            SnackBar(
+              backgroundColor: ColorResources.ERROR,
+              content: Text("Please fill no account",
+                style: poppinsRegular,
+              )
+            )
           );
           return;
         }
         showMaterialModalBottomSheet(
           context: context, 
           builder: (context) {
-            return Container(
-            height: 300.0,
-            margin: EdgeInsets.only(top: 60.0, bottom: 0.0, left: 0.0, right: 0.0),
-            child: Form(
+            return Form(
             key: formKey,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
+              child: Container(
+                height: 50.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                Container(
-                  margin: EdgeInsets.only(
-                    left: Dimensions.MARGIN_SIZE_DEFAULT, 
-                    right: Dimensions.MARGIN_SIZE_DEFAULT, 
-                    bottom: Dimensions.MARGIN_SIZE_DEFAULT
-                  ),
-                  child: CustomPasswordTextField(
-                    hintTxt: "Password",
-                    textInputAction: TextInputAction.done,
-                    focusNode: passNode,
-                    controller: passwordTextController,
-                  )
-                ),
-
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 16.0,
-                    right: 16.0, 
-                    bottom: 10.0, 
-                    top: 15.0
-                  ),
-                  child: TextButton(
-                  onPressed: () async {
-                    try {
-                      if(passwordTextController.text.trim().isEmpty) {
-                        Fluttertoast.showToast(
-                          msg: getTranslated("PASSWORD_REQUIRED", context),
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: ColorResources.ERROR,
-                        );
-                        return;
-                      }
-                      final res = await Provider.of<AuthProvider>(context, listen: false).authDisbursement(context, passwordTextController.text);
-                      if(res == 200) {
-                        await Provider.of<PPOBProvider>(context, listen: false).submitDisbursement(context, widget.token);
-                      } 
-                    } on CustomException catch(e) {
-                      String error = e.toString();
-                      Fluttertoast.showToast(
-                        msg: error,
-                        toastLength: Toast.LENGTH_LONG,
-                        backgroundColor: ColorResources.ERROR
-                      );
-                    } on ServerErrorException catch(e) {
-                      Fluttertoast.showToast(
-                        msg: e.toString(),
-                        backgroundColor: ColorResources.ERROR,
-                        toastLength: Toast.LENGTH_LONG,
-                        textColor: ColorResources.WHITE
-                      );  
-                    } catch(e) {
-                      print(e);
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    backgroundColor: ColorResources.BTN_PRIMARY
-                  ),
-                  child: Container(
-                    height: 45.0,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2), 
-                          spreadRadius: 1.0, 
-                          blurRadius: 7.0, 
-                          offset: Offset(0, 1)
+                    Container(
+                      margin: EdgeInsets.only(top: 20.0, left: 16.0, right: 16, bottom: 20.0),
+                      child: Text(getTranslated("ENTER_YOUR_PASSWORD", context),
+                        style: poppinsRegular.copyWith(
+                          fontSize: 9.0.sp 
                         ),
-                      ],
-                      borderRadius: BorderRadius.circular(10.0)),
-                      child: Consumer<AuthProvider>(
-                        builder: (BuildContext context, AuthProvider authProvider, Widget child) {
-                          return authProvider.authDisbursementStatus == AuthDisbursementStatus.loading 
-                          ? Loader(
-                              color: ColorResources.WHITE,
-                            )
-                          : Text(getTranslated('SIGN_IN', context),
-                            style: poppinsRegular.copyWith(
-                              fontSize: 16.0,
-                              color: ColorResources.WHITE,
-                            )
-                          );
-                        } 
+                      ),
+                    ),
+
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: Dimensions.MARGIN_SIZE_DEFAULT, 
+                        right: Dimensions.MARGIN_SIZE_DEFAULT, 
+                        bottom: Dimensions.MARGIN_SIZE_DEFAULT
+                      ),
+                      child: CustomPasswordTextField(
+                        hintTxt: getTranslated("PASSWORD", context),
+                        textInputAction: TextInputAction.done,
+                        focusNode: passNode,
+                        controller: passwordTextController,
                       )
                     ),
-                  )  
+
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: 16.0,
+                      right: 16.0, 
+                      bottom: 10.0, 
+                      top: 15.0
+                    ),
+                    child: TextButton(
+                    onPressed: () async {
+                      try {
+                        if(passwordTextController.text.trim().isEmpty) {
+                          Fluttertoast.showToast(
+                            msg: getTranslated("PASSWORD_REQUIRED", context),
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: ColorResources.ERROR,
+                          );
+                          return;
+                        }
+                        final res = await Provider.of<AuthProvider>(context, listen: false).authDisbursement(context, passwordTextController.text);
+                        if(res == 200) {
+                          await Provider.of<PPOBProvider>(context, listen: false).submitDisbursement(context, widget.token);
+                        } 
+                      } on CustomException catch(e) {
+                        String error = e.toString();
+                        ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                          SnackBar(
+                            backgroundColor: ColorResources.ERROR,
+                            content: Text(error,
+                              style: poppinsRegular,
+                            )
+                          )
+                        );
+                      } on ServerErrorException catch(e) {
+                        String error = e.toString();
+                        ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                          SnackBar(
+                            backgroundColor: ColorResources.ERROR,
+                            content: Text(error,
+                              style: poppinsRegular,
+                            )
+                          )
+                        );  
+                      } catch(_) {}
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      backgroundColor: ColorResources.BTN_PRIMARY
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2), 
+                            spreadRadius: 1.0, 
+                            blurRadius: 7.0, 
+                            offset: Offset(0, 1)
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10.0)),
+                        child: Consumer<AuthProvider>(
+                          builder: (BuildContext context, AuthProvider authProvider, Widget child) {
+                            return authProvider.authDisbursementStatus == AuthDisbursementStatus.loading 
+                            ? Loader(
+                                color: ColorResources.WHITE,
+                              )
+                            : Text(getTranslated('CONTINUE', context),
+                              style: poppinsRegular.copyWith(
+                                fontSize: 9.0.sp,
+                                color: ColorResources.WHITE,
+                              )
+                            );
+                          } 
+                        )
+                      ),
+                    )  
+                  ),
+                  ],
                 ),
-                ],
               ),
             )
-          ),
-        );
+          );
       });
       } catch(e) {
         print(e);
@@ -183,7 +200,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
     }
     
     return Scaffold(
-      key: scaffoldKey,
+      key: globalKey,
       body: SafeArea(
         child: Stack(
           children: [
@@ -202,14 +219,14 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                       children: [
                         Text("Total deduction",
                           style: poppinsRegular.copyWith(
-                            fontSize: 11.0,
+                            fontSize: 9.0.sp,
                             fontWeight: FontWeight.w500
                           )
                         ),
                         SizedBox(height: 8.0),
                         Text(ConnexistHelper.formatCurrency(double.parse(widget.totalDeduction.toString())),
                           style: poppinsRegular.copyWith(
-                            fontSize: 16.0,
+                            fontSize: 9.0.sp,
                             fontWeight: FontWeight.bold,
                             color: ColorResources.BLACK
                           ),
@@ -220,114 +237,116 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
 
                   SizedBox(height: 20.0),
 
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                        Text("Cash out on",
-                          style: poppinsRegular.copyWith(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w500
-                          )
-                        ),
+                      Text("Cash out on",
+                        style: poppinsRegular.copyWith(
+                          fontSize: 9.0.sp,
+                          fontWeight: FontWeight.w500
+                        )
+                      ),
 
-                        Consumer<PPOBProvider>(
-                          builder: (BuildContext context, PPOBProvider ppobProvider, Widget child) {
-                            return StatefulBuilder(
-                              builder: (BuildContext context, Function s) {
-                                return ppobProvider.getGlobalPaymentMethodName != "" && 
-                                ppobProvider.getGlobalPaymentAccount != "" 
-                                ?  
-                                  Container(
-                                    margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                    child: Column(
-                                      children: [
-
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("${ppobProvider.getGlobalPaymentMethodName} - ${ppobProvider.getGlobalPaymentAccount}",
-                                              style: poppinsRegular,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Provider.of<PPOBProvider>(context, listen: false).removePaymentMethod();
-                                              },
-                                              child: Icon(
-                                                Icons.remove_circle,
-                                                color: ColorResources.BTN_PRIMARY,  
-                                              ),
-                                            )
-                                          ],
-                                        ),
-
-                                      ]
-                                    ),
-                                  )
-                                : Container(
+                      Consumer<PPOBProvider>(
+                        builder: (BuildContext context, PPOBProvider ppobProvider, Widget child) {
+                          return StatefulBuilder(
+                            builder: (BuildContext context, Function s) {
+                              return ppobProvider.getGlobalPaymentMethodName != "" && 
+                              ppobProvider.getGlobalPaymentAccount != "" 
+                              ?  
+                                Container(
+                                  margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
                                   child: Column(
                                     children: [
+
                                       Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              elevation: MaterialStateProperty.resolveWith<double>(
-                                                (Set<MaterialState> states) {
-                                                  if (states.contains(MaterialState.disabled)) {
-                                                    return 0;
-                                                  }
-                                                  return 0;
-                                                },
-                                              ),
-                                              backgroundColor: MaterialStateProperty.all(ColorResources.BLUE),
-                                              
+                                          Text("${ppobProvider.getGlobalPaymentMethodName} - ${ppobProvider.getGlobalPaymentAccount}",
+                                            style: poppinsRegular.copyWith(
+                                              fontSize: 9.0.sp
                                             ),
-                                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
-                                              title: "Bank Transfer",
-                                              items: ppobProvider.bankDisbursement
-                                            ))),
-                                            child: Text("Bank Transfer",
-                                              style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ),
-                                            )
                                           ),
-                                          SizedBox(width: 15.0),
-                                          ElevatedButton(
-                                            style: ButtonStyle(
-                                              elevation: MaterialStateProperty.resolveWith<double>(
-                                                (Set<MaterialState> states) {
-                                                  if (states.contains(MaterialState.disabled)) {
-                                                    return 0;
-                                                  }
-                                                  return 0;
-                                                },
-                                              ),
-                                              backgroundColor: MaterialStateProperty.all(ColorResources.BLUE),
+                                          InkWell(
+                                            onTap: () {
+                                              Provider.of<PPOBProvider>(context, listen: false).removePaymentMethod();
+                                            },
+                                            child: Icon(
+                                              Icons.remove_circle,
+                                              color: ColorResources.BTN_PRIMARY,  
                                             ),
-                                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
-                                              title: "E Money",
-                                              items: ppobProvider.emoneyDisbursement
-                                            ))), 
-                                            child: Text("E-Money",
-                                              style: poppinsRegular.copyWith(
-                                                color: ColorResources.WHITE
-                                              ),
-                                            )
                                           )
                                         ],
                                       ),
-                                    ],
+
+                                    ]
                                   ),
-                                );
-                              },
-                            );
-                          },
-                        ),                        
-                       
-                      ],
-                    ),
+                                )
+                              : Container(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            elevation: MaterialStateProperty.resolveWith<double>(
+                                              (Set<MaterialState> states) {
+                                                if (states.contains(MaterialState.disabled)) {
+                                                  return 0;
+                                                }
+                                                return 0;
+                                              },
+                                            ),
+                                            backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
+                                            
+                                          ),
+                                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
+                                            title: "Bank Transfer",
+                                            items: ppobProvider.bankDisbursement
+                                          ))),
+                                          child: Text("Bank Transfer",
+                                            style: poppinsRegular.copyWith(
+                                              fontSize: 9.0.sp,
+                                              color: ColorResources.WHITE
+                                            ),
+                                          )
+                                        ),
+                                        SizedBox(width: 15.0),
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            elevation: MaterialStateProperty.resolveWith<double>(
+                                              (Set<MaterialState> states) {
+                                                if (states.contains(MaterialState.disabled)) {
+                                                  return 0;
+                                                }
+                                                return 0;
+                                              },
+                                            ),
+                                            backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
+                                          ),
+                                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListTileComponent(
+                                            title: getTranslated("E_MONEY", context),
+                                            items: ppobProvider.emoneyDisbursement
+                                          ))), 
+                                          child: Text(getTranslated("E_MONEY", context),
+                                            style: poppinsRegular.copyWith(
+                                              fontSize: 9.0.sp,
+                                              color: ColorResources.WHITE
+                                            ),
+                                          )
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),                        
+                     
+                    ],
                   ),
 
                   SizedBox(height: 10.0),
@@ -339,7 +358,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
 
                         Text("Cash out detail",
                           style: poppinsRegular.copyWith(
-                            fontSize: 11.0,
+                            fontSize: 9.0.sp,
                             fontWeight: FontWeight.w500
                           )
                         ),
@@ -351,12 +370,12 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           children: [
                             Text("Cash out amount",
                               style: poppinsRegular.copyWith(
-                                fontSize: 11.0
+                                fontSize: 9.0.sp
                               ),
                             ),
                             Text(ConnexistHelper.formatCurrency(double.parse(widget.totalDeduction.toString())),
-                              style: TextStyle(
-                                fontSize: 12.0,
+                              style: poppinsRegular.copyWith(
+                                fontSize: 9.0.sp,
                                 color: ColorResources.BLACK
                               ),
                             )
@@ -370,12 +389,12 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           children: [
                             Text("Admin fee",
                               style: poppinsRegular.copyWith(
-                                fontSize: 11.0
+                                fontSize: 9.0.sp
                               ),
                             ),
                             Text(ConnexistHelper.formatCurrency(double.parse(widget.adminFee.toString())),
                               style: poppinsRegular.copyWith(
-                                fontSize: 12.0,
+                                fontSize: 9.0.sp,
                                 color: ColorResources.BLACK
                               ),
                             )
@@ -388,13 +407,13 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Total deduction",
-                              style: TextStyle(
-                                fontSize: 11.0
+                              style: poppinsRegular.copyWith(
+                                fontSize: 9.0.sp
                               ),
                             ),
                             Text(ConnexistHelper.formatCurrency(double.parse(grandTotal.toString())),
                               style: poppinsRegular.copyWith(
-                                fontSize: 12.0,
+                                fontSize: 9.0.sp,
                                 color: ColorResources.BLACK
                               ),
                             )
@@ -413,7 +432,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                color: ColorResources.BLACK,
+                color: Colors.transparent,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
                 child: ElevatedButton(
                   onPressed: submit,
@@ -429,7 +448,7 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                     backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       )
                     )
                   ),
@@ -445,7 +464,8 @@ class _CashOutInformationScreenState extends State<CashOutInformationScreen> {
                         )
                       : Text(getTranslated("CONTINUE", context),
                         style: poppinsRegular.copyWith(
-                          color: ColorResources.WHITE
+                          color: ColorResources.WHITE,
+                          fontSize: 9.0.sp
                         ),
                       );
                     },

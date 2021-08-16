@@ -5,16 +5,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/data/models/warung/address_model.dart';
+import 'package:mbw204_club_ina/data/models/warung/address_single_model.dart';
+import 'package:mbw204_club_ina/data/models/warung/region_model.dart';
+import 'package:mbw204_club_ina/data/models/warung/region_subdistrict_model.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
-import 'package:mbw204_club_ina/data/models/warung/address_model.dart';
-import 'package:mbw204_club_ina/data/models/warung/address_single_model.dart';
-import 'package:mbw204_club_ina/data/models/warung/region_model.dart';
-import 'package:mbw204_club_ina/data/models/warung/region_subdistrict_model.dart';
+import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 
 enum GetAddressStatus { loading, loaded, idle, empty, error, }
@@ -69,10 +70,10 @@ class RegionProvider with ChangeNotifier {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/commerce/shipping/addresses");
+      print(res.data);
       AddressModel addressModel = AddressModel.fromJson(res.data);
       _addressList = [];
-      List<AddressList> listAddress = addressModel.body;
-      _addressList.addAll(listAddress);
+      _addressList.addAll(addressModel.body);
       setStateGetAddressStatus(GetAddressStatus.loaded);
       if(_addressList.isEmpty) {
         setStateGetAddressStatus(GetAddressStatus.empty);
@@ -82,7 +83,7 @@ class RegionProvider with ChangeNotifier {
       setStateGetAddressStatus(GetAddressStatus.error);
       Fluttertoast.showToast(
         backgroundColor: ColorResources.ERROR,
-        msg: "Internal Server Problem",
+        msg: "Failed: Internal Server Problem",
         fontSize: 14.0
       );
       print(e?.response?.statusCode);
@@ -114,12 +115,12 @@ class RegionProvider with ChangeNotifier {
         insetAnimCurve: Curves.easeInOut,
         progressTextStyle: poppinsRegular.copyWith(
           color: Colors.black, 
-          fontSize: 13.0, 
+          fontSize: 14.0, 
           fontWeight: FontWeight.w400
         ),
         messageTextStyle: poppinsRegular.copyWith(
           color: Colors.black, 
-          fontSize: 19.0, 
+          fontSize: 14.0, 
           fontWeight: FontWeight.w600
         )
       );
@@ -137,8 +138,11 @@ class RegionProvider with ChangeNotifier {
         "village": village,
         "subdistrict": subdistrict,
         "defaultLocation": true,
-        "location": [Provider.of<LocationProvider>(context, listen: false).getCurrentLat, Provider.of<LocationProvider>(context, listen: false).getCurrentLong] 
+        "location": [Provider.of<LocationProvider>(context, listen: false).getCurrentLong, Provider.of<LocationProvider>(context, listen: false).getCurrentLat] 
       });
+      if(_res.data["code"] == 411) {
+        throw ServerErrorException(_res.data["error"]);
+      }
       pr.hide();
       Fluttertoast.showToast(
         backgroundColor: ColorResources.SUCCESS,
@@ -146,22 +150,26 @@ class RegionProvider with ChangeNotifier {
         msg: "Alamat berhasil ditambah",
       );
       Navigator.of(context).pop();
-      Future.delayed(Duration(seconds: 1), () {
-        getDataAddress(context);
-      });
+      getDataAddress(context);
       final AddressSingleModel addressSingleModel = AddressSingleModel.fromJson(_res.data);
       return addressSingleModel;
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
       pr.hide();
-      Fluttertoast.showToast(
+    } on ServerErrorException catch(e) {
+       Fluttertoast.showToast(
         fontSize: 14.0,
-        msg: "Internal Server Problem",
+        msg: e.toString(),
         backgroundColor: ColorResources.ERROR
       );
     } catch (e) {
       print(e);
+      Fluttertoast.showToast(
+        fontSize: 14.0,
+        msg: "Failed: Internal Server Problem",
+        backgroundColor: ColorResources.ERROR
+      );
     }
   }
 
@@ -189,12 +197,12 @@ class RegionProvider with ChangeNotifier {
       insetAnimCurve: Curves.easeInOut,
       progressTextStyle: poppinsRegular.copyWith(
         color: Colors.black, 
-        fontSize: 13.0, 
+        fontSize: 14.0, 
         fontWeight: FontWeight.w400
       ),
       messageTextStyle: poppinsRegular.copyWith(
         color: Colors.black, 
-        fontSize: 19.0, 
+        fontSize: 14.0, 
         fontWeight: FontWeight.w600
       )
     );
@@ -234,7 +242,7 @@ class RegionProvider with ChangeNotifier {
       pr.hide();
       Fluttertoast.showToast(
         fontSize: 14.0,
-        msg: "Internal Server Problem",
+        msg: "Failed: Internal Server Problem",
         backgroundColor: ColorResources.ERROR
       );
     } catch (e) {

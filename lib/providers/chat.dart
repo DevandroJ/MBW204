@@ -104,13 +104,13 @@ class ChatProvider with ChangeNotifier {
   Future fetchListConversations(BuildContext context, String groupId) async {
     try {
       List<ListConversationData> lcd = await chatRepo.fetchListConversations(context, groupId);
-      if(_listConversationData.length != lcd.length || listConversationsStatus == ListConversationsStatus.refetch) {
+      // if(_listConversationData.length != lcd.length || listConversationsStatus == ListConversationsStatus.refetch) { 
         _listConversationData.clear();
         _listConversationData.addAll(lcd);
+      // }
         setStateListConversationsStatus(ListConversationsStatus.loaded);
-        if(_listConversationData.isEmpty) {
-          setStateListConversationsStatus(ListConversationsStatus.empty);
-        }
+      if(_listConversationData.isEmpty) {
+        setStateListConversationsStatus(ListConversationsStatus.empty);
       }
     } catch(e) {
       setStateListConversationsStatus(ListConversationsStatus.error);
@@ -164,17 +164,11 @@ class ChatProvider with ChangeNotifier {
             text: inputMsgController.text
           )
         ));
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          Timer(Duration(milliseconds: 10),() => scrollController.animateTo(
-            scrollController.position.maxScrollExtent, 
-            duration: Duration(seconds: 1), 
-            curve: Curves.easeInOut
-          ));
-          // jumpTo(scrollController.position.maxScrollExtent));
-        });
+        inputMsgController.text = "";
+        Timer(Duration(milliseconds: 300), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
         await loadSoundSent();
+        setStateSendMessage(SendMessageStatus.loaded);
       }
-      inputMsgController.text = "";
       await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
       int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       _listConversationData[index].messageStatus = "DELIVERED";
@@ -195,60 +189,66 @@ class ChatProvider with ChangeNotifier {
 
   Future sendMessageToConversationsSocket(BuildContext context, dynamic data) async {
     Map<String, dynamic> basket = Provider.of(context, listen: false);
+    int index = _listConversationData.indexWhere((el) => el.id == data["id"]);
     try { 
-      _listConversationData.insert(0, ListConversationData(
-        id: data["id"],
-        replyToConversationId: data["payload"]["replyToConversationId"],
-        created: DateTime.now().toString(),
-        fromMe: false,
-        contextId: AppConstants.X_CONTEXT_ID,
-        group: data["payload"]["group"],
-        origin: Origin(
-          userId: sharedPreferences.getString("userId"),
-          identity: sharedPreferences.getString("phoneNumber"),
-          displayName: sharedPreferences.getString("userName"),
-          group: false,
-          classId: "ojidinfo",
-          profilePic: ListConversationProfilePic(
-            originalName: "",
-            path: "",
-            fileLength: 0,
-            contentType: "image/jpeg",
-            kind: "IMAGE"
-          )
-        ),
-        remote: Origin(
-          userId: data["payload"]["remote"]["userId"],
-          identity: data["payload"]["remote"]["identity"],
-          displayName: data["payload"]["remote"]["displayName"],
-          group: data["payload"]["remote"]["group"],
-          classId: data["payload"]["remote"]["classId"],
-          profilePic: ListConversationProfilePic(
-            originalName: data["payload"]["remote"]["profilePic"]["originalName"],
-            path: data["payload"]["remote"]["profilePic"]["originalName"],
-            fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
-            contentType: data["payload"]["remote"]["profilePic"]["contentType"],
-            kind: data["payload"]["remote"]["profilePic"]["kind"]
-          )
-        ),
-        messageStatus: "SENT",
-        type: data["payload"]["type"],
-        classId: data["payload"]["classId"],
-        content: Content(
-          charset: data["payload"]["content"]["charset"],
-          text: data["payload"]["content"]["text"]
-        )
-      ));
-      Timer(Duration(milliseconds: 200),() => scrollController.jumpTo(scrollController.position.maxScrollExtent));
-      await loadSoundSent();
       if(basket["state"] == AppLifecycleState.paused){  
         notifyChat(context, data);
+      } else {
+        ListChatData listChatData = basket["listChatData"];
+        if(data["payload"]["chatId"] == listChatData.id) {
+          _listConversationData.insert(0, ListConversationData(
+            id: data["id"],
+            replyToConversationId: data["payload"]["replyToConversationId"],
+            created: DateTime.now().toString(),
+            fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
+            contextId: AppConstants.X_CONTEXT_ID,
+            group: data["payload"]["group"],
+            origin: Origin(
+              userId: sharedPreferences.getString("userId"),
+              identity: sharedPreferences.getString("phoneNumber"),
+              displayName: sharedPreferences.getString("userName"),
+              group: false,
+              classId: "ojidinfo",
+              profilePic: ListConversationProfilePic(
+                originalName: "",
+                path: "",
+                fileLength: 0,
+                contentType: "image/jpeg",
+                kind: "IMAGE"
+              )
+            ),
+            remote: Origin(
+              userId: data["payload"]["remote"]["userId"],
+              identity: data["payload"]["remote"]["identity"],
+              displayName: data["payload"]["remote"]["displayName"],
+              group: data["payload"]["remote"]["group"],
+              classId: data["payload"]["remote"]["classId"],
+              profilePic: ListConversationProfilePic(
+                originalName: data["payload"]["remote"]["profilePic"]["originalName"],
+                path: data["payload"]["remote"]["profilePic"]["originalName"],
+                fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
+                contentType: data["payload"]["remote"]["profilePic"]["contentType"],
+                kind: data["payload"]["remote"]["profilePic"]["kind"]
+              )
+            ),
+            messageStatus: "SENT",
+            type: data["payload"]["type"],
+            classId: data["payload"]["classId"],
+            content: Content(
+              charset: data["payload"]["content"]["charset"],
+              text: data["payload"]["content"]["text"]
+            )
+          ));
+          _listConversationData[index].messageStatus = "DELIVERED";
+          Timer(Duration(milliseconds: 300), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
+          await loadSoundSent();
+          setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
+        }
       }
       fetchListChat(context);
       setStateListChatStatus(ListChatStatus.refetch);
       setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
     } on Error catch(_) {
-      int index = _listConversationData.indexWhere((el) => el.id == data["id"]);
       _listConversationData[index].messageStatus = "UNDELIVERED";
       inputMsgController.text = _listConversationData[index].content.text;
       setStateSendMessage(SendMessageStatus.error);

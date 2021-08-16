@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
-import 'package:mbw204_club_ina/providers/auth.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 

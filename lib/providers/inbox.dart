@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/data/models/inbox.dart';
 
+import 'package:mbw204_club_ina/data/models/inbox.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/dio.dart';
 
@@ -28,10 +28,8 @@ class InboxProvider with ChangeNotifier {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL}/data/inbox?type=$type");
       InboxModel inboxModel = InboxModel.fromJson(json.decode(res.data));
-      if(_inboxes.length != inboxModel.body.length) {
-        _inboxes.clear();
-        _inboxes.addAll(inboxModel.body);
-      }
+      _inboxes = [];
+      _inboxes.addAll(inboxModel.body);
       readCount = _inboxes.where((el) => el.read == false).length;
       setStateInboxStatus(InboxStatus.loaded);
       if(_inboxes.isEmpty) {
@@ -54,7 +52,6 @@ class InboxProvider with ChangeNotifier {
         "read": true
       });
       getInboxes(context, type);
-      _inboxes.clear();
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);

@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-
 import 'package:mbw204_club_ina/data/models/warung/region_subdistrict_model.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/maps/src/place_picker.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/providers/location.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -130,7 +128,9 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Tambah Alamat Baru",
-          style: poppinsRegular,
+          style: poppinsRegular.copyWith(
+            color: ColorResources.WHITE
+          ),
         ),
         backgroundColor: ColorResources.PRIMARY,
         iconTheme: IconThemeData(color: Colors.white),
@@ -234,7 +234,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
                         child: Text("Simpan",
                           style: poppinsRegular.copyWith(
                             fontSize: 14.0, 
-                            color: Colors.white
+                            color: ColorResources.WHITE
                           )
                         ),
                       ),
@@ -368,7 +368,7 @@ class _TambahAlamatPageState extends State<TambahAlamatPage> {
                                         separatorBuilder:
                                             (context, index) {
                                           return Divider(
-                                            thickness: 1,
+                                            thickness: 1.0,
                                           );
                                         },
                                       );
@@ -1103,7 +1103,7 @@ Widget inputFieldAddress(BuildContext context) {
               Container(
                 padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
                 child: Text( locationProvider.getCurrentNameAddress == "Location no Selected" 
-                  ? getTranslated("LOCATION_NO_SELECTED", context) 
+                  ? "Location no Selected"
                   : locationProvider.getCurrentNameAddress,
                   style: poppinsRegular.copyWith(
                     color: Colors.black,

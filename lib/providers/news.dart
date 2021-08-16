@@ -7,7 +7,7 @@ import 'package:mbw204_club_ina/data/models/news.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/exceptions.dart';
 
-enum GetNewsStatus { idle, loading, loaded, error, empty }
+enum GetNewsStatus { idle, loading, loaded, error, refetch, empty }
 
 class NewsProvider with ChangeNotifier {
 
@@ -34,7 +34,7 @@ class NewsProvider with ChangeNotifier {
       );
       NewsModel newsModel = NewsModel.fromJson(json.decode(res.data));
       List<NewsBody> listNewsBody = newsModel.body;
-      if(_newsBody.length != listNewsBody.length) {
+      if(_newsBody.length != listNewsBody.length || getNewsStatus == GetNewsStatus.refetch) {
         _newsBody.clear();
         _newsBody.addAll(listNewsBody);
       }
@@ -53,12 +53,13 @@ class NewsProvider with ChangeNotifier {
     }
   }
 
-  Future refresh(BuildContext context, bool isEvent) async {
-    setStateGetNewsStatus(GetNewsStatus.loading);
+  void refresh(BuildContext context, bool isEvent) {
     if(isEvent) {
-      await getNews(context, true);
+      getNews(context, true);
+      setStateGetNewsStatus(GetNewsStatus.refetch);
     } else {
-      await getNews(context, false);
+      getNews(context, false);
+      setStateGetNewsStatus(GetNewsStatus.refetch);
     }
   } 
 

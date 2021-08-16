@@ -35,7 +35,7 @@ class InquiryRegistrationData {
   });
 
   String inquiryStatus;
-  int productPrice;
+  var productPrice;
   String productId;
   String productCode;
   String productName;
@@ -70,10 +70,10 @@ class InquiryRegistrationUser {
     this.admin,
   });
 
-  int amount;
+  var amount;
   String phoneNumber;
   String accountName;
-  int admin;
+  var admin;
 
   factory InquiryRegistrationUser.fromJson(Map<String, dynamic> json) => InquiryRegistrationUser(
     amount: json["amount"] == null ? null : json["amount"],

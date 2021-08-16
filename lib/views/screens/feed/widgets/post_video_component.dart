@@ -4,7 +4,11 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:io' as io;
 
+import 'package:sizer/sizer.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,7 +18,6 @@ import 'package:filesize/filesize.dart';
 import 'package:readmore/readmore.dart';
 import 'package:better_player/better_player.dart';
 
-import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/feed/feedmedia.dart';
@@ -159,20 +162,20 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
           Container(
             margin: EdgeInsets.only(left: 70.0),
             child: ReadMoreText(widget.caption,
-              style: TextStyle(
-                fontSize: 14.0,
+              style: poppinsRegular.copyWith(
+                fontSize: 9.0.sp,
               ),
               trimLines: 2,
               colorClickableText: Colors.black,
               trimMode: TrimMode.Line,
               trimCollapsedText: 'Tampilkan Lebih',
               trimExpandedText: 'Tutup',
-              moreStyle: TextStyle(
-                fontSize: 14.0, 
+              moreStyle: poppinsRegular.copyWith(
+                fontSize: 9.0.sp,
                 fontWeight: FontWeight.bold
               ),
-              lessStyle: TextStyle(
-                fontSize: 14.0, 
+              lessStyle: poppinsRegular.copyWith(
+                fontSize: 9.0.sp, 
                 fontWeight: FontWeight.bold
               ),
             ),
@@ -227,8 +230,8 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                                         Icon(Icons.download_rounded),
                                         SizedBox(height: 10.0),
                                         Text("Unduh video ini ?",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
+                                          style: poppinsRegular.copyWith(
+                                            fontSize: 10.0.sp,
                                             fontWeight: FontWeight.bold
                                           ),
                                         ),
@@ -241,7 +244,11 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                                                 backgroundColor:  MaterialStateProperty.all<Color>(ColorResources.ERROR)
                                               ),
                                               onPressed: () => Navigator.of(context).pop(), 
-                                              child: Text("Tidak")
+                                              child: Text("Tidak",
+                                                style: poppinsRegular.copyWith(
+                                                  fontSize: 9.0.sp,
+                                                ),
+                                              )
                                             ),
                                             ElevatedButton(
                                               onPressed: () async {
@@ -250,13 +257,13 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                                                   if(status.isGranted) {
                                                     String downloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
                                                     String url = '${AppConstants.BASE_URL_IMG}${widget.media.path}'; 
-                                                    // await FlutterDownloader.enqueue(
-                                                    //   url: url, 
-                                                    //   savedDir: downloadDir,
-                                                    //   fileName: basename(widget.media.path),
-                                                    //   openFileFromNotification: true,
-                                                    //   showNotification: true,
-                                                    // );                                                       
+                                                    await FlutterDownloader.enqueue(
+                                                      url: url, 
+                                                      savedDir: downloadDir,
+                                                      fileName: basename(widget.media.path),
+                                                      openFileFromNotification: true,
+                                                      showNotification: true,
+                                                    );                                                       
                                                     showAnimatedDialog(
                                                       context: context,
                                                       barrierDismissible: true,
@@ -320,8 +327,8 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                     ),
                     child: Text(
                       filesize(widget.media.fileLength),
-                      style: TextStyle(
-                        fontSize: 15.0,
+                      style: poppinsRegular.copyWith(
+                        fontSize: 9.0.sp,
                         color: Colors.white
                       )
                     )
@@ -341,9 +348,9 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                     )
                   ),
                   child: Text(progress.toString(),
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.white
+                    style: poppinsRegular.copyWith(
+                      fontSize: 9.0.sp,
+                      color: ColorResources.WHITE
                       )
                     ) 
                   )

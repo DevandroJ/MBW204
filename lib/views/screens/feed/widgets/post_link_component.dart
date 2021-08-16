@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_link_preview/flutter_link_preview.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PostLinkComponent extends StatelessWidget {
   final dynamic url;
+  final String caption;
 
   PostLinkComponent({
-    this.url
+    this.url,
+    this.caption
   });
 
   @override
@@ -17,10 +21,10 @@ class PostLinkComponent extends StatelessWidget {
       margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
       child: FlutterLinkPreview(
         url: url,
-        bodyStyle: TextStyle(
+        bodyStyle: poppinsRegular.copyWith(
           fontSize: 18.0,
         ),
-        titleStyle: TextStyle(
+        titleStyle: poppinsRegular.copyWith(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
         ),
@@ -38,6 +42,13 @@ class PostLinkComponent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(5.0),
+                    child: SelectableText(url,
+                      style: poppinsRegular,
+                    ),
+                  ),
                   if(info.image != null)
                     Expanded(
                       child: Image.network(
@@ -50,7 +61,7 @@ class PostLinkComponent extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
                       child: Text(
                       info.title,
-                      style: TextStyle(
+                      style: poppinsRegular.copyWith(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -58,8 +69,10 @@ class PostLinkComponent extends StatelessWidget {
                   ),
                   if(info.description != null)
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(info.description),
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(info.description,
+                        style: poppinsRegular,
+                      ),
                     ),
                   ],
                 ),
@@ -87,7 +100,7 @@ class PostLinkComponent extends StatelessWidget {
         );
       } else if (info is WebVideoInfo) {
       return InkWell(
-        onTap: () async =>  await launch(url),
+        onTap: () async => await launch(url),
           child: SizedBox(
             height: 350.0,
             child: Card(

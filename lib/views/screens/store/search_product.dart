@@ -9,8 +9,8 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -104,7 +104,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
               centerTitle: false,
               toolbarHeight: 10,
               automaticallyImplyLeading: false,
-              backgroundColor: ColorResources.BTN_PRIMARY,
+              backgroundColor: ColorResources.PRIMARY,
             ),
 
             SliverPersistentHeader(

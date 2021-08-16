@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 
 class CashOutSuccessScreen extends StatelessWidget {
@@ -33,7 +32,7 @@ class CashOutSuccessScreen extends StatelessWidget {
               margin: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Text("Permintaan Anda akan segera kami proses,",
                 softWrap: true,
-                style: poppinsRegular.copyWith(
+                style: TextStyle(
                   fontSize: 16.0,
                   height: 1.4,
                   fontWeight: FontWeight.bold,
@@ -46,7 +45,7 @@ class CashOutSuccessScreen extends StatelessWidget {
               margin: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Text("Notifikasi akan masuk ke Inbox Anda.",
                 softWrap: true,
-                style: poppinsRegular.copyWith(
+                style: TextStyle(
                   fontSize: 16.0,
                   height: 1.4,
                   fontWeight: FontWeight.bold,
@@ -80,7 +79,7 @@ class CashOutSuccessScreen extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
                 },
                 child: Text("OK",
-                  style: poppinsRegular.copyWith(
+                  style: TextStyle(
                     color: Colors.white
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:sizer/sizer.dart';
 import 'package:readmore/readmore.dart';
 
 import 'package:mbw204_club_ina/utils/colorResources.dart';
@@ -27,7 +28,7 @@ class _PostTextComponentState extends State<PostTextComponent> {
         children: [
           ReadMoreText(widget.item.text,
             style: poppinsRegular.copyWith(
-              fontSize: 14.0,
+              fontSize: 9.0.sp,
               color: ColorResources.BLACK
             ),
             trimLines: 2,
@@ -36,11 +37,11 @@ class _PostTextComponentState extends State<PostTextComponent> {
             trimCollapsedText: 'Tampilkan Lebih',
             trimExpandedText: 'Tutup',
             moreStyle: poppinsRegular.copyWith(
-              fontSize: 14.0, 
+              fontSize: 9.0.sp, 
               fontWeight: FontWeight.bold
             ),
             lessStyle: poppinsRegular.copyWith(
-              fontSize: 14.0, 
+              fontSize: 9.0.sp, 
               fontWeight: FontWeight.bold
             ),
           ),

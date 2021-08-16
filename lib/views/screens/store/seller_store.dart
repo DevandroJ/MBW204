@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/views/screens/store/seller_transaction_order.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -21,7 +20,7 @@ class SellerStoreScreen extends StatefulWidget {
 
 class _SellerStoreScreenState extends State<SellerStoreScreen> with TickerProviderStateMixin {
 
-  Future<bool> onWillPop() {
+  Future<bool> onWillPop() { 
     return Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DashBoardScreen();
     }));
@@ -46,8 +45,9 @@ class _SellerStoreScreenState extends State<SellerStoreScreen> with TickerProvid
         ),
         centerTitle: true,
         elevation: 0,
-        title: Text(getTranslated("MY_STORE", context),
+        title: Text("Toko Saya",
           style: poppinsRegular.copyWith(
+            color: ColorResources.WHITE,
             fontSize: 16.0
           ),
         ),
@@ -63,7 +63,7 @@ class _SellerStoreScreenState extends State<SellerStoreScreen> with TickerProvid
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

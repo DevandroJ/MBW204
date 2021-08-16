@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -71,14 +72,14 @@ class _CashoutScreenState extends State<CashoutScreen> {
                               children: [
                                 Text(getTranslated("AMOUNT", context),
                                   style: poppinsRegular.copyWith(
-                                    fontSize: 12.0,
+                                    fontSize: 10.0.sp,
                                     color: Colors.grey
                                   )
                                 ),
                                 SizedBox(height: 2.0),
                                 Text(priceDisplay,
                                   style: poppinsRegular.copyWith(
-                                    fontSize: 25.0,
+                                    fontSize: 10.0.sp,
                                     fontWeight: FontWeight.bold
                                   ),
                                 )
@@ -90,7 +91,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                               children: [
                                 Text(getTranslated("YOUR_BALANCE", context),
                                   style: poppinsRegular.copyWith(
-                                    fontSize: 12.0,
+                                    fontSize: 10.0.sp,
                                     color: Colors.grey
                                   ),
                                 ),
@@ -104,7 +105,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
                                         : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
                                         softWrap: true,
                                         style: poppinsRegular.copyWith(
-                                          fontSize: 17.0,
+                                          fontSize: 10.0.sp,
                                           fontWeight: FontWeight.bold
                                         ) 
                                       ),
@@ -133,7 +134,6 @@ class _CashoutScreenState extends State<CashoutScreen> {
                                 return Loader(
                                   color: ColorResources.BTN_PRIMARY
                                 );  
-
                                 return GridView.builder(
                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
@@ -168,7 +168,9 @@ class _CashoutScreenState extends State<CashoutScreen> {
                                             Expanded(
                                               child: Container(
                                                 child: Text(ConnexistHelper.formatCurrency(double.parse(ppobProvider.denomDisbursement[i].code)),
-                                                  style: poppinsRegular,
+                                                  style: poppinsRegular.copyWith(
+                                                    fontSize: 9.0.sp
+                                                  )
                                                 )
                                               ),
                                             ),
@@ -214,7 +216,7 @@ class _CashoutScreenState extends State<CashoutScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                color: ColorResources.BG_GREY,
+                color: Colors.transparent,
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
                 child: ElevatedButton(
                   onPressed: inquiryDisbursement,
@@ -227,10 +229,10 @@ class _CashoutScreenState extends State<CashoutScreen> {
                       return 0;
                     },
                   ),
-                   backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY_SECOND),
+                   backgroundColor: MaterialStateProperty.all(ColorResources.BTN_PRIMARY),
                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       )
                     )
                   ),

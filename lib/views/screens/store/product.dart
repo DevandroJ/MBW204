@@ -7,19 +7,17 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:mbw204_club_ina/helpers/helper.dart';
+import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/views/basewidget/custom_app_bar.dart';
 import 'package:mbw204_club_ina/data/models/warung/card_add_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/category_product_model.dart';
 import 'package:mbw204_club_ina/data/models/warung/product_warung_model.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
-import 'package:mbw204_club_ina/views/screens/feed/notification.dart';
 import 'package:mbw204_club_ina/views/screens/store/cart_product.dart';
 import 'package:mbw204_club_ina/views/screens/store/detail_product.dart';
-import 'package:mbw204_club_ina/views/basewidget/search.dart';
 
 class ProductPage extends StatefulWidget {
   final String idCategory;
@@ -40,36 +38,21 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   ScrollController scrollController = ScrollController();
-  int page = 0;
+  String idCategory;
   CartModel cartModel;
   CategoryProductModel categoryProductModel;
-  bool isLoading = true;
-  bool isLoadingProduct = true;
-  bool isLoadingParent = true;
-  List<ProductWarungList> product = [];
-
-  circularProgress() {
-    return Center(
-      child: Container(
-        child: LottieBuilder.asset(
-          "assets/lottie/search_product.json",
-          height: 200.0,
-          width: 200.0,
-          alignment: Alignment.center,
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-
 
   @override
   void initState() {
     super.initState();
-    this.getMoreData(page);
+    idCategory = widget.idCategory;
+    Future.delayed(Duration.zero, () {
+      Provider.of<WarungProvider>(context, listen: false).getDataCategoryProductByParent(context, widget.typeProduct, widget.idCategory);
+      Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, "", idCategory);
+    });
     scrollController.addListener(() {
       if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
-        getMoreData(page);
+        getMoreData();
       }
     });
   }
@@ -80,106 +63,95 @@ class _ProductPageState extends State<ProductPage> {
     super.dispose();
   }
 
-  void getMoreData(int index) async {
-    Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, "", widget.idCategory, index).then((value) {
-      if (value != null) {
-        setState(() {
-          isLoadingProduct = false;
-          product.addAll(value.body);
-          page++;
-        });
-      }
-    });
+  void getMoreData() async {
+    Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumenLoad(context, "", idCategory);
   }
 
   @override
   Widget build(BuildContext context) {
     
-    Provider.of<WarungProvider>(context, listen: false).getDataCategoryProductByParent(context, widget.typeProduct, widget.idCategory);
-
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
+        child: NestedScrollView(
           controller: scrollController,
-          physics: BouncingScrollPhysics(),
-          slivers: [
-            
-            SliverToBoxAdapter(
-              child: CustomAppBar(
-                title: "Product - ${widget.nameCategory}", 
-                isBackButtonExist: true
-              )
-            ),
-
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: SliverDelegate(
-                child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.PADDING_SIZE_SMALL, 
-                  vertical: 2.0
+           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+  
+              SliverAppBar(
+                iconTheme: IconThemeData(
+                  color: ColorResources.BTN_PRIMARY
                 ),
-                color: ColorResources.WHITE,
-                alignment: Alignment.center,
-                child: Row(
-                  children: [
-                  Expanded(
-                    child: SearchWidget(
-                      hintText: "Cari Produk di Toko Benz Mart",
-                    )
+                title: Text("Produk - ${widget.nameCategory}",
+                  style: poppinsRegular.copyWith(
+                    color: ColorResources.BTN_PRIMARY,
+                    fontWeight: FontWeight.bold
                   ),
-                  Consumer<WarungProvider>(
-                    builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
-                      return warungProvider.cartBody == null 
-                      ? 
-                        GestureDetector(
-                          onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => CartProdukPage())),
-                          child: Container(
-                            margin: EdgeInsets.only(left: 20.0, right: 14.0),
-                            child: Icon(
-                              Icons.shopping_cart,
+                ),
+              ),
+
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: SliverDelegate(
+                  child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL, 
+                    vertical: 2.0
+                  ),
+                  color: ColorResources.WHITE,
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: [
+                    Expanded(
+                      child: SearchWidget(
+                        hintText: "Cari Produk",
+                      )
+                    ),
+                    Consumer<WarungProvider>(
+                      builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
+                        return warungProvider.cartBody == null 
+                        ? 
+                          GestureDetector(
+                            onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => CartProdukPage())),
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20.0, right: 14.0),
+                              child: Icon(
+                                Icons.shopping_cart,
+                                color: ColorResources.PRIMARY,
+                              )
+                            ),
+                          ) 
+                        : Badge(
+                          position: BadgePosition.topEnd(top: 3.0, end: 6.0),
+                          animationDuration: Duration(milliseconds: 300),
+                          animationType: BadgeAnimationType.slide,
+                          badgeContent: Text(
+                            warungProvider.cartBody.numOfItems.toString(),
+                            style: poppinsRegular.copyWith(
+                              color: Colors.white, 
+                              fontSize: 12.0
+                            ),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.shopping_cart, 
                               color: ColorResources.PRIMARY,
-                            )
-                          ),
-                        ) 
-                      : Badge(
-                        position: BadgePosition.topEnd(top: 3.0, end: 6.0),
-                        animationDuration: Duration(milliseconds: 300),
-                        animationType: BadgeAnimationType.slide,
-                        badgeContent: Text(
-                          warungProvider.cartBody.numOfItems.toString(),
-                          style: poppinsRegular.copyWith(
-                            color: Colors.white, 
-                            fontSize: 12.0
-                          ),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.shopping_cart, 
-                            color: ColorResources.PRIMARY,
-                          ),
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CartProdukPage())),
-                        )
-                      );
-                    },
-                  ),
-                ]
-              )
-            ))),
+                            ),
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CartProdukPage())),
+                          )
+                        );
+                      },
+                    ),
+                  ]
+                )
+              ))),
 
-            SliverToBoxAdapter(
-              child: getCategoryParent(),
-            ),
+              SliverToBoxAdapter(
+                child: getCategoryParent(),
+              ),
             
-            SliverToBoxAdapter(
-              child: isLoadingProduct 
-              ? loadingList() 
-              : product.length == 0 
-              ? emptyTransaction() 
-              : getDataProductByCategory()
-            )
-
-          ],
+            ];
+          },
+          body: getDataProductByCategory(),
         )
       ) 
     );
@@ -198,7 +170,7 @@ class _ProductPageState extends State<ProductPage> {
               child: ListView.builder(
                 itemCount: 5,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int i) {
                   return Container(
                     width: 100.0,
                     height: 45.0,
@@ -220,40 +192,64 @@ class _ProductPageState extends State<ProductPage> {
           height: 50.0,
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
           child: ListView.builder(
-            itemCount: warungProvider.categoryProductByParentList.length,
-            physics: BouncingScrollPhysics(),
+            itemCount: warungProvider.categoryProductByParentList.length + 1,
             scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int i) {
-              return GestureDetector(
+              if(i == 0) {
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      idCategory = widget.idCategory;
+                    });
+                    Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, "", idCategory);
+                  },
+                child: Container(
+                  height: 50.0,
+                  padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35),
+                    color: idCategory == widget.idCategory ? ColorResources.PRIMARY : ColorResources.WHITE,
+                    border: Border.all(
+                      color: ColorResources.BTN_PRIMARY,
+                      width: 1.0
+                    )
+                  ),
+                  child: Center(
+                    child: Text(widget.nameCategory,
+                  style: poppinsRegular.copyWith(
+                    color: idCategory == widget.idCategory ? ColorResources.WHITE : ColorResources.PRIMARY,
+                    fontSize: 14.0,
+                  )))),
+                );
+              }
+              return InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                    return ProductPage(
-                      idCategory: warungProvider.categoryProductByParentList[i].id,
-                      nameCategory: warungProvider.categoryProductByParentList[i].name,
-                      typeProduct: "commerce",
-                      path: ""
-                    );
-                  }));
+                  setState(() {
+                    idCategory = warungProvider.categoryProductByParentList[i-1].id;
+                  });
+                  Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, "", idCategory);
                 },
-              child: Container(
-                height: 50.0,
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.only(right: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: ColorResources.PRIMARY,
-                    width: 2.0
+                child: Container(
+                  height: 50.0,
+                  padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35),
+                    color: idCategory == warungProvider.categoryProductByParentList[i-1].id ? ColorResources.PRIMARY : ColorResources.WHITE,
+                    border: Border.all(
+                      color: ColorResources.BTN_PRIMARY,
+                      width: 1.0
+                    )
+                  ),
+                  child: Center(
+                    child: Text(warungProvider.categoryProductByParentList[i-1].name,
+                  style: poppinsRegular.copyWith(
+                    color: idCategory == warungProvider.categoryProductByParentList[i-1].id ? ColorResources.WHITE : ColorResources.PRIMARY,
+                    fontSize: 14.0,
                   )
-                ),
-                child: Center(
-                  child: Text(warungProvider.categoryProductByParentList[i].name,
-                style: TextStyle(
-                  color: ColorResources.PRIMARY,
-                  fontSize: 14.0,
-                )))),
+                ))),
               );
             },
           ),
@@ -262,48 +258,36 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  Widget loadingListCategory() {
-    return Container(
-      height: 45,
-      margin: EdgeInsets.only(top: 8, left: 16, right: 16),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
-        child: ListView.builder(
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Container(
-              width: 100,
-              height: 45,
-              margin: EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50), color: Colors.white),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
   Widget getDataProductByCategory() {
-    return GridView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
-      physics: BouncingScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 10.0,
-        crossAxisSpacing: 10.0,
-        childAspectRatio: 3 / 5,
-      ),
-      itemCount: product.length,
-      itemBuilder: (context, index) {
-        if (index == product.length) {
-          return Container();
-        } else {
-          return itemsData(context, product[index]);
+    return Consumer<WarungProvider>(  
+      builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
+        if(warungProvider.categoryProductByCategoryConsumenStatus == CategoryProductByCategoryConsumenStatus.loading) {
+          return loadingList();
         }
+        return RefreshIndicator(
+          onRefresh: () {
+            return Provider.of<WarungProvider>(context, listen: false).getDataProductByCategoryConsumen(context, "", idCategory);
+          },
+          child: GridView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0, top: 8.0),
+            physics: AlwaysScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              childAspectRatio: 1 / 1.7
+            ),
+            itemCount: warungProvider.productWarungConsumenList.length,
+            itemBuilder: (BuildContext context, int i) {
+              if (i == warungProvider.productWarungConsumenList.length) {
+                return Container();
+              } else {
+                return itemsData(context, warungProvider.productWarungConsumenList[i]);
+              }
+            },
+          ),
+        );
       },
     );
   }
@@ -337,34 +321,44 @@ class _ProductPageState extends State<ProductPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: 5 / 4.8,
+                  aspectRatio: 5 / 5,
                   child: Stack(
                     children: [
-                      Align(
-                        alignment: Alignment.center,
-                          child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: CachedNetworkImage(
-                            imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productWarungList.pictures.first.path}",
-                            fit: BoxFit.cover,
-                            placeholder: (BuildContext context, String url) => Center(
-                            child: Shimmer.fromColors(
-                              baseColor: Colors.grey[300],
-                              highlightColor: Colors.grey[100],
-                              child: Container(
-                                color: Colors.white,
-                                width: double.infinity,
-                                height: double.infinity,
-                              ),
-                            )),
-                            errorWidget: (BuildContext context, String url, dynamic error) => Center(
-                            child: Image.asset("assets/images/default_image.png",
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: double.infinity,
-                            )),
+                    ClipRRect(
+                     borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0)
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: "${AppConstants.BASE_URL_FEED_IMG}${productWarungList.pictures.first.path}",
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fitHeight,
+                                image: imageProvider
+                              )
+                            ),
+                          );
+                        },
+                        fit: BoxFit.cover,
+                        placeholder: (BuildContext context, String url) => Center(
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[300],
+                          highlightColor: Colors.grey[100],
+                          child: Container(
+                            color: Colors.white,
+                            width: double.infinity,
+                            height: double.infinity,
                           ),
-                        ),
+                        )),
+                        errorWidget: (BuildContext context, String url, dynamic error) => Center(
+                        child: Image.asset("assets/images/default_image.png",
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        )),
+                      ),
                       ),
                       productWarungList.discount != null
                       ? Align(

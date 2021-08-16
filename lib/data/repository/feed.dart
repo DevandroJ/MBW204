@@ -448,7 +448,7 @@ class FeedService {
 
 
 
-  Future<HttpClientResponse> sendPostDoc(FilePickerResult files, [String groupId = ""]) async {
+  Future<HttpClientResponse> sendPostDoc(String caption, FilePickerResult files, [String groupId = ""]) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString("token");
     HttpClient httpClient = HttpClient();
@@ -460,7 +460,7 @@ class FeedService {
       "visibilityType": "PUBLIC",
       "type": "DOCUMENT",
       "content" : {
-        "caption" : basename(files.files[0].path),
+        "caption" : caption,
         "medias": [
           {
             "originalName": basename(files.files[0].path),

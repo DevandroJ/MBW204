@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:mbw204_club_ina/localization/language_constrants.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/providers/profile.dart';
@@ -24,10 +23,12 @@ import 'package:mbw204_club_ina/views/screens/feed/widgets/post_video_component.
 class NewsComponent extends StatefulWidget {
   final int i;
   final List<GroupsBody> groupsBody;
+  final GlobalKey<ScaffoldMessengerState> globalKey;
    
   NewsComponent({
     this.i,
-    this.groupsBody
+    this.groupsBody,
+    this.globalKey
   });
 
   @override
@@ -49,32 +50,10 @@ class _NewsComponentState extends State<NewsComponent> {
             
             ListTile(
               dense: true,
-              leading: CachedNetworkImage(
-                imageUrl: "${AppConstants.BASE_URL_FEED_IMG}/${widget.groupsBody[widget.i].user.profilePic.path}",
-                imageBuilder: (BuildContext context, ImageProvider imageProvider) {
-                  return CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: imageProvider,
-                    radius: 20.0,
-                  );                 
-                },
-                placeholder: (BuildContext context, String url) {
-                  return CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Loader(
-                      color: ColorResources.PRIMARY
-                    ),
-                    radius: 20.0,
-                  );   
-                
-                },
-                errorWidget: (BuildContext context, url, error) {
-                  return CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage('assets/images/profile.png'),
-                    radius: 20.0 ,
-                  );      
-                },
+              leading: CircleAvatar(
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage("${AppConstants.BASE_URL_IMG}/${widget.groupsBody[widget.i].user.profilePic.path}"),
+                radius: 20.0,
               ),
               title: Text(widget.groupsBody[widget.i].user.nickname,
                 style: poppinsRegular.copyWith(
@@ -83,7 +62,7 @@ class _NewsComponentState extends State<NewsComponent> {
               ),
               subtitle: Text(timeago.format((DateTime.parse(widget.groupsBody[widget.i].created).toLocal()), locale: 'id'),
                 style: poppinsRegular.copyWith(
-                  fontSize: 12.0,
+                  fontSize: 9.0.sp,
                   color: Colors.grey
                 ),
               ),
@@ -95,9 +74,13 @@ class _NewsComponentState extends State<NewsComponent> {
             if(widget.groupsBody[widget.i].postType == PostType.TEXT) 
               PostTextComponent(widget.groupsBody[widget.i].content),
             if(widget.groupsBody[widget.i].postType == PostType.LINK)
-              PostLinkComponent(url: widget.groupsBody[widget.i].content.url),
+              PostLinkComponent(url: widget.groupsBody[widget.i].content.url, caption: widget.groupsBody[widget.i].content.caption),
             if(widget.groupsBody[widget.i].postType == PostType.DOCUMENT)
-              PostDocComponent(widget.groupsBody[widget.i].content.medias),
+              PostDocComponent(
+                globalKey: widget.globalKey,
+                medias: widget.groupsBody[widget.i].content.medias, 
+                caption: widget.groupsBody[widget.i].content.caption
+              ),
             if(widget.groupsBody[widget.i].postType == PostType.IMAGE)
               PostImageComponent(widget.groupsBody[widget.i].content.medias, widget.groupsBody[widget.i].content.caption),
             if(widget.groupsBody[widget.i].postType == PostType.VIDEO)
@@ -119,7 +102,7 @@ class _NewsComponentState extends State<NewsComponent> {
                           child: Text(widget.groupsBody[widget.i].numOfLikes.toString(), 
                             style: poppinsRegular.copyWith(
                               color: ColorResources.BLACK,
-                              fontSize: 15.0
+                              fontSize: 9.0.sp
                             )
                           ),
                         ),
@@ -137,9 +120,9 @@ class _NewsComponentState extends State<NewsComponent> {
                       ],
                     ),
                   ),
-                  Text('${widget.groupsBody[widget.i].numOfComments.toString()} ${getTranslated("COMMENT", context)}',
+                  Text('${widget.groupsBody[widget.i].numOfComments.toString()} Komentar',
                     style: poppinsRegular.copyWith(
-                      fontSize: 14.0
+                      fontSize: 9.0.sp
                     ),
                   )
                 ]
@@ -156,9 +139,10 @@ class _NewsComponentState extends State<NewsComponent> {
       itemBuilder: (BuildContext buildContext) { 
         return [
           PopupMenuItem(
-            child: Text(getTranslated("DELETE_POST", context),
+            child: Text("Hapus Post",
               style: poppinsRegular.copyWith(
-                color: ColorResources.BTN_PRIMARY
+                color: ColorResources.BTN_PRIMARY,
+                fontSize: 9.0.sp
               )
             ), 
             value: "/delete-post"
@@ -183,9 +167,9 @@ class _NewsComponentState extends State<NewsComponent> {
                       color: ColorResources.BLACK,
                     ),
                     SizedBox(height: 10.0),
-                    Text(getTranslated("DELETE_POST", context),
+                    Text("Hapus Post",
                       style: poppinsRegular.copyWith(
-                        fontSize: 16.0,
+                        fontSize: 10.0.sp,
                         fontWeight: FontWeight.bold
                       ),
                     ),
@@ -195,9 +179,7 @@ class _NewsComponentState extends State<NewsComponent> {
                       children: [
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text(getTranslated("NO", context),
-                            style: poppinsRegular,
-                          )
+                          child: Text("Tidak")
                         ), 
                         StatefulBuilder(
                           builder: (BuildContext context, Function s) {
@@ -222,9 +204,7 @@ class _NewsComponentState extends State<NewsComponent> {
                             ? Loader(
                               color: ColorResources.WHITE,
                             )
-                            : Text(getTranslated("YES", context),
-                              style: poppinsRegular,
-                            )
+                            : Text("Ya"),                           
                           );
                         })
                       ],

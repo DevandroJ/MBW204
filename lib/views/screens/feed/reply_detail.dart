@@ -50,7 +50,7 @@ class _ReplyDetailScreenState extends State<ReplyDetailScreen> {
             return Container(
               height: 150.0,
               child: Loader(
-                color: ColorResources.BTN_PRIMARY,
+                color: ColorResources.WHITE,
               )
             );
           }

@@ -66,7 +66,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => SplashRepo(sharedPreferences: getIt()));
 
   // Provider
-  getIt.registerFactory(() => AuthProvider(authRepo: getIt()));
+  getIt.registerFactory(() => AuthProvider(authRepo: getIt(), ));
   getIt.registerFactory(() => ChatProvider(chatRepo: getIt(), sharedPreferences: getIt()));
   getIt.registerFactory(() => CategoryProvider(categoryRepo: getIt()));
   getIt.registerFactory(() => SosProvider(sosRepo: getIt()));

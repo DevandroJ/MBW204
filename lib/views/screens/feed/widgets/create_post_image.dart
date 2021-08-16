@@ -5,13 +5,13 @@ import 'dart:typed_data';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:hex/hex.dart';
 
 import 'package:mbw204_club_ina/container.dart';
 import 'package:mbw204_club_ina/data/repository/feed.dart';
 import 'package:mbw204_club_ina/mobx/feed.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/loader.dart';
 
 class CreatePostImageScreen extends StatefulWidget {
@@ -26,14 +26,14 @@ class CreatePostImageScreen extends StatefulWidget {
 }
 
 class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
+  GlobalKey<ScaffoldMessengerState> globalKey = GlobalKey<ScaffoldMessengerState>();
   FeedState feedState = getIt<FeedState>(); 
   TextEditingController captionTextEditingController = TextEditingController();
   int current = 0;
   bool isLoading = false;
-  bool validateC = false;
 
   Widget displaySinglePictures() {
-    File file = File(widget?.files?.first?.path);
+    File file = File(widget.files.first.path);
     return Container(
       height: 180.0,
       child: Image.file(file,
@@ -104,6 +104,7 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalKey,
       body: CustomScrollView(
         slivers: [
 
@@ -111,7 +112,7 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
             brightness: Brightness.light,
             backgroundColor: Colors.white,
             title: Text('Create Post', 
-              style: TextStyle(
+              style: poppinsRegular.copyWith(
                 color: Colors.black 
               )
             ),
@@ -136,10 +137,19 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
                         setState(() => isLoading = true);
                         try {
                           String caption = captionTextEditingController.text;
-                          if(caption.trim() == "") {
-                            setState(() => validateC = true);
-                            setState(() => isLoading = false);
-                            throw Exception();
+                          if(caption.trim().isNotEmpty) {
+                            if(caption.trim().length < 10) {
+                              ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: ColorResources.ERROR,
+                                  content: Text("Minimal Caption 10 Karakter",
+                                    style: poppinsRegular,
+                                  )
+                                )
+                              );
+                              setState(() => isLoading = false);
+                              return;
+                            }
                           } 
                           if(widget.files.length > 1) {
                             for (int i = 0; i < widget.files.length; i++) {
@@ -160,33 +170,17 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
                           }
                           await feedState.sendPostImage(caption, widget.files, widget.groupId);          
                           setState(() => isLoading = false);
-                          showAnimatedDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (BuildContext context) {
-                              return Center(
-                                child: Container(
-                                  color: ColorResources.WHITE,
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.check,
-                                    size: 18.0,
-                                    color: ColorResources.GREEN,
-                                  ),
-                                ),
-                              );
-                            },
-                            animationType: DialogTransitionType.scale,
-                            curve: Curves.fastOutSlowIn,
-                            duration: Duration(seconds: 1),
+                          ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
+                            SnackBar(
+                              backgroundColor: ColorResources.SUCCESS,
+                              content: Text("Postingan berhasil dibuat",
+                                style: poppinsRegular,
+                              )
+                            )
                           );
-                          Future.delayed(Duration(seconds: 1), () => Navigator.of(context, rootNavigator: true).pop());
-                          Future.delayed(Duration(seconds: 2), () => Navigator.of(context).pop());
-                        } on Exception catch(_) {
+                          Navigator.of(context).pop();
+                        } catch(_) {
                           setState(() => isLoading = false);
-                        } catch(e) {
-                          setState(() => isLoading = false);
-                          print(e);
                         }
                       },
                       child: Container(
@@ -196,11 +190,13 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
                           color: ColorResources.PRIMARY,
                           borderRadius: BorderRadius.circular(20.0)
                         ),
-                        child: isLoading ? Loader(
-                          color: ColorResources.WHITE,
-                        ) : Text('Post',
+                        child: isLoading 
+                        ? Loader(
+                            color: ColorResources.WHITE,
+                          ) 
+                        : Text('Post',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: poppinsRegular.copyWith(
                             color: Colors.white
                           ),
                         ),
@@ -234,7 +230,12 @@ class _CreatePostImageScreenState extends State<CreatePostImageScreen> {
                     controller: captionTextEditingController,
                     decoration: InputDecoration(
                       hintText: "Caption",
-                      errorText: validateC ? "Caption can`t null or empty" : null,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                      ),
                     ),
                   ),
                 ]
