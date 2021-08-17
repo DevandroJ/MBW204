@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/views/screens/historyactivity/history_activity.dart';
 import 'package:mbw204_club_ina/views/screens/ppob/topup/history.dart';
@@ -104,7 +104,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         elevation: 0.0,
         centerTitle: true,
         title: Text(getTranslated("MY_ACCOUNT", context),
-          style: poppinsRegular,
+          style: poppinsRegular.copyWith(
+            fontSize: 10.0.sp
+          ),
         ),
         backgroundColor: ColorResources.GRAY_DARK_PRIMARY,
       ),
@@ -161,15 +163,19 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   margin: EdgeInsets.only(top: 180.0),
-                  child: Text(Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.loading  
-                  ? "..." 
-                  : Provider.of<ProfileProvider>(context, listen: false).profileStatus == ProfileStatus.error 
-                  ? "..." 
-                  : Provider.of<ProfileProvider>(context, listen: false).getUserFullname, 
-                    style: poppinsRegular.copyWith(
-                      color: ColorResources.BTN_PRIMARY_SECOND,
-                      fontSize: 19.0
-                    ),
+                  child: Consumer<ProfileProvider>(
+                    builder: (BuildContext context, ProfileProvider profileProvider, Widget child) {
+                      return Text(profileProvider.profileStatus == ProfileStatus.loading  
+                      ? "..." 
+                      : profileProvider.profileStatus == ProfileStatus.error 
+                      ? "..." 
+                      : profileProvider.getUserFullname, 
+                        style: poppinsRegular.copyWith(
+                          color: ColorResources.BTN_PRIMARY_SECOND,
+                          fontSize: 10.sp
+                        )
+                      );
+                    },
                   )
                 ),
               )
@@ -187,6 +193,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             indicatorColor: ColorResources.BLACK,
             labelColor: ColorResources.BLACK,
             unselectedLabelColor: ColorResources.GRAY_PRIMARY,
+            labelStyle: poppinsRegular.copyWith(
+              fontSize: 9.0.sp
+            ),
             tabs: [
               Tab(
                 text: getTranslated("PROFILE", context),
@@ -237,7 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             children: [
                               Text(getTranslated("MY_BALANCE", context),
                                 style: poppinsRegular.copyWith(
-                                  fontSize: 15.0,
+                                  fontSize: 9.0.sp,
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -250,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                                     ? "..."
                                     : ConnexistHelper.formatCurrency(double.parse(ppobProvider.balance.toString())),
                                     style: poppinsRegular.copyWith(
-                                      fontSize: 16.0,
+                                      fontSize: 9.0.sp,
                                       fontWeight: FontWeight.normal
                                     ),
                                   );
@@ -297,7 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpScreen())), 
                           child: Text(getTranslated("TOPUP", context),
                             style: poppinsRegular.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 9.0.sp,
                               color: ColorResources.YELLOW_PRIMARY
                             ),
                           )
@@ -321,7 +330,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TopUpHistoryScreen())), 
                           child: Text(getTranslated("HISTORY_BALANCE", context),
                             style: poppinsRegular.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 9.0.sp,
                               color: ColorResources.YELLOW_PRIMARY
                             ),
                           )
@@ -349,7 +358,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryActivityScreen())), 
                       child: Text(getTranslated("HISTORY_ACTIVITY", context),
                         style: poppinsRegular.copyWith(
-                          fontSize: 14.0,
+                          fontSize: 9.0.sp,
                           color: ColorResources.YELLOW_PRIMARY
                         ),
                       )
@@ -370,6 +379,25 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           : profileProviuder.profileStatus == ProfileStatus.error 
                           ? "..."
                           : profileProviuder.getUserCodeReferral
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                ),
+              if(Provider.of<ProfileProvider>(context, listen: false).getUserRole == "user")
+                Container(
+                  margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10.0),
+                      Consumer<ProfileProvider>(
+                        builder: (BuildContext context, ProfileProvider profileProviuder, Widget child) {
+                          return profileListAccount(context, getTranslated("ADDRESS", context), profileProviuder.profileStatus == ProfileStatus.loading
+                          ? "..."
+                          : profileProviuder.profileStatus == ProfileStatus.error 
+                          ? "..."
+                          : profileProviuder.getUserAddress
                           );
                         },
                       )
@@ -565,7 +593,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           SizedBox(width: 10.0),
                           Text(getTranslated("EDIT", context),
                             style: poppinsRegular.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 9.0.sp,
                               color: ColorResources.YELLOW_PRIMARY
                             ),
                           )
@@ -642,7 +670,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     left: 30.0,
                     child: Text("PARTNERSHIP",
                       style: poppinsRegular.copyWith(
-                        fontSize: 24.0,
+                        fontSize: 14.0.sp,
                         fontWeight: FontWeight.bold,
                         color: ColorResources.YELLOW_PRIMARY
                       ),
@@ -655,7 +683,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     left: 30.0,
                     child: Text("RELATIONSHIP",
                       style: poppinsRegular.copyWith(
-                        fontSize: 24.0,
+                        fontSize: 14.0.sp,
                         fontWeight: FontWeight.bold,
                         color: ColorResources.YELLOW_PRIMARY
                       ),
@@ -679,7 +707,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     left: 30.0,
                     child: Text("MERCEDES BENZ W204 CLUB INDONESIA",
                       style: poppinsRegular.copyWith(
-                        fontSize: 12.0,
+                        fontSize: 14.0.sp,
                         fontWeight: FontWeight.bold,
                         color: ColorResources.WHITE
                       ),
@@ -699,7 +727,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         style: poppinsRegular.copyWith(
                           color: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? ColorResources.YELLOW_PRIMARY : ColorResources.WHITE,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.0
+                          fontSize: 12.0.sp
                         ),
                       );
                     },
@@ -719,7 +747,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                         style: poppinsRegular.copyWith(
                           color: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? ColorResources.YELLOW_PRIMARY : ColorResources.BTN_PRIMARY_SECOND,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.0
+                          fontSize: 12.0.sp
                         ),
                       );
                     },
@@ -728,7 +756,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       
                 Positioned(
                   bottom: 10.0,
-                  left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 15.0 : 0.0,
+                  left: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? 15.0 : null,
                   right: Provider.of<ProfileProvider>(context, listen: false).getUserRole == "lead" ? null : 10.0,
                   child: Container(
                     height: 18.0,
@@ -861,12 +889,15 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label,
-            style: poppinsRegular,
+            style: poppinsRegular.copyWith(
+              fontSize: 9.0.sp
+            ),
           ),
           SizedBox(height: 5.0),
           Text(title,
             style: poppinsRegular.copyWith(
-              color: ColorResources.BTN_PRIMARY_SECOND
+              color: ColorResources.BTN_PRIMARY_SECOND,
+              fontSize: 9.0.sp
             ),
           ),
           Divider(

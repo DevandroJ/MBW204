@@ -144,6 +144,7 @@
   "CREATE_ACCOUNT": "Create Account",
   "UPDATE_ACCOUNT": "Update Account",
   "UPDATE_ACCOUNT_SUCCESSFUL": "Update Account Succesful",  
+  "UPDATE_CHANGE_EMAIL_SUCCESSFUL": "Update E-mail Address Succesful",
   "SETTINGS": "Settings",
   "OOPS": "Oops!",
   "RETRY": "Retry",

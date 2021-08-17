@@ -198,6 +198,9 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
       File file = File(_file.path);
       String digestFile = sha256.convert(bytes).toString();
       String imageHash = base64Url.encode(HEX.decode(digestFile)); 
+
+      Provider.of<WarungProvider>(context, listen: false).setStateCreateStoreStatus(CreateStoreStatus.loading);
+
       await Provider.of<WarungProvider>(context, listen: false).uploadImageProduct(
         context, 
         body, 
@@ -485,10 +488,10 @@ class _FormStoreScreenState extends State<FormStoreScreen> {
                                   thickness: 3,
                                 ),
                                 Expanded(
-                                flex: 40,
-                                child: FutureBuilder<RegionModel>(
-                                  future: Provider.of<RegionProvider>(context, listen: false).getRegion(context, "province"),
-                                  builder: (context, snapshot) {
+                                  flex: 40,
+                                  child: FutureBuilder<RegionModel>(
+                                    future: Provider.of<RegionProvider>(context, listen: false).getRegion(context, "province"),
+                                    builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       final RegionModel regionModel = snapshot.data;
                                       return ListView.separated(

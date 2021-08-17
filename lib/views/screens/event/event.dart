@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:mbw204_club_ina/data/models/event.dart';
@@ -46,7 +47,7 @@ class _EventScreenState extends State<EventScreen> {
         title: Text("Event",
           style: poppinsRegular.copyWith(
             color: ColorResources.BLACK,
-            fontWeight: FontWeight.bold
+            fontSize: 10.0.sp
           ),
         ),
       ),
@@ -162,12 +163,12 @@ class _EventScreenState extends State<EventScreen> {
                                                       dense: true,
                                                       leading: Text("Deskripsi :",
                                                         style: poppinsRegular.copyWith(
-                                                          fontSize: 12.0
+                                                          fontSize: 9.0.sp
                                                         )
                                                       ),
                                                       title: Text(eventData.description,
                                                         style: poppinsRegular.copyWith(
-                                                          fontSize: 12.0
+                                                          fontSize: 9.0.sp
                                                         ),
                                                       ),
                                                     ),
@@ -176,12 +177,12 @@ class _EventScreenState extends State<EventScreen> {
                                                       dense: true,
                                                       leading: Text("Lokasi :",
                                                         style: poppinsRegular.copyWith(  
-                                                          fontSize: 12.0                                                       
+                                                          fontSize: 9.0.sp                                                       
                                                         )
                                                       ),
                                                       title: Text(eventData.location,
                                                         style: poppinsRegular.copyWith(
-                                                          fontSize: 12.0
+                                                          fontSize: 9.0.sp
                                                         ),
                                                       ),
                                                     ),
@@ -193,12 +194,12 @@ class _EventScreenState extends State<EventScreen> {
                                                           dense: true,
                                                             leading: Text("Mulai :",
                                                               style: poppinsRegular.copyWith(
-                                                                fontSize: 12.0
+                                                                fontSize: 9.0.sp
                                                               )
                                                             ),
                                                             title: Text(eventData.start,
                                                               style: poppinsRegular.copyWith(
-                                                                fontSize: 12.0
+                                                                fontSize: 9.0.sp
                                                               ),
                                                             ),
                                                           ),
@@ -208,12 +209,12 @@ class _EventScreenState extends State<EventScreen> {
                                                             dense: true,
                                                             leading: Text("Selesai :",
                                                               style: poppinsRegular.copyWith(
-                                                                fontSize: 12.0
+                                                                fontSize: 9.0.sp
                                                               )
                                                             ),
                                                             title: Text(eventData.end,
                                                               style: poppinsRegular.copyWith(
-                                                                fontSize: 12.0
+                                                                fontSize: 9.0.sp
                                                               ),
                                                             ),
                                                           ),
@@ -232,7 +233,8 @@ class _EventScreenState extends State<EventScreen> {
                                                             onPressed: null,
                                                             child: Text("Anda telah bergabung",
                                                               style: poppinsRegular.copyWith(
-                                                                color: ColorResources.WHITE
+                                                                color: ColorResources.WHITE,
+                                                                fontSize: 9.0.sp
                                                               ),
                                                             ),                            
                                                           )
@@ -247,7 +249,8 @@ class _EventScreenState extends State<EventScreen> {
                                                               ) 
                                                             : Text(getTranslated("JOIN", context),
                                                               style: poppinsRegular.copyWith(
-                                                                color: ColorResources.WHITE
+                                                                color: ColorResources.WHITE,
+                                                                fontSize: 9.0.sp
                                                               ),
                                                             ),
                                                           ),
@@ -273,7 +276,8 @@ class _EventScreenState extends State<EventScreen> {
                                       children: [
                                         Text(eventData.description,
                                           style: poppinsRegular.copyWith(
-                                            color: ColorResources.WHITE
+                                            color: ColorResources.WHITE,
+                                            fontSize: 9.0.sp
                                           ),
                                         ),
                                       ],

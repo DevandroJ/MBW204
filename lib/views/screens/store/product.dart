@@ -104,6 +104,7 @@ class _ProductPageState extends State<ProductPage> {
                     Expanded(
                       child: SearchWidget(
                         hintText: "Cari Produk",
+                        type: "commerce",
                       )
                     ),
                     Consumer<WarungProvider>(

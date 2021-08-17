@@ -300,8 +300,9 @@ class _SearchProductPageState extends State<SearchProductPage> {
                       height: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12)),
+                          topLeft: Radius.circular(12.0),
+                          topRight: Radius.circular(12.0)
+                        ),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
@@ -309,23 +310,22 @@ class _SearchProductPageState extends State<SearchProductPage> {
                             topRight: Radius.circular(12)),
                         child: CachedNetworkImage(
                           imageUrl: productWarungList.pictures.length == 0
-                              ? ""
-                              : AppConstants.BASE_URL_FEED_IMG +
-                                  productWarungList.pictures.first.path,
+                          ? ""
+                          : AppConstants.BASE_URL_FEED_IMG + productWarungList.pictures.first.path,
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Center(
-                              child: Shimmer.fromColors(
-                            baseColor: Colors.grey[300],
-                            highlightColor: Colors.grey[100],
-                            child: Container(
-                              color: Colors.white,
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
-                          )),
+                            child: Shimmer.fromColors(
+                              baseColor: Colors.grey[300],
+                              highlightColor: Colors.grey[100],
+                              child: Container(
+                                color: Colors.white,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                            )
+                          ),
                           errorWidget: (context, url, error) => Center(
-                              child: Image.asset(
-                            "assets/default_image.png",
+                            child: Image.asset("assets/default_image.png",
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: double.infinity,
@@ -364,7 +364,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -69,7 +69,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 child: Text("Version ${packageInfo?.version}+${packageInfo?.buildNumber}",
                   style: poppinsRegular.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 11.0
+                    fontSize: 9.0.sp
                   )
                 ),
               ),
@@ -94,7 +94,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         drawerItems(context, ProfileScreen(), "profil", Images.profile_drawer, getTranslated("PROFILE", context)),
                         Consumer<WarungProvider>(
                           builder: (BuildContext context, WarungProvider warungProvider, Widget child) {
-                            return drawerItems(context, null, "store", Images.shopping_image, warungProvider.sellerStoreStatus == SellerStoreStatus.empty ? getTranslated("OPEN_STORE", context) : getTranslated("MY_STORE", context));                
+                            return warungProvider.sellerStoreStatus == SellerStoreStatus.loading 
+                            ? drawerItems(context, null, "store", Images.shopping_image, "...") 
+                            : drawerItems(context, null, "store", Images.shopping_image, warungProvider.sellerStoreStatus == SellerStoreStatus.empty ? getTranslated("OPEN_STORE", context) : getTranslated("MY_STORE", context));            
                           },
                         ),
                         drawerItems(context, CashoutScreen(), getTranslated("CASH_OUT", context), Images.cash_out, getTranslated("CASH_OUT", context)),
@@ -119,7 +121,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                         child: Text(getTranslated("SIGN_IN", context),
                           style: poppinsRegular.copyWith(
-                            color: ColorResources.BLACK
+                            color: ColorResources.BLACK,
+                            fontSize: 9.0.sp
                           ),
                         ),
                       ),
@@ -128,7 +131,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 }
               },
             ),
-
     
           ],
         ),
@@ -431,7 +433,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             },  
             title: Text(title,
               style: poppinsRegular.copyWith(
-                fontSize: 13.0
+                fontSize: 9.0.sp
               ),
             ),
             leading: Container(

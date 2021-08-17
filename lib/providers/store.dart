@@ -80,14 +80,14 @@ class WarungProvider with ChangeNotifier {
   String _categoryEditProductId;
   String get categoryEditProductId => _categoryEditProductId;
 
+  CreateStoreStatus _createStoreStatus = CreateStoreStatus.idle;
+  CreateStoreStatus get createStoreStatus => _createStoreStatus;
+
   EditStoreStatus _editStoreStatus = EditStoreStatus.idle;
   EditStoreStatus get editStoreStatus => _editStoreStatus;
 
   CategoryProductStatus _categoryProductStatus = CategoryProductStatus.loading;
   CategoryProductStatus get categoryProductStatus => _categoryProductStatus;
-
-  CreateStoreStatus _createStoreStatus = CreateStoreStatus.loading;
-  CreateStoreStatus get createStoreStatus => _createStoreStatus;
 
   CartStatus _cartStatus = CartStatus.loading;
   CartStatus get cartStatus => _cartStatus;
@@ -281,7 +281,6 @@ class WarungProvider with ChangeNotifier {
     String phone, 
     [String deskripsi = ""]
   ) async {
-    setStateCreateStoreStatus(CreateStoreStatus.loading);
     Map<String, dynamic> data = {
       "name": nameStore,
       "picture": {
@@ -427,7 +426,6 @@ class WarungProvider with ChangeNotifier {
 
   Future<CategoryProductModel> getDataCategoryProduct(BuildContext context, String typeProduct) async {
     try {
-    
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/$typeProduct/product/categories");
       CategoryProductModel categoryProductModel = CategoryProductModel.fromJson(res.data);
@@ -444,9 +442,9 @@ class WarungProvider with ChangeNotifier {
         var categoryHasManyProductAssign = [];
         categoryProductList = [];
         categoryProductList.addAll(categoryProductModel.body);
-        for (var item in categoryProductModel.body) {
+        for (var item in categoryProductModel.body) { 
           ProductWarungModel productWarungModel = await getDataProductByCategoryConsumen(context, "", item.id);
-          List<ProductWarungList> productWarungList = productWarungModel.body;
+          List<ProductWarungList> productWarungList = productWarungModel.body; 
           categoryHasManyProductAssign.add({
             "id": item.id,
             "category": item.name,

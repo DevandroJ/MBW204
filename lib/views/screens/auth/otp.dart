@@ -213,16 +213,22 @@ class OtpScreenState extends State<OtpScreen> {
                             ),
                               backgroundColor: ColorResources.WHITE,
                             ),
-                            child: Text('Apply',
+                            child: authProvider.applyChangeEmailOtpStatus == ApplyChangeEmailOtpStatus.loading 
+                            ? SizedBox(
+                                width: 18.0,
+                                height: 18.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(ColorResources.BTN_PRIMARY),
+                                ),
+                              ) 
+                            : Text('Apply',
                               style: poppinsRegular.copyWith(
                                 color: ColorResources.BTN_PRIMARY,
                                 fontSize: 9.0.sp,
                                 fontWeight: FontWeight.bold
                               )
                             ),
-                            onPressed: () {
-                              authProvider.applyCustomEmail();
-                            }
+                            onPressed: () => authProvider.applyChangeEmailOtp(context, globalKey),
                           ),
                         ),
                       )

@@ -4,6 +4,7 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,7 +54,10 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text(getTranslated("INBOX", context), 
-              style: poppinsRegular.copyWith(color: Colors.black)),
+              style: poppinsRegular.copyWith(
+                color: ColorResources.BLACK,
+                fontSize: 10.0.sp
+              )),
               elevation: 0.0,
               pinned: false,
               centerTitle: true,
@@ -91,6 +95,9 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelColor: ColorResources.WHITE,
+                unselectedLabelStyle: poppinsRegular.copyWith(
+                  fontSize: 9.0.sp
+                ),
                 indicator: BubbleTabIndicator(
                   indicatorHeight: 32.0,
                   indicatorRadius: 6.0,
@@ -156,7 +163,9 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
         if(inboxProvider.inboxStatus == InboxStatus.error) {
           return Center(
             child: Text(getTranslated("THERE_WAS_PROBLEM", context),
-              style: poppinsRegular,
+              style: poppinsRegular.copyWith(
+                fontSize: 9.0.sp
+              ),
             ),
           );
         }
@@ -174,7 +183,9 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                   height: MediaQuery.of(context).size.height / 1.5,
                   child: Center(
                     child: Text(getTranslated("NO_INBOX_AVAILABLE", context),
-                      style: poppinsRegular,
+                      style: poppinsRegular.copyWith(
+                        fontSize: 9.0.sp
+                      ),
                     ),
                   ),
                 ),
@@ -203,7 +214,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                         await Provider.of<InboxProvider>(context, listen: false).updateInbox(context, inboxProvider.inboxes[i].inboxId, type);
                       });
                       if(inboxProvider.inboxes[i].subject == "Emergency") {
-                        Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, inboxProvider.inboxes[i].senderId);
+                      Provider.of<ProfileProvider>(context, listen: false).getSingleUser(context, inboxProvider.inboxes[i].senderId);
 
                         showAnimatedDialog(
                           context: context,
@@ -278,14 +289,18 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Text(getTranslated("NAME", context),
-                                                          style: poppinsRegular,
+                                                          style: poppinsRegular.copyWith(
+                                                            fontSize: 9.0.sp
+                                                          ),
                                                         ),
                                                         Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                         ? "..." 
                                                         : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                         ? "..." 
                                                         : profileProvider.singleUserData.fullname,
-                                                          style: poppinsRegular,
+                                                          style: poppinsRegular.copyWith(
+                                                            fontSize: 9.0.sp
+                                                          ),
                                                         )
                                                       ]
                                                     ),
@@ -294,14 +309,18 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Text(getTranslated("PHONE_NUMBER", context),
-                                                          style: poppinsRegular,
+                                                          style: poppinsRegular.copyWith(
+                                                            fontSize: 9.0.sp
+                                                          ),
                                                         ),
                                                         Text(profileProvider.singleUserDataStatus == SingleUserDataStatus.loading 
                                                         ? "..." 
                                                         : profileProvider.singleUserDataStatus == SingleUserDataStatus.error 
                                                         ? "..." 
                                                         : profileProvider.singleUserData.phoneNumber,
-                                                          style: poppinsRegular,
+                                                          style: poppinsRegular.copyWith(
+                                                            fontSize: 9.0.sp
+                                                          ),
                                                         )
                                                       ]
                                                     ),
@@ -325,7 +344,8 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                     Text(inboxProvider.inboxes[i].body,
                                                       textAlign: TextAlign.justify,
                                                       style: poppinsRegular.copyWith(
-                                                        height: 1.4
+                                                        height: 1.4,
+                                                        fontSize: 9.0.sp
                                                       ),
                                                     ),
 
@@ -358,7 +378,8 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                                 ? "..."
                                                                 : "Whatsapp",
                                                                 style: poppinsRegular.copyWith(
-                                                                  color: ColorResources.WHITE
+                                                                  color: ColorResources.WHITE,
+                                                                  fontSize: 9.0.sp
                                                                 ),
                                                               ),
                                                             ),
@@ -383,7 +404,8 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                                                                 ? "..."
                                                                 : getTranslated("PHONE_NUMBER", context),
                                                                 style: poppinsRegular.copyWith(
-                                                                  color: ColorResources.WHITE
+                                                                  color: ColorResources.WHITE,
+                                                                  fontSize: 9.0.sp
                                                                 ),
                                                               )
                                                             )
@@ -467,7 +489,8 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                         style: poppinsRegular.copyWith(
                           fontWeight: inboxProvider.inboxes[i].read 
                           ? FontWeight.normal 
-                          : FontWeight.bold
+                          : FontWeight.bold,
+                          fontSize: 9.0.sp
                         ),  
                       ),
                     ),
@@ -482,7 +505,8 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                           ? "..."
                           : inboxProvider.inboxes[i].body,
                             style: poppinsRegular.copyWith(
-                              height: 1.6
+                              height: 1.6,
+                              fontSize: 9.0.sp
                             ),
                             textAlign: TextAlign.justify,
                           ),
@@ -495,7 +519,7 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                           ? "..."
                           : DateFormat('dd MMM yyyy kk:mm').format(inboxProvider.inboxes[i].created.add(Duration(hours: 7))),
                             style: poppinsRegular.copyWith(
-                              fontSize: 11.0
+                              fontSize: 8.0.sp
                             ),
                           ),
                         )
@@ -506,9 +530,6 @@ class _InboxScreenState extends State<InboxScreen>  with TickerProviderStateMixi
                 Divider()
               ]
             );
-                          
-
-
             },
           ),
         );   

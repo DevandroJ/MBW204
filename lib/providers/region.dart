@@ -39,6 +39,9 @@ class RegionProvider with ChangeNotifier {
       Response res = await dio.get("${AppConstants.BASE_URL_ECOMMERCE}/region/$nameType");
       RegionModel regionModel = RegionModel.fromJson(res.data);
       return regionModel;
+    } on DioError catch(e) {
+      print(e?.response?.data);
+      print(e?.response?.statusCode);
     } catch (e) {
       print(e);
     }

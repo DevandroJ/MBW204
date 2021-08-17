@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 import 'package:mbw204_club_ina/providers/profile.dart';
 import 'package:mbw204_club_ina/views/screens/auth/sign_in.dart';
@@ -22,7 +23,12 @@ class SignOutConfirmationDialog extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: 50),
-            child: Text(getTranslated('WANT_TO_SIGN_OUT', context), style: poppinsRegular, textAlign: TextAlign.center),
+            child: Text(getTranslated('WANT_TO_SIGN_OUT', context), 
+              style: poppinsRegular.copyWith(
+                fontSize: 9.0.sp
+              ), 
+              textAlign: TextAlign.center
+            ),
           ),
           Divider(
             height: 0.0, 
@@ -48,7 +54,10 @@ class SignOutConfirmationDialog extends StatelessWidget {
                     bottomLeft: Radius.circular(10.0)
                   )
                 ),
-                child: Text(getTranslated('YES', context), style: poppinsRegular.copyWith(color: ColorResources.WHITE)),
+                child: Text(getTranslated('YES', context), style: poppinsRegular.copyWith(
+                  color: ColorResources.WHITE,
+                  fontSize: 9.0.sp
+                )),
               ),
             )
           ),
@@ -65,7 +74,9 @@ class SignOutConfirmationDialog extends StatelessWidget {
                   )
                 ),
                 child: Text(getTranslated('NO', context), style: poppinsRegular.copyWith(
-                  color: ColorResources.BLACK)
+                    color: ColorResources.BLACK,
+                    fontSize: 9.0.sp,
+                  )
                 ),
               ),
             )

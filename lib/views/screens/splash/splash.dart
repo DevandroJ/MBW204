@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
-import 'package:mbw204_club_ina/utils/constant.dart';
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:sizer/sizer.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/providers/banner.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
 import 'package:mbw204_club_ina/providers/fcm.dart';
@@ -122,8 +124,8 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Container(
               margin: EdgeInsets.only(bottom: 115.0),
               child: Text("Version ${packageInfo == null ? '...' : packageInfo?.version} + ${packageInfo == null ? '...' : packageInfo?.buildNumber}",
-                style: TextStyle(
-                  fontSize: 12.0,
+                style: poppinsRegular.copyWith(
+                  fontSize: 9.0.sp,
                   fontWeight: FontWeight.normal,
                   color: ColorResources.WHITE
                 ),
@@ -136,10 +138,10 @@ class _SplashScreenState extends State<SplashScreen> {
           : Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.only(bottom: 115.0),
+              margin: EdgeInsets.only(bottom: 135.0),
               child: Text("DEV",
-                style: TextStyle(
-                  fontSize: 12.0,
+                style: poppinsRegular.copyWith(
+                  fontSize: 9.0.sp,
                   fontWeight: FontWeight.normal,
                   color: ColorResources.WHITE
                 ),
@@ -152,8 +154,9 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Container(
               margin: EdgeInsets.only(bottom: 80.0),
               child: Text("Poweredby:",
-                style: TextStyle(
-                  color: ColorResources.WHITE
+                style: poppinsRegular.copyWith(
+                  color: ColorResources.WHITE,
+                  fontSize: 9.0.sp
                 ),
               ),
             ),
@@ -172,8 +175,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   SizedBox(width: 10.0),
                   Text("|",
-                    style: TextStyle(
-                      fontSize: 30.0,
+                    style: poppinsRegular.copyWith(
+                      fontSize: 9.0.sp,
                       fontWeight: FontWeight.normal,
                       color: ColorResources.WHITE
                     ),

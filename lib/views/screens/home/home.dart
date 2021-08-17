@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
       Provider.of<NewsProvider>(context, listen: false).getNews(context, false); 
       Provider.of<ChatProvider>(context, listen: false).fetchListChat(context);
       Provider.of<WarungProvider>(context, listen: false).getDataStore(context);
+      Provider.of<WarungProvider>(context, listen: false).getDataCategoryProduct(context, "commerce");
     });
     // scrollController = ScrollController();
     // scrollController.addListener(() {
@@ -121,6 +122,7 @@ class _HomePageState extends State<HomePage> {
                       floating: true,
                       pinned: true,
                       centerTitle: false,
+                      // collapsedHeight: 20.h,
                       expandedHeight: 25.h,
                       elevation: 0.0,
                       title: Container(
@@ -258,26 +260,35 @@ class _HomePageState extends State<HomePage> {
                                 options: CarouselOptions(
                                   autoPlay: true,
                                   enlargeCenterPage: true,
+                                  enableInfiniteScroll: false,
                                   aspectRatio: 16 / 9,
                                   viewportFraction: 1.0,
-                                  onPageChanged: (int index, CarouselPageChangedReason reason) {
-                                    bannerProvider.setCurrentIndex(index);
+                                  onPageChanged: (int i, CarouselPageChangedReason reason) {
+                                    bannerProvider.setCurrentIndex(i);
                                   },
                                 ),
                                 itemCount: bannerProvider.bannerListMap.length,
                                 itemBuilder: (BuildContext context, int i) {
-                                  return Container(
-                                    width: double.infinity,
-                                    child: CachedNetworkImage(
+                                  return CachedNetworkImage(
                                     imageUrl: "${AppConstants.BASE_URL_IMG}/${bannerProvider.bannerListMap[i]["path"]}",
-                                    fit: BoxFit.cover,
-                                    ),
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            
+                                            fit: BoxFit.fitWidth,
+                                            image: imageProvider
+                                          )
+                                        ),
+                                      );                                        
+                                    },
                                   );                  
                                 },
                               ),
 
                               Positioned(
-                                bottom: 1.5.h,
+                                bottom: 0.5.h,
                                 left: 0.0,
                                 right: 0.0,
                                 child: Row(
@@ -287,8 +298,8 @@ class _HomePageState extends State<HomePage> {
                                     return TabPageSelectorIndicator(
                                       backgroundColor: index == bannerProvider.currentIndex 
                                       ? ColorResources.BTN_PRIMARY 
-                                      : ColorResources.WHITE,
-                                      borderColor: Colors.white,
+                                      : Colors.grey[350],
+                                      borderColor: Colors.grey[200],
                                       size: 10.0,
                                     );
                                   }).toList(),

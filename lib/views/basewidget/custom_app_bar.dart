@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/utils/colorResources.dart';
+import 'package:sizer/sizer.dart';
 
+import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
 import 'package:mbw204_club_ina/utils/dimensions.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;
-  final isBackButtonExist;
+  final bool isBackButtonExist;
   final IconData icon;
   final Function onActionPressed;
 
@@ -40,7 +41,10 @@ class CustomAppBar extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: poppinsRegular.copyWith(fontSize: 20, color: Colors.white),
+                style: poppinsRegular.copyWith(
+                  fontSize: 10.sp, 
+                  color: ColorResources.WHITE
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

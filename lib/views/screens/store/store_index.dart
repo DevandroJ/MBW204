@@ -6,9 +6,9 @@ import 'package:lottie/lottie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
-import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:mbw204_club_ina/helpers/helper.dart';
 import 'package:mbw204_club_ina/views/basewidget/search.dart';
 import 'package:mbw204_club_ina/views/screens/dashboard/dashboard.dart';
 import 'package:mbw204_club_ina/views/screens/store/buyer_transaction_order.dart';
@@ -142,6 +142,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                               Expanded(
                                 child: SearchWidget(
                                   hintText: "Cari Produk",
+                                  type: "commerce",
                                 )
                               ),
                               InkWell(
@@ -278,7 +279,6 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
             if(warungProvider.categoryHasManyProduct[i]["items"].length == 0) {
               return Container();
             }
-            
             return Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: Column(
@@ -297,13 +297,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0)
                     ),
-                    child: warungProvider.categoryHasManyProduct[i]["items"].length == 0 
-                    ? Center(
-                        child: Text("Belum ada Produk",
-                        style: poppinsRegular,
-                      )
-                    )
-                    : ListView.builder(
+                    child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       physics: BouncingScrollPhysics(),

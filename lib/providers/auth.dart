@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
 import 'package:mbw204_club_ina/views/screens/auth/otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,12 +28,14 @@ enum ForgotPasswordStatus { loading, loaded, error, idle }
 enum LoginStatus { loading, loaded, error, idle }
 enum ResendOtpStatus { idle, loading, loaded, error, empty } 
 enum VerifyOtpStatus { idle, loading, loaded, error, empty }
+enum ApplyChangeEmailOtpStatus { idle, loading, loaded, error, empty }
 
 abstract class BaseAuth {
   Future register(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey, UserData userData, String userType);
   Future login(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey, UserData userData);
   Future resendOtp(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey, String email);
   Future verifyOtp(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey);
+  Future applyChangeEmailOtp(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey);
   Future forgotPassword(BuildContext context, UserData userData);
   Future<InquiryRegisterModel> verify(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey, String token, UserModel user);
   InquiryRegisterModel inquiryRegisterModel;
@@ -86,6 +89,9 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
   ResendOtpStatus _resendOtpStatus = ResendOtpStatus.idle;
   ResendOtpStatus get resendOtpStatus => _resendOtpStatus;
 
+  ApplyChangeEmailOtpStatus _applyChangeEmailOtpStatus = ApplyChangeEmailOtpStatus.idle;
+  ApplyChangeEmailOtpStatus get applyChangeEmailOtpStatus => _applyChangeEmailOtpStatus;
+
   void setStateLoginStatus(LoginStatus loginStatus) {
     _loginStatus = loginStatus;
     Future.delayed(Duration.zero, () =>  notifyListeners());
@@ -113,6 +119,11 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
 
   void setResendOtpStatus(ResendOtpStatus resendOtpStatus) {
     _resendOtpStatus = resendOtpStatus;
+    Future.delayed(Duration.zero, () => notifyListeners());
+  }
+
+  void setApplyChangeEmailOtpStatus(ApplyChangeEmailOtpStatus applyChangeEmailOtpStatus) {
+    _applyChangeEmailOtpStatus = applyChangeEmailOtpStatus;
     Future.delayed(Duration.zero, () => notifyListeners());
   }
 
@@ -290,6 +301,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
           writeData(user);
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen()));
         } else {
+          prefs.setString("email_otp", user.body.user.emailAddress);
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OtpScreen()));
         }
       }
@@ -397,6 +409,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
           writeData(user);
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashBoardScreen()));
         } else {
+          prefs.setString("email_otp", user.body.user.emailAddress);
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OtpScreen()));
         }
       }
@@ -477,7 +490,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
     }
   }
 
-     Future verifyOtp(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey) async {
+  Future verifyOtp(BuildContext context, GlobalKey<ScaffoldMessengerState> globalKey) async {
     if(otp == null) {
       ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
         SnackBar(
@@ -560,6 +573,40 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
     }
   }
 
+  Future applyChangeEmailOtp(BuildContext context,  GlobalKey<ScaffoldMessengerState> globalKey) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    changeEmailName = prefs.getString("email_otp");
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(changeEmailName); 
+    if(!emailValid) {
+      ShowSnackbar.snackbar(context, "Ex : customcare@connexist.com", "", ColorResources.ERROR);
+      return;
+    } else {
+      if(emailCustom.trim().isNotEmpty) {
+        changeEmailName = emailCustom;
+      }
+      notifyListeners();
+    }
+    try {
+      setApplyChangeEmailOtpStatus(ApplyChangeEmailOtpStatus.loading);
+      await dio.post("${AppConstants.BASE_URL}/user-service/change-email", data: {
+        "old_email": prefs.getString("email_otp"),
+        "new_email": changeEmailName
+      });
+      prefs.setString("email_otp", changeEmailName);
+      ShowSnackbar.snackbar(context, getTranslated("UPDATE_CHANGE_EMAIL_SUCCESSFUL", context), "", ColorResources.SUCCESS);
+      changeEmail = true;
+      setApplyChangeEmailOtpStatus(ApplyChangeEmailOtpStatus.loaded);
+    } on DioError catch(e) {
+      print(e?.response?.statusCode);
+      print(e?.response?.data);
+      ShowSnackbar.snackbar(context, json.decode(e?.response?.data)["error"], "", ColorResources.ERROR);
+      setApplyChangeEmailOtpStatus(ApplyChangeEmailOtpStatus.error);
+    } catch(e) {
+      print(e);
+      setApplyChangeEmailOtpStatus(ApplyChangeEmailOtpStatus.error);
+    }
+  }
+
   void cleanText() {
     otpTextController.text = "";
     notifyListeners();
@@ -577,13 +624,18 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
 
   void cancelCustomEmail() {
     changeEmail = true;
-    changeEmailName = sharedPreferences.getString("email_otp");
     notifyListeners();
   }
 
-  void applyCustomEmail() {
+  void applyCustomEmail(BuildContext context) {
     changeEmail = true;
-    changeEmailName = emailCustom.trim().isEmpty ? sharedPreferences.getString("email_otp") : emailCustom;
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailCustom); 
+    if(!emailValid) {
+      ShowSnackbar.snackbar(context, "Ex : customcare@connexist.com", "", ColorResources.ERROR);
+      return;
+    } else {
+      changeEmailName = emailCustom;
+    }
     notifyListeners();
   }
 

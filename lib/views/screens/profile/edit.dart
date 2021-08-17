@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 import 'package:mbw204_club_ina/views/basewidget/custom_dropdown.dart';
 import 'package:mbw204_club_ina/localization/language_constrants.dart';
@@ -42,20 +44,25 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         style: poppinsRegular.copyWith(
           color: ColorResources.BTN_PRIMARY_SECOND,
           fontWeight: FontWeight.bold, 
+          fontSize: 10.0.sp
         ),
       ),
       actions: [
         MaterialButton(
           child: Text(getTranslated("CAMERA", context),
             style: poppinsRegular.copyWith(
-              color: Colors.black
+              color: ColorResources.BLACK,
+              fontSize: 9.0.sp
             )
           ),
           onPressed: () => Navigator.pop(context, ImageSource.camera),
         ),
         MaterialButton(
           child: Text(getTranslated("GALLERY", context),
-            style: poppinsRegular.copyWith(color: Colors.black),
+            style: poppinsRegular.copyWith(
+              color: Colors.black,
+              fontSize: 9.0.sp
+            ),
           ),
           onPressed: () => Navigator.pop(context, ImageSource.gallery)
           )
@@ -82,9 +89,25 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         imageQuality: 70
       );
       if(pickedFile != null) {
-        setState(() {
-          file = File(pickedFile.path); 
-        });
+        setState(() => file = File(pickedFile.path));
+        File cropped = await ImageCropper.cropImage(
+          sourcePath: file.path,
+          androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Crop It',
+            toolbarColor: Colors.blueGrey[900],
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false
+          ),
+          iosUiSettings: IOSUiSettings(
+            minimumAspectRatio: 1.0,
+          )
+        );  
+        if(cropped != null) {
+          setState(() => file = cropped);
+        } else {
+          setState(() => file = null);
+        }
       }
     }
   }
@@ -307,6 +330,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   margin: EdgeInsets.only(top: 60.0, left: 145.0, right: 10.0),
                   child: TextField(
                     controller: fullnameController,
+                    style: poppinsRegular.copyWith(
+                      fontSize: 9.0.sp,
+                    ),
+                    decoration: InputDecoration(
+                      hintStyle: poppinsRegular.copyWith(
+                        fontSize: 9.0.sp
+                      )
+                    ),
                   )
                 ),
               ),
@@ -478,7 +509,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       onPressed: () => Navigator.of(context).pop(), 
                       child: Text(getTranslated("BACK", context),
                         style: poppinsRegular.copyWith(
-                          fontSize: 14.0,
+                          fontSize: 9.0.sp,
                           color: ColorResources.YELLOW_PRIMARY
                         ),
                       )
@@ -506,7 +537,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ) 
                           : Text(getTranslated("SAVE", context),
                             style: poppinsRegular.copyWith(
-                              fontSize: 14.0,
+                              fontSize: 9.0.sp,
                               color: ColorResources.YELLOW_PRIMARY
                             ),
                           )
@@ -529,13 +560,21 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label,
-          style: poppinsRegular,
+          style: poppinsRegular.copyWith(
+            fontSize: 9.0.sp
+          ),
         ),
         TextField(
           readOnly: readOnly,
+          style: poppinsRegular.copyWith(
+            fontSize: 9.0.sp
+          ),
           controller: textEditingController,
           decoration: InputDecoration(
-            isDense: true
+            isDense: true,
+            hintStyle: poppinsRegular.copyWith(
+              fontSize: 9.0.sp
+            )
           ),
         ),
         Divider(

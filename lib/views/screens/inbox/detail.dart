@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:mbw204_club_ina/utils/constant.dart';
@@ -68,10 +69,14 @@ class InboxDetailScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   SelectableText("No Transaksi", 
-                                    style: poppinsRegular,
+                                    style: poppinsRegular.copyWith(
+                                      fontSize: 9.0.sp
+                                    ),
                                   ),
                                   SelectableText(field1.toString() == null ? "-" : field1,
-                                    style: poppinsRegular,
+                                    style: poppinsRegular.copyWith(
+                                      fontSize: 9.0.sp
+                                    ),
                                   )
                                 ],
                               ),
@@ -81,23 +86,37 @@ class InboxDetailScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   SelectableText("Harga",
-                                    style: poppinsRegular,
+                                    style: poppinsRegular.copyWith(
+                                      fontSize: 9.0.sp
+                                    ),
                                   ),
                                   SelectableText(field2.toString() == null ? "-" : ConnexistHelper.formatCurrency(double.parse(field2)),
-                                    style: poppinsRegular,
+                                    style: poppinsRegular.copyWith(
+                                      fontSize: 9.0.sp
+                                    ),
                                   )
                                 ],
                               ),
-                            type == "default" ? SizedBox() : SizedBox(height: 8.0),
+                            type == "default" 
+                            ? SizedBox() 
+                            : SizedBox(height: 8.0),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SelectableText(type != "default" 
                                 ? "Status" : "Subject",
-                                  style: poppinsRegular,
+                                  style: poppinsRegular.copyWith(
+                                    fontSize: 9.0.sp
+                                  ),
                                 ),
-                                SelectableText(subject.toString() == null ? "-" : subject,
-                                  style: poppinsRegular,
+                                Container(
+                                  width: type != "default" ? null : 250.0,
+                                  child: SelectableText(subject.toString() == null ? "-" : subject,
+                                    textAlign: TextAlign.justify,
+                                    style: poppinsRegular.copyWith(
+                                      fontSize: 9.0.sp,
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
@@ -122,7 +141,8 @@ class InboxDetailScreen extends StatelessWidget {
                         children: [
                           SelectableText(body,
                             style: poppinsRegular.copyWith(
-                              height: 1.8
+                              height: 1.8,
+                              fontSize: 9.0.sp
                             ),
                             textAlign: TextAlign.justify,
                           ),
@@ -131,9 +151,13 @@ class InboxDetailScreen extends StatelessWidget {
                           ? SizedBox()
                           : SelectableText(field6.toString() == null ? "-" : field6, 
                             textAlign: TextAlign.justify,
-                            style: poppinsRegular,
+                            style: poppinsRegular.copyWith(
+                              fontSize: 9.0.sp
+                            ),
                           ),
-                          type == "default" ? SizedBox() : SizedBox(height: 10.0),
+                          type == "default" 
+                          ? SizedBox() 
+                          : SizedBox(height: 10.0),
                           type != "payment.waiting"
                           ? SizedBox() 
                           : Container(
@@ -151,7 +175,8 @@ class InboxDetailScreen extends StatelessWidget {
                               ),
                               child: SelectableText("Lihat Tagihan",
                                 style: poppinsRegular.copyWith(
-                                  color: ColorResources.WHITE
+                                  color: ColorResources.WHITE,
+                                  fontSize: 9.0.sp
                                 ),
                                 textAlign: TextAlign.justify,
                               ),
@@ -174,7 +199,8 @@ class InboxDetailScreen extends StatelessWidget {
                               ),
                               child: SelectableText("Cara Pembayaran",
                                 style: poppinsRegular.copyWith(
-                                  color: ColorResources.WHITE
+                                  color: ColorResources.WHITE,
+                                  fontSize: 9.0.sp
                                 ),
                                 textAlign: TextAlign.justify,
                               ),
@@ -186,70 +212,6 @@ class InboxDetailScreen extends StatelessWidget {
                   ],
                 ),
                 
-                // Card(
-                //   child: Container(
-                //     padding: EdgeInsets.all(10.0),
-                //     child:Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Text("No Transaksi"),
-                //             Text(field1.toString() == null ? "-" : field1)
-                //           ],
-                //         ),
-                //         SizedBox(height: 8.0),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Text("Harga"),
-                //             Text(field2.toString() == null ? "-" : ConnexistHelper.formatCurrency(double.parse(field2)))
-                //           ],
-                //         ),
-                //         SizedBox(height: 8.0),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Text("Status"),
-                //             Text(subject.toString() == null ? "-" : subject)
-                //           ],
-                //         ),
-                //         Divider(),
-                //         Text(body,
-                //           style: TextStyle(
-                //             height: 1.8
-                //           ),
-                //           textAlign: TextAlign.justify,
-                //           softWrap: true,
-                //         ),
-                //         SizedBox(height: 10.0),
-                //         Text(field6.toString() == null ? "-" : field6, 
-                //           textAlign: TextAlign.justify,
-                //           softWrap: true,
-                //         ),
-                //         SizedBox(height: 10.0),
-                //         InkWell(
-                //           onTap: () {
-                //             try {
-                //               launch(field5.toString());
-                //             } catch(e) {
-                //               print(e);
-                //             }
-                //           },
-                //           child: Text(field5.toString() == null ? "-" : field5,
-                //             style: TextStyle(
-                //               color: ColorResources.BLUE
-                //             ),
-                //             textAlign: TextAlign.justify,
-                //             softWrap: true,
-                //           ),
-                //         )
-                //       ],
-                //     )
-                //   ),
-                // )
-
               )
             )
 

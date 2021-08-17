@@ -331,8 +331,12 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                               return Container(
                                 margin: EdgeInsets.only(left: i == 0 ? 0.0 : 10.0),
                                 child: ChoiceChip(
-                                  label: Text(['Baru', 'Bekas'][i]),
-                                  selectedColor: ColorResources.PRIMARY,
+                                  label: Text(['Baru', 'Bekas'][i],
+                                    style: poppinsRegular.copyWith(
+                                      color: ColorResources.WHITE
+                                    ),
+                                  ),
+                                  selectedColor: ColorResources.BTN_PRIMARY_SECOND,
                                   selected: typeCondition == i,
                                   onSelected: (bool selected) {
                                     setState(() {
@@ -553,15 +557,17 @@ class _TambahJualanPageState extends State<TambahJualanPage> {
                             ),
                     ),
                     SizedBox(
-                      height: 25,
+                      height: 25.0,
                     ),
                     SizedBox(
-                      height: 55,
+                      height: 55.0,
                       width: double.infinity,
-                      child: RaisedButton(
-                      color: ColorResources.PRIMARY,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: ColorResources.PRIMARY,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                         child: Center(
                           child: Text("Jual Barang",
