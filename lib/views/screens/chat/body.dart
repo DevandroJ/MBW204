@@ -29,12 +29,6 @@ class _ChatBodyState extends State<ChatBody> {
     }); 
   }
 
-  @override 
-  void dispose() {
-    Provider.of<ChatProvider>(context, listen: false).scrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
    
@@ -65,26 +59,26 @@ class _ChatBodyState extends State<ChatBody> {
                       backgroundColor: ColorResources.BTN_PRIMARY,
                       color: ColorResources.WHITE,
                       child: ListView.builder(
-                        controller:  Provider.of<ChatProvider>(context, listen: false).scrollController,
                         shrinkWrap: true,
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: data.length,
+                        controller: Provider.of<ChatProvider>(context, listen: false).scrollController,
+                        itemCount: data.length + 1,
                         itemBuilder: (BuildContext context, int i) {
-                          if(chatProvider.listConversationsData.length == i) {
-                            return SizedBox(
-                              height: 10.0,
+                          if(i == data.length) {
+                            return Container(
+                              height: 70.0,
                             );
                           }
                           return Message(
                             chatProvider: chatProvider,
-                            message: data[i]
+                            message: data[i],
+                            key: ValueKey(data[i].id),
                           );   
                         }
                       ),
                     );
                   },
                 ),
-              )
+              ),
             ),
             ChatInput()
           ],

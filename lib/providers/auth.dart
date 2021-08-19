@@ -228,7 +228,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         if(e?.response?.data['code'] == 404 && user.body.user.status == "enabled" && user.body.user.emailActivated) {
           ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
             SnackBar(
-              duration: Duration(seconds: 15),
+              duration: Duration(seconds: 5),
               backgroundColor: ColorResources.SUCCESS,
               content: Text(getTranslated("SUCCESSFUL_LOGIN", context),
                 style: poppinsRegular,
@@ -292,6 +292,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
         if(user.body.user.status == "enabled" && user.body.user.emailActivated) {
           ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
             SnackBar(
+              duration: Duration(seconds: 5),
               backgroundColor: ColorResources.SUCCESS,
               content: Text(getTranslated("SUCCESSFUL_LOGIN", context),
                 style: poppinsRegular,
@@ -513,7 +514,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       );
       ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
         SnackBar(
-          duration: Duration(seconds: 15),
+          duration: Duration(seconds: 10),
           backgroundColor: ColorResources.SUCCESS,
           content: Text("Akun Alamat E-mail $changeEmailName Anda sudah aktif, silahkan Login",
             style: poppinsRegular,
@@ -555,7 +556,7 @@ class AuthProvider with ChangeNotifier implements BaseAuth {
       );
       ScaffoldMessenger.of(globalKey.currentContext).showSnackBar(
         SnackBar(
-          duration: Duration(seconds: 15),
+          duration: Duration(seconds: 10),
           backgroundColor: ColorResources.SUCCESS,
           content: Text("Silahkan periksa Alamat E-mail $email Anda, untuk melihat kode OTP yang tercantum",
             style: poppinsRegular,

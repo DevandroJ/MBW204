@@ -1,4 +1,12 @@
+import 'dart:io';
+
+import 'package:ext_storage/ext_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:readmore/readmore.dart';
 import 'package:sizer/sizer.dart';
@@ -78,6 +86,45 @@ class _PostImageComponentState extends State<PostImageComponent> {
                             )
                           ));
                         },
+                        onLongPress: () async {
+                          showAnimatedDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (ctx) {
+                              return Dialog(
+                                child: Container(
+                                height: 50.0,
+                                padding: EdgeInsets.all(10.0),
+                                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                                child: StatefulBuilder(
+                                  builder: (BuildContext c, Function s) {
+                                  return ElevatedButton(
+                                    onPressed: () async { 
+                                      Directory documentsIos = await getApplicationDocumentsDirectory();
+                                      String saveDir = Platform.isIOS ? documentsIos.path : await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+                                      String url = '${AppConstants.BASE_URL_IMG}${i.path}'; 
+                                      await FlutterDownloader.enqueue(
+                                        url: url, 
+                                        savedDir: saveDir, 
+                                        fileName: basename(i.path),
+                                        openFileFromNotification: true,
+                                        showNotification: true,
+                                      ); 
+                                      Navigator.of(context).pop();
+                                      ShowSnackbar.snackbar(context, "Gambar telah disimpan pada $saveDir", "", ColorResources.SUCCESS);
+                                    },
+                                    child: Text("Unduh Gambar", 
+                                      style: poppinsRegular.copyWith(
+                                        fontSize: 9.0.sp
+                                      ),
+                                    ),                           
+                                  );
+                                })
+                                )
+                              );
+                            },
+                          );
+                        },
                         child: CachedNetworkImage(
                           imageUrl: "${AppConstants.BASE_URL_IMG}${i.path}",
                           imageBuilder: (context, imageProvider) => Container(
@@ -89,7 +136,7 @@ class _PostImageComponentState extends State<PostImageComponent> {
                               ),
                             ),
                           ),
-                          placeholder: (context, url) => Shimmer.fromColors(
+                          placeholder: (BuildContext context, String url) => Shimmer.fromColors(
                             highlightColor: Colors.white,
                             baseColor: Colors.grey[200],
                             child: Container(
@@ -162,6 +209,45 @@ class _PostImageComponentState extends State<PostImageComponent> {
                 img: '${AppConstants.BASE_URL_IMG}${widget.medias[0].path}',
               );
             }));
+          },
+          onLongPress: () {
+            showAnimatedDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (ctx) {
+                return Dialog(
+                  child: Container(
+                  height: 50.0,
+                  padding: EdgeInsets.all(10.0),
+                  margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                  child: StatefulBuilder(
+                    builder: (BuildContext c, Function s) {
+                    return ElevatedButton(
+                      onPressed: () async { 
+                        Directory documentsIos = await getApplicationDocumentsDirectory();
+                        String saveDir = Platform.isIOS ? documentsIos.path : await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+                        String url = '${AppConstants.BASE_URL_IMG}${widget.medias[0].path}'; 
+                        await FlutterDownloader.enqueue(
+                          url: url, 
+                          savedDir: saveDir, 
+                          fileName: basename(widget.medias[0].path),
+                          openFileFromNotification: true,
+                          showNotification: true,
+                        ); 
+                        Navigator.of(context).pop();
+                        ShowSnackbar.snackbar(context, "Gambar telah disimpan pada $saveDir", "", ColorResources.SUCCESS);
+                      },
+                      child: Text("Unduh Gambar", 
+                        style: poppinsRegular.copyWith(
+                          fontSize: 9.0.sp
+                        ),
+                      ),                           
+                    );
+                  })
+                  )
+                );
+              },
+            );
           },
           child: CachedNetworkImage(
             imageUrl: "${AppConstants.BASE_URL_IMG}${widget.medias[0].path}",

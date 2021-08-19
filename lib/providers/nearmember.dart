@@ -5,6 +5,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,10 +48,11 @@ class NearMemberProvider with ChangeNotifier {
         if(_nearMemberData.isEmpty) {
           setStateNearMemberStatus(NearMemberStatus.empty);
         }
-      }
-    } catch(e) {
+      } 
+    } on NullException catch(_) {
+      setStateNearMemberStatus(NearMemberStatus.empty);
+    } catch(_) {
       setStateNearMemberStatus(NearMemberStatus.error);
-      print(e);
     }
   }
 

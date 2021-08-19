@@ -242,7 +242,10 @@ class _EventScreenState extends State<EventScreen> {
                                                             style: TextButton.styleFrom(
                                                               backgroundColor: ColorResources.BTN_PRIMARY_SECOND
                                                             ),
-                                                            onPressed: () async => await eventProvider.eventJoin(context, eventProvider.events[i][0]["event_id"]),
+                                                            onPressed: () async {
+                                                              EventData eventData = eventProvider.events[i];
+                                                              await eventProvider.eventJoin(context, eventData.eventId);
+                                                            },
                                                             child: eventProvider.eventJoinStatus == EventJoinStatus.loading 
                                                             ? Loader(
                                                                 color: ColorResources.YELLOW_PRIMARY,

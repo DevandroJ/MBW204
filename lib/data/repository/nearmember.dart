@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/utils/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mbw204_club_ina/data/models/nearmember.dart';
@@ -21,6 +22,9 @@ class NearMemberRepo {
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.get("${AppConstants.BASE_URL}/data/nearme?lat=$lat&lng=$long");
+      if(json.decode(res.data)["body"] == null) {
+        throw NullException();
+      }
       NearMemberModel nearMemberModel = NearMemberModel.fromJson(json.decode(res.data));
       List<NearMemberData> nearMemberData = nearMemberModel.body;
       listNearMemberData = nearMemberData;
@@ -28,8 +32,8 @@ class NearMemberRepo {
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);
-    } catch(e) {
-      print(e);
+    } on NullException catch(_) {
+      throw NullException();
     }
     return listNearMemberData;
   }

@@ -63,7 +63,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     //   print("==== RETURN BACK TO APP ====");
     // }
     // if(state == AppLifecycleState.paused) {
-      Provider.of<ChatProvider>(context, listen: false).notifyChat(context);
     // }
   }
 

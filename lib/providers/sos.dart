@@ -46,7 +46,7 @@ class SosProvider extends ChangeNotifier {
         "geoPosition": geoPosition,
         "address": address,
         "sosType": "sos",
-        "Message": "$body $address",
+        "Message": "$body ${address.replaceAll(',', '')}",
         "sender": sender,
         "phoneNumber": phoneNumber
       });

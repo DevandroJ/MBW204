@@ -1,8 +1,14 @@
+import 'dart:io';
 import 'dart:ui';
 
 // import 'package:badges/badges.dart';
+import 'package:path/path.dart' as b;
+import 'package:ext_storage/ext_storage.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,6 +18,8 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/utils/socket.dart';
+import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
 import 'package:mbw204_club_ina/providers/inbox.dart';
 import 'package:mbw204_club_ina/providers/chat.dart';
@@ -78,7 +86,7 @@ class _HomePageState extends State<HomePage> {
     //     setState(() => lastStatus = isShrink);
     //   }
     // });
-    // SocketHelper.shared.connect(context);
+    SocketHelper.shared.connect(context);
   }
 
   Future<bool> onWillPop() {
@@ -133,38 +141,38 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       actions: [
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
-                        //   child: InkWell(
-                        //     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
-                        //     child: Container(
-                        //       width: 28.0,
-                        //       height: 28.0,
-                        //       margin: EdgeInsets.only(right: 10.sp),
-                        //       decoration: BoxDecoration(
-                        //         color: ColorResources.GREY,
-                        //         borderRadius: BorderRadius.circular(20.0)
-                        //       ),
-                        //       child: 
-                        //       // Badge(
-                        //       //   position: BadgePosition(
-                        //       //     top: -9.0,
-                        //       //     end: 14.0
-                        //       //   ),
-                        //       //   badgeContent: Text("2",
-                        //       //     style: poppinsRegular.copyWith(color: Colors.white),
-                        //       //   ),
-                        //       //   child: 
+                        Container(
+                          margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
+                          child: InkWell(
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InboxScreen())),
+                            child: Container(
+                              width: 28.0,
+                              height: 28.0,
+                              margin: EdgeInsets.only(right: 10.sp),
+                              decoration: BoxDecoration(
+                                color: ColorResources.GREY,
+                                borderRadius: BorderRadius.circular(20.0)
+                              ),
+                              child: 
+                              // Badge(
+                              //   position: BadgePosition(
+                              //     top: -9.0,
+                              //     end: 14.0
+                              //   ),
+                              //   badgeContent: Text("2",
+                              //     style: poppinsRegular.copyWith(color: Colors.white),
+                              //   ),
+                              //   child: 
                                 
-                        //         Icon(
-                        //           Icons.chat,
-                        //           color: ColorResources.BLACK,
-                        //           size: 18.0,
-                        //         ),
-                        //       // ),
-                        //     ),
-                        //   ),
-                        // ),
+                                Icon(
+                                  Icons.chat,
+                                  color: ColorResources.BLACK,
+                                  size: 18.0,
+                                ),
+                              // ),
+                            ),
+                          ),
+                        ),
                         Container(
                           margin: EdgeInsets.only(top: 14.0, bottom: 14.0),
                           child: InkWell(
@@ -501,9 +509,295 @@ class _HomePageState extends State<HomePage> {
                                   Consumer<NearMemberProvider>(
                                     builder: (BuildContext context, NearMemberProvider nearMemberProvider, Widget child) {
                                       if(nearMemberProvider.nearMemberStatus == NearMemberStatus.loading) {
-                                        return Expanded(
-                                          child: Loader(
-                                            color: ColorResources.BTN_PRIMARY_SECOND,
+                                        return Container(
+                                          margin: EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                                          height: 120.0,
+                                          child: ListView(
+                                            scrollDirection: Axis.horizontal,
+                                            shrinkWrap: true,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    child: Container(
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(50.0),
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ), 
+                                                    baseColor: Colors.grey[300], 
+                                                    highlightColor: Colors.grey[200]
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 60.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 40.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              SizedBox(width: 8.0),
+                                              Column(
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    child: Container(
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(50.0),
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ), 
+                                                    baseColor: Colors.grey[300], 
+                                                    highlightColor: Colors.grey[200]
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 60.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 40.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              SizedBox(width: 8.0),
+                                              Column(
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    child: Container(
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(50.0),
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ), 
+                                                    baseColor: Colors.grey[300], 
+                                                    highlightColor: Colors.grey[200]
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 60.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 40.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),      
+                                                ],
+                                              ),
+                                                SizedBox(width: 8.0),
+                                              Column(
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    child: Container(
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(50.0),
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ), 
+                                                    baseColor: Colors.grey[300], 
+                                                    highlightColor: Colors.grey[200]
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 60.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 40.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),      
+                                                ],
+                                              ),
+                                                SizedBox(width: 8.0),
+                                              Column(
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    child: Container(
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(50.0),
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ), 
+                                                    baseColor: Colors.grey[300], 
+                                                    highlightColor: Colors.grey[200]
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 60.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 40.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),      
+                                                ],
+                                              ),
+                                                SizedBox(width: 8.0),
+                                              Column(
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    child: Container(
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(50.0),
+                                                        color: ColorResources.WHITE
+                                                      ),
+                                                    ), 
+                                                    baseColor: Colors.grey[300], 
+                                                    highlightColor: Colors.grey[200]
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 60.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8.0),
+                                                  Container(
+                                                    child: Shimmer.fromColors(
+                                                      child: Container(
+                                                        width: 40.0,
+                                                        height: 10.0,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0),
+                                                          color: ColorResources.WHITE
+                                                        ),
+                                                      ), 
+                                                      baseColor: Colors.grey[300], 
+                                                      highlightColor: Colors.grey[200]
+                                                    ),
+                                                  ),      
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         );
                                       }
@@ -1317,8 +1611,45 @@ Widget newsComponent(BuildContext context) {
     builder: (BuildContext context, NewsProvider newsProvider, Widget child) {
       
       if(newsProvider.getNewsStatus == GetNewsStatus.loading) {
-        return Loader(
-          color: ColorResources.BTN_PRIMARY_SECOND,
+        return ListView(
+          children: [
+            Shimmer.fromColors(
+              child: Container(
+                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                height: 90.0,
+                decoration: BoxDecoration(
+                  color: ColorResources.WHITE,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ), 
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.grey[200]
+            ),
+            Shimmer.fromColors(
+              child: Container(
+                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                height: 90.0,
+                decoration: BoxDecoration(
+                  color: ColorResources.WHITE,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ), 
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.grey[200]
+            ),
+            Shimmer.fromColors(
+              child: Container(
+                margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                height: 90.0,
+                decoration: BoxDecoration(
+                  color: ColorResources.WHITE,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ), 
+              baseColor: Colors.grey[300],
+              highlightColor: Colors.grey[200]
+            ),
+          ],
         );
       }
 
@@ -1349,49 +1680,89 @@ Widget newsComponent(BuildContext context) {
               ),
               child: Stack(
                 children: [
-
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
-                          imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
-                          width: 120.0,
-                          height: 80.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            image: DecorationImage(
-                              image: imageProvider, 
-                              fit: BoxFit.cover
+                      InkWell(
+                        onLongPress: () {
+                          showAnimatedDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (ctx) {
+                            return Dialog(
+                              child: Container(
+                              height: 50.0,
+                              padding: EdgeInsets.all(10.0),
+                              margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 16.0, right: 16.0),
+                              child: StatefulBuilder(
+                                builder: (BuildContext c, Function s) {
+                                return ElevatedButton(
+                                  onPressed: () async { 
+                                    Directory documentsIos = await getApplicationDocumentsDirectory();
+                                      String saveDir = Platform.isIOS ? documentsIos.path : await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+                                      String url = '${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}'; 
+                                      await FlutterDownloader.enqueue(
+                                        url: url, 
+                                        savedDir: saveDir, 
+                                        fileName: b.basename(newsProvider.newsBody[i].media[0].path),
+                                        openFileFromNotification: true,
+                                        showNotification: true,
+                                      ); 
+                                      Navigator.of(context).pop();
+                                      ShowSnackbar.snackbar(context, "Gambar telah disimpan pada $saveDir", "", ColorResources.SUCCESS);
+                                    },
+                                    child: Text("Unduh Gambar", 
+                                      style: poppinsRegular.copyWith(
+                                        fontSize: 9.0.sp
+                                      ),
+                                    ),                           
+                                  );
+                                })
+                                )
+                              );
+                            },
+                          );
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: "${AppConstants.BASE_URL_IMG}/${newsProvider.newsBody[i].media[0].path}",
+                            imageBuilder: (BuildContext context, ImageProvider<Object> imageProvider) => Container(
+                            width: 120.0,
+                            height: 80.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: imageProvider, 
+                                fit: BoxFit.cover
+                              ),
                             ),
                           ),
+                          placeholder: (BuildContext context, String url) {
+                            return Container(
+                              width: 120.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/default_image.png'), 
+                                  fit: BoxFit.cover
+                                ),
+                              ),
+                            );                          
+                          },
+                          errorWidget: (BuildContext context, String url, dynamic error) {
+                            return Container(
+                              width: 120.0,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/default_image.png'), 
+                                  fit: BoxFit.cover
+                                ),
+                              ),
+                            );                                              
+                          },
                         ),
-                        placeholder: (BuildContext context, String url) {
-                          return Container(
-                            width: 120.0,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/default_image.png'), 
-                                fit: BoxFit.cover
-                              ),
-                            ),
-                          );                          
-                        },
-                        errorWidget: (BuildContext context, String url, dynamic error) {
-                          return Container(
-                            width: 120.0,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/default_image.png'), 
-                                fit: BoxFit.cover
-                              ),
-                            ),
-                          );                                              
-                        },
                       ),
                       SizedBox(width: 10.0),
                       Container(

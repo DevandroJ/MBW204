@@ -162,7 +162,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   );
                 }
               }, 
-              child: Text(getTranslated("ABOUT_US", context),
+              child: Text(getTranslated("HISTORY", context),
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),
@@ -217,7 +217,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 //   );
                 // }
               }, 
-              child: Text(getTranslated("ORGANIZATION_POLICY", context),
+              child: Text(getTranslated("ORGANIZATION_RULES_REGULATIONS", context),
                 style: poppinsRegular.copyWith(
                   color: ColorResources.WHITE
                 ),

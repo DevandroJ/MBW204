@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:io' as io;
 
+import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mbw204_club_ina/utils/custom_themes.dart';
@@ -56,10 +58,10 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
   Future downloadFile(String url) async {
     Dio dio = Dio();
     try {  
-      PermissionStatus status = await Permission.storage.status;
-      if(!status.isGranted) {
-        await Permission.storage.request();
-      }
+      // PermissionStatus status = await Permission.storage.status;
+      // if(!status.isGranted) {
+      //   await Permission.storage.request();
+      // }
       String dir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
       await dio.download(url, "$dir/${widget.media.path}", onReceiveProgress: (received, total) {
         setState(() {
@@ -96,7 +98,17 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
     super.initState();
     bindBackgroundIsolate();
     FlutterDownloader.registerCallback(downloadingCallback); 
-    ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS).then((dir) {
+    Platform.isIOS 
+    ? getApplicationDocumentsDirectory().then((dir) {
+        setState(() => checkPath = "$dir/${widget.media.path.split('/').last}");
+        betterPlayerDataSource = BetterPlayerDataSource(
+        BetterPlayerDataSourceType.file, checkPath);
+        betterPlayerController = BetterPlayerController(
+        betterPlayerConfiguration,
+        betterPlayerDataSource: betterPlayerDataSource
+      );
+    }) 
+    : ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS).then((dir) {
       setState(() => checkPath = "$dir/${widget.media.path.split('/').last}");
       betterPlayerDataSource = BetterPlayerDataSource(
         BetterPlayerDataSourceType.file, checkPath);
@@ -108,7 +120,6 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
   }
 
   void dispose() {
-    betterPlayerController.dispose();
     unbindBackgroundIsolate();
     super.dispose();
   }
@@ -130,19 +141,32 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
         });
       }
       if(_downloadingTaskStatus == DownloadTaskStatus.complete) {       
-        ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS).then((dir) {
+        Platform.isIOS 
+        ? getApplicationDocumentsDirectory().then((dir) {
+            setState(() {
+              progressRun = false;
+              checkPath = "$dir/${widget.media.path.split('/').last}";
+            });
+              betterPlayerDataSource = BetterPlayerDataSource(
+              BetterPlayerDataSourceType.file, checkPath);
+              betterPlayerController = BetterPlayerController(
+              betterPlayerConfiguration,
+              betterPlayerDataSource: betterPlayerDataSource
+            );
+          })
+        : ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS).then((dir) {
           setState(() {
             progressRun = false;
             checkPath = "$dir/${widget.media.path.split('/').last}";
           });
-        betterPlayerDataSource = BetterPlayerDataSource(
-          BetterPlayerDataSourceType.file, checkPath);
-            betterPlayerController = BetterPlayerController(
-            betterPlayerConfiguration,
-            betterPlayerDataSource: betterPlayerDataSource
-          );
-        });
-      }
+          betterPlayerDataSource = BetterPlayerDataSource(
+            BetterPlayerDataSourceType.file, checkPath);
+              betterPlayerController = BetterPlayerController(
+              betterPlayerConfiguration,
+              betterPlayerDataSource: betterPlayerDataSource
+            );
+          });
+        }
     });
   }
 
@@ -215,6 +239,7 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                             )
                           ),
                           onTap: () async {
+                            print(widget.media.path);
                             showAnimatedDialog(
                               context: context,
                               barrierDismissible: true,
@@ -255,11 +280,12 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                                                 try {
                                                   final status = await Permission.storage.request();
                                                   if(status.isGranted) {
-                                                    String downloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+                                                    Directory documentsIos = await getApplicationDocumentsDirectory();
+                                                    String saveDir = Platform.isIOS ? documentsIos.path : await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
                                                     String url = '${AppConstants.BASE_URL_IMG}${widget.media.path}'; 
                                                     await FlutterDownloader.enqueue(
                                                       url: url, 
-                                                      savedDir: downloadDir,
+                                                      savedDir: saveDir,
                                                       fileName: basename(widget.media.path),
                                                       openFileFromNotification: true,
                                                       showNotification: true,
@@ -284,16 +310,18 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                                                       curve: Curves.fastOutSlowIn,
                                                       duration: Duration(seconds: 2),
                                                     );
-                                                    Future.delayed(Duration(seconds: 1), () => Navigator.of(context, rootNavigator: true).pop());
-                                                    Future.delayed(Duration(seconds: 1), () => Navigator.of(context).pop());    
-                                                  } else {
-                                                    print("Permission denied");
-                                                  }
+                                                    Navigator.of(context, rootNavigator: true).pop();
+                                                    Navigator.of(context).pop();    
+                                                  } 
                                                 } catch(e) {
                                                   print(e);
                                                 }
                                               },
-                                              child: Text("Ya"),
+                                              child: Text("Ya",
+                                                style: poppinsRegular.copyWith(
+                                                  fontSize: 9.0.sp
+                                                ),
+                                              ),
                                             )
                                           ],
                                         )

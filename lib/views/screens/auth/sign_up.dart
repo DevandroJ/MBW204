@@ -500,6 +500,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   "value": "C 280",
                                                 },
                                                 {
+                                                  "display": "C 300",
+                                                  "value": "C 300",
+                                                },
+                                                {
                                                   "display": "C 350",
                                                   "value": "C 350",
                                                 },

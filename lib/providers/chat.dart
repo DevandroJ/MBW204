@@ -121,6 +121,11 @@ class ChatProvider with ChangeNotifier {
   Future sendMessageToConversations(BuildContext context, String text, ListChatData listChatData) async {
     try { 
       if(sharedPreferences.getString("userId") != listChatData.userId) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent, 
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
         _listConversationData.insert(0, ListConversationData(
           id: conversationIdGenerated,
           contextId: AppConstants.X_CONTEXT_ID,
@@ -165,97 +170,90 @@ class ChatProvider with ChangeNotifier {
           )
         ));
         inputMsgController.text = "";
-        Timer(Duration(milliseconds: 300), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
         await loadSoundSent();
         setStateSendMessage(SendMessageStatus.loaded);
       }
-      await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
-      int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
-      _listConversationData[index].messageStatus = "DELIVERED";
-      fetchListChat(context);
-      setStateListChatStatus(ListChatStatus.refetch);
-      setStateSendMessage(SendMessageStatus.loaded);
+      // await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
+      // int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
+      // _listConversationData[index].messageStatus = "DELIVERED";
+      // fetchListChat(context);
+      // setStateListChatStatus(ListChatStatus.refetch);
+      // setStateSendMessage(SendMessageStatus.loaded);
     } on Error catch(_) {
       int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       _listConversationData[index].messageStatus = "UNDELIVERED";
       inputMsgController.text = _listConversationData[index].content.text;
       text = _listConversationData[index].content.text;
       setStateSendMessage(SendMessageStatus.error);
-    } catch(e) {
+    } catch(_) {
       setStateSendMessage(SendMessageStatus.error);
-      print(e);
     }
   }
 
   Future sendMessageToConversationsSocket(BuildContext context, dynamic data) async {
     Map<String, dynamic> basket = Provider.of(context, listen: false);
-    int index = _listConversationData.indexWhere((el) => el.id == data["id"]);
-    try { 
-      if(basket["state"] == AppLifecycleState.paused){  
-        notifyChat(context, data);
-      } else {
-        ListChatData listChatData = basket["listChatData"];
-        if(data["payload"]["chatId"] == listChatData.id) {
-          _listConversationData.insert(0, ListConversationData(
-            id: data["id"],
-            replyToConversationId: data["payload"]["replyToConversationId"],
-            created: DateTime.now().toString(),
-            fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
-            contextId: AppConstants.X_CONTEXT_ID,
-            group: data["payload"]["group"],
-            origin: Origin(
-              userId: sharedPreferences.getString("userId"),
-              identity: sharedPreferences.getString("phoneNumber"),
-              displayName: sharedPreferences.getString("userName"),
-              group: false,
-              classId: "ojidinfo",
-              profilePic: ListConversationProfilePic(
-                originalName: "",
-                path: "",
-                fileLength: 0,
-                contentType: "image/jpeg",
-                kind: "IMAGE"
-              )
-            ),
-            remote: Origin(
-              userId: data["payload"]["remote"]["userId"],
-              identity: data["payload"]["remote"]["identity"],
-              displayName: data["payload"]["remote"]["displayName"],
-              group: data["payload"]["remote"]["group"],
-              classId: data["payload"]["remote"]["classId"],
-              profilePic: ListConversationProfilePic(
-                originalName: data["payload"]["remote"]["profilePic"]["originalName"],
-                path: data["payload"]["remote"]["profilePic"]["originalName"],
-                fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
-                contentType: data["payload"]["remote"]["profilePic"]["contentType"],
-                kind: data["payload"]["remote"]["profilePic"]["kind"]
-              )
-            ),
-            messageStatus: "SENT",
-            type: data["payload"]["type"],
-            classId: data["payload"]["classId"],
-            content: Content(
-              charset: data["payload"]["content"]["charset"],
-              text: data["payload"]["content"]["text"]
+    
+    if(basket["state"] == AppLifecycleState.paused) {  
+      notifyChat(context, data);      
+    } else {
+      ListChatData listChatData = basket["listChatData"];
+      if(data["payload"]["chatId"] == listChatData.id) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent, 
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+        _listConversationData.insert(0, ListConversationData(
+          id: data["id"],
+          replyToConversationId: data["payload"]["replyToConversationId"],
+          created: DateTime.now().toString(),
+          fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
+          contextId: AppConstants.X_CONTEXT_ID,
+          group: data["payload"]["group"],
+          origin: Origin(
+            userId: sharedPreferences.getString("userId"),
+            identity: sharedPreferences.getString("phoneNumber"),
+            displayName: sharedPreferences.getString("userName"),
+            group: false,
+            classId: "ojidinfo",
+            profilePic: ListConversationProfilePic(
+              originalName: "",
+              path: "",
+              fileLength: 0,
+              contentType: "image/jpeg",
+              kind: "IMAGE"
             )
-          ));
-          _listConversationData[index].messageStatus = "DELIVERED";
-          Timer(Duration(milliseconds: 300), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
-          await loadSoundSent();
-          setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
-        }
+          ),
+          remote: Origin(
+            userId: data["payload"]["remote"]["userId"],
+            identity: data["payload"]["remote"]["identity"],
+            displayName: data["payload"]["remote"]["displayName"],
+            group: data["payload"]["remote"]["group"],
+            classId: data["payload"]["remote"]["classId"],
+            profilePic: ListConversationProfilePic(
+              originalName: data["payload"]["remote"]["profilePic"]["originalName"],
+              path: data["payload"]["remote"]["profilePic"]["originalName"],
+              fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
+              contentType: data["payload"]["remote"]["profilePic"]["contentType"],
+              kind: data["payload"]["remote"]["profilePic"]["kind"]
+            )
+          ),
+          messageStatus: "DELIVERED",
+          type: data["payload"]["type"],
+          classId: data["payload"]["classId"],
+          content: Content(
+            charset: data["payload"]["content"]["charset"],
+            text: data["payload"]["content"]["text"]
+          )
+        ));
+        await loadSoundSent();
+        setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
+      } else {
+        notifyChat(context, data);     
       }
-      fetchListChat(context);
-      setStateListChatStatus(ListChatStatus.refetch);
-      setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
-    } on Error catch(_) {
-      _listConversationData[index].messageStatus = "UNDELIVERED";
-      inputMsgController.text = _listConversationData[index].content.text;
-      setStateSendMessage(SendMessageStatus.error);
-    } catch(e) {
-      setStateSendMessageStatusConfirm(SendMessageStatusConfirm.error);
-      print(e);
     }
+    fetchListChat(context);
+    setStateListChatStatus(ListChatStatus.refetch);
   }
 
   Future<int> loadSoundSent() async {
@@ -263,12 +261,15 @@ class ChatProvider with ChangeNotifier {
     return await pool.play(await pool.load(asset));
   }
 
+  Future<int> loadSoundBgMsg() async {
+    var asset = await rootBundle.load("assets/sounds/bg-message.mp3");
+    return await pool.play(await pool.load(asset));
+  }
+  
   Future ackRead(BuildContext context, String chatId) async {
     try {
       await chatRepo.ackRead(context, chatId);
-    } catch(e) {
-      print(e);
-    }
+    } catch(_) {}
   }
 
   Future notifyChat(BuildContext context, [dynamic data]) async { 
@@ -281,6 +282,7 @@ class ChatProvider with ChangeNotifier {
     );
     a.IOSNotificationDetails iosNotificationDetails = a.IOSNotificationDetails();
     a.NotificationDetails notificationDetails = a.NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails);
+    await loadSoundBgMsg();
     await flutterLocalNotificationsPlugin.show(0, data["payload"]["remote"]["displayName"], data["payload"]["content"]["text"], notificationDetails);
   }
 

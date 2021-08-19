@@ -25,9 +25,9 @@ class AppConstants {
   static const String BASE_URL_ECOMMERCE_DIMENSTION_SIZE = '$SWITCH_TO_BASE_URL/commerce-mercyw204/pub/v1/ninja/dimensionSizes';
   static const String BASE_URL_ECOMMERCE_APPROXIMATELY_VOLUMES = '$SWITCH_TO_BASE_URL/commerce-mercyw204/pub/v1/ninja/pickupApproxVolumes';
 
-  static const String SWITCH_TO = "sandbox";
-  static const String SWITCH_TO_BASE_URL = "https://apidev.cxid.xyz:8443";
-  static const String SWITCH_TO_BASE_URL_FEED = "https://apidev.cxid.xyz:7443/api/v1";
+  static const String SWITCH_TO = "prod";
+  static const String SWITCH_TO_BASE_URL = "https://smsapi.connexist.com:8443";
+  static const String SWITCH_TO_BASE_URL_FEED = "https://feedapi.connexist.id:7443/api/v1";
   static const String SWITCH_TO_CHAT_BASE_URL = "https://apidev.cxid.xyz:5091";
 
   static const String X_CONTEXT_ID = '342790713173';

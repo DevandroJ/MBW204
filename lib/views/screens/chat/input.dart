@@ -70,31 +70,27 @@ class _ChatInputState extends State<ChatInput> {
       }
     });
   }
-
-  @override 
-  void dispose() {
-    Provider.of<ChatProvider>(context, listen: false).inputMsgController.dispose();
-    super.dispose();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 10.0,
-        vertical: 12 / 2
-      ),
-      decoration: BoxDecoration(
-        color: ColorResources.GRAY_LIGHT_PRIMARY,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 32.0,
-            color: ColorResources.BLACK.withOpacity(0.2)
-          )
-        ]
-      ),
-      child: SafeArea(
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 70.0,
+        padding: EdgeInsets.symmetric(
+          horizontal: 10.0,
+          vertical: 12 / 2
+        ),
+        decoration: BoxDecoration(
+          color: ColorResources.GRAY_LIGHT_PRIMARY,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 4),
+              blurRadius: 32.0,
+              color: ColorResources.BLACK.withOpacity(0.2)
+            )
+          ]
+        ),
         child: Row(
           children: [
             Container(

@@ -179,7 +179,11 @@ class _NewsComponentState extends State<NewsComponent> {
                       children: [
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text("Tidak")
+                          child: Text("Tidak",
+                            style: poppinsRegular.copyWith(
+                              fontSize: 9.0.sp
+                            )
+                          )
                         ), 
                         StatefulBuilder(
                           builder: (BuildContext context, Function s) {
@@ -204,7 +208,11 @@ class _NewsComponentState extends State<NewsComponent> {
                             ? Loader(
                               color: ColorResources.WHITE,
                             )
-                            : Text("Ya"),                           
+                            : Text("Ya", 
+                              style: poppinsRegular.copyWith(
+                                fontSize: 9.0.sp
+                              ),
+                            ),                           
                           );
                         })
                       ],

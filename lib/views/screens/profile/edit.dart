@@ -77,9 +77,25 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         imageQuality: 70
       );
       if(pickedFile != null) {
-        setState(() {
-          file = File(pickedFile.path); 
-        });
+        setState(() => file = File(pickedFile.path));
+        File cropped = await ImageCropper.cropImage(
+          sourcePath: file.path,
+          androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Crop It',
+            toolbarColor: Colors.blueGrey[900],
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false
+          ),
+          iosUiSettings: IOSUiSettings(
+            minimumAspectRatio: 1.0,
+          )
+        );  
+        if(cropped != null) {
+          setState(() => file = cropped);
+        } else {
+          setState(() => file = null);
+        }
       }
     } else {
       PickedFile pickedFile = await ImagePicker().getImage(

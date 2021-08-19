@@ -172,7 +172,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         children: [
                           Container(
                             child: Text(feedState.post.body.numOfLikes.toString(),
-                              style: TextStyle(fontSize: 15.0)
+                              style: poppinsRegular.copyWith(
+                                fontSize: 9.0.sp
+                              )
                             ),
                           ),
                           InkWell(
@@ -271,7 +273,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           title: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                              color: ColorResources.BLACK,
+                              color: ColorResources.BLUE_GREY,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(8.0)
                               )
