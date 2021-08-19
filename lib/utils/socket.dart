@@ -34,7 +34,7 @@ class SocketHelper {
         print(data);
         final res = data as dynamic; 
         if(res is List) {
-          if(res[0]["action"] == "CHAT_CONVERSATION") {
+          if(res[0]["action"] == "CHAT_CONVERSATION" || res[0]["action"] == "CHAT_MESSAGE_STATE") {
             Future.delayed(Duration.zero, () async {
               await Provider.of<ChatProvider>(context, listen: false).sendMessageToConversationsSocket(context, res[0]);
             });

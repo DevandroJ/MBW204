@@ -3,13 +3,10 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:io' as io;
 
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:mbw204_club_ina/utils/custom_themes.dart';
-import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -20,6 +17,8 @@ import 'package:filesize/filesize.dart';
 import 'package:readmore/readmore.dart';
 import 'package:better_player/better_player.dart';
 
+import 'package:mbw204_club_ina/utils/custom_themes.dart';
+import 'package:mbw204_club_ina/utils/loader.dart';
 import 'package:mbw204_club_ina/utils/colorResources.dart';
 import 'package:mbw204_club_ina/utils/constant.dart';
 import 'package:mbw204_club_ina/data/models/feed/feedmedia.dart';
@@ -27,11 +26,13 @@ import 'package:mbw204_club_ina/data/models/feed/feedmedia.dart';
 class PostVideoComponent extends StatefulWidget {
   final FeedMedia media;
   final String caption;
+  final GlobalKey<ScaffoldMessengerState> globalKey;
 
-  PostVideoComponent(
+  PostVideoComponent({
     this.media,
-    this.caption
-  );
+    this.caption,
+    this.globalKey
+  });
 
   @override
   _PostVideoComponentState createState() => _PostVideoComponentState();
@@ -58,10 +59,10 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
   Future downloadFile(String url) async {
     Dio dio = Dio();
     try {  
-      // PermissionStatus status = await Permission.storage.status;
-      // if(!status.isGranted) {
-      //   await Permission.storage.request();
-      // }
+      PermissionStatus status = await Permission.storage.status;
+      if(!status.isGranted) {
+        await Permission.storage.request();
+      }
       String dir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
       await dio.download(url, "$dir/${widget.media.path}", onReceiveProgress: (received, total) {
         setState(() {
@@ -167,6 +168,21 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
             );
           });
         }
+        if(_downloadingTaskStatus == DownloadTaskStatus.failed) {
+          setState(() {
+            progressRun = false;
+          });
+          ScaffoldMessenger.of(widget.globalKey.currentContext).showSnackBar(
+            SnackBar(
+              backgroundColor: ColorResources.ERROR,
+              content: Text("Unduh gagal",
+                style: poppinsRegular.copyWith(
+                  fontSize: 9.0.sp
+                ),
+              )
+            )
+          );
+        }
     });
   }
 
@@ -205,7 +221,7 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
             ),
           ),
           SizedBox(height: 12.0),
-          io.File(checkPath).existsSync() && progressRun == false ? 
+          File(checkPath).existsSync() && progressRun == false ? 
           Container(
             height: 185.0,
             child: BetterPlayer(
@@ -290,27 +306,16 @@ class _PostVideoComponentState extends State<PostVideoComponent> {
                                                       openFileFromNotification: true,
                                                       showNotification: true,
                                                     );                                                       
-                                                    showAnimatedDialog(
-                                                      context: context,
-                                                      barrierDismissible: true,
-                                                      builder: (BuildContext context) {
-                                                        return Center(
-                                                          child: Container(
-                                                            color: ColorResources.WHITE,
-                                                            padding: EdgeInsets.all(8.0),
-                                                            child: Icon(
-                                                              Icons.check,
-                                                              size: 18.0,
-                                                              color: ColorResources.GREEN,
-                                                            ),
+                                                    ScaffoldMessenger.of(widget.globalKey.currentContext).showSnackBar(
+                                                      SnackBar(
+                                                        backgroundColor: ColorResources.SUCCESS,
+                                                        content: Text("Berhasil mengunduh $saveDir",
+                                                          style: poppinsRegular.copyWith(
+                                                            fontSize: 9.0.sp
                                                           ),
-                                                        );
-                                                      },
-                                                      animationType: DialogTransitionType.scale,
-                                                      curve: Curves.fastOutSlowIn,
-                                                      duration: Duration(seconds: 2),
+                                                        )
+                                                      )
                                                     );
-                                                    Navigator.of(context, rootNavigator: true).pop();
                                                     Navigator.of(context).pop();    
                                                   } 
                                                 } catch(e) {

@@ -49,6 +49,7 @@ class ChatRepo {
   }
 
   Future<ResponseSendMessageConversationModelData> sendMessageToConversations(BuildContext context, String text, String identity) async {
+    print(identity);
     try {
       Dio dio = await DioManager.shared.getClient(context);
       Response res = await dio.post("${AppConstants.BASE_URL_CHAT}/write", 
@@ -75,7 +76,8 @@ class ChatRepo {
   Future ackRead(BuildContext context, String chatId) async {
     try { 
       Dio dio = await DioManager.shared.getClient(context);
-      await dio.put("${AppConstants.BASE_URL_CHAT}/ack/$chatId");
+      Response res = await dio.put("${AppConstants.BASE_URL_CHAT}/ack/$chatId");
+      print(res.data);
     } on DioError catch(e) {
       print(e?.response?.statusCode);
       print(e?.response?.data);

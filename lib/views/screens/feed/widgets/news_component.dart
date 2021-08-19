@@ -84,7 +84,11 @@ class _NewsComponentState extends State<NewsComponent> {
             if(widget.groupsBody[widget.i].postType == PostType.IMAGE)
               PostImageComponent(widget.groupsBody[widget.i].content.medias, widget.groupsBody[widget.i].content.caption),
             if(widget.groupsBody[widget.i].postType == PostType.VIDEO)
-              PostVideoComponent(widget.groupsBody[widget.i].content.medias[0], widget.groupsBody[widget.i].content.caption),
+              PostVideoComponent(
+                globalKey:  widget.globalKey,
+                media : widget.groupsBody[widget.i].content.medias[0], 
+                caption: widget.groupsBody[widget.i].content.caption
+              ),
             
             SizedBox(height: 8.0),
 

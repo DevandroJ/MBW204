@@ -156,7 +156,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               if (feedState.post.body.postType == PostType.IMAGE)
                 PostImageComponent(feedState.post.body.content.medias, feedState.post.body.content.caption),
               if (feedState.post.body.postType == PostType.VIDEO)
-                PostVideoComponent(feedState.post.body.content.medias[0], feedState.post.body.content.caption),
+                PostVideoComponent(
+                  globalKey: widget.globalKey,  
+                  media: feedState.post.body.content.medias[0], 
+                  caption: feedState.post.body.content.caption
+                ),
              
               SizedBox(height: 8.0),
 

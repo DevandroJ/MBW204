@@ -173,12 +173,12 @@ class ChatProvider with ChangeNotifier {
         await loadSoundSent();
         setStateSendMessage(SendMessageStatus.loaded);
       }
-      // await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
-      // int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
-      // _listConversationData[index].messageStatus = "DELIVERED";
-      // fetchListChat(context);
-      // setStateListChatStatus(ListChatStatus.refetch);
-      // setStateSendMessage(SendMessageStatus.loaded);
+      await chatRepo.sendMessageToConversations(context, text, listChatData.identity);
+      int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
+      _listConversationData[index].messageStatus = "DELIVERED";
+      fetchListChat(context);
+      setStateListChatStatus(ListChatStatus.refetch);
+      setStateSendMessage(SendMessageStatus.loaded);
     } on Error catch(_) {
       int index = _listConversationData.indexWhere((el) => el.id == conversationIdGenerated);
       _listConversationData[index].messageStatus = "UNDELIVERED";
@@ -192,60 +192,69 @@ class ChatProvider with ChangeNotifier {
 
   Future sendMessageToConversationsSocket(BuildContext context, dynamic data) async {
     Map<String, dynamic> basket = Provider.of(context, listen: false);
-    
     if(basket["state"] == AppLifecycleState.paused) {  
       notifyChat(context, data);      
     } else {
       ListChatData listChatData = basket["listChatData"];
-      if(data["payload"]["chatId"] == listChatData.id) {
+      if(data["payload"]["chatId"] == listChatData?.id) {
         scrollController.animateTo(
           scrollController.position.maxScrollExtent, 
           duration: Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
-        _listConversationData.insert(0, ListConversationData(
-          id: data["id"],
-          replyToConversationId: data["payload"]["replyToConversationId"],
-          created: DateTime.now().toString(),
-          fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
-          contextId: AppConstants.X_CONTEXT_ID,
-          group: data["payload"]["group"],
-          origin: Origin(
-            userId: sharedPreferences.getString("userId"),
-            identity: sharedPreferences.getString("phoneNumber"),
-            displayName: sharedPreferences.getString("userName"),
-            group: false,
-            classId: "ojidinfo",
-            profilePic: ListConversationProfilePic(
-              originalName: "",
-              path: "",
-              fileLength: 0,
-              contentType: "image/jpeg",
-              kind: "IMAGE"
+        if(data["action"] == "CHAT_CONVERSATION") {
+          _listConversationData.insert(0, ListConversationData(
+            id: data["id"],
+            replyToConversationId: data["payload"]["replyToConversationId"],
+            created: DateTime.now().toString(),
+            fromMe: sharedPreferences.getString("userId") == data["payload"]["remote"]["userId"] ? true : false,
+            contextId: AppConstants.X_CONTEXT_ID,
+            group: data["payload"]["group"],
+            origin: Origin(
+              userId: sharedPreferences.getString("userId"),
+              identity: sharedPreferences.getString("phoneNumber"),
+              displayName: sharedPreferences.getString("userName"),
+              group: false,
+              classId: "ojidinfo",
+              profilePic: ListConversationProfilePic(
+                originalName: "",
+                path: "",
+                fileLength: 0,
+                contentType: "image/jpeg",
+                kind: "IMAGE"
+              )
+            ),
+            remote: Origin(
+              userId: data["payload"]["remote"]["userId"],
+              identity: data["payload"]["remote"]["identity"],
+              displayName: data["payload"]["remote"]["displayName"],
+              group: data["payload"]["remote"]["group"],
+              classId: data["payload"]["remote"]["classId"],
+              profilePic: ListConversationProfilePic(
+                originalName: data["payload"]["remote"]["profilePic"]["originalName"],
+                path: data["payload"]["remote"]["profilePic"]["originalName"],
+                fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
+                contentType: data["payload"]["remote"]["profilePic"]["contentType"],
+                kind: data["payload"]["remote"]["profilePic"]["kind"]
+              )
+            ),
+            messageStatus: "DELIVERED",
+            type: data["payload"]["type"],
+            classId: data["payload"]["classId"],
+            content: Content(
+              charset: data["payload"]["content"]["charset"],
+              text: data["payload"]["content"]["text"]
             )
-          ),
-          remote: Origin(
-            userId: data["payload"]["remote"]["userId"],
-            identity: data["payload"]["remote"]["identity"],
-            displayName: data["payload"]["remote"]["displayName"],
-            group: data["payload"]["remote"]["group"],
-            classId: data["payload"]["remote"]["classId"],
-            profilePic: ListConversationProfilePic(
-              originalName: data["payload"]["remote"]["profilePic"]["originalName"],
-              path: data["payload"]["remote"]["profilePic"]["originalName"],
-              fileLength: data["payload"]["remote"]["profilePic"]["fileLength"],
-              contentType: data["payload"]["remote"]["profilePic"]["contentType"],
-              kind: data["payload"]["remote"]["profilePic"]["kind"]
-            )
-          ),
-          messageStatus: "DELIVERED",
-          type: data["payload"]["type"],
-          classId: data["payload"]["classId"],
-          content: Content(
-            charset: data["payload"]["content"]["charset"],
-            text: data["payload"]["content"]["text"]
-          )
-        ));
+          ));
+          await ackRead(context, data["payload"]["chatId"]);
+        }
+        if(data["action"] == "CHAT_MESSAGE_STATE") {   
+          // int index = _listConversationData.indexWhere((item) => item.id == data["payload"]["conversationId"]);
+          // if(index != -1) {
+          //   _listConversationData[index].messageStatus = _listConversationData[index].messageStatus;
+          //   notifyListeners();
+          // }
+        }
         await loadSoundSent();
         setStateSendMessageStatusConfirm(SendMessageStatusConfirm.loaded);
       } else {

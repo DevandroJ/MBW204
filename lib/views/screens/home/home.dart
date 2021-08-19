@@ -7,7 +7,6 @@ import 'package:ext_storage/ext_storage.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'package:mbw204_club_ina/helpers/show_snackbar.dart';
 import 'package:mbw204_club_ina/utils/socket.dart';
 import 'package:mbw204_club_ina/views/screens/inbox/inbox.dart';
 import 'package:mbw204_club_ina/providers/store.dart';
@@ -197,7 +197,6 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.transparent,
                       flexibleSpace: Consumer<BannerProvider>(
                         builder: (BuildContext context, BannerProvider bannerProvider, Widget child) {
-                          
                           if(bannerProvider.bannerStatus == BannerStatus.loading) {
                             return Container(
                               width: double.infinity,
@@ -284,7 +283,6 @@ class _HomePageState extends State<HomePage> {
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
-                                            
                                             fit: BoxFit.fitWidth,
                                             image: imageProvider
                                           )

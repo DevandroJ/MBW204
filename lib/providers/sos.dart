@@ -41,12 +41,13 @@ class SosProvider extends ChangeNotifier {
     try {
       setStateSosConfirmStatus(SosConfirmStatus.loading);
       Dio dio = await DioManager.shared.getClient(context);
+      String content = "$body ${address.replaceAll('.', '')}";
       await dio.post("${AppConstants.BASE_URL}/data/sos", data: {
         "userId": userId,
         "geoPosition": geoPosition,
-        "address": address,
+        "address": "$body $address",
         "sosType": "sos",
-        "Message": "$body ${address.replaceAll(',', '')}",
+        "Message": content,
         "sender": sender,
         "phoneNumber": phoneNumber
       });

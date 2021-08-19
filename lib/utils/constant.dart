@@ -27,7 +27,7 @@ class AppConstants {
 
   static const String SWITCH_TO = "prod";
   static const String SWITCH_TO_BASE_URL = "https://smsapi.connexist.com:8443";
-  static const String SWITCH_TO_BASE_URL_FEED = "https://feedapi.connexist.id:7443/api/v1";
+  static const String SWITCH_TO_BASE_URL_FEED = "https://feedapi.connexist.id/api/v1";
   static const String SWITCH_TO_CHAT_BASE_URL = "https://apidev.cxid.xyz:5091";
 
   static const String X_CONTEXT_ID = '342790713173';

@@ -27,6 +27,15 @@ class _ChatBodyState extends State<ChatBody> {
       ListChatData listChatData = basket["listChatData"];
       Provider.of<ChatProvider>(context, listen: false).fetchListConversations(context, listChatData.id);
     }); 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ChatProvider>(context, listen: false).scrollController.animateTo(
+        Provider.of<ChatProvider>(context, listen: false).scrollController.position.maxScrollExtent, 
+        duration: Duration(
+          milliseconds: 300
+        ), 
+        curve: Curves.easeInOut
+      );
+   });
   }
 
   @override
@@ -182,8 +191,7 @@ class Message extends StatelessWidget {
               );
             } : null,
             child: message.fromMe 
-            ? Container()
-            : Icon(
+            ? Icon(
               message.messageStatus == "UNDELIVERED"
               ? Icons.error 
               : message.messageStatus == "SENT" 
@@ -201,7 +209,7 @@ class Message extends StatelessWidget {
               ? ColorResources.SUCCESS 
               : null,
               size: 20.0,
-            ),
+            ) : Container(),
           ),
         )
       ],
